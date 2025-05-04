@@ -3,6 +3,7 @@
     <head>
         <title>planner.io</title>
         <link rel="stylesheet" href="styles/main.css">
+        <script src="script.js"></script>
     </head>
     <body>
         <h1>Planner.io</h1>
@@ -10,15 +11,15 @@
             <h3>Please enter your username and password to access your projects</h3>
             <fieldset>
                 <div class="inputBox">
-                    <label>username:</label>
-                    <input type="text">
+                    <label>email:</label>
+                    <input type="email" name="userEmail">
                 </div>
                 <div>
                     <label>password:</label>
-                    <input type="password">
+                    <input type="password" name="userPass">
                 </div>
             </fieldset>
-            <button type="submit" class="formButton">Login</button>
+            <button type="submit" class="formButton" id="login">Login</button>
         </form>
         <a href="signup.html">Sign-up instead</a>
 

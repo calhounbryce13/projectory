@@ -151,11 +151,28 @@ label{
 
 
 .darkmodeContainer{
-    height: 80%;
-    width: 5%;
+    height: 50%;
+    width: 4%;
     border: 2px solid var(--border-color);
     background-image: url('../icons8-dark-mode-90.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
+    animation: myanimation 2s forwards ease-out;
+    animation-delay: 1000ms;
+    opacity: 0;
+
+}
+
+
+/**************************** animation functions ***********************************************************************/
+
+@keyframes myanimation{
+    0%{
+        transform: translateY(10vh);
+    }
+    100%{
+        transform: translateY(0vh);
+        opacity: 1;
+    }
 }

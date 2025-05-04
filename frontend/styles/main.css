@@ -1,9 +1,27 @@
 :root{
 
-    --border-color: rgba(255, 0, 0, 1);
+    --border-color: rgba(255, 0, 0, 0);
 
+
+    --off-white: rgba(247, 249, 252, 1.0);
+    --soft-blue: rgba(58, 134, 255, 1.0);
+    --light-grey-blue: rgba(230, 237, 245, 1.0);
+
+    --forest-green: rgba(34, 139, 87, 1.0);
+    --light-biege: rgba(250, 250, 245, 1.0);
+    --soft-sage: rgba(232, 240, 230, 1.0);
+
+    --ice-blue: #8ecae6;
+    --strong-blue: 	#219ebc;
+    --deep-blue: #023047;
+    --yellow-gold: #ffb703;
+    --gold: #fb8500;
+
+
+    
 }
 
+/************************** name elements *************************************************************************/
 
 body{
     height: 100%;
@@ -13,25 +31,36 @@ body{
     justify-content: space-between;
     align-items: center;
     border: 2px solid var(--border-color);
-    padding: 5%;
     overflow-x: hidden;
+    padding: 5%;
+    padding-top: 0%;
+    background-color: var(--ice-blue);
+    color: var(--deep-blue);
+}
+
+header{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100vw;
+    height: 10vh;
+    background-color: var(--deep-blue);
+    border: 2px solid var(--border-color);
+    padding-right: 5%;
+
 }
 
 h1{
     font-size: 10vw;
+    border: 2px solid var(--border-color);
 }
 
 h3{
-    font-size: 1vw;
-}
-
-.inputBox{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    margin-top: 1vh;
-    margin-bottom: 1vh;
+    font-size: 1.5vw;
+    border: 2px solid var(--border-color);
+    max-width: 20vw;
+    text-align: center;
 }
 
 form{
@@ -39,25 +68,94 @@ form{
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    height: 30vh;
+    height: auto;
     width: 30vw;
     border: 2px solid var(--border-color);
-
-
+    background-color: var(--strong-blue);
+    border-radius: 20px;
 }
 
 fieldset{
-    height: 70%;
+    height: 20vh;
     width: 90%;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
     border: 2px solid var(--border-color);
+}
 
+input{
+    border-radius: 10px;
+    height: 3vh;
+    width: 12vw;
+    
+}
+
+div{
+    border: 2px solid var(--border-color);
+}
+
+button{
+    background-color: var(--yellow-gold);
+    border: none;
+    border-radius: 10px;
+}
+
+a{
+    text-decoration: none;
+    color: var(--deep-blue);
+    border: 2px solid var(--border-color);
+}
+
+label{
+    font-size: 1.7vw;
+}
+
+
+/****************************** form elements *********************************************************************/
+.inputBox{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+    width: 75%;
 }
 
 .formButton{
     height: 6vh;
     width: 60%;
+    margin-top: 3vh;
+    margin-bottom: 3vh;
+    font-size: 1.5vw;
+}
+
+.formButtonAlt{
+    margin-top: 4vh;
+    margin-bottom: 4vh;
+    height: 6vh;
+    width: 10vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--yellow-gold);
+    border-radius: 10px;
+}
+.formButtonAlt:active{
+    filter: brightness(85%);
+}
+
+/***************************************************************************************************/
+
+
+.darkmodeContainer{
+    height: 80%;
+    width: 5%;
+    border: 2px solid var(--border-color);
+    background-image: url('../icons8-dark-mode-90.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }

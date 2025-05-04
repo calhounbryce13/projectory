@@ -1,6 +1,9 @@
 'use strict';
 
 
+const REGISTRATION_URL = 'http://127.0.0.1:3000/registration';
+
+
 
 document.addEventListener('DOMContentLoaded', ()=>{
 
@@ -33,7 +36,11 @@ document.addEventListener('DOMContentLoaded', ()=>{
 });
 
 const send_data_to_backend = async(email, pass)=>{
-    let response = await fetch('');
+    let response = await fetch(REGISTRATION_URL,{
+        method: 'POST',
+        body: {userEmail: email, userPassword: pass}
+    });
+    console.log(response);
 }
 
 

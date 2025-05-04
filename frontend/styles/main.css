@@ -48,7 +48,6 @@ header{
     background-color: var(--deep-blue);
     border: 2px solid var(--border-color);
     padding-right: 5%;
-
 }
 
 h1{
@@ -76,7 +75,6 @@ form{
 }
 
 fieldset{
-    height: 20vh;
     width: 90%;
     display: flex;
     flex-direction: column;
@@ -124,6 +122,14 @@ label{
     width: 75%;
 }
 
+.fieldsetSignup{
+    height: 35vh;
+}
+
+.fieldsetLogin{
+    height: 20vh;
+}
+
 .formButton{
     height: 6vh;
     width: 60%;
@@ -145,6 +151,15 @@ label{
 }
 .formButtonAlt:active{
     filter: brightness(85%);
+}
+
+.requirements{
+    height: 8%;
+    width: 60%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
 }
 
 /***************************************************************************************************/

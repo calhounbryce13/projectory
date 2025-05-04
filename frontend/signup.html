@@ -13,7 +13,7 @@
         <h1>Planner.io</h1>
         <form>
             <h3> Sign up here to start adding new projects</h3>
-            <fieldset>
+            <fieldset id="fieldsetSignup">
                 <div class="inputBox">
                     <label>email:</label>
                     <input type="email" name="email">
@@ -21,6 +21,12 @@
                 <div class="inputBox">
                     <label>password:</label>
                     <input type="password" name="pass">
+                </div>
+                <div class="requirements">
+                    <ul class="passwordReqs">
+                        <li> must be at least 10 characters</li>
+                        <li> must contain at least one special character ()</li>
+                    </ul>
                 </div>
                 <div class="inputBox">
                     <label>confirm password:</label>

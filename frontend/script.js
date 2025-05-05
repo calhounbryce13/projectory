@@ -2,8 +2,9 @@
 
 
 const REGISTRATION_URL = 'http://127.0.0.1:3000/registration';
+const PASSWORD_MIN = 8;
 
-
+//todo: send the user email and password to the backend
 
 document.addEventListener('DOMContentLoaded', ()=>{
 
@@ -14,12 +15,16 @@ document.addEventListener('DOMContentLoaded', ()=>{
             const email = document.getElementsByName('email')[0];
             const pass = document.getElementsByName('pass')[0];
             const passConfirm = document.getElementsByName('passConfirm')[0];
-            check_for_empty(email, pass);
-            if(pass.value !== passConfirm.value){
-                window.alert("passwords must match!");
-                return;
+            const validPassword = password_validation(email, pass, passConfirm);
+            if(validPassword != 0){
+                try{
+                    send_data_to_backend(email, pass);
+                }catch(error){
+                    window.alert("there was an error trying to make an account for you, please try again");
+                }
+                
             }
-            send_data_to_backend(email, pass);
+        
         });
     }
 
@@ -35,12 +40,32 @@ document.addEventListener('DOMContentLoaded', ()=>{
     }
 });
 
+
+const password_validation = function(email, pass, passConfirm){
+    check_for_empty(email, pass);
+    if(Array.from(pass.value).length < PASSWORD_MIN){
+        window.alert("passwords must be at least 8 characters long!");
+        return 0;
+    }
+    if(pass.value !== passConfirm.value){
+        window.alert("passwords must match!");
+        return 0;
+    }
+
+    return 1;
+}
+
 const send_data_to_backend = async(email, pass)=>{
     let response = await fetch(REGISTRATION_URL,{
         method: 'POST',
-        body: {userEmail: email, userPassword: pass}
+        body: JSON.stringify({userEmail: email, userPassword: pass}),
+        headers: {
+            "Content-Type": "Application/json"
+        }
     });
-    console.log(response);
+    let data = await response.json();
+    console.log(data);
+
 }
 
 

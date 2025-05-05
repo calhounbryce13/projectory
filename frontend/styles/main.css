@@ -72,6 +72,8 @@ form{
     border: 2px solid var(--border-color);
     background-color: var(--strong-blue);
     border-radius: 20px;
+    opacity: 0;
+    animation: myanimation .6s ease-out forwards;
 }
 
 fieldset{
@@ -148,6 +150,9 @@ label{
     align-items: center;
     background-color: var(--yellow-gold);
     border-radius: 10px;
+    opacity: 0;
+    animation: myanimation 1.2s ease-out forwards;
+    animation-delay: 1000ms;
 }
 .formButtonAlt:active{
     filter: brightness(85%);

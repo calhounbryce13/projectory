@@ -61,6 +61,12 @@ h3{
     max-width: 20vw;
     text-align: center;
 }
+@media(max-width:900px){
+    h3{
+        font-size: 4.0vw;
+        max-width: 50vw;
+    }
+}
 
 form{
     display: flex;
@@ -74,6 +80,11 @@ form{
     border-radius: 20px;
     opacity: 0;
     animation: myanimation .6s ease-out forwards;
+}
+@media (max-width: 800px){
+    form{
+        width: auto;
+    }
 }
 
 fieldset{
@@ -90,6 +101,11 @@ input{
     height: 3vh;
     width: 12vw;
     
+}
+@media(max-width:900px){
+    input{
+        width: 45vw;
+    }
 }
 
 div{
@@ -111,6 +127,11 @@ a{
 label{
     font-size: 1.7vw;
 }
+@media(max-width:900px){
+    label{
+        font-size: 4.25vw;
+    }
+}
 
 
 /****************************** form elements *********************************************************************/
@@ -122,6 +143,11 @@ label{
     margin-top: 1vh;
     margin-bottom: 1vh;
     width: 75%;
+}
+@media(max-width:900px){
+    .inputBox{
+        width: 100%;
+    }
 }
 
 .fieldsetSignup{
@@ -138,6 +164,11 @@ label{
     margin-top: 3vh;
     margin-bottom: 3vh;
     font-size: 1.5vw;
+}
+@media(max-width:900px){
+    .formButton{
+        font-size: 3.75vw;
+    }
 }
 
 .formButtonAlt{
@@ -157,6 +188,12 @@ label{
 .formButtonAlt:active{
     filter: brightness(85%);
 }
+@media(max-width:900px){
+    .formButtonAlt{
+        width: 35vw;
+    }
+
+}
 
 .requirements{
     height: 8%;
@@ -165,6 +202,12 @@ label{
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
+}
+@media(max-width:900px){
+    .requirements{
+        font-size: 3vw;
+
+    }
 }
 
 /***************************************************************************************************/
@@ -181,6 +224,12 @@ label{
     animation: myanimation 2s forwards ease-out;
     animation-delay: 1000ms;
     opacity: 0;
+}
+@media (max-width: 900px){
+    .darkmodeContainer{
+        height: 70%;
+        width: 20%;
+    }
 
 }
 

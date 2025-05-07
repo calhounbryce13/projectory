@@ -12,6 +12,9 @@
   "dependencies": {
     "express": "5.1.0",
     "nodemon": "3.1.10",
-    "cors": "2.8.5"
+    "cors": "2.8.5",
+    "mongoose": "8.14.1",
+    "bcrypt": "5.1.1"
+    
   }
 }

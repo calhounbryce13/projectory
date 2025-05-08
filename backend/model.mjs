@@ -1,9 +1,22 @@
 import mongoose from 'mongoose';
+import 'dotenv/config';
 
-const connection_URL = '';
 
-connect_to_database();
+mongoose.connect(
+    process.env.MONGODB_CONNECT_STRING,
+    { useNewUrlParser: true }
+);
 
+
+const db = mongoose.connection;
+
+db.once("open", ()=>{
+    console.log("\nconnected to mongodb database!");
+});
+
+
+
+////////////////////////////////////////////////////////////////
 
 
 const planned_projects = new mongoose.Schema({
@@ -26,32 +39,27 @@ const userSchema = new mongoose.Schema({
     complete: [planned_projects]
 
 });
+////////////////////////////////////////////////////////////////
 
-let User = mongoose.model('User', userSchema);
+let User = mongoose.model('User', userSchema, 'user-data');
 
+////////////////////////////////////////////////////////////////
 
-const create_new_user = function(email, password, passKey){
-
-
+const create_new_user = async(email, password, passKey)=>{
+    const newAccount = new User({email: email, password:password, passKey:passKey, current: [], planned: [], complete:[]});
+    return await newAccount.save();
 }
 
 
-
-
-
-
-
-
-
-
-
-const connect_to_database = async function(){
-    try{
-        await mongoose.connect(connection_URL);
-        console.log("\nsuccessfully connected to the MongoDB database");
-    }catch(error){
-        console.log("\ncould not connect to the database");
-    }
+const find_existing_user = async(userEmail)=>{
+    let filter = {email: userEmail};
+    let knownUsers = await User.find(filter);
+    return knownUsers;
 }
 
-export default create_new_user();
+find_existing_user("somethingUnique345@yahoo.com");
+
+
+////////////////////////////////////////////////////////////////
+
+export default { create_new_user, find_existing_user }

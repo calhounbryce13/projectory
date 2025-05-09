@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import bcrypt from 'bcrypt';
+import session from 'express-session';
 
 import User from './model.mjs';
 
@@ -10,9 +11,15 @@ const rounds = 10;
 
 
 
-/// middleware ///
+/******************************** MIDDLEWARE ********************************************************************/
+
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+app.use(session({
+    secret: "something something darkside",
+    saveUninitialized: false,
+    resave: false
+}));
 app.use(cors({
     origin: (origin, callback) => {
         if (!origin || origin === "null") {  // Allow requests from null origins for local testing
@@ -24,22 +31,32 @@ app.use(cors({
     methods: ['GET, POST']
 }))
 
-////////////////////////////////////////////////////////////////////////////
+/******************************** ROUTE HANDLERS ********************************************************************/
 app.get('/testing', (req, res)=>{
     res.send({message: "hello world"});
 });
 
+
+app.post('/logout', (req, res)=>{
+    if(req.session.loggedIn){
+        req.session.destroy();
+    }
+    res.status(200).json("logged out");
+
+});
+
 app.post('/login', async(req, res)=>{
+    console.log(req.body);
     const userEmail = req.body['userEmail'];
     const plainTextPassword = req.body['userPassword'];
+    console.log(userEmail, plainTextPassword);
     if(userEmail && plainTextPassword){
         let alreadyHasAccount = await check_for_existing_email(userEmail);
         console.log(alreadyHasAccount);
         if(alreadyHasAccount == true){
             let validPassword = await validate_user_password(plainTextPassword, userEmail);
             if(validPassword){
-                //start session
-                res.status(200).send({message:"session start"});
+                session_start(req, res, userEmail);
             }
             else{
                 res.status(200).send({message:"invalid username and/or password (password)"});
@@ -61,8 +78,7 @@ app.post('/login', async(req, res)=>{
 
 app.post('/registration', async(req, res)=>{
     if(req.body){
-        const email = req.body['userEmail'];
-        const password = req.body['userPassword'];
+        const { email, password } = req.body;
         if(email && password){
             let alreadyHasAccount = await check_for_existing_email(email);
             console.log(alreadyHasAccount);
@@ -85,6 +101,26 @@ app.post('/registration', async(req, res)=>{
     res.status(400).send({message: "error no request body"});
 });
 
+
+
+
+/******************************** HELPER FUNCTIONS ********************************************************************/
+
+
+
+const session_start = function(req, res, email){
+    console.log(req.session.loggedIn);
+    if(!(req.session.loggedIn)){
+        req.session.loggedIn = true;
+        req.session.user = email;
+        console.log(req.sessio)
+        res.status(200).send({message:"session start"});
+    }
+    else{
+        res.status(200).json(req.session);
+    }
+    return;
+}
 
 const validate_user_password = async(plainTextPassword, userEmail)=>{
     let userAccount = await User.find_existing_user(userEmail);
@@ -132,6 +168,7 @@ const setup_user_account = async(password, email, res)=>{
     res.status(200).send({message:true});
 }
 
+/****************************************************************************************************/
 
 app.listen(PORT,()=>{
     console.log(`server listening on port ${PORT}`);

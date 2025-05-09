@@ -19,7 +19,12 @@ Content-Type: application/json
 
 {
     "userEmail": "somethingUnique345@yahoo.com",
-    "userPassword":"Appl3Sauc3_500"
+    "userPassword": "Appl3Sauc3_500"
 }
 
 ###
+
+
+POST http://127.0.0.1:3000/logout
+
+connect.sid=s%3AlLfkJ6UvwurvkvNN31CenbFvBmi804Od.I4D6rqeN%2BIP5ktsFcX2YF5ZGkkGJrcK0NL1qM0LjR%2FQ

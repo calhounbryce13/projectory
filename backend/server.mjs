@@ -107,13 +107,11 @@ app.post('/registration', async(req, res)=>{
 /******************************** HELPER FUNCTIONS ********************************************************************/
 
 
-
 const session_start = function(req, res, email){
-    console.log(req.session.loggedIn);
     if(!(req.session.loggedIn)){
         req.session.loggedIn = true;
         req.session.user = email;
-        console.log(req.sessio)
+        console.log(req.sessio);
         res.status(200).send({message:"session start"});
     }
     else{

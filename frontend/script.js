@@ -15,17 +15,25 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
     const login = document.getElementById('login');
     if(login){
-        login.addEventListener('click', (event)=>{
+        login.addEventListener('click', async(event)=>{
             event.preventDefault();
             const userEmail = document.getElementsByName('userEmail')[0];
             const userPass = document.getElementsByName('userPass')[0];
             check_for_empty(userEmail, userPass);
+            let response = await registration_and_login_fetch(userEmail.value, userPass.value, LOGIN_URL);
+            let data = await response.json();
+            if(data.message == 'session start'){
+                window.location.assign('projects.html');
+            }
+            else{
+                window.alert("wrong email and/or password");
+            }
         });
     }
 });
 
 
-
+////////////////////////////////////////////////////////////////////////////////////////////////////
 const process_signup_data = async(event)=>{
     event.preventDefault();
     const email = document.getElementsByName('email')[0];
@@ -34,7 +42,7 @@ const process_signup_data = async(event)=>{
     const validPassword = password_validation(email, pass, passConfirm);
 
     if(validPassword != 0){
-        let response = await registration_fetch(email.value, pass.value);
+        let response = await registration_and_login_fetch(email.value, pass.value, REGISTRATION_URL);
         if(response != null){
             inform_user(response);
         }
@@ -70,9 +78,9 @@ const password_validation = function(email, pass, passConfirm){
     return 1;
 }
 
-const registration_fetch = async(email, pass)=>{
+const registration_and_login_fetch = async(email, pass, endpoint)=>{
     try{
-        let response = await fetch(REGISTRATION_URL,{
+        let response = await fetch(endpoint,{
             method: 'POST',
             body: JSON.stringify({"userEmail": email, "userPassword": pass}),
             headers: {

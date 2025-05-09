@@ -27,4 +27,5 @@ Content-Type: application/json
 
 POST http://127.0.0.1:3000/logout
 
-connect.sid=s%3AlLfkJ6UvwurvkvNN31CenbFvBmi804Od.I4D6rqeN%2BIP5ktsFcX2YF5ZGkkGJrcK0NL1qM0LjR%2FQ
+connect.sid=s%3A_2TPh6HHdbjRScurxFOJ85miuJiqwe0J.tAJmQdtdkDB0sKkw7aPjdBhEUmuN4Mb4cw9myTezpOI
+

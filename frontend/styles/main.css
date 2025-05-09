@@ -1,3 +1,7 @@
+
+
+@import url('https://fonts.googleapis.com/css2?family=Cal+Sans&family=Fredoka:wght@300..700&display=swap');
+
 :root{
 
     --border-color: rgba(255, 0, 0, 0);
@@ -16,6 +20,7 @@
     --deep-blue: #023047;
     --yellow-gold: #ffb703;
     --gold: #fb8500;
+    
 
 
     
@@ -36,6 +41,7 @@ body{
     padding-top: 0%;
     background-color: var(--ice-blue);
     color: var(--deep-blue);
+    font-family: 'Cal Sans';
 }
 
 header{
@@ -60,6 +66,7 @@ h3{
     border: 2px solid var(--border-color);
     max-width: 20vw;
     text-align: center;
+    font-weight: 100;
 }
 @media(max-width:900px){
     h3{

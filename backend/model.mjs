@@ -57,7 +57,20 @@ const find_existing_user = async(userEmail)=>{
     return knownUsers;
 }
 
-find_existing_user("somethingUnique345@yahoo.com");
+const delete_all_for_user = async(userEmail)=>{
+    let filter = {email: userEmail};
+    let res = await User.deleteMany(filter);
+    console.log(res.deletedCount);
+    return res;
+}
+
+const delete_user = async(userEmail)=>{
+    let filter = {email: userEmail};
+    let res = await User.deleteOne(filter);
+    console.log(res.deletedCount);
+    return res;
+}
+
 
 
 ////////////////////////////////////////////////////////////////

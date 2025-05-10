@@ -8,7 +8,7 @@ POST http://127.0.0.1:3000/registration
 Content-Type: application/json
 
 {
-    "userEmail": "somethingUnique345@yahoo.com",
+    "userEmail": "somethingUnique245@yahoo.com",
     "userPassword":"Appl3Sauc3_500"
 }
 
@@ -18,8 +18,8 @@ POST http://127.0.0.1:3000/login
 Content-Type: application/json
 
 {
-    "userEmail": "somethingUnique345@yahoo.com",
-    "userPassword": "Appl3Sauc3_500"
+    "userEmail": "calhounbryce13@gmail.com",
+    "userPassword": "Jarvis123"
 }
 
 ###
@@ -27,5 +27,4 @@ Content-Type: application/json
 
 POST http://127.0.0.1:3000/logout
 
-connect.sid=s%3A_2TPh6HHdbjRScurxFOJ85miuJiqwe0J.tAJmQdtdkDB0sKkw7aPjdBhEUmuN4Mb4cw9myTezpOI
-
+connect.sid=s%3AqDkY5S4wR9Vc-CPx9rcbOD-JW1fF4F6y.E4NDXGF%2B3x8qE%2BvQvCx7bnGdxCk2v4TVpJi7%2BpY3vL8

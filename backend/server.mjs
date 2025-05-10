@@ -18,17 +18,23 @@ app.use(express.urlencoded({extended: true}));
 app.use(session({
     secret: "something something darkside",
     saveUninitialized: false,
-    resave: false
+    resave: false,
+    cookie: {
+        httpOnly: true,
+        secure: false,    
+        sameSite: 'lax'
+    }
 }));
 app.use(cors({
-    origin: (origin, callback) => {
-        if (!origin || origin === "null") {  // Allow requests from null origins for local testing
-            callback(null, true);
+    origin:(origin, callback) => {
+        if (!origin || origin === "null") {
+          callback(null, true); // allows requests from null
         } else {
             callback(new Error("Blocked by CORS"));
         }
     },
-    methods: ['GET, POST']
+    methods: ['GET', 'POST'],
+    credentials: true
 }))
 
 /******************************** ROUTE HANDLERS ********************************************************************/
@@ -38,14 +44,23 @@ app.get('/testing', (req, res)=>{
 
 
 app.post('/logout', (req, res)=>{
-    if(req.session.loggedIn){
-        req.session.destroy();
+    console.log("\nlogout endpoint hit\n");
+    try{
+        if(req.session.loggedIn){
+            req.session.destroy();
+            console.log(req.session);
+            res.status(200).json("logged out");
+        }
+        else{
+            console.log("\nerroneous logout w/o login!");
+        }
+    }catch(error){
+        console.log(error);
     }
-    res.status(200).json("logged out");
-
 });
 
 app.post('/login', async(req, res)=>{
+    console.log("\nlogin endpoint hit\n");
     console.log(req.body);
     const userEmail = req.body['userEmail'];
     const plainTextPassword = req.body['userPassword'];
@@ -77,8 +92,10 @@ app.post('/login', async(req, res)=>{
 });
 
 app.post('/registration', async(req, res)=>{
+    console.log("registration endpoint hit!");
     if(req.body){
-        const { email, password } = req.body;
+        const email = req.body['userEmail'];
+        const password = req.body['userPassword'];
         if(email && password){
             let alreadyHasAccount = await check_for_existing_email(email);
             console.log(alreadyHasAccount);
@@ -111,11 +128,12 @@ const session_start = function(req, res, email){
     if(!(req.session.loggedIn)){
         req.session.loggedIn = true;
         req.session.user = email;
-        console.log(req.sessio);
+        console.log(req.session);
         res.status(200).send({message:"session start"});
     }
     else{
-        res.status(200).json(req.session);
+        console.log("\nalready logged in!");
+        res.status(200).json("user already logged in");
     }
     return;
 }
@@ -158,6 +176,7 @@ const setup_user_account = async(password, email, res)=>{
     let response;
     try{
         response = await User.create_new_user(email, hashedPassword, rounds);
+        console.log("\nnew user created", email);
     }catch(error){
         console.log(error);
         res.status(500).send({message:"error trying to create a new user"});

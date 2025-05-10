@@ -3,6 +3,7 @@
 
 const REGISTRATION_URL = 'http://127.0.0.1:3000/registration';
 const LOGIN_URL = 'http://127.0.0.1:3000/login';
+const LOGOUT_URL = 'http://127.0.0.1:3000/logout';
 const PASSWORD_MIN = 1;
 
 
@@ -23,10 +24,27 @@ document.addEventListener('DOMContentLoaded', ()=>{
             let response = await registration_and_login_fetch(userEmail.value, userPass.value, LOGIN_URL);
             let data = await response.json();
             if(data.message == 'session start'){
-                window.location.assign('projects.html');
+                window.location.assign('userhome.html');
             }
             else{
                 window.alert("wrong email and/or password");
+            }
+        });
+    }
+
+    const logout = document.getElementById('logout-button');
+    if(logout){
+        logout.addEventListener('click', async()=>{
+            console.log("logout clicked");
+            try{
+                let response = await fetch(LOGOUT_URL, {
+                    method: 'POST',
+                    credentials: 'include'
+                });
+                window.location.assign('login.html');
+            }catch(error){
+                console.log(error);
+                window.alert("logout NOT successful! please try to log out again.");
             }
         });
     }
@@ -42,6 +60,8 @@ const process_signup_data = async(event)=>{
     const validPassword = password_validation(email, pass, passConfirm);
 
     if(validPassword != 0){
+        console.log("A");
+        console.log(email.value, pass.value);
         let response = await registration_and_login_fetch(email.value, pass.value, REGISTRATION_URL);
         if(response != null){
             inform_user(response);
@@ -83,12 +103,14 @@ const registration_and_login_fetch = async(email, pass, endpoint)=>{
         let response = await fetch(endpoint,{
             method: 'POST',
             body: JSON.stringify({"userEmail": email, "userPassword": pass}),
+            credentials: "include",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
             }
         });
         return response;
     }catch(error){
+        console.log("\nFETCH ERROR");
         return null;
     }
 }

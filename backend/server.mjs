@@ -43,6 +43,92 @@ app.get('/testing', (req, res)=>{
 });
 
 
+app.post('/view-current-projects', (req, res)=>{
+    console.log("\ncurrent projects endpoint hit!\n");
+    let validSession = validate_user_session(req);
+    if(!validSession){
+        res.status(400).json("invalid request session");
+        return;
+    }
+
+});
+app.post('/view-planned-projects', (req, res)=>{
+    console.log("\ncurrent projects endpoint hit!\n");
+    let validSession = validate_user_session(req);
+    if(!validSession){
+        res.status(400).json("invalid request session");
+        return;
+    }
+    
+});
+app.post('/view-complete-projects', (req, res)=>{
+    console.log("\ncurrent projects endpoint hit!\n");
+    let validSession = validate_user_session(req);
+    if(!validSession){
+        res.status(400).json("invalid request session");
+        return;
+    }
+    
+});
+app.post('/add-current-projects', async(req, res)=>{
+    console.log("\ncurrent projects endpoint hit!\n");
+    let validSession = validate_user_session(req);
+    if(!validSession){
+        res.status(400).json("invalid request session");
+        return;
+    }
+    const email = req.session.user;
+    const title = req.body['title'];
+    const goal = req.body['goal'];
+    const subtasks = req.body['subtasks'];
+    const project = {
+        title: title,
+        goal: goal,
+        tasks: subtasks
+    };
+
+
+    //! dont call this yet, need to update !
+    //! current project schema to accept a list of strings !
+    await User.add_user_project(email, project, 0);
+    res.status(200).json("current project added");
+
+});
+app.post('/add-planned-projects', async(req, res)=>{
+    console.log("\nplanned projects endpoint hit!\n");
+    let validSession = validate_user_session(req);
+    if(!validSession){
+        res.status(400).json("invalid request session");
+        return;
+    }
+    const email = req.session.user;
+    const title = req.body['title'];
+    const goal = req.body['goal'];
+
+    const project = {
+        title: title,
+        goal: goal
+    };
+    
+    try{
+        await User.add_user_project(email, project, 1);
+        res.status(200).json("planned project added");
+    }catch(error){
+        console.log(error);
+        res.status(500).json("could not add user planned project");
+    }
+});
+app.post('/add-complete-projects', (req, res)=>{
+    console.log("\ncurrent projects endpoint hit!\n");
+    let validSession = validate_user_session(req);
+    if(!validSession){
+        res.status(400).json("invalid request session");
+        return;
+    }
+    
+});
+
+
 app.post('/logout', (req, res)=>{
     console.log("\nlogout endpoint hit\n");
     try{
@@ -122,6 +208,16 @@ app.post('/registration', async(req, res)=>{
 
 
 /******************************** HELPER FUNCTIONS ********************************************************************/
+
+
+const validate_user_session = function(req){
+    if(req.session){
+        if(req.session.loggedIn){
+            return true;
+        }
+    }
+    return false
+}
 
 
 const session_start = function(req, res, email){

@@ -50,6 +50,20 @@ const create_new_user = async(email, password, passKey)=>{
     return await newAccount.save();
 }
 
+const add_user_project = async(email, project, num)=>{
+    const user = await find_existing_user(email);
+    if(num == 0){
+        user[0].current.push(project);
+    }
+    else if(num == 1){
+        user[0].planned.push(project);
+    }
+    else if(num == 2){
+        user[0].complete.push(project);
+    }
+    await user[0].save();
+}
+
 
 const find_existing_user = async(userEmail)=>{
     let filter = {email: userEmail};
@@ -72,7 +86,13 @@ const delete_user = async(userEmail)=>{
 }
 
 
+let testProject = {
+    title: "to steal the moon",
+    goal: "by any means necessary",
+}
+
+//add_user_project('calhounbryce13@gmail.com', testProject, 1);
 
 ////////////////////////////////////////////////////////////////
 
-export default { create_new_user, find_existing_user }
+export default { create_new_user, find_existing_user, add_user_project }

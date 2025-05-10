@@ -25,6 +25,31 @@ Content-Type: application/json
 ###
 
 
+POST http://127.0.0.1:3000/current-projects
+
+connect.sid=s%3AbwW9whTpWMWf22RtH2yxh4DI-x2QxUk6.9xgy5JmpG0JYU4rF%2BUFbNtnHFr5sF3th4SoeDJw7Cb8
+
+
+###
+
+POST http://127.0.0.1:3000/add-planned-projects
+Content-Type: application/json
+Cookie: connect.sid=s%3A0p7WqMaa6whF_caSo6P8SwCMbm9V7xFU.CJsTafOVdEDJW1Uk%2BK5mGyFti0PUhC%2FxPAiwyCRi8M4
+
+{
+    "title":"to you, from me",
+    "goal":"something something darkside"
+}
+
+
+###
+
+
 POST http://127.0.0.1:3000/logout
 
-connect.sid=s%3AqDkY5S4wR9Vc-CPx9rcbOD-JW1fF4F6y.E4NDXGF%2B3x8qE%2BvQvCx7bnGdxCk2v4TVpJi7%2BpY3vL8
+connect.sid=s%3AbwW9whTpWMWf22RtH2yxh4DI-x2QxUk6.9xgy5JmpG0JYU4rF%2BUFbNtnHFr5sF3th4SoeDJw7Cb8
+
+
+###
+
+POST http://127.0.0.1:3000/add-current-projects

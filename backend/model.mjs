@@ -27,7 +27,7 @@ const planned_projects = new mongoose.Schema({
 const current_projects = new mongoose.Schema({
     title: String,
     goal: String,
-    first_task: String
+    tasks: [String]
 });
 
 const userSchema = new mongoose.Schema({
@@ -89,9 +89,10 @@ const delete_user = async(userEmail)=>{
 let testProject = {
     title: "to steal the moon",
     goal: "by any means necessary",
+    tasks: ["step 1", "step 2", "step 3"]
 }
 
-//add_user_project('calhounbryce13@gmail.com', testProject, 1);
+add_user_project('calhounbryce13@gmail.com', testProject, 1);
 
 ////////////////////////////////////////////////////////////////
 

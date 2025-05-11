@@ -32,13 +32,14 @@ connect.sid=s%3AbwW9whTpWMWf22RtH2yxh4DI-x2QxUk6.9xgy5JmpG0JYU4rF%2BUFbNtnHFr5sF
 
 ###
 
-POST http://127.0.0.1:3000/add-planned-projects
+POST http://127.0.0.1:3000/add-current-projects
 Content-Type: application/json
-Cookie: connect.sid=s%3A0p7WqMaa6whF_caSo6P8SwCMbm9V7xFU.CJsTafOVdEDJW1Uk%2BK5mGyFti0PUhC%2FxPAiwyCRi8M4
+Cookie: connect.sid=s%3AXLf6TtW53qassnbuwag8vd8X4eBwPLJJ.6pZWXsGM8tQ72ZnI46vyZ%2FLQSZaacINQscVMsw6j0P4
 
 {
     "title":"to you, from me",
-    "goal":"something something darkside"
+    "goal":"something something darkside",
+    "tasks": ["step 1", "step 2", "step 3"]
 }
 
 
@@ -47,7 +48,7 @@ Cookie: connect.sid=s%3A0p7WqMaa6whF_caSo6P8SwCMbm9V7xFU.CJsTafOVdEDJW1Uk%2BK5mG
 
 POST http://127.0.0.1:3000/logout
 
-connect.sid=s%3AbwW9whTpWMWf22RtH2yxh4DI-x2QxUk6.9xgy5JmpG0JYU4rF%2BUFbNtnHFr5sF3th4SoeDJw7Cb8
+connect.sid=s%3AXLf6TtW53qassnbuwag8vd8X4eBwPLJJ.6pZWXsGM8tQ72ZnI46vyZ%2FLQSZaacINQscVMsw6j0P4
 
 
 ###

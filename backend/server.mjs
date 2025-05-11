@@ -80,11 +80,11 @@ app.post('/add-current-projects', async(req, res)=>{
     const email = req.session.user;
     const title = req.body['title'];
     const goal = req.body['goal'];
-    const subtasks = req.body['subtasks'];
+    const tasks = req.body['tasks'];
     const project = {
         title: title,
         goal: goal,
-        tasks: subtasks
+        tasks: tasks
     };
 
 

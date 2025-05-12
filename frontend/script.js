@@ -9,6 +9,14 @@ const PASSWORD_MIN = 8;
 
 document.addEventListener('DOMContentLoaded', ()=>{
 
+    window.addEventListener('load', ()=>{
+        if(window.location.pathname.endsWith("/projects.html")){
+            update_header_text();
+            // send fetch call
+
+        }
+    });
+    home_page_listeners();
     const signUp = document.getElementById('signup');
     if(signUp){
         signUp.addEventListener('click', (event)=>process_signup_data(event));
@@ -22,7 +30,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
             const userPass = document.getElementsByName('userPass')[0];
             if(!(check_for_empty(userEmail, userPass))){
                 let response = await registration_and_login_fetch(userEmail.value, userPass.value, LOGIN_URL);
-                console.log(response)
                 if(response != null){
                     let data = await response.json();
                     if(data.message == 'session start'){
@@ -57,6 +64,32 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+const update_header_text = function(){
+    const header = document.getElementsByTagName('h2')[0];
+    header.textContent = `My ${localStorage.getItem("project-type")} projects`;
+}
+
+const get_buttons = function(){
+    let res = [];
+    res.push(document.getElementById('current'));
+    res.push(document.getElementById('planned'));
+    res.push(document.getElementById('completed'));
+    return res;
+}
+
+const home_page_listeners = function(){
+    const buttons = get_buttons();
+    for(let x = 0; x < buttons.length; x++){
+        if(buttons[x]){
+            buttons[x].addEventListener('click',()=>{
+                localStorage.setItem("project-type", buttons[x].id);
+                window.location.assign("projects.html");
+            });
+        }
+        
+    }
+}
 
 const strip_body = function(){
     const body = document.body;

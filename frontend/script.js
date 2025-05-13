@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
         if(window.location.pathname.endsWith("/projects.html")){
             update_header_text();
             // send fetch call
-
         }
     });
     home_page_listeners();

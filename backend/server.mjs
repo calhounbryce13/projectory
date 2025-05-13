@@ -26,13 +26,7 @@ app.use(session({
     }
 }));
 app.use(cors({
-    origin:(origin, callback) => {
-        if (!origin || origin === "null") {
-          callback(null, true); // allows requests from null
-        } else {
-            callback(new Error("Blocked by CORS"));
-        }
-    },
+    origin: "http://127.0.0.1:5500",
     methods: ['GET', 'POST'],
     credentials: true
 }))
@@ -50,6 +44,7 @@ app.post('/view-current-projects', (req, res)=>{
         res.status(400).json("invalid request session");
         return;
     }
+    let currentProjects = [];
 
 });
 app.post('/view-planned-projects', (req, res)=>{

@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
         });
     }
 
-    const logout = document.getElementById('logout-button');
+    const logout = document.getElementsByClassName('logout-button')[0];
     if(logout){
         logout.addEventListener('click', async()=>{
             console.log("logout clicked");

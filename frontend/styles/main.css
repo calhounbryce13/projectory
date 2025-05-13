@@ -190,8 +190,13 @@ ol{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+}
+@media(max-width:900px){
+    ol{
+        align-items: center;
 
+    }
 }
 
 footer{

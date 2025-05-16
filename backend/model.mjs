@@ -1,3 +1,8 @@
+/*
+Author: Bryce Calhoun
+Description: Backend database model for Projectory's frontend
+*/
+
 import mongoose from 'mongoose';
 import 'dotenv/config';
 
@@ -6,11 +11,6 @@ mongoose.connect(
     process.env.MONGODB_CONNECT_STRING,
     { useNewUrlParser: true }
 );
-
-
-
-
-
 
 const db = mongoose.connection;
 
@@ -68,7 +68,6 @@ const add_user_project = async(email, project, num)=>{
     await user[0].save();
 }
 
-
 const find_existing_user = async(userEmail)=>{
     let filter = {email: userEmail};
     let knownUsers = await User.find(filter);
@@ -89,15 +88,31 @@ const delete_user = async(userEmail)=>{
     return res;
 }
 
+const get_my_projects = async(email, projectType)=>{
+    let user = await find_existing_user(email);
+    console.log(user[0].current);
+
+    if(projectType == 'current'){
+        return user[0].current;
+    }
+    else if(projectType == 'planned'){
+        return user[0].planned;
+    }
+    else if(projectType == 'completed'){
+        return user[0].complete;
+    }
+}
+
+
 
 let testProject = {
-    title: "to steal the moon",
-    goal: "by any means necessary",
+    title: "Repaint the garage",
+    goal: "cover the entire surface of the garage in pink paint",
     tasks: ["step 1", "step 2", "step 3"]
 }
 
-add_user_project('calhounbryce13@gmail.com', testProject, 1);
+add_user_project('calhounbryce13@gmail.com', testProject,0);
 
 ////////////////////////////////////////////////////////////////
 
-export default { create_new_user, find_existing_user, add_user_project }
+export default { create_new_user, find_existing_user, add_user_project, get_my_projects }

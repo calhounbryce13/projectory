@@ -4,15 +4,33 @@
 const REGISTRATION_URL = 'http://127.0.0.1:3000/registration';
 const LOGIN_URL = 'http://127.0.0.1:3000/login';
 const LOGOUT_URL = 'http://127.0.0.1:3000/logout';
+const VIEW_PROJECTS_URL = 'http://127.0.0.1:3000/view-projects';
 const PASSWORD_MIN = 8;
 
 
 document.addEventListener('DOMContentLoaded', ()=>{
 
-    window.addEventListener('load', ()=>{
+    window.addEventListener('load', async()=>{
         if(window.location.pathname.endsWith("/projects.html")){
             update_header_text();
-            // send fetch call
+            let projects;
+            try{
+                projects = await fetch(VIEW_PROJECTS_URL,{
+                    headers:{
+                        "Content-type": "application/json"
+                    },
+                    credentials: 'include',
+                    method: 'POST',
+                    body: JSON.stringify({"project-type": localStorage.getItem("project-type")})
+                    
+                });
+                let userProjects = await projects.json();
+                populate_project_screen(userProjects);
+            }catch(error){
+                console.log(error);
+                //show_error_message();
+            }
+            
         }
     });
     home_page_listeners();
@@ -63,6 +81,45 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+const populate_project_screen = function(projects){
+    console.log(projects);
+    for(let i = 0; i < projects.length; i++){
+        let titleText = document.createElement('p');
+        titleText.textContent = projects[i].title;
+
+        let myTitle = document.createElement('div');
+        myTitle.appendChild(titleText);
+        myTitle.classList.add('project-title');
+
+        let titleContainer = document.createElement('div');
+        titleContainer.appendChild(myTitle);
+        titleContainer.classList.add('project-title-container');
+
+        let goalText = document.createElement('p');
+        goalText.textContent = projects[i].goal;
+        let goalContainer = document.createElement('div');
+        goalContainer.appendChild(goalText);
+        goalContainer.classList.add('project-goal');
+
+        let taskList = document.createElement('ol');
+        for(let j = 0; j < projects[i].tasks.length; j++){
+            let index = document.createElement('li');
+            index.textContent = projects[i].tasks[j];
+            taskList.appendChild(index);
+        }
+
+        let myProject = document.createElement('div');
+        myProject.appendChild(titleContainer);
+        myProject.appendChild(goalContainer);
+        myProject.appendChild(taskList);
+        myProject.classList.add('my-project')
+
+        let myMain = document.getElementById('projects-main');
+        myMain.appendChild(myProject);
+    }
+
+}
 
 const update_header_text = function(){
     const header = document.getElementsByTagName('h2')[0];

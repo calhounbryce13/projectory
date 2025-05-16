@@ -1,3 +1,10 @@
+/*
+Author: Bryce Calhoun
+Description: Backend REST API/database controller for Projectory's frontend
+*/
+
+
+
 import express from 'express';
 import cors from 'cors';
 import bcrypt from 'bcrypt';
@@ -37,34 +44,29 @@ app.get('/testing', (req, res)=>{
 });
 
 
-app.post('/view-current-projects', (req, res)=>{
-    console.log("\ncurrent projects endpoint hit!\n");
+app.post('/view-projects', async(req, res)=>{
+    console.log("\nprojects endpoint hit!\n");
+    console.log(req.session);
     let validSession = validate_user_session(req);
     if(!validSession){
         res.status(400).json("invalid request session");
         return;
     }
-    let currentProjects = [];
+    let projects = [];
+    try{
+        console.log("A");
+        projects = await User.get_my_projects(req.session.user, req.body['project-type']);
+        console.log(projects);
+        res.status(200).json(projects);
+    }catch(error){
+        console.log(error);
+        res.status(500).json("error getting user projects");
+    }
+});
 
-});
-app.post('/view-planned-projects', (req, res)=>{
-    console.log("\ncurrent projects endpoint hit!\n");
-    let validSession = validate_user_session(req);
-    if(!validSession){
-        res.status(400).json("invalid request session");
-        return;
-    }
-    
-});
-app.post('/view-complete-projects', (req, res)=>{
-    console.log("\ncurrent projects endpoint hit!\n");
-    let validSession = validate_user_session(req);
-    if(!validSession){
-        res.status(400).json("invalid request session");
-        return;
-    }
-    
-});
+
+
+
 app.post('/add-current-projects', async(req, res)=>{
     console.log("\ncurrent projects endpoint hit!\n");
     let validSession = validate_user_session(req);
@@ -82,9 +84,6 @@ app.post('/add-current-projects', async(req, res)=>{
         tasks: tasks
     };
 
-
-    //! dont call this yet, need to update !
-    //! current project schema to accept a list of strings !
     await User.add_user_project(email, project, 0);
     res.status(200).json("current project added");
 
@@ -206,8 +205,13 @@ app.post('/registration', async(req, res)=>{
 
 
 const validate_user_session = function(req){
+    //console.log("\n request DATA ", req);
     if(req.session){
-        if(req.session.loggedIn){
+        console.log(req.session);
+
+        if(req.session.loggedIn && (req.session.user != '')){
+            console.log(req.session.loggedIn, req.session.user);
+
             return true;
         }
     }

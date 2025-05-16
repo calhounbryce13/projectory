@@ -279,6 +279,18 @@ footer{
     background-color: var(--deep-blue);
 }
 
+.hidden-form{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.hidden-form:active{
+    opacity: 1;
+}
+
 .requirements{
     height: 8%;
     width: 60%;
@@ -452,12 +464,41 @@ footer{
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
-}
 
+    transition: width 0.3s ease, height 0.3s ease, border-radius 0.3s ease;
+}
 @media(max-width:900px){
     .add-new{
         width: 16vw;
     }
+}
+
+.add-new:active{
+    height: 60vh;
+    width: 100%;
+    background-image: none;
+    z-index: 2;
+}
+
+#home-button{
+    background-image: url('../home-icon.svg');
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 7vh;
+    width: 4vw;
+    background-color: var(--yellow-gold);
+    border-radius: 10px;
+
+}
+
+.home-button-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 98%;
+    padding-left: 2%;
 }
 
 

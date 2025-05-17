@@ -501,6 +501,23 @@ footer{
     padding-left: 2%;
 }
 
+#project-form-add-more-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+}
+
+#project-form-subtasks{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    width: 90%;
+
+}
+
 
 
 

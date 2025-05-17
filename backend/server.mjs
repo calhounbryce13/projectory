@@ -65,8 +65,6 @@ app.post('/view-projects', async(req, res)=>{
 });
 
 
-
-
 app.post('/add-current-projects', async(req, res)=>{
     console.log("\ncurrent projects endpoint hit!\n");
     let validSession = validate_user_session(req);
@@ -78,14 +76,23 @@ app.post('/add-current-projects', async(req, res)=>{
     const title = req.body['title'];
     const goal = req.body['goal'];
     const tasks = req.body['tasks'];
-    const project = {
-        title: title,
-        goal: goal,
-        tasks: tasks
-    };
+    if(!(goal == "") && !(title == "")){
+        const project = {
+            title: title,
+            goal: goal,
+            tasks: tasks
+        };
+        try{
+            await User.add_user_project(email, project, 0);
+            res.status(200).json("current project added");
+        }catch(error){
+            console.log(error);
+            res.status(500).json("error");
+        }
+        return;
+    }
+    res.status(400).json({"Error": "Incomplete body"})
 
-    await User.add_user_project(email, project, 0);
-    res.status(200).json("current project added");
 
 });
 app.post('/add-planned-projects', async(req, res)=>{
@@ -98,19 +105,26 @@ app.post('/add-planned-projects', async(req, res)=>{
     const email = req.session.user;
     const title = req.body['title'];
     const goal = req.body['goal'];
+    if(!(title == "") && !(goal == "")){
 
-    const project = {
-        title: title,
-        goal: goal
-    };
-    
-    try{
-        await User.add_user_project(email, project, 1);
-        res.status(200).json("planned project added");
-    }catch(error){
-        console.log(error);
-        res.status(500).json("could not add user planned project");
+        const project = {
+            title: title,
+            goal: goal
+        };
+        
+        try{
+            await User.add_user_project(email, project, 1);
+            res.status(200).json("planned project added");
+        }catch(error){
+            console.log(error);
+            res.status(500).json("could not add user planned project");
+        }
     }
+    else{
+        res.status(400).json({"Error": "Incomplete body"})
+    }
+
+
 });
 app.post('/add-complete-projects', (req, res)=>{
     console.log("\ncurrent projects endpoint hit!\n");

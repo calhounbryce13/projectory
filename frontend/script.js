@@ -5,6 +5,8 @@ const REGISTRATION_URL = 'http://127.0.0.1:3000/registration';
 const LOGIN_URL = 'http://127.0.0.1:3000/login';
 const LOGOUT_URL = 'http://127.0.0.1:3000/logout';
 const VIEW_PROJECTS_URL = 'http://127.0.0.1:3000/view-projects';
+const ADD_PLANNED_URL = 'http://127.0.0.1:3000/add-planned-projects';
+const ADD_CURR_URL = 'http://127.0.0.1:3000/add-current-projects';
 const PASSWORD_MIN = 8;
 
 
@@ -13,19 +15,9 @@ document.addEventListener('DOMContentLoaded', ()=>{
     window.addEventListener('load', async()=>{
         if(window.location.pathname.endsWith("/projects.html")){
             update_header_text();
-            let projects;
+            populate_form();
             try{
-                projects = await fetch(VIEW_PROJECTS_URL,{
-                    headers:{
-                        "Content-type": "application/json"
-                    },
-                    credentials: 'include',
-                    method: 'POST',
-                    body: JSON.stringify({"project-type": localStorage.getItem("project-type")})
-                    
-                });
-                let userProjects = await projects.json();
-                populate_project_screen(userProjects);
+                get_project_data();
             }catch(error){
                 console.log(error);
                 //show_error_message();
@@ -33,7 +25,16 @@ document.addEventListener('DOMContentLoaded', ()=>{
             
         }
     });
+
+
+    add_subtasks_functionality();
+
+    submit_new_project_functionality();
+
     home_page_listeners();
+
+
+
     const signUp = document.getElementById('signup');
     if(signUp){
         signUp.addEventListener('click', (event)=>process_signup_data(event));
@@ -63,17 +64,12 @@ document.addEventListener('DOMContentLoaded', ()=>{
     const logout = document.getElementsByClassName('logout-button')[0];
     if(logout){
         logout.addEventListener('click', async()=>{
+            let response = await fetch(LOGOUT_URL, {
+                method: "POST",
+                credentials: "include"
+            });
+            window.location.assign('login.html');
             console.log("logout clicked");
-            try{
-                let response = await fetch(LOGOUT_URL, {
-                    method: 'POST',
-                    credentials: 'include'
-                });
-                window.location.assign('login.html');
-            }catch(error){
-                console.log(error);
-                window.alert("logout NOT successful! please try to log out again.");
-            }
         });
     }
 });
@@ -81,6 +77,161 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+const create_list_of_tasks = function(inputs){
+    let res = [];
+    for(let i = 0; i < inputs.length; i++){
+        if(inputs[i].value != ""){
+            res.push(inputs[i].value);
+        }
+    }
+    return res;
+}
+
+const submit_new_project_functionality = function(){
+    const form = document.getElementById('project-form');
+    if(form){
+        form.addEventListener('submit', async(event)=>{
+            event.preventDefault();
+            if((form.elements['project-title'].value == "") || (form.elements['project-goal'].value == "")){
+                error_message("please fill out the entire form!");
+                return;
+            }
+            if(localStorage.getItem('project-type') == 'planned'){
+                let response;
+                try{
+                    response = await fetch(ADD_PLANNED_URL,{
+                        method: "POST",
+                        headers:{
+                            "Content-type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            "title": form.elements['project-title'].value,
+                            "goal": form.elements['project-goal'].value
+                        }),
+                        credentials:'include'
+                    });
+                }catch(error){
+                    console.log(error);
+                }
+                if(response){
+                    if(response.status == 200){
+                        error_message("success! new planned project has been saved");
+                        return;
+                    }
+                }
+                error_message("there seems to have been an issue submitting your project, please try again");
+                
+            }
+            else{
+                const inputs = Array.from(document.getElementsByClassName('subtask-input'));
+                if(inputs[0].value == ""){
+                    error_message("Please fill out at least the first subtask!");
+                    return;
+                }
+                const taskList = create_list_of_tasks(inputs);
+                let response;
+                try{
+                    response = await fetch(ADD_CURR_URL,{
+                        method: "POST",
+                        credentials: "include",
+                        headers:{
+                            "Content-type": "application/json"
+                        },
+                        body:JSON.stringify({
+                            "title": form.elements['project-title'].value,
+                            "goal": form.elements['project-goal'].value,
+                            "tasks": taskList
+                        })
+                    });
+                }catch(error){
+                    console.log(error);
+                }
+                if(response){
+                    if(response.status == 200){
+                        error_message("success! new current project has been saved");
+                        return;
+                    }
+                }
+                error_message("there seems to have been an issue submitting your project, please try again");
+            }
+        })
+    }
+}
+
+
+const add_subtasks_functionality = function(){
+    const projectFieldset = document.getElementById('project-fieldset');
+    if(projectFieldset){
+        projectFieldset.addEventListener('click', (event)=>{
+            if(event.target.id == 'project-form-add-more'){
+            const container = document.getElementById('project-form-subtasks');
+            container.appendChild(build_new_subtask());
+            }
+        });
+    }
+}
+
+
+const get_project_data = async()=>{
+    let projects = await fetch(VIEW_PROJECTS_URL,{
+        headers:{
+            "Content-type": "application/json"
+        },
+        credentials: 'include',
+        method: 'POST',
+        body: JSON.stringify({"project-type": localStorage.getItem("project-type")})
+        
+    });
+    let userProjects = await projects.json();
+    populate_project_screen(userProjects);
+}
+
+const build_add_more_container = function(){
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.id = 'project-form-add-more';
+    button.textContent = 'add more';
+
+    const parent = document.createElement('div');
+    parent.id = 'project-form-add-more-container';
+    parent.appendChild(button);
+
+    return parent;
+}
+
+const build_subtask_container = function(){
+    const container = document.createElement('div');
+    container.id = 'project-form-subtasks';
+    container.appendChild(build_new_subtask());
+
+    return container;
+}
+
+const build_new_subtask = function(){
+    const label = document.createElement('label');
+    label.textContent = 'subtask';
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.classList.add('subtask-input');
+
+    const parentContainer = document.createElement('div');
+    parentContainer.appendChild(label);
+    parentContainer.appendChild(input);
+
+    return parentContainer;
+    
+}
+
+const populate_form = function(){
+    const projectType = localStorage.getItem('project-type');
+    if(projectType == 'planned'){
+        return;
+    }
+    const fieldset = document.getElementById('project-fieldset');
+    fieldset.appendChild(build_subtask_container());
+    fieldset.appendChild(build_add_more_container());
+}
 
 const populate_project_screen = function(projects){
     console.log(projects);

@@ -6,7 +6,6 @@ Description: Backend database model for Projectory's frontend
 import mongoose from 'mongoose';
 import 'dotenv/config';
 
-
 mongoose.connect(
     process.env.MONGODB_CONNECT_STRING,
     { useNewUrlParser: true }
@@ -17,7 +16,6 @@ const db = mongoose.connection;
 db.once("open", ()=>{
     console.log("\nconnected to mongodb database!");
 });
-
 
 
 ////////////////////////////////////////////////////////////////

@@ -64,12 +64,20 @@ document.addEventListener('DOMContentLoaded', ()=>{
     const logout = document.getElementsByClassName('logout-button')[0];
     if(logout){
         logout.addEventListener('click', async()=>{
-            let response = await fetch(LOGOUT_URL, {
-                method: "POST",
-                credentials: "include"
-            });
-            window.location.assign('login.html');
             console.log("logout clicked");
+            try{
+                let response = await fetch(LOGOUT_URL, {
+                    method: "POST",
+                    credentials: "include"
+                });
+
+            }catch(error){
+                console.log(error);
+            }
+            setTimeout(()=>{
+                console.log("logout clicked");
+                window.location.assign('login.html');
+            }, 1000)
         });
     }
 });
@@ -233,37 +241,61 @@ const populate_form = function(){
     fieldset.appendChild(build_add_more_container());
 }
 
+const build_project_title = function(projects, i){
+    let titleText = document.createElement('p');
+    titleText.textContent = projects[i].title;
+
+    let myTitle = document.createElement('div');
+    myTitle.appendChild(titleText);
+    myTitle.classList.add('project-title');
+
+    let titleContainer = document.createElement('div');
+    titleContainer.appendChild(myTitle);
+    titleContainer.classList.add('project-title-container');
+
+    return titleContainer;
+
+}
+
+const build_goal = function(projects, i){
+    let goalText = document.createElement('p');
+    goalText.textContent = projects[i].goal;
+
+    let goalContainer = document.createElement('div');
+    goalContainer.appendChild(goalText);
+    goalContainer.classList.add('project-goal');
+
+    return goalContainer;
+}
+
+const build_tasks = function(projects, i){
+    let taskList = document.createElement('ol');
+    for(let j = 0; j < projects[i].tasks.length; j++){
+        let index = document.createElement('li');
+        index.textContent = projects[i].tasks[j];
+        taskList.appendChild(index);
+    }
+    return taskList;
+}
+
 const populate_project_screen = function(projects){
     console.log(projects);
     for(let i = 0; i < projects.length; i++){
-        let titleText = document.createElement('p');
-        titleText.textContent = projects[i].title;
 
-        let myTitle = document.createElement('div');
-        myTitle.appendChild(titleText);
-        myTitle.classList.add('project-title');
+        let titleContainer = build_project_title(projects, i);
 
-        let titleContainer = document.createElement('div');
-        titleContainer.appendChild(myTitle);
-        titleContainer.classList.add('project-title-container');
+        let goalContainer = build_goal(projects, i);
 
-        let goalText = document.createElement('p');
-        goalText.textContent = projects[i].goal;
-        let goalContainer = document.createElement('div');
-        goalContainer.appendChild(goalText);
-        goalContainer.classList.add('project-goal');
-
-        let taskList = document.createElement('ol');
-        for(let j = 0; j < projects[i].tasks.length; j++){
-            let index = document.createElement('li');
-            index.textContent = projects[i].tasks[j];
-            taskList.appendChild(index);
-        }
 
         let myProject = document.createElement('div');
         myProject.appendChild(titleContainer);
         myProject.appendChild(goalContainer);
-        myProject.appendChild(taskList);
+
+        if(localStorage.getItem('project-type') == 'current'){
+            let taskList = build_tasks(projects, i);
+            myProject.appendChild(taskList);
+        }
+
         myProject.classList.add('my-project')
 
         let myMain = document.getElementById('projects-main');

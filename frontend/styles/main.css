@@ -355,7 +355,7 @@ footer{
 }
 @media(max-width:900px){
     .logout-button{
-        width: 30%;
+        width: 35%;
     }
 }
 
@@ -489,7 +489,11 @@ footer{
     width: 4vw;
     background-color: var(--yellow-gold);
     border-radius: 10px;
-
+}
+@media(max-width:900px){
+    #home-button{
+        width: 12vw;
+    }
 }
 
 .home-button-container{

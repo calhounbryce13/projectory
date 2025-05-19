@@ -45,7 +45,7 @@ app.get('/testing', (req, res)=>{
 
 
 app.post('/view-projects', async(req, res)=>{
-    console.log("\nprojects endpoint hit!\n");
+    console.log("\nprojects view endpoint hit!\n");
     console.log(req.session);
     let validSession = validate_user_session(req);
     if(!validSession){

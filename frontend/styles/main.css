@@ -4,7 +4,7 @@
 
 :root{
 
-    --border-color: rgba(255, 0, 0, 0);
+    --border-color: rgba(255, 0, 0, 1);
 
 
     --off-white: rgba(247, 249, 252, 1.0);
@@ -191,6 +191,7 @@ ol{
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
+    border: 2px solid var(--border-color);
 }
 @media(max-width:900px){
     ol{
@@ -519,6 +520,22 @@ footer{
     justify-content: flex-end;
     align-items: center;
     width: 90%;
+
+}
+
+.additional-task-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    width: 90%;
+}
+
+.additional-task-fieldset{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
 
 }
 

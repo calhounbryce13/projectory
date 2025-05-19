@@ -101,16 +101,16 @@ const get_my_projects = async(email, projectType)=>{
     }
 }
 
-
-
-let testProject = {
-    title: "Repaint the garage",
-    goal: "cover the entire surface of the garage in pink paint",
-    tasks: ["step 1", "step 2", "step 3"]
+const add_task_to_existing_project = async(user, task, index)=>{
+    let myUser = await find_existing_user(user);
+    myUser[0].current[index].tasks.push(task);
+    await myUser[0].save();
 }
 
-add_user_project('calhounbryce13@gmail.com', testProject,0);
+
+
+add_task_to_existing_project('calhounbryce13@gmail.com', "blah blah blah", 2);
 
 ////////////////////////////////////////////////////////////////
 
-export default { create_new_user, find_existing_user, add_user_project, get_my_projects }
+export default { create_new_user, find_existing_user, add_user_project, get_my_projects, add_task_to_existing_project }

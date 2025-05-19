@@ -4,9 +4,10 @@
 const REGISTRATION_URL = 'http://127.0.0.1:3000/registration';
 const LOGIN_URL = 'http://127.0.0.1:3000/login';
 const LOGOUT_URL = 'http://127.0.0.1:3000/logout';
-const VIEW_PROJECTS_URL = 'http://127.0.0.1:3000/view-projects';
-const ADD_PLANNED_URL = 'http://127.0.0.1:3000/add-planned-projects';
-const ADD_CURR_URL = 'http://127.0.0.1:3000/add-current-projects';
+const VIEW_PROJECTS_URL = 'http://127.0.0.1:3000/projects-view';
+const ADD_PLANNED_URL = 'http://127.0.0.1:3000/planned-projects-generator';
+const ADD_CURR_URL = 'http://127.0.0.1:3000/current-projects-generator';
+const ADD_SUBTASK_URL = 'http://127.0.0.1:3000/subtask-generator';
 const PASSWORD_MIN = 8;
 
 
@@ -26,8 +27,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
         }
     });
 
+    add_task_to_existing_functionality();
 
-    add_subtasks_functionality();
+
+    add_task_to_new_functionality();
 
     submit_new_project_functionality();
 
@@ -85,6 +88,51 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+const add_to_existing_project_fetch = async(newText, i)=>{
+
+    try{
+        let response = await fetch(ADD_SUBTASK_URL, {
+            headers:{
+                "Content-type": "application/json"
+            },
+            method: "POST",
+            credentials: "include",
+            body: JSON.stringify({"new task":newText, "index": i})
+        });
+        error_message("Success! A new task was added to your project");
+    }catch(error){
+        console.log(error);
+        error_message("There was an issue adding that last task to your project, please try again.")
+    }
+
+}
+
+const attach_event_listener = function(buttons){
+    const inputs = Array.from(document.getElementsByName('a-new-task'));
+    for(let i = 0; i < buttons.length; i++){
+        buttons[i].addEventListener('click', ()=>{
+            if(inputs[i].value != ""){
+                add_to_existing_project_fetch(inputs[i].value, i);
+                setTimeout(()=>{
+                    inputs[i].value = "";
+                }, 3000);
+                
+            }
+
+        });
+    }
+
+}
+
+const add_task_to_existing_functionality = function(){
+
+    const submitButtons = document.getElementsByClassName('new-task-button');
+    if(submitButtons){
+        attach_event_listener(Array.from(submitButtons));
+    }
+
+}
 
 const create_list_of_tasks = function(inputs){
     let res = [];
@@ -168,7 +216,7 @@ const submit_new_project_functionality = function(){
 }
 
 
-const add_subtasks_functionality = function(){
+const add_task_to_new_functionality = function(){
     const projectFieldset = document.getElementById('project-fieldset');
     if(projectFieldset){
         projectFieldset.addEventListener('click', (event)=>{
@@ -393,9 +441,6 @@ const process_signup_data = async(event)=>{
     const pass = document.getElementsByName('pass')[0];
     const passConfirm = document.getElementsByName('passConfirm')[0];
     const validPassword = password_validation(email, pass, passConfirm);
-    console.log(validPassword);
-
-
     if(validPassword != 0){
         console.log(email.value, pass.value);
         let response = await registration_and_login_fetch(email.value, pass.value, REGISTRATION_URL);

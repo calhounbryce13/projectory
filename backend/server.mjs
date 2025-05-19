@@ -44,7 +44,7 @@ app.get('/testing', (req, res)=>{
 });
 
 
-app.post('/view-projects', async(req, res)=>{
+app.post('/projects-view', async(req, res)=>{
     console.log("\nprojects view endpoint hit!\n");
     console.log(req.session);
     let validSession = validate_user_session(req);
@@ -65,7 +65,7 @@ app.post('/view-projects', async(req, res)=>{
 });
 
 
-app.post('/add-current-projects', async(req, res)=>{
+app.post('/current-projects-generator', async(req, res)=>{
     console.log("\ncurrent projects endpoint hit!\n");
     let validSession = validate_user_session(req);
     if(!validSession){
@@ -95,7 +95,7 @@ app.post('/add-current-projects', async(req, res)=>{
 
 
 });
-app.post('/add-planned-projects', async(req, res)=>{
+app.post('/planned-projects-generator', async(req, res)=>{
     console.log("\nplanned projects endpoint hit!\n");
     let validSession = validate_user_session(req);
     if(!validSession){
@@ -126,14 +126,18 @@ app.post('/add-planned-projects', async(req, res)=>{
 
 
 });
-app.post('/add-complete-projects', (req, res)=>{
-    console.log("\ncurrent projects endpoint hit!\n");
-    let validSession = validate_user_session(req);
-    if(!validSession){
-        res.status(400).json("invalid request session");
-        return;
+
+app.post('/subtask-generator', (req, res)=>{
+    if(req.body && validate_user_session(req)){
+        if((req.body['new task']) && (req.body['index'])){
+            if((req.body['new task'] != "") && (typeof(req.body['index']) == 'number')){
+                User.add_task_to_existing_project(req.session.user, req.body['new task'], req.body['index']);
+                res.status(200).json("success!");
+                return;
+            }
+        }
     }
-    
+    res.status(400).json({"error": "bad request"});
 });
 
 

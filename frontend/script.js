@@ -93,9 +93,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
 
 const add_to_existing_project_fetch = async(newText, i)=>{
+    let response;
 
     try{
-        let response = await fetch(ADD_SUBTASK_URL, {
+        response = await fetch(ADD_SUBTASK_URL, {
             headers:{
                 "Content-type": "application/json"
             },
@@ -103,11 +104,17 @@ const add_to_existing_project_fetch = async(newText, i)=>{
             credentials: "include",
             body: JSON.stringify({"new task":newText, "index": i})
         });
-        error_message("Success! A new task was added to your project");
+        if(response.status != 200){
+            error_message("There was an issue adding that last task to your project, please try again.")
+        }
+        else{
+            error_message("Success! A new task was added to your project");
+        }
     }catch(error){
         console.log(error);
         error_message("There was an issue adding that last task to your project, please try again.")
     }
+
 
 }
 
@@ -184,6 +191,7 @@ const submit_new_project_functionality = function(){
                 }
                 if(response){
                     if(response.status == 200){
+                        event.target.reset();
                         error_message("success! new planned project has been saved");
                         return;
                     }
@@ -217,13 +225,15 @@ const submit_new_project_functionality = function(){
                 }
                 if(response){
                     if(response.status == 200){
+                        event.target.reset();
                         error_message("success! new current project has been saved");
                         return;
                     }
                 }
                 error_message("there seems to have been an issue submitting your project, please try again");
             }
-        })
+        
+        });
     }
 }
 

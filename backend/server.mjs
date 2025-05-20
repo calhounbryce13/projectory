@@ -63,6 +63,7 @@ app.post('/projects-view', async(req, res)=>{
 });
 
 
+
 app.post('/current-projects-generator', async(req, res)=>{
     console.log("\ncurrent projects endpoint hit!\n");
     let validSession = validate_user_session(req);
@@ -128,8 +129,14 @@ app.post('/planned-projects-generator', async(req, res)=>{
 app.post('/subtask-generator', (req, res)=>{
     console.log("subtask generator endpoint hit!");
     if(req.body && validate_user_session(req)){
-        if((req.body['new task']) && (req.body['index'])){
+        console.log("a");
+        console.log(req.body['new task'], req.body['index']);
+        if((req.body['new task']) && (req.body['index'] != null)){
+            console.log("b");
+
             if((req.body['new task'] != "") && (typeof(req.body['index']) == 'number')){
+                console.log("c");
+
                 User.add_task_to_existing_project(req.session.user, req.body['new task'], req.body['index']);
                 res.status(200).json("success!");
                 return;

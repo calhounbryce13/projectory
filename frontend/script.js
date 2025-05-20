@@ -27,7 +27,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
         }
     });
 
-    add_task_to_existing_functionality();
+    
+    setTimeout(()=>{
+        add_task_to_existing_functionality();
+    }, 3000)
 
 
     add_task_to_new_functionality();
@@ -109,8 +112,16 @@ const add_to_existing_project_fetch = async(newText, i)=>{
 }
 
 const attach_event_listener = function(buttons){
+    console.log("b");
+
     const inputs = Array.from(document.getElementsByName('a-new-task'));
+    console.log("inputs:", inputs);
+    console.log("buttons", buttons);
+
+
     for(let i = 0; i < buttons.length; i++){
+        console.log("c");
+
         buttons[i].addEventListener('click', ()=>{
             if(inputs[i].value != ""){
                 add_to_existing_project_fetch(inputs[i].value, i);
@@ -129,6 +140,7 @@ const add_task_to_existing_functionality = function(){
 
     const submitButtons = document.getElementsByClassName('new-task-button');
     if(submitButtons){
+        console.log("a");
         attach_event_listener(Array.from(submitButtons));
     }
 
@@ -326,6 +338,41 @@ const build_tasks = function(projects, i){
     return taskList;
 }
 
+const build_task_form_container = function(){
+    console.log("1");
+    const label = document.createElement('label');
+    label.textContent = 'Task: ';
+
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.name = 'a-new-task';
+
+    const container = document.createElement('div');
+    container.appendChild(label);
+    container.appendChild(input);
+
+    const buttonContainer = document.createElement('div');
+
+    const button = document.createElement('button');
+    button.classList.add('new-task-button');
+    button.type = 'button';
+    button.textContent = 'add to project';
+
+    buttonContainer.appendChild(button);
+
+    const fieldset = document.createElement('fieldset');
+    fieldset.classList.add('additional-task-fieldset');
+    fieldset.appendChild(container);
+    fieldset.appendChild(buttonContainer);
+
+
+    const parent = document.createElement('div');
+    parent.appendChild(fieldset);
+    parent.classList.add('additional-task-container');
+
+    return parent;
+}
+
 const populate_project_screen = function(projects){
     console.log(projects);
     for(let i = 0; i < projects.length; i++){
@@ -341,7 +388,9 @@ const populate_project_screen = function(projects){
 
         if(localStorage.getItem('project-type') == 'current'){
             let taskList = build_tasks(projects, i);
+            let taskFormContainer = build_task_form_container();
             myProject.appendChild(taskList);
+            myProject.appendChild(taskFormContainer);
         }
 
         myProject.classList.add('my-project')

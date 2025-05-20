@@ -54,9 +54,7 @@ app.post('/projects-view', async(req, res)=>{
     }
     let projects = [];
     try{
-        console.log("A");
         projects = await User.get_my_projects(req.session.user, req.body['project-type']);
-        console.log(projects);
         res.status(200).json(projects);
     }catch(error){
         console.log(error);
@@ -128,6 +126,7 @@ app.post('/planned-projects-generator', async(req, res)=>{
 });
 
 app.post('/subtask-generator', (req, res)=>{
+    console.log("subtask generator endpoint hit!");
     if(req.body && validate_user_session(req)){
         if((req.body['new task']) && (req.body['index'])){
             if((req.body['new task'] != "") && (typeof(req.body['index']) == 'number')){

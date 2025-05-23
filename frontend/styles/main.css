@@ -4,7 +4,7 @@
 
 :root{
 
-    --border-color: rgba(255, 0, 0, 0);
+    --border-color: rgba(255, 0, 0, 1);
 
 
     --off-white: rgba(247, 249, 252, 1.0);
@@ -308,6 +308,21 @@ footer{
     }
 }
 
+#project-fieldset{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--border-color);
+}
+
+.input-container{
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+}
+
+
+
 /***************************************************************************************************/
 
 
@@ -374,6 +389,11 @@ footer{
 .home-screen-buttons:hover{
     color: var(--yellow-gold);
     background-color: var(--deep-blue);
+}
+#completed{
+    height: 8vh;
+    width: 12vw;
+    font-size: 1.5vw;
 }
 @media(max-width:900px){
     .home-screen-buttons{
@@ -513,6 +533,7 @@ footer{
     justify-content: flex-end;
     align-items: center;
     width: 100%;
+    margin-top: 2vh;
 }
 
 #project-form-subtasks{

@@ -2,18 +2,17 @@
 <html lang="en">
     <head>
         <title>Projectory</title>
-        <link rel="stylesheet" href="styles/main.css">
-        <script src="script.js"></script>
+        <link rel="stylesheet" href="style/main.css">
+        <script src="script/script.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-        <link rel="manifest" href="site.webmanifest">
+        <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+        <link rel="manifest" href="favicon/site.webmanifest">
     </head>
     <body>
         <header>
             <p class="header-title">Projectory</p>
-            <!--<button id="logout-button">logout</button>-->
             <div class="header-options-container">
                 <div class="darkmodeContainer">
                 </div>
@@ -27,7 +26,10 @@
             <div class="h2-container">
                 <h2></h2>
             </div>
-            <form id="project-form">
+            <div class="container user-projects">
+
+            </div>
+            <form class="project-form">
                 <fieldset id="project-fieldset">
                     <div class="input-container">
                         <label>Project title</label>
@@ -37,67 +39,9 @@
                         <label>Project goal</label>
                         <input type="text" name="project-goal">
                     </div>
-
-                    <!--
-                    <div id="project-form-subtasks">
-                        <div>
-                            <label>subtask</label>
-                            <input type="text" class="subtask-input">
-                        </div>
-                    </div>
-                    
-
-                    <div id="project-form-add-more-container">
-                        <button type="button" id="project-form-add-more">add more</button>
-                    </div>
-                    -->
                 </fieldset>
-                <button type="submit">submit</button>
+                <button type="submit" id="submit-new-project-button"></button>
             </form>
-            <!--
-
-            <div class="my-project">
-                <div class="project-title-container">
-                    <div class="project-title"><p>my project</p></div>
-                </div>
-                <div class="project-goal"><p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Odio autem eius modi similique, ipsa doloribus neque pariatur unde expedita ipsam magnam fuga laborum sed, non obcaecati laboriosam repellat, ratione quaerat!</p></div>
-                <ol class="project-steps">
-                    <li class="subtask">Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur asperiores repellendus, repudiandae, illo rem minus, magnam at provident similique ipsa quis. Cum animi iste pariatur laborum, amet suscipit odio similique?</li>
-                    <li class="subtask">Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur asperiores repellendus, repudiandae, illo rem minus, magnam at provident similique ipsa quis. Cum animi iste pariatur laborum, amet suscipit odio similique?</li>
-                    <li class="subtask">Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur asperiores repellendus, repudiandae, illo rem minus, magnam at provident similique ipsa quis. Cum animi iste pariatur laborum, amet suscipit odio similique?</li>
-                </ol>
-
-
-
-                <div class="additional-task-container">
-                    <fieldset class="additional-task-fieldset">
-                        <div>
-                            <label>Task: </label>
-                            <input type="text" name="a-new-task">
-                        </div>
-                        <div>
-                            <button class="new-task-button" type="button">add to project</button>
-                        </div>
-                    </fieldset>
-                </div>
-
-
-
-            </div>
-            <div class="my-project">
-                <div class="project-title-container">
-                    <div class="project-title"><p>my project</p></div>
-                </div>
-                <div class="project-goal"><p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Odio autem eius modi similique, ipsa doloribus neque pariatur unde expedita ipsam magnam fuga laborum sed, non obcaecati laboriosam repellat, ratione quaerat!</p></div>
-                <ol class="project-steps">
-                    <li class="subtask">Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur asperiores repellendus, repudiandae, illo rem minus, magnam at provident similique ipsa quis. Cum animi iste pariatur laborum, amet suscipit odio similique?</li>
-                </ol>
-
-            </div>
-
-            
-            -->
-
             <div class="add-new-container">
                 <button class="add-new"></button>
             </div>

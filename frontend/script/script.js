@@ -17,13 +17,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
         if(window.location.pathname.endsWith("/projects.html")){
             update_header_text();
             populate_form();
-            try{
-                get_project_data();
-            }catch(error){
-                console.log(error);
-                //show_error_message();
-            }
-            
+            get_project_data();
         }
     });
 
@@ -39,13 +33,27 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
     home_page_listeners();
 
+    signup_functionality();
+
+    login_functionality();
+
+    logout_functionality();
 
 
+});
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+const signup_functionality = function(){
     const signUp = document.getElementById('signup');
     if(signUp){
         signUp.addEventListener('click', (event)=>process_signup_data(event));
     }
 
+}
+const login_functionality = function(){
     const login = document.getElementById('login');
     if(login){
         login.addEventListener('click', async(event)=>{
@@ -53,6 +61,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
             const userEmail = document.getElementsByName('userEmail')[0];
             const userPass = document.getElementsByName('userPass')[0];
             if(!(check_for_empty(userEmail, userPass))){
+
                 let response = await registration_and_login_fetch(userEmail.value, userPass.value, LOGIN_URL);
                 if(response != null){
                     let data = await response.json();
@@ -66,7 +75,9 @@ document.addEventListener('DOMContentLoaded', ()=>{
             }
         });
     }
-
+    
+}
+const logout_functionality = function(){
     const logout = document.getElementsByClassName('logout-button')[0];
     if(logout){
         logout.addEventListener('click', async()=>{
@@ -81,20 +92,15 @@ document.addEventListener('DOMContentLoaded', ()=>{
                 console.log(error);
             }
             setTimeout(()=>{
-                console.log("logout clicked");
                 window.location.assign('login.html');
             }, 1000)
         });
     }
-});
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
+    
+}
 
 const add_to_existing_project_fetch = async(newText, i)=>{
     let response;
-
     try{
         response = await fetch(ADD_SUBTASK_URL, {
             headers:{
@@ -109,6 +115,9 @@ const add_to_existing_project_fetch = async(newText, i)=>{
         }
         else{
             error_message("Success! A new task was added to your project");
+            //clear_project_view();
+            //! I need to fetch for user projects again
+            //populate_project_screen(userProjects);
         }
     }catch(error){
         console.log(error);
@@ -119,15 +128,11 @@ const add_to_existing_project_fetch = async(newText, i)=>{
 }
 
 const attach_event_listener = function(buttons){
-    console.log("b");
 
     const inputs = Array.from(document.getElementsByName('a-new-task'));
-    console.log("inputs:", inputs);
-    console.log("buttons", buttons);
 
 
     for(let i = 0; i < buttons.length; i++){
-        console.log("c");
 
         buttons[i].addEventListener('click', ()=>{
             if(inputs[i].value != ""){
@@ -147,7 +152,6 @@ const add_task_to_existing_functionality = function(){
 
     const submitButtons = document.getElementsByClassName('new-task-button');
     if(submitButtons){
-        console.log("a");
         attach_event_listener(Array.from(submitButtons));
     }
 
@@ -252,24 +256,41 @@ const add_task_to_new_functionality = function(){
 
 
 const get_project_data = async()=>{
-    let projects = await fetch(VIEW_PROJECTS_URL,{
-        headers:{
-            "Content-type": "application/json"
-        },
-        credentials: 'include',
-        method: 'POST',
-        body: JSON.stringify({"project-type": localStorage.getItem("project-type")})
-        
+
+    let projects;
+    try{
+        projects = await fetch(VIEW_PROJECTS_URL,{
+            headers:{
+                "Content-type": "application/json"
+            },
+            credentials: 'include',
+            method: 'POST',
+            body: JSON.stringify({"project-type": localStorage.getItem("project-type")})
+            
+        });
+    }catch(error){
+        console.log(error);
+    }
+    if(projects){
+        let userProjects = await projects.json();
+        populate_project_screen(userProjects);
+    }
+    else{
+        //show_error_message();
+
+    }
+    const addNewProjectButton = Array.from(document.getElementsByClassName('add-new'))[0];
+    addNewProjectButton.addEventListener('click', (event)=>{
+        const form = Array.from(document.getElementsByClassName('project-form'))[0];
+        form.classList.toggle('project-form-show');
+        event.target.classList.toggle('add-new-open');
     });
-    let userProjects = await projects.json();
-    populate_project_screen(userProjects);
 }
 
 const build_add_more_container = function(){
     const button = document.createElement('button');
     button.type = 'button';
     button.id = 'project-form-add-more';
-    button.textContent = 'add more';
 
     const parent = document.createElement('div');
     parent.id = 'project-form-add-more-container';
@@ -349,7 +370,6 @@ const build_tasks = function(projects, i){
 }
 
 const build_task_form_container = function(){
-    console.log("1");
     const label = document.createElement('label');
     label.textContent = 'Task: ';
 
@@ -405,8 +425,8 @@ const populate_project_screen = function(projects){
 
         myProject.classList.add('my-project')
 
-        let myMain = document.getElementById('projects-main');
-        myMain.appendChild(myProject);
+        let parentContainer = Array.from(document.getElementsByClassName('user-projects'))[0];
+        parentContainer.appendChild(myProject);
     }
 
 }
@@ -501,7 +521,6 @@ const process_signup_data = async(event)=>{
     const passConfirm = document.getElementsByName('passConfirm')[0];
     const validPassword = password_validation(email, pass, passConfirm);
     if(validPassword != 0){
-        console.log(email.value, pass.value);
         let response = await registration_and_login_fetch(email.value, pass.value, REGISTRATION_URL);
         if(response != null){
             inform_user(response);
@@ -527,18 +546,13 @@ const inform_user = async(response)=>{
 
 const password_validation = function(email, pass, passConfirm){
     const isEmpty = check_for_empty(email, pass);
-    console.log(isEmpty);
 
     if(isEmpty != 1){
-        console.log(Array.from(pass.value).length);
-
         if(Array.from(pass.value).length < PASSWORD_MIN){
             error_message("passwords must be at least 8 characters long!");
             return 0;
         }
         if(pass.value !== passConfirm.value){
-            console.log(passConfirm.value);
-
             error_message("passwords must match!");
             return 0;
         }
@@ -550,6 +564,7 @@ const password_validation = function(email, pass, passConfirm){
 }
 
 const registration_and_login_fetch = async(email, pass, endpoint)=>{
+    
     try{
         let response = await fetch(endpoint,{
             method: 'POST',
@@ -562,14 +577,15 @@ const registration_and_login_fetch = async(email, pass, endpoint)=>{
         return response;
     }catch(error){
         console.log(error);
-        error_message("There seems to be an issue connecting to backend web services at the moment :/")
+        
+
+        error_message("There seems to be an issue connecting to backend web services at the moment :/");
         return null;
     }
 }
 
 const check_for_empty = function(email, pass){
     if(email && pass){
-        console.log(email.value, pass.value);
         if(email.value == "" || pass.value == ""){
             error_message("Please fill out the entire form!");
             return 1;

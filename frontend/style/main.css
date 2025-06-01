@@ -20,12 +20,26 @@
     --deep-blue: #023047;
     --yellow-gold: #ffb703;
     --gold: #fb8500;
-    
 
 }
+
+
 *{
     font-family: 'Cal Sans';
+}
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid var(--border-color);
+}
 
+.user-projects{
+    flex-direction: column;
+    width: 75%;
+    min-height: 2vh;
+    margin-top: 4vh;
+    margin-bottom: 4vh;
 }
 
 /************************** name elements *************************************************************************/
@@ -50,7 +64,6 @@ body{
     body{
         padding: 2%;
     }
-    
 }
 main{
     margin-top: 7vh;
@@ -94,7 +107,7 @@ h1{
     border: 2px solid var(--border-color);
 }
 h2{
-    font-size: 3vw;
+    font-size: 4vw;
 }
 @media(max-width:900px){
     h2{
@@ -345,7 +358,7 @@ footer{
     height: 50%;
     width: 25%;
     border: 2px solid var(--border-color);
-    background-image: url('../icons8-dark-mode-90.png');
+    background-image: url('../icons/icons8-dark-mode-90.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -363,7 +376,7 @@ footer{
 
 
 .logout-button{
-    background-image: url('../logout-icon.svg');
+    background-image: url('../icons/logout-icon.svg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
@@ -415,7 +428,7 @@ footer{
 
 
 .my-project{
-    width: 75%;
+    width: 95%;
     height: auto;
     display: flex;
     flex-direction: column;
@@ -433,6 +446,10 @@ footer{
     }
     
 }
+
+.project-title{
+    font-size: 2.5vw;
+}
 .project-title-container{
     width: 100%;
     display: flex;
@@ -448,6 +465,7 @@ footer{
 }
 
 .project-goal{
+    font-size: 1.5vw;
     font-weight: 100;
 }
 .subtask{
@@ -482,28 +500,26 @@ footer{
 .add-new{
     height: 6vh;
     width: 4vw;
-    background-image: url('../plus-icon.svg');
+    background-image: url('../icons/plus-icon.svg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
-
-    transition: width 0.3s ease, height 0.3s ease, border-radius 0.3s ease;
+    transition: .5s ease-in-out
 }
 @media(max-width:900px){
     .add-new{
         width: 16vw;
     }
 }
-
 .add-new:active{
-    height: 60vh;
-    width: 100%;
-    background-image: none;
-    z-index: 2;
+    filter: brightness(85%);
+}
+.add-new-open{
+    background-image: url('../icons/close-icon.svg');
 }
 
 #home-button{
-    background-image: url('../home-icon.svg');
+    background-image: url('../icons/home-icon.svg');
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
@@ -526,6 +542,27 @@ footer{
     width: 98%;
     padding-left: 2%;
 }
+
+.project-form{
+    position: relative;
+    display: none;
+}
+
+.project-form-show{
+    display: flex;
+}
+
+
+#project-form-add-more{
+    background-image: url('../icons/plus-icon.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 4vh;
+    width: 4vh;
+}
+
+
 
 #project-form-add-more-container{
     display: flex;
@@ -559,6 +596,16 @@ footer{
     justify-content: space-evenly;
     align-items: center;
 
+}
+
+
+#submit-new-project-button{
+    background-image: url('../icons/submit-icon.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 4vh;
+    width: 8vh;
 }
 
 

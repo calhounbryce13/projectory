@@ -74,12 +74,27 @@ app.post('/current-projects-generator', async(req, res)=>{
     const email = req.session.user;
     const title = req.body['title'];
     const goal = req.body['goal'];
-    const tasks = req.body['tasks'];
+
+
+    const tasks = [];
+    const tasklist = req.body['tasks'];
+    for(let i = 0; i < tasklist.length; i++){
+        const task_description = tasklist[i]
+        let task = {
+            task_description: task_description,
+            is_complete: 0
+        }
+        tasks.push(task)
+    }
+
+
+
     if(!(goal == "") && !(title == "")){
         const project = {
             title: title,
             goal: goal,
-            tasks: tasks
+            tasks: tasks,
+            is_complete: 0
         };
         try{
             await User.add_user_project(email, project, 0);

@@ -21,6 +21,11 @@ db.once("open", ()=>{
 ////////////////////////////////////////////////////////////////
 
 
+const task = new mongoose.Schema({
+    task_description: String,
+    is_complete: Number
+});
+
 const planned_projects = new mongoose.Schema({
     title: String,
     goal: String
@@ -29,7 +34,8 @@ const planned_projects = new mongoose.Schema({
 const current_projects = new mongoose.Schema({
     title: String,
     goal: String,
-    tasks: [String]
+    tasks: [task],
+    is_complete: Number
 });
 
 const userSchema = new mongoose.Schema({

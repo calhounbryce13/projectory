@@ -8,8 +8,8 @@ POST http://127.0.0.1:3000/registration
 Content-Type: application/json
 
 {
-    "userEmail": "somethingUnique245@yahoo.com",
-    "userPassword":"Appl3Sauc3_500"
+    "userEmail": "calhounbryce13@gmail.com",
+    "userPassword":"Jarvis123"
 }
 
 ###
@@ -32,24 +32,22 @@ connect.sid=s%3AbwW9whTpWMWf22RtH2yxh4DI-x2QxUk6.9xgy5JmpG0JYU4rF%2BUFbNtnHFr5sF
 
 ###
 
-POST http://127.0.0.1:3000/add-current-projects
+POST http://127.0.0.1:3000/current-projects-generator
 Content-Type: application/json
-Cookie: connect.sid=s%3AXLf6TtW53qassnbuwag8vd8X4eBwPLJJ.6pZWXsGM8tQ72ZnI46vyZ%2FLQSZaacINQscVMsw6j0P4
+Cookie: connect.sid=s%3AcyZ84jgt_1DNMGoxZZKQzlqryykh2H6q.Oy2vMURRYtx0IJKKaVu6Z2O0wYvrMsMhU0lEhH9cwU8
 
 {
     "title":"to you, from me",
-    "goal":"something something darkside",
+    "goal":"something something something darkside",
     "tasks": ["step 1", "step 2", "step 3"]
 }
-
 
 ###
 
 
 POST http://127.0.0.1:3000/logout
 
-connect.sid=s%3AXLf6TtW53qassnbuwag8vd8X4eBwPLJJ.6pZWXsGM8tQ72ZnI46vyZ%2FLQSZaacINQscVMsw6j0P4
-
+connect.sid=s%3AjVBJU2uRHXAE-TRa_05nfOrY38Rc_wnR.Rxj%2Fo%2Bd8HD%2F5cAeQfaUkiJ4GrU44wAdvgioVDu12ezU
 
 ###
 

@@ -9,7 +9,7 @@ Content-Type: application/json
     "userEmail": "calhounbryce13@gmail.com",
     "projectTitle": "to you, from me",
     "index": 0,
-    "statusMark": 1
+    "statusMark": 0
 }
 
 ###

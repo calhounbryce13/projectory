@@ -5,9 +5,11 @@ Author: Bryce Calhoun
 """
 
 from mongoengine import *
+import config
 
 
-connect(host='mongodb+srv://calhounbryce13:T4113ngr10010137@mycluster1.iv9rj.mongodb.net/Planner-io?retryWrites=true&w=majority&appName=MyCluster1')
+
+connect(host=config.data['MONGODB_CONNECTION_STRING'])
 
 
 

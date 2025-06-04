@@ -67,14 +67,3 @@ def mark_project_task(UserEmail, projectTitle, taskIndex, mark):
     return 'fail'
     
 
-
-def main():
-
-    mark_project_task('calhounbryce13@gmail.com', 'to you, from me', 0, 0)
-
-
-
-
-
-if __name__ == "__main__":
-    main()

@@ -82,6 +82,7 @@ app.post('/current-projects-generator', async(req, res)=>{
         const task_description = tasklist[i]
         let task = {
             task_description: task_description,
+            due_date: null,
             is_complete: 0
         }
         tasks.push(task)

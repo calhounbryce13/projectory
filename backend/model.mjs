@@ -21,8 +21,9 @@ db.once("open", ()=>{
 ////////////////////////////////////////////////////////////////
 
 
-const task = new mongoose.Schema({
+const Task = new mongoose.Schema({
     task_description: String,
+    due_date: Date,
     is_complete: Number
 });
 
@@ -34,8 +35,9 @@ const planned_projects = new mongoose.Schema({
 const current_projects = new mongoose.Schema({
     title: String,
     goal: String,
-    tasks: [task],
-    is_complete: Number
+    tasks: [Task],
+    is_complete: Number,
+    links: [String]
 });
 
 const userSchema = new mongoose.Schema({
@@ -108,8 +110,13 @@ const get_my_projects = async(email, projectType)=>{
 }
 
 const add_task_to_existing_project = async(user, task, index)=>{
+    const taskObject = {
+        task_description: task,
+        is_complete: 0
+    }
+
     let myUser = await find_existing_user(user);
-    myUser[0].current[index].tasks.push(task);
+    myUser[0].current[index].tasks.push(taskObject);
     await myUser[0].save();
 }
 

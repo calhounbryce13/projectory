@@ -168,9 +168,10 @@ const create_list_of_tasks = function(inputs){
 }
 
 const submit_new_project_functionality = function(){
-    const form = document.getElementById('project-form');
+    const form = Array.from(document.getElementsByClassName('project-form'))[0];
     if(form){
         form.addEventListener('submit', async(event)=>{
+            console.log("a")
             event.preventDefault();
             if((form.elements['project-title'].value == "") || (form.elements['project-goal'].value == "")){
                 error_message("please fill out the entire form!");
@@ -204,6 +205,7 @@ const submit_new_project_functionality = function(){
                 
             }
             else{
+                console.log("hello")
                 const inputs = Array.from(document.getElementsByClassName('subtask-input'));
                 if(inputs[0].value == ""){
                     error_message("Please fill out at least the first subtask!");
@@ -212,6 +214,7 @@ const submit_new_project_functionality = function(){
                 const taskList = create_list_of_tasks(inputs);
                 let response;
                 try{
+                    console.log("here")
                     response = await fetch(ADD_CURR_URL,{
                         method: "POST",
                         credentials: "include",
@@ -256,6 +259,7 @@ const add_task_to_new_functionality = function(){
 
 
 const get_project_data = async()=>{
+    console.log(localStorage.getItem("project-type"))
 
     let projects;
     try{
@@ -362,8 +366,18 @@ const build_goal = function(projects, i){
 const build_tasks = function(projects, i){
     let taskList = document.createElement('ol');
     for(let j = 0; j < projects[i].tasks.length; j++){
+
+        const text = document.createElement('p');
+        //text.classList.add('');
+        text.textContent = projects[i].tasks[j].task_description
+
+        const radioButton = document.createElement('input');
+        //radioButton.classList.add('');
+        radioButton.type = 'radio'
+
         let index = document.createElement('li');
-        index.textContent = projects[i].tasks[j];
+        index.appendChild(text);
+        index.appendChild(radioButton);
         taskList.appendChild(index);
     }
     return taskList;

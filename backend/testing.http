@@ -34,7 +34,7 @@ connect.sid=s%3AbwW9whTpWMWf22RtH2yxh4DI-x2QxUk6.9xgy5JmpG0JYU4rF%2BUFbNtnHFr5sF
 
 POST http://127.0.0.1:3000/current-projects-generator
 Content-Type: application/json
-Cookie: connect.sid=s%3A0GbZwbZY3o7BFwsVFr0Hh--xcMoCOtcq.Zu4j48%2BqDlI8IjRowh199Y0VQyOQKFyGbOSvFYFuWjc
+Cookie: connect.sid=s%3Av9XQkh6vWukJJlKy4LrDOW9U7WTj1A4H.3ZwQRGSRajF3IfuCGglgchrDZ4DqvZpH%2FHDaW5JSKpU
 
 {
     "title":"to you, from me again",

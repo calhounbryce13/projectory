@@ -1,0 +1,25 @@
+
+
+
+PUT http://127.0.0.1:4000/link-inserter
+Content-Type: application/json
+
+{
+    "userEmail": "calhounbryce13@gmail.com",
+    "projectTitle": "to you, from me again",
+    "link": "http://example3.com"
+}
+
+
+###
+
+DELETE http://127.0.0.1:4000/link-remover
+Content-Type: application/json
+
+{
+    "userEmail": "calhounbryce13@gmail.com",
+    "projectTitle": "to you, from me again",
+    "link": "http://example3.com"
+}
+
+###

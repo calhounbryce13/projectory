@@ -4,3 +4,4 @@ backend/testing.http
 microservice-B/__pycache__/model.cpython-312.pyc
 microservice-B/config.py
 /deletion-microservice
+/backend/.env

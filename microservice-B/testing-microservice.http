@@ -13,3 +13,16 @@ Content-Type: application/json
 }
 
 ###
+
+
+PUT http://127.0.0.1:5000/completed-project-manager
+Content-Type: application/json
+
+{
+    "userEmail": "calhounbryce13@gmail.com",
+    "projectTitle": "to you, from me again"
+}
+
+
+
+###

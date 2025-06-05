@@ -34,12 +34,12 @@ connect.sid=s%3AbwW9whTpWMWf22RtH2yxh4DI-x2QxUk6.9xgy5JmpG0JYU4rF%2BUFbNtnHFr5sF
 
 POST http://127.0.0.1:3000/current-projects-generator
 Content-Type: application/json
-Cookie: connect.sid=s%3AcyZ84jgt_1DNMGoxZZKQzlqryykh2H6q.Oy2vMURRYtx0IJKKaVu6Z2O0wYvrMsMhU0lEhH9cwU8
+Cookie: connect.sid=s%3A0GbZwbZY3o7BFwsVFr0Hh--xcMoCOtcq.Zu4j48%2BqDlI8IjRowh199Y0VQyOQKFyGbOSvFYFuWjc
 
 {
-    "title":"to you, from me",
-    "goal":"something something something darkside",
-    "tasks": ["step 1", "step 2", "step 3"]
+    "title":"to you, from me again",
+    "goal":"something something something lightside",
+    "tasks": ["step 1", "step 2", "step 3", "step 4"]
 }
 
 ###

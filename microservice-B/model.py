@@ -20,6 +20,13 @@ class Task(EmbeddedDocument):
     is_complete = IntField()
 
 
+
+
+class Complete(EmbeddedDocument):
+    title = StringField()
+    goal = StringField()
+
+
 class Planned(EmbeddedDocument):
     meta = {"strict": False}
 
@@ -31,6 +38,7 @@ class Current(EmbeddedDocument):
     meta = {"strict": False}
 
     title = StringField()
+    goal = StringField()
     tasks = ListField(EmbeddedDocumentField(Task))
     is_complete = IntField()
 
@@ -42,11 +50,29 @@ class User(Document):
     email = StringField()
     current = ListField(EmbeddedDocumentField(Current))
     planned = ListField(EmbeddedDocumentField(Planned))
+    complete = ListField(EmbeddedDocumentField(Complete))
 
+
+
+def mark_project_complete(userEmail, projectTitle):
+    user = User.objects(email=userEmail).first()
+
+    if(user):
+        goal = ""
+        for currentProject in user.current:
+            if(currentProject.title == projectTitle):
+                goal = currentProject.goal
+                break
+        user.complete.append(Complete(title=projectTitle, goal=goal))
+        user.save()
+        return True
+    return False
+
+    
 
 
 def mark_project_task(UserEmail, projectTitle, taskIndex, mark):
-    if((mark != 0) and (mark != 1)): return
+    if((mark != 0) and (mark != 1)): return False
 
     user = User.objects(email=UserEmail).first()
     if(user):
@@ -59,11 +85,10 @@ def mark_project_task(UserEmail, projectTitle, taskIndex, mark):
                     break
                 except IndexError:
                     print("\nError: Given task index is out of range!")
-                    return 'fail'
+                    return False
         
         user.current = current_projects_updated
         user.save()
-        return 'success'
-    return 'fail'
+        return True
+    return False
     
-

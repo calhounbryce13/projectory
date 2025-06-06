@@ -21,6 +21,32 @@ document.addEventListener('DOMContentLoaded', ()=>{
         }
     });
 
+
+    const removeAccountButton = Array.from(document.getElementsByClassName('remove-user-account'))[0];
+    if(removeAccountButton){
+        removeAccountButton.addEventListener('click', async()=>{
+            let user = await fetch_for_user_email();
+            let deleteResponse;
+            try{
+                let logoutResponse = await fetch(LOGOUT_URL, {
+                    method: "POST",
+                    credentials: "include"
+                });
+                deleteResponse = await fetch('http://127.0.0.1:8000/deletion',{
+                    method: 'DELETE',
+                    headers:{
+                        "x-user-email": user
+                    }
+                })
+                window.location.assign('signup.html');
+            }catch(error){
+                console.log(error);
+                window.alert("unable to remove your account");
+            }
+        });
+    }
+
+
     
     setTimeout(()=>{
         add_task_to_existing_functionality();
@@ -363,21 +389,173 @@ const build_goal = function(projects, i){
     return goalContainer;
 }
 
+
+const fetch_for_user_email = async()=>{
+    let response = await fetch('http://127.0.0.1:3000/get-user-email', {
+        method: 'GET',
+        credentials: 'include'
+    });
+    if(response.status == 200){
+        return await response.json();
+    }
+    return null;
+}
+
+
+const send_completion_fetch = async(title, user)=>{
+    let response;
+    try{
+        response = await fetch('http://127.0.0.1:5000/completed-project-manager', {
+            method: 'PUT',
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                    "userEmail": user,
+                    "projectTitle": title
+            })
+        });
+    }catch(error){
+        return false;
+    }
+    if(response.status == 200){
+        return true;
+    }
+
+}
+
+
+const check_for_complete = function(projects, i, user){
+    const tasks = Array.from(projects[i].tasks);
+    for(let x = 0; x < tasks.length; x++){
+        console.log("checking...")
+        if(tasks[x].is_complete == 0){
+            return;
+        }
+    }
+    let result = send_completion_fetch(projects[i].title, user);
+    
+}
+
+const get_updated_projects = async()=>{
+    let projects;
+    try{
+        projects = await fetch(VIEW_PROJECTS_URL,{
+            headers:{
+                "Content-type": "application/json"
+            },
+            credentials: 'include',
+            method: 'POST',
+            body: JSON.stringify({"project-type": "current"})
+            
+        });
+    }catch(error){
+        console.log(error);
+    }
+    if(projects){
+        return await projects.json();
+    }
+    else{
+        return false;
+    }
+}
+
 const build_tasks = function(projects, i){
     let taskList = document.createElement('ol');
     for(let j = 0; j < projects[i].tasks.length; j++){
 
         const text = document.createElement('p');
         //text.classList.add('');
-        text.textContent = projects[i].tasks[j].task_description
+        text.textContent = projects[i].tasks[j].task_description;
 
-        const radioButton = document.createElement('input');
-        //radioButton.classList.add('');
-        radioButton.type = 'radio'
+        const checkBox = document.createElement('input');
+        checkBox.classList.add('task-completion-checkbox');
+        checkBox.type = 'checkbox';
+        if(projects[i].tasks[j].is_complete == 1){
+            checkBox.checked = true;
+            text.style.textDecoration = 'line-through';
+            text.style.color = 'red';
+        }
+
+        let taskContainer = document.createElement('div');
+        taskContainer.classList.add('subtask-container');
+        taskContainer.appendChild(text);
+        taskContainer.appendChild(checkBox);
+
+        const removeTaskButton = document.createElement('button');
+        removeTaskButton.classList.add('remove-task-button');
+        removeTaskButton.addEventListener('click', async()=>{
+            let title = projects[i].title;
+            let index = j;
+            let user = await fetch_for_user_email();
+            let response;
+            try{
+                response = await fetch('http://127.0.0.1:8000/deletion',{
+                    method: 'DELETE',
+                    headers:{
+                        "Content-Type": "application/json",
+                        "x-user-email": user
+                    },
+                    body: JSON.stringify({
+                        "project-type": "current",
+                        "project-name": title,
+                        "task-index": index
+                    })
+                })
+            }catch(error){
+                console.log(error);
+            }
+            if(response.status != 200){
+                window.alert("unable to remove that task")
+            }
+        })
+
+
+
+        taskContainer.appendChild(removeTaskButton);
+
+        checkBox.addEventListener('click', async(event)=>{
+            let user = await fetch_for_user_email();
+            let title = projects[i].title;
+            let index = j;
+            let mark;
+            if(event.target.checked){
+                mark = 1;
+            }
+            else{
+                mark = 0;
+            }
+            let serviceBresponse;
+            try{
+                serviceBresponse = await fetch('http://127.0.0.1:5000/task-manager', {
+                    method: 'POST',
+                    headers:{"Content-Type": "application/json"},
+                    body: JSON.stringify({
+                        "userEmail": user,
+                        "projectTitle": title,
+                        "index": index,
+                        "statusMark": mark
+                    })
+                });
+            }catch(error){
+                console.log(error);
+            }
+            if(serviceBresponse.status == 200 && mark){
+                text.style.textDecoration = 'line-through';
+                text.style.color = 'red';
+            }
+            else{
+                text.style.textDecoration = 'none';
+                text.style.color = 'var(--deep-blue)';
+
+            }
+            console.log("\nold proj:", projects);
+            projects = await get_updated_projects();
+            console.log("\nnew proj:", projects);
+            check_for_complete(projects, i, user)
+
+        });
 
         let index = document.createElement('li');
-        index.appendChild(text);
-        index.appendChild(radioButton);
+        index.appendChild(taskContainer);
         taskList.appendChild(index);
     }
     return taskList;
@@ -417,6 +595,97 @@ const build_task_form_container = function(){
     return parent;
 }
 
+const add_links_container = function(myProject, projects, i){
+    let unordered_list = document.createElement('ol');
+    for(let x = 0; x < projects[i].links.length; x++){
+        let index = document.createElement('li');
+        index.textContent = projects[i].links[x];
+        let removeLinkButton = document.createElement('button');
+        removeLinkButton.classList.add('remove-link-button');
+        removeLinkButton.textContent = 'remove';
+        removeLinkButton.addEventListener('click', async()=>{
+            let title = projects[i].title;
+            let user = await fetch_for_user_email();
+            let linkText = projects[i].links[x];
+            let response;
+            try{
+                response = await fetch('http://127.0.0.1:4000/link-remover', {
+                    method: 'DELETE',
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        "userEmail": user,
+                        "projectTitle": title,
+                        "link": linkText
+                    })
+                });
+            }catch(error){
+                console.log(error);
+                window.alert("did not remove link from that project")
+            }
+            if(response.status != 200){
+                window.alert("could not remove link from that project")
+                
+            }
+            
+        });
+
+        
+        index.appendChild(removeLinkButton);
+        unordered_list.appendChild(index);
+    }
+    myProject.appendChild(unordered_list);
+}
+
+const add_new_link_form = function(myProject, projects, i){
+    let textInput = document.createElement('input');
+    textInput.type = 'text';
+    textInput.placeholder = 'url link';
+    textInput.name = 'add-new-link-input';
+
+
+    let subButton = document.createElement('button');
+    subButton.type = 'submit';
+    subButton.classList.add('add-link-button');
+
+    let myForm = document.createElement('form');
+    myForm.addEventListener('submit', async(event)=>{
+        event.preventDefault();
+        let linkText = event.target.elements['add-new-link-input'].value;
+        let title = projects[i].title;
+        let user = await fetch_for_user_email();
+
+        let response;
+        try{
+            response = await fetch('http://127.0.0.1:4000/link-inserter', {
+                method: 'PUT',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    "userEmail": user,
+                    "projectTitle": title,
+                    "link": linkText
+                })
+            });
+        }catch(error){
+            console.log(error);
+            window.alert("did not add a new link to that project")
+        }
+        if(response.status == 200){
+            event.target.elements['add-new-link-input'].value = '';
+        }
+        
+
+    })
+    myForm.appendChild(textInput);
+    myForm.appendChild(subButton);
+
+    myProject.appendChild(myForm);
+
+}
+
 const populate_project_screen = function(projects){
     console.log(projects);
     for(let i = 0; i < projects.length; i++){
@@ -427,10 +696,43 @@ const populate_project_screen = function(projects){
 
 
         let myProject = document.createElement('div');
+        let removeProjectButton = document.createElement('button');
+        removeProjectButton.classList.add('remove-project-button');
+        removeProjectButton.addEventListener('click', async()=>{
+            let title = projects[i].title;
+            let user = await fetch_for_user_email();
+            let response;
+            try{
+                response = await fetch('http://127.0.0.1:8000/deletion',{
+                    method: 'DELETE',
+                    headers:{
+                        "Content-Type": "application/json",
+                        "x-user-email": user
+                    },
+                    body: JSON.stringify({
+                        "project-type": "current",
+                        "project-name": title
+                    })
+                })
+            }catch(error){
+                console.log(error);
+            }
+            if(response.status != 200){
+                window.alert("unable to remove that project")
+            }
+
+        })
+
+
+
+        myProject.appendChild(removeProjectButton);
         myProject.appendChild(titleContainer);
         myProject.appendChild(goalContainer);
+        
 
         if(localStorage.getItem('project-type') == 'current'){
+            add_links_container(myProject, projects, i);
+            add_new_link_form(myProject, projects, i);
             let taskList = build_tasks(projects, i);
             let taskFormContainer = build_task_form_container();
             myProject.appendChild(taskList);

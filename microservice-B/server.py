@@ -5,12 +5,17 @@ Author: Bryce Calhoun
 
 
 from flask import Flask, request
+from flask_cors import CORS
 import requests
 import model
 import json
 
+
+
+
 PORT = 5000
 app = Flask(__name__)
+CORS(app, supports_credentials=True, origins=["http://127.0.0.1:5500"])
 
 
 def validate_request(email, title, index, mark):
@@ -59,6 +64,7 @@ def call_model_to_mark_task():
 
 @app.route('/completed-project-manager', methods=['PUT'])
 def call_model_to_complete_project():
+    print("endpoint reached")
 
 
     userEmail, projectTitle = (request.json).values()

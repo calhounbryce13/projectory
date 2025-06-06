@@ -44,6 +44,15 @@ app.get('/testing', (req, res)=>{
 });
 
 
+app.get('/get-user-email', (req, res)=>{
+
+    try{
+        res.status(200).json(req.session.user);
+    }catch(error){
+        res.status(500).json('null');
+    }
+});
+
 app.post('/projects-view', async(req, res)=>{
     console.log("\nprojects view endpoint hit!\n");
     console.log(req.session);

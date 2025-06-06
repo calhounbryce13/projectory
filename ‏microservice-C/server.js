@@ -7,6 +7,7 @@ Author: Bryce Calhoun
 
 import express from 'express';
 import model from './model.mjs';
+import cors from 'cors';
 
 
 
@@ -18,6 +19,9 @@ const PORT = 4000;
 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
+app.use(cors({
+    origin: 'http://127.0.0.1:5500'
+}));
 /////////////////////////////////////////////////////////////////
 
 const valid_request = function(body){

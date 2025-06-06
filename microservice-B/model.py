@@ -63,6 +63,7 @@ def mark_project_complete(userEmail, projectTitle):
             if(currentProject.title == projectTitle):
                 goal = currentProject.goal
                 break
+        print("abacus")
         user.complete.append(Complete(title=projectTitle, goal=goal))
         user.save()
         return True

@@ -4,7 +4,7 @@
 
 :root{
 
-    --border-color: rgba(255, 0, 0, 1);
+    --border-color: rgba(255, 0, 0, 0);
 
 
     --off-white: rgba(247, 249, 252, 1.0);
@@ -40,6 +40,58 @@
     min-height: 2vh;
     margin-top: 4vh;
     margin-bottom: 4vh;
+}
+
+.task-completion-checkbox{
+
+}
+
+.add-link-button{
+    height: 2vw;
+    width: 4vw;
+}
+
+.remove-link-button{
+    height: 2vw;
+    width: 5vw;
+    margin: 1vh;
+}
+
+.subtask-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.remove-task-button{
+    height: 2vw;
+    width: 3vw;
+    background-image: url('../icons/delete-icon.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.remove-project-button{
+    height: 4vw;
+    width: 4vw;
+    background-image: url('../icons/delete-icon.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    
+}
+
+.remove-user-account{
+    height: 50%;
+    width: 25%;
+    background-image: url('../icons/delete-icon.svg');
+    background-color: red;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+
 }
 
 /************************** name elements *************************************************************************/

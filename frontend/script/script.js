@@ -345,6 +345,8 @@ const build_new_subtask = function(){
     input.classList.add('subtask-input');
 
     const parentContainer = document.createElement('div');
+    parentContainer.classList.add('container');
+    parentContainer.classList.add('new-subtask');
     parentContainer.appendChild(label);
     parentContainer.appendChild(input);
 
@@ -698,6 +700,12 @@ const populate_project_screen = function(projects){
         let myProject = document.createElement('div');
         let removeProjectButton = document.createElement('button');
         removeProjectButton.classList.add('remove-project-button');
+        let projectHeaderContainer = document.createElement('div');
+        projectHeaderContainer.classList.add('container');
+        projectHeaderContainer.classList.add('project-header-container');
+        projectHeaderContainer.appendChild(removeProjectButton);
+
+
         removeProjectButton.addEventListener('click', async()=>{
             let title = projects[i].title;
             let user = await fetch_for_user_email();
@@ -725,7 +733,7 @@ const populate_project_screen = function(projects){
 
 
 
-        myProject.appendChild(removeProjectButton);
+        myProject.appendChild(projectHeaderContainer);
         myProject.appendChild(titleContainer);
         myProject.appendChild(goalContainer);
         

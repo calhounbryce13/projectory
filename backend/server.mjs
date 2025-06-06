@@ -33,16 +33,13 @@ app.use(session({
     }
 }));
 app.use(cors({
+    //! update for deployment
     origin: "http://127.0.0.1:5500",
     methods: ['GET', 'POST'],
     credentials: true
 }))
 
 /******************************** ROUTE HANDLERS ********************************************************************/
-app.get('/testing', (req, res)=>{
-    res.send({message: "hello world"});
-});
-
 
 app.get('/get-user-email', (req, res)=>{
 
@@ -74,7 +71,6 @@ app.post('/projects-view', async(req, res)=>{
 
 
 app.post('/current-projects-generator', async(req, res)=>{
-    console.log("\ncurrent projects endpoint hit!\n");
     let validSession = validate_user_session(req);
     if(!validSession){
         res.status(400).json("invalid request session");
@@ -96,8 +92,6 @@ app.post('/current-projects-generator', async(req, res)=>{
         }
         tasks.push(task)
     }
-
-
 
     if(!(goal == "") && !(title == "")){
         const project = {
@@ -152,16 +146,9 @@ app.post('/planned-projects-generator', async(req, res)=>{
 });
 
 app.post('/subtask-generator', (req, res)=>{
-    console.log("subtask generator endpoint hit!");
     if(req.body && validate_user_session(req)){
-        console.log("a");
-        console.log(req.body['new task'], req.body['index']);
         if((req.body['new task']) && (req.body['index'] != null)){
-            console.log("b");
-
             if((req.body['new task'] != "") && (typeof(req.body['index']) == 'number')){
-                console.log("c");
-
                 User.add_task_to_existing_project(req.session.user, req.body['new task'], req.body['index']);
                 res.status(200).json("success!");
                 return;
@@ -170,7 +157,6 @@ app.post('/subtask-generator', (req, res)=>{
     }
     res.status(400).json({"error": "bad request"});
 });
-
 
 app.post('/logout', (req, res)=>{
     console.log("\nlogout endpoint hit\n");
@@ -193,7 +179,6 @@ app.post('/login', async(req, res)=>{
     console.log(req.body);
     const userEmail = req.body['userEmail'];
     const plainTextPassword = req.body['userPassword'];
-    console.log(userEmail, plainTextPassword);
     if(userEmail && plainTextPassword){
         let alreadyHasAccount = await check_for_existing_email(userEmail);
         console.log(alreadyHasAccount);
@@ -221,13 +206,11 @@ app.post('/login', async(req, res)=>{
 });
 
 app.post('/registration', async(req, res)=>{
-    console.log("registration endpoint hit!");
     if(req.body){
         const email = req.body['userEmail'];
         const password = req.body['userPassword'];
         if(email && password){
             let alreadyHasAccount = await check_for_existing_email(email);
-            console.log(alreadyHasAccount);
             if(alreadyHasAccount == false){
                 setup_user_account(password, email, res);
                 return;
@@ -254,13 +237,8 @@ app.post('/registration', async(req, res)=>{
 
 
 const validate_user_session = function(req){
-    //console.log("\n request DATA ", req);
     if(req.session){
-        console.log(req.session);
-
         if(req.session.loggedIn && (req.session.user != '')){
-            console.log(req.session.loggedIn, req.session.user);
-
             return true;
         }
     }
@@ -272,11 +250,10 @@ const session_start = function(req, res, email){
     if(!(req.session.loggedIn)){
         req.session.loggedIn = true;
         req.session.user = email;
-        console.log(req.session);
         res.status(200).send({message:"session start"});
     }
     else{
-        console.log("\nalready logged in!");
+        console.log(`${email},\nalready logged in!`);
         res.status(200).json("user already logged in");
     }
     return;

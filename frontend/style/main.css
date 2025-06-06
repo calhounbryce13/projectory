@@ -94,6 +94,14 @@
 
 }
 
+.project-header-container{
+    width: 95%;
+    justify-content: flex-end;
+    padding: 1vw;
+}
+
+
+
 /************************** name elements *************************************************************************/
 
 body{
@@ -180,6 +188,11 @@ h3{
         font-size: 4.0vw;
         max-width: 50vw;
     }
+}
+
+strong{
+    font-weight: 500;
+    color: var(--yellow-gold);
 }
 
 form{
@@ -384,7 +397,10 @@ footer{
 .input-container{
     margin-top: 2vh;
     margin-bottom: 2vh;
+    width: 90%;
+    justify-content: space-between;
 }
+
 
 
 
@@ -434,6 +450,10 @@ footer{
     background-size: contain;
     height: 50%;
     width: 15%;
+}
+.logout-button:hover{
+    background-color: var(--deep-blue);
+    background-image: url('../icons/logout-icon-hover.svg');
 }
 @media(max-width:900px){
     .logout-button{
@@ -501,6 +521,7 @@ footer{
 
 .project-title{
     font-size: 2.5vw;
+    text-decoration: underline;
 }
 .project-title-container{
     width: 100%;
@@ -558,6 +579,9 @@ footer{
     background-size: contain;
     transition: .5s ease-in-out
 }
+.add-new:hover{
+    filter: brightness(85%);
+}
 @media(max-width:900px){
     .add-new{
         width: 16vw;
@@ -579,6 +603,10 @@ footer{
     width: 4vw;
     background-color: var(--yellow-gold);
     border-radius: 10px;
+}
+#home-button:hover{
+    background-color: var(--deep-blue);
+    background-image: url('../icons/home-icon-hover.svg');
 }
 @media(max-width:900px){
     #home-button{
@@ -602,6 +630,7 @@ footer{
 
 .project-form-show{
     display: flex;
+    padding: 1vh;
 }
 
 
@@ -612,6 +641,10 @@ footer{
     background-size: contain;
     height: 4vh;
     width: 4vh;
+}
+
+#project-form-add-more:hover{
+    filter: brightness(85%);
 }
 
 
@@ -632,6 +665,12 @@ footer{
     align-items: center;
     width: 90%;
 
+}
+
+.new-subtask{
+    width: 100%;
+    justify-content: flex-start;
+    margin: 1vh;
 }
 
 .additional-task-container{
@@ -657,7 +696,12 @@ footer{
     background-repeat: no-repeat;
     background-size: contain;
     height: 4vh;
-    width: 8vh;
+    width: 16vh;
+    margin: 2vh;
+    border: 2px solid var(--deep-blue);
+}
+#submit-new-project-button:hover{
+    filter: brightness(85%);
 }
 
 

@@ -42,10 +42,6 @@
     margin-bottom: 4vh;
 }
 
-.task-completion-checkbox{
-
-}
-
 .add-link-button{
     height: 2vw;
     width: 4vw;
@@ -91,7 +87,6 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
-
 }
 
 .project-header-container{
@@ -100,18 +95,14 @@
     padding: 1vw;
 }
 
-
-
 /************************** name elements *************************************************************************/
 
 body{
     margin-top: 0px;
     height: 100%;
     width: 90vw;
-    display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: center;
     border: 2px solid var(--border-color);
     overflow-x: hidden;
     padding: 5%;
@@ -120,40 +111,25 @@ body{
     color: var(--deep-blue);
     font-family: 'Cal Sans';
 }
-@media(max-width:900px){
-    body{
-        padding: 2%;
-    }
-}
+
 main{
     margin-top: 7vh;
-    display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
     height: 100%;
     width: 90%;
     border: 2px solid var(--border-color);
 }
+
 #projects-main{
     height: auto;
     max-width: 80%;
     border-right: 4px solid var(--gold);
     border-left: 4px solid var(--gold);
 }
-@media(max-width:900px){
-    #projects-main{
-        max-width: 90%;
-        border: none;
-    }
-    
-}
 
-header{
-    display: flex;
+#header{
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
     width: 95vw;
     height: 10vh;
     background-color: var(--deep-blue);
@@ -169,12 +145,6 @@ h1{
 h2{
     font-size: 4vw;
 }
-@media(max-width:900px){
-    h2{
-        font-size: 7vw;
-    }
-
-}
 
 h3{
     font-size: 1.5vw;
@@ -183,12 +153,6 @@ h3{
     text-align: center;
     font-weight: 100;
 }
-@media(max-width:900px){
-    h3{
-        font-size: 4.0vw;
-        max-width: 50vw;
-    }
-}
 
 strong{
     font-weight: 500;
@@ -196,10 +160,8 @@ strong{
 }
 
 form{
-    display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: center;
     height: auto;
     width: 30vw;
     border: 2px solid var(--border-color);
@@ -208,18 +170,10 @@ form{
     opacity: 0;
     animation: myanimation .6s ease-out forwards;
 }
-@media (max-width: 800px){
-    form{
-        width: auto;
-    }
-}
 
 fieldset{
     width: 90%;
-    display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
     border: 2px solid var(--border-color);
 }
 
@@ -228,13 +182,9 @@ input{
     height: 3vh;
     width: 12vw;
 }
+
 input:focus{
     border: 4px solid var(--yellow-gold);
-}
-@media(max-width:900px){
-    input{
-        width: 45vw;
-    }
 }
 
 div{
@@ -259,24 +209,11 @@ a{
 label{
     font-size: 1.7vw;
 }
-@media(max-width:900px){
-    label{
-        font-size: 4.25vw;
-    }
-}
 
 ol{
-    display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: flex-start;
     border: 2px solid var(--border-color);
-}
-@media(max-width:900px){
-    ol{
-        align-items: center;
-
-    }
 }
 
 footer{
@@ -286,27 +223,14 @@ footer{
     border: 2px solid var(--border-color);
 }
 
-@media(max-width:900px){
-    footer{
-        width: 50%;
-    }
-}
-
-
 /****************************** form elements *********************************************************************/
+
 .inputBox{
-    display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
     margin-top: 1vh;
     margin-bottom: 1vh;
     width: 75%;
-}
-@media(max-width:900px){
-    .inputBox{
-        width: 100%;
-    }
 }
 
 .fieldsetSignup{
@@ -324,11 +248,7 @@ footer{
     margin-bottom: 3vh;
     font-size: 1.5vw;
 }
-@media(max-width:900px){
-    .formButton{
-        font-size: 3.75vw;
-    }
-}
+
 .formButton:hover{
     color: var(--yellow-gold);
     background-color: var(--deep-blue);
@@ -339,58 +259,27 @@ footer{
     margin-bottom: 4vh;
     height: 6vh;
     width: 10vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     background-color: var(--yellow-gold);
     border-radius: 10px;
     opacity: 0;
     animation: myanimation 1.2s ease-out forwards;
     animation-delay: 1000ms;
 }
-@media(max-width:900px){
-    .formButtonAlt{
-        width: 35vw;
-    }
 
-}
 .formButtonAlt:hover{
     color: var(--yellow-gold);
     background-color: var(--deep-blue);
 }
 
-.hidden-form{
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-.hidden-form:active{
-    opacity: 1;
-}
-
-.requirements{
+#requirements{
     height: 8%;
     width: 60%;
-    display: flex;
     flex-direction: row;
     justify-content: flex-end;
-    align-items: center;
-}
-@media(max-width:900px){
-    .requirements{
-        font-size: 3vw;
-
-    }
 }
 
 #project-fieldset{
-    display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
     border: 2px solid var(--border-color);
 }
 
@@ -401,25 +290,14 @@ footer{
     justify-content: space-between;
 }
 
-
-
-
 /***************************************************************************************************/
 
-
-.header-options-container{
-    display: flex;
+#header-options-container{
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
     width: 20%;
     height: 100%;
     border: 2px solid var(--border-color);
-}
-@media(max-width:900px){
-    .header-options-container{
-        width: 40%;
-    }
 }
 
 .darkmodeContainer{
@@ -434,14 +312,6 @@ footer{
     animation-delay: 1000ms;
     opacity: 0;
 }
-@media (max-width: 900px){
-    .darkmodeContainer{
-        height: 70%;
-        width: 20%;
-    }
-
-}
-
 
 .logout-button{
     background-image: url('../icons/logout-icon.svg');
@@ -451,16 +321,11 @@ footer{
     height: 50%;
     width: 15%;
 }
+
 .logout-button:hover{
     background-color: var(--deep-blue);
     background-image: url('../icons/logout-icon-hover.svg');
 }
-@media(max-width:900px){
-    .logout-button{
-        width: 35%;
-    }
-}
-
 
 .home-screen-buttons{
     height: 10vh;
@@ -471,33 +336,22 @@ footer{
     font-size: 2.5vw;
     color: var(--deep-blue);
 }
+
 .home-screen-buttons:hover{
     color: var(--yellow-gold);
     background-color: var(--deep-blue);
 }
+
 #completed{
     height: 8vh;
     width: 12vw;
     font-size: 1.5vw;
 }
-@media(max-width:900px){
-    .home-screen-buttons{
-        width: 50vw;
-        font-size: 6vw;
-    }
-}
-
 
 .header-title{
     color: var(--yellow-gold);
     font-size: 2vw;
 }
-@media(max-width:900px){
-    .header-title{
-        font-size: 6vw;
-    }
-}
-
 
 .my-project{
     width: 95%;
@@ -512,17 +366,12 @@ footer{
     border-radius: 20px;
     border: 2px solid var(--yellow-gold);
 }
-@media(max-width:900px){
-    .my-project{
-        width: 90%;
-    }
-    
-}
 
 .project-title{
     font-size: 2.5vw;
     text-decoration: underline;
 }
+
 .project-title-container{
     width: 100%;
     display: flex;
@@ -531,41 +380,27 @@ footer{
     align-items: center;
     font-size: 2vw;
 }
-@media(max-width:900px){
-    .project-title-container{
-        font-size: 6vw;
-    }
-}
 
 .project-goal{
     font-size: 1.5vw;
     font-weight: 100;
 }
+
 .subtask{
     width: 30%;
     height: auto;
     border: 2px solid var(--border-color);
 }
-@media(max-width:900px){
-    .subtask{
-        width: 85%;
-        margin-bottom: 2%;
-    }
-}
 
-.h2-container{
-    display: flex;
+#h2-container{
     flex-direction: row;
     justify-content: flex-start;
-    align-items: center;
     width: 75%;
 }
 
-.add-new-container{
-    display: flex;
+#add-new-container{
     flex-direction: row;
     justify-content: flex-end;
-    align-items: center;
     width: 75%;
     margin-bottom: 2vh;
 }
@@ -579,17 +414,15 @@ footer{
     background-size: contain;
     transition: .5s ease-in-out
 }
+
 .add-new:hover{
     filter: brightness(85%);
 }
-@media(max-width:900px){
-    .add-new{
-        width: 16vw;
-    }
-}
+
 .add-new:active{
     filter: brightness(85%);
 }
+
 .add-new-open{
     background-image: url('../icons/close-icon.svg');
 }
@@ -604,21 +437,15 @@ footer{
     background-color: var(--yellow-gold);
     border-radius: 10px;
 }
+
 #home-button:hover{
     background-color: var(--deep-blue);
     background-image: url('../icons/home-icon-hover.svg');
 }
-@media(max-width:900px){
-    #home-button{
-        width: 12vw;
-    }
-}
 
-.home-button-container{
-    display: flex;
+#home-button-container{
     flex-direction: row;
     justify-content: flex-start;
-    align-items: center;
     width: 98%;
     padding-left: 2%;
 }
@@ -632,7 +459,6 @@ footer{
     display: flex;
     padding: 1vh;
 }
-
 
 #project-form-add-more{
     background-image: url('../icons/plus-icon.svg');
@@ -648,21 +474,16 @@ footer{
 }
 
 
-
 #project-form-add-more-container{
-    display: flex;
     flex-direction: row;
     justify-content: flex-end;
-    align-items: center;
     width: 100%;
     margin-top: 2vh;
 }
 
 #project-form-subtasks{
-    display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    align-items: center;
     width: 90%;
 
 }
@@ -705,7 +526,82 @@ footer{
 }
 
 
-
+@media(max-width:900px){
+    body{
+        padding: 2%;
+    }
+    #projects-main{
+        max-width: 90%;
+        border: none;
+    }
+    h2{
+        font-size: 7vw;
+    }
+    h3{
+        font-size: 4.0vw;
+        max-width: 50vw;
+    }
+    form{
+        width: auto;
+    }
+    input{
+        width: 45vw;
+    }
+    label{
+        font-size: 4.25vw;
+    }
+    ol{
+        align-items: center;
+    }
+    footer{
+        width: 50%;
+    }
+    .inputBox{
+        width: 100%;
+    }
+    .formButton{
+        font-size: 3.75vw;
+    }
+    .formButtonAlt{
+        width: 35vw;
+    }
+    .requirements{
+        font-size: 3vw;
+    }
+    .header-options-container{
+        width: 40%;
+    }
+    .darkmodeContainer{
+        height: 70%;
+        width: 20%;
+    }
+    .logout-button{
+        width: 35%;
+    }
+    .home-screen-buttons{
+        width: 50vw;
+        font-size: 6vw;
+    }
+    .header-title{
+        font-size: 6vw;
+    }
+    .my-project{
+        width: 90%;
+    }
+    .project-title-container{
+        font-size: 6vw;
+    }
+    .subtask{
+        width: 85%;
+        margin-bottom: 2%;
+    }
+    .add-new{
+        width: 16vw;
+    }
+    #home-button{
+        width: 12vw;
+    }
+}
 
 /**************************** animation functions ***********************************************************************/
 

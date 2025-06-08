@@ -10,27 +10,27 @@
         <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
         <link rel="manifest" href="favicon/site.webmanifest">
     </head>
-    <body>
-        <header>
+    <body class="container">
+        <header class="container" id="header">
             <p class="header-title">Projectory</p>
-            <div class="header-options-container">
+            <div class="container" id="header-options-container">
                 <div class="darkmodeContainer">
                 </div>
                 <button class="logout-button"></button>
                 <button class="remove-user-account"></button>
             </div>
         </header>
-        <main id="projects-main">
-            <div class="home-button-container">
+        <main class="container" id="projects-main">
+            <div class="container" id="home-button-container">
                 <a href="userhome.html" id="home-button"></a>
             </div>
-            <div class="h2-container">
+            <div class="container" id="h2-container">
                 <h2></h2>
             </div>
             <div class="container user-projects">
 
             </div>
-            <form class="project-form">
+            <form class="container project-form">
                 <div>
                     <h3>
                         use the form below to add project data including 
@@ -38,7 +38,7 @@
                         to get started.
                     </h3>
                 </div>
-                <fieldset id="project-fieldset">
+                <fieldset class="container" id="project-fieldset">
                     <div class="container input-container">
                         <label>Project title</label>
                         <input type="text" name="project-title">
@@ -50,7 +50,7 @@
                 </fieldset>
                 <button type="submit" id="submit-new-project-button"></button>
             </form>
-            <div class="add-new-container">
+            <div class="container" id="add-new-container">
                 <button class="add-new"></button>
             </div>
         </main>

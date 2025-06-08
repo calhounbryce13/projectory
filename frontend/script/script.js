@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
     generate_user_projects_page();
     backend_communication();
     home_page_listeners();
-    
     setTimeout(()=>{
         add_task_to_existing_functionality();
     }, 3000);
@@ -68,6 +67,7 @@ const build_add_more_container = function(){
     button.id = 'project-form-add-more';
 
     const parent = document.createElement('div');
+    parent.classList.add('container');
     parent.id = 'project-form-add-more-container';
     parent.appendChild(button);
 
@@ -77,9 +77,18 @@ const build_add_more_container = function(){
 const build_subtask_container = function(){
     const container = document.createElement('div');
     container.id = 'project-form-subtasks';
+    container.classList.add('container');
     container.appendChild(build_new_subtask());
 
     return container;
+}
+
+const add_fields_for_subtasks = function(){
+    const fieldset = document.getElementById('project-fieldset');
+    if(fieldset){
+        fieldset.appendChild(build_subtask_container());
+        fieldset.appendChild(build_add_more_container());
+    }
 }
 
 const populate_form_controls = function(){
@@ -87,9 +96,7 @@ const populate_form_controls = function(){
     if(projectType == 'planned'){
         return;
     }
-    const fieldset = document.getElementById('project-fieldset');
-    fieldset.appendChild(build_subtask_container());
-    fieldset.appendChild(build_add_more_container());
+    add_fields_for_subtasks();
 }
 
 const build_project_title = function(projects, i){
@@ -105,7 +112,6 @@ const build_project_title = function(projects, i){
     titleContainer.classList.add('project-title-container');
 
     return titleContainer;
-
 }
 
 const build_goal = function(projects, i){
@@ -130,90 +136,99 @@ const fetch_for_user_email = async()=>{
     return null;
 }
 
-const add_links_container = function(myProject, projects, i){
+const send_request_to_remove_a_link = async(title, user, linkText)=>{
+    response = await fetch(endpoints.link_remover, {
+        method: 'DELETE',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            "userEmail": user,
+            "projectTitle": title,
+            "link": linkText
+        })
+    });
+}
+
+const remove_a_link_from_a_project = async(projects, i, x)=>{
+    let title = projects[i].title;
+    let user = await fetch_for_user_email();
+    let linkText = projects[i].links[x];
+    let response;
+    try{
+        send_request_to_remove_a_link(title, user, linkText);
+    }catch(error){
+        console.log(error);
+        window.alert("did not remove link from that project")
+    }
+    if(response.status != 200){
+        window.alert("could not remove link from that project")
+        
+    }
+}
+
+const populate_links_view = function(myProject, projects, i){
     let unordered_list = document.createElement('ol');
+    unordered_list.classList.add('container');
     for(let x = 0; x < projects[i].links.length; x++){
+
         let index = document.createElement('li');
         index.textContent = projects[i].links[x];
         let removeLinkButton = document.createElement('button');
         removeLinkButton.classList.add('remove-link-button');
         removeLinkButton.textContent = 'remove';
-        removeLinkButton.addEventListener('click', async()=>{
-            let title = projects[i].title;
-            let user = await fetch_for_user_email();
-            let linkText = projects[i].links[x];
-            let response;
-            try{
-                response = await fetch('http://127.0.0.1:4000/link-remover', {
-                    method: 'DELETE',
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        "userEmail": user,
-                        "projectTitle": title,
-                        "link": linkText
-                    })
-                });
-            }catch(error){
-                console.log(error);
-                window.alert("did not remove link from that project")
-            }
-            if(response.status != 200){
-                window.alert("could not remove link from that project")
-                
-            }
-            
-        });
 
-        
+        removeLinkButton.addEventListener('click', remove_a_link_from_a_project(projects, i, x));
         index.appendChild(removeLinkButton);
         unordered_list.appendChild(index);
     }
     myProject.appendChild(unordered_list);
 }
 
-const add_new_link_form = function(myProject, projects, i){
+const send_a_request_to_insert_a_link = async(title, user, linkText)=>{
+    response = await fetch(endpoints.link_inserter, {
+        method: 'PUT',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            "userEmail": user,
+            "projectTitle": title,
+            "link": linkText
+        })
+    });
+}
+
+const process_the_form_to_add_a_new_link = async(event)=>{
+    event.preventDefault();
+    let linkText = event.target.elements['add-new-link-input'].value;
+    let title = projects[i].title;
+    let user = await fetch_for_user_email();
+
+    let response;
+    try{
+        send_a_request_to_insert_a_link(title, user, linkText);
+    }catch(error){
+        console.log(error);
+        window.alert("did not add a new link to that project")
+    }
+    if(response.status == 200){
+        event.target.elements['add-new-link-input'].value = '';
+    }
+}
+
+const populate_add_link_form_controls = function(myProject, projects, i){
     let textInput = document.createElement('input');
     textInput.type = 'text';
     textInput.placeholder = 'url link';
     textInput.name = 'add-new-link-input';
-
 
     let subButton = document.createElement('button');
     subButton.type = 'submit';
     subButton.classList.add('add-link-button');
 
     let myForm = document.createElement('form');
-    myForm.addEventListener('submit', async(event)=>{
-        event.preventDefault();
-        let linkText = event.target.elements['add-new-link-input'].value;
-        let title = projects[i].title;
-        let user = await fetch_for_user_email();
-
-        let response;
-        try{
-            response = await fetch('http://127.0.0.1:4000/link-inserter', {
-                method: 'PUT',
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    "userEmail": user,
-                    "projectTitle": title,
-                    "link": linkText
-                })
-            });
-        }catch(error){
-            console.log(error);
-            window.alert("did not add a new link to that project")
-        }
-        if(response.status == 200){
-            event.target.elements['add-new-link-input'].value = '';
-        }
-        
-
-    })
+    myForm.addEventListener('submit', process_the_form_to_add_a_new_link(event))
     myForm.appendChild(textInput);
     myForm.appendChild(subButton);
 
@@ -402,8 +417,8 @@ const populate_project_screen = function(projects){
         
 
         if(localStorage.getItem('project-type') == 'current'){
-            add_links_container(myProject, projects, i);
-            add_new_link_form(myProject, projects, i);
+            populate_links_view(myProject, projects, i);
+            populate_add_link_form_controls(myProject, projects, i);
             let taskList = build_tasks(projects, i);
             let taskFormContainer = build_task_form_container();
             myProject.appendChild(taskList);

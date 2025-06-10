@@ -2,6 +2,7 @@
 
 const host = "http://127.0.0.1:3000/";
 const host2 = "http://127.0.0.1:4000/";
+const host3 = "http://127.0.0.1:8000/";
 
 export const endpoints = {
     registration: host + "registration",
@@ -12,5 +13,6 @@ export const endpoints = {
     current_projects_generator: host + "current-projects-generator",
     subtask_generator: host + "subtask-generator",
     link_remover: host2 + "link-remover",
-    link_inserter: host2 + "link-inserter"
+    link_inserter: host2 + "link-inserter",
+    deletion: host3 + "deletion"
 }

@@ -392,7 +392,7 @@ const populate_project_screen = function(projects){
             let user = await fetch_for_user_email();
             let response;
             try{
-                response = await fetch('http://127.0.0.1:8000/deletion',{
+                response = await fetch(endpoints.deletion,{
                     method: 'DELETE',
                     headers:{
                         "Content-Type": "application/json",
@@ -433,20 +433,27 @@ const populate_project_screen = function(projects){
 
 }
 
+
+const send_a_request_to_get_user_projects = async()=>{
+    let projects = await fetch(endpoints.projects_view,{
+        headers:{
+            "Content-type": "application/json"
+        },
+        credentials: 'include',
+        method: 'POST',
+        body: JSON.stringify({"project-type": localStorage.getItem("project-type")})
+        
+    });
+    return projects;
+
+}
+
 const get_project_data = async()=>{
     console.log(localStorage.getItem("project-type"))
 
     let projects;
     try{
-        projects = await fetch(endpoints.projects_view,{
-            headers:{
-                "Content-type": "application/json"
-            },
-            credentials: 'include',
-            method: 'POST',
-            body: JSON.stringify({"project-type": localStorage.getItem("project-type")})
-            
-        });
+        projects = await send_a_request_to_get_user_projects();
     }catch(error){
         console.log(error);
     }
@@ -463,6 +470,38 @@ const get_project_data = async()=>{
         form.classList.toggle('project-form-show');
         event.target.classList.toggle('add-new-open');
     });
+}
+
+
+const clear_container = function(container){
+    if(container){
+        while(container.children.length > 0){
+            container.removeChild(container.lastChild);
+        }
+    }
+}
+
+const update_user_projects_view = async()=>{
+    console.log("a");
+    let container = Array.from(document.getElementsByClassName('user-projects'))[0];
+    if(container){
+        console.log("b");
+
+        //container = Array.from(container)[0];
+        console.log("container pre clearing:", container);
+        clear_container(container);
+        console.log("c");
+
+        try{
+            let projects = await send_a_request_to_get_user_projects();
+            projects = await projects.json();
+            populate_project_screen(projects);
+            console.log("d");
+
+        }catch(error){
+            console.log(error);
+        }
+    }
 }
 
 const generate_user_projects_page = function(){
@@ -632,9 +671,6 @@ const add_to_existing_project_fetch = async(newText, i)=>{
         }
         else{
             error_message("Success! A new task was added to your project");
-            //clear_project_view();
-            //! I need to fetch for user projects again
-            //populate_project_screen(userProjects);
         }
     }catch(error){
         console.log(error);
@@ -650,9 +686,14 @@ const attach_event_listener = function(buttons){
         buttons[i].addEventListener('click', ()=>{
             if(inputs[i].value != ""){
                 add_to_existing_project_fetch(inputs[i].value, i);
+                update_user_projects_view();
+
+                /*
                 setTimeout(()=>{
                     inputs[i].value = "";
                 }, 3000);
+
+                */
                 
             }
         });

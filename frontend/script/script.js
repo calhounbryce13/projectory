@@ -426,7 +426,7 @@ const populate_project_screen = function(projects){
         }
 
         myProject.classList.add('my-project')
-
+        //! the parent container to hold user projects is undefined here
         let parentContainer = Array.from(document.getElementsByClassName('user-projects'))[0];
         parentContainer.appendChild(myProject);
     }

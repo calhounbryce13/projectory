@@ -9,6 +9,8 @@ import express from 'express';
 import cors from 'cors';
 import bcrypt from 'bcrypt';
 import session from 'express-session';
+import nodemailer from 'nodemailer';
+
 
 import User from './model.mjs';
 
@@ -39,6 +41,19 @@ app.use(cors({
     credentials: true
 }))
 
+/******************************** TRANSPORTER ********************************************************************/
+const transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth:{
+        user: "calhounbryce13@gmail.com",
+        pass: process.env.EMAIL_PASSWORD
+    }
+})
+
+
+
 /******************************** ROUTE HANDLERS ********************************************************************/
 
 app.get('/get-user-email', (req, res)=>{
@@ -67,8 +82,6 @@ app.post('/projects-view', async(req, res)=>{
         res.status(500).json("error getting user projects");
     }
 });
-
-
 
 app.post('/current-projects-generator', async(req, res)=>{
     let validSession = validate_user_session(req);
@@ -113,6 +126,7 @@ app.post('/current-projects-generator', async(req, res)=>{
 
 
 });
+
 app.post('/planned-projects-generator', async(req, res)=>{
     console.log("\nplanned projects endpoint hit!\n");
     let validSession = validate_user_session(req);
@@ -291,19 +305,44 @@ const check_for_existing_email = async(userEmail)=>{
     return true;
 }
 
+const send_confirmation_email = async(email)=>{
+    const subject = 'Projectory account confirmation';
+    const introductoryWelcome = 'Welcome to Projectory!\nThis email is just to confirm your account registration for your records.';
+    const contactReference = '\nIf you have any questions, feel free to respond to this.';
+    const message = introductoryWelcome + contactReference;
+    try{
+        const sendEmail = await transporter.sendMail({
+            from:'calhounbryce13@gmail.com',
+            to: email,
+            subject: subject,
+            text: message
+        });
+        return true;
+    }catch(error){
+        console.log(error);
+        return false;
+    }
+}
+
 
 const setup_user_account = async(password, email, res)=>{
     let hashedPassword = await bcrypt.hash(password, rounds);
     let response;
     try{
         response = await User.create_new_user(email, hashedPassword, rounds);
+        const emailSent = await send_confirmation_email(email);
+        if(emailSent){
+            res.status(200).json({"message":"true"});
+            return;
+        }
+        res.status(200).json("account made successfully but error sending confirm email");
         console.log("\nnew user created", email);
+        return;
     }catch(error){
         console.log(error);
         res.status(500).send({message:"error trying to create a new user"});
         return;
     }
-    res.status(200).send({message:true});
 }
 
 /****************************************************************************************************/

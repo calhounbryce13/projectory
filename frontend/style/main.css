@@ -48,9 +48,15 @@
 }
 
 .remove-link-button{
+    background-image: url('../icons/delete-icon.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
     height: 2vw;
     width: 5vw;
     margin: 1vh;
+    border: 2px solid var(--border-color);
+
 }
 
 .subtask-container{
@@ -69,9 +75,19 @@
     background-size: contain;
 }
 
+.remove-project-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    width: 90%;
+    height: auto;
+    border: 2px solid var(--border-color);
+}
+
 .remove-project-button{
-    height: 4vw;
-    width: 4vw;
+    height: 6vh;
+    width: 6vh;
     background-image: url('../icons/delete-icon.svg');
     background-position: center;
     background-repeat: no-repeat;
@@ -94,6 +110,40 @@
     justify-content: flex-end;
     padding: 1vw;
 }
+
+.project-links-list{
+    height: auto;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--gold);
+    border-radius: 10px;
+
+}
+
+.container-for-a-single-link{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    border: 2px solid var(--border-color);
+}
+
+.project-link-text{
+    display: inline-block;
+    max-width: 50%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: auto;
+    border: 2px dotted var(--border-color);
+
+}
+
+
 
 /************************** name elements *************************************************************************/
 
@@ -364,26 +414,36 @@ footer{
     margin-bottom: 2vh;
     padding: 1vh;
     border-radius: 20px;
-    border: 2px solid var(--yellow-gold);
+    border: 3px solid var(--yellow-gold);
 }
 
 .project-title{
     font-size: 2.5vw;
     text-decoration: underline;
+    max-width: 75%;
 }
 
 .project-title-container{
-    width: 100%;
+    width: 90%;
+    height: auto;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    font-size: 2vw;
+    border: 2px solid var(--border-color);
 }
 
 .project-goal{
     font-size: 1.5vw;
     font-weight: 100;
+    max-width: 75%;
+}
+
+.project-goal-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
 .subtask{

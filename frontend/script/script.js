@@ -100,16 +100,13 @@ const populate_form_controls = function(){
 }
 
 const build_project_title = function(projects, i){
-    let titleText = document.createElement('p');
-    titleText.textContent = projects[i].title;
+    const title = document.createElement('p');
+    title.textContent = projects[i].title;
+    title.classList.add('project-title');
 
-    let myTitle = document.createElement('div');
-    myTitle.appendChild(titleText);
-    myTitle.classList.add('project-title');
-
-    let titleContainer = document.createElement('div');
-    titleContainer.appendChild(myTitle);
+    const titleContainer = document.createElement('div');
     titleContainer.classList.add('project-title-container');
+    titleContainer.appendChild(title);
 
     return titleContainer;
 }
@@ -117,10 +114,12 @@ const build_project_title = function(projects, i){
 const build_goal = function(projects, i){
     let goalText = document.createElement('p');
     goalText.textContent = projects[i].goal;
+    goalText.classList.add('project-goal');
 
     let goalContainer = document.createElement('div');
+    goalContainer.classList.add('project-goal-container');
     goalContainer.appendChild(goalText);
-    goalContainer.classList.add('project-goal');
+
 
     return goalContainer;
 }
@@ -371,45 +370,109 @@ const build_task_form_container = function(){
     return parent;
 }
 
+
+const build_project_delete_container = function(projects, i){
+    const deleteProjectButton = document.createElement('button');
+    deleteProjectButton.classList.add('remove-project-button');
+    deleteProjectButton.addEventListener('click', async()=>{
+        let title = projects[i].title;
+        let user = await fetch_for_user_email();
+        let response;
+        try{
+            response = await fetch(endpoints.deletion,{
+                method: 'DELETE',
+                headers:{
+                    "Content-Type": "application/json",
+                    "x-user-email": user
+                },
+                body: JSON.stringify({
+                    "project-type": "current",
+                    "project-name": title
+                })
+            })
+        }catch(error){
+            console.log(error);
+        }
+        if(response.status != 200){
+            window.alert("unable to remove that project")
+        }
+    });
+
+    const deleteProjectContainer = document.createElement('div');
+    deleteProjectContainer.classList.add('remove-project-container');
+    deleteProjectContainer.appendChild(deleteProjectButton);
+
+    return deleteProjectContainer;
+}
+
+
+
+
+
+const build_a_single_link = function(projects, i, x){
+    const removeLinkButton = document.createElement('button');
+    removeLinkButton.classList.add('remove-link-button');
+    removeLinkButton.addEventListener('click', remove_a_link_from_a_project(projects, i, x));
+
+    const linkText = document.createElement('a');
+    linkText.target = '_blank';
+    linkText.classList.add('project-link-text');
+    linkText.href = projects[i].links[x];
+    linkText.textContent = linkText.href;
+
+    const linkContainer = document.createElement('div');
+    linkContainer.classList.add('container-for-a-single-link');
+
+    linkContainer.appendChild(removeLinkButton);
+    linkContainer.appendChild(linkText);
+
+    return linkContainer;
+}
+
+const form_to_input_new_link = function(unordered_list){
+    
+
+}
+
+const build_project_links = function(projects, i){
+    const unordered_list = document.createElement('ul');
+    unordered_list.classList.add('project-links-list');
+    for(let x = 0; x < projects[i].links.length; x++){
+        const linkContainer = build_a_single_link(projects, i, x);
+        unordered_list.appendChild(linkContainer);
+    }
+    // form_to_input_new_link(unordered_list);
+    return unordered_list;
+}
+
 const populate_project_screen = function(projects){
     console.log(projects);
     for(let i = 0; i < projects.length; i++){
-
-        let titleContainer = build_project_title(projects, i);
-
-        let goalContainer = build_goal(projects, i);
-
         let myProject = document.createElement('div');
-        let removeProjectButton = document.createElement('button');
-        removeProjectButton.classList.add('remove-project-button');
+        myProject.classList.add('my-project');
+
+        const deleteProjectContainer = build_project_delete_container();
+        const projectTitle = build_project_title(projects, i);
+        const projectGoal = build_goal(projects, i);
+
+        myProject.appendChild(deleteProjectContainer);
+        myProject.appendChild(projectTitle);
+        myProject.appendChild(projectGoal);
+
+        if(localStorage.getItem('project-type') == 'current'){
+            const projectLinks = build_project_links(projects, i);
+            myProject.appendChild(projectLinks);
+
+        }
+        
+        /*
+
         let projectHeaderContainer = document.createElement('div');
         projectHeaderContainer.classList.add('container');
         projectHeaderContainer.classList.add('project-header-container');
         projectHeaderContainer.appendChild(removeProjectButton);
 
-        removeProjectButton.addEventListener('click', async()=>{
-            let title = projects[i].title;
-            let user = await fetch_for_user_email();
-            let response;
-            try{
-                response = await fetch(endpoints.deletion,{
-                    method: 'DELETE',
-                    headers:{
-                        "Content-Type": "application/json",
-                        "x-user-email": user
-                    },
-                    body: JSON.stringify({
-                        "project-type": "current",
-                        "project-name": title
-                    })
-                })
-            }catch(error){
-                console.log(error);
-            }
-            if(response.status != 200){
-                window.alert("unable to remove that project")
-            }
-        });
+        
 
         myProject.appendChild(projectHeaderContainer);
         myProject.appendChild(titleContainer);
@@ -424,11 +487,15 @@ const populate_project_screen = function(projects){
             myProject.appendChild(taskList);
             myProject.appendChild(taskFormContainer);
         }
+        */
 
-        myProject.classList.add('my-project')
+
+
         //! the parent container to hold user projects is undefined here
         let parentContainer = Array.from(document.getElementsByClassName('user-projects'))[0];
         parentContainer.appendChild(myProject);
+
+        
     }
 
 }
@@ -901,10 +968,10 @@ const home_page_listeners = function(){
 
 const inform_user = async(response)=>{
     let data = await response.json();
-    if(data.message == true){
+    if(data.message == "true"){
         window.alert("account made successfully!");
     }
-    else if(data.message == 'already has an account'){
+    else if(data.message == "already has an account"){
         window.alert("there is already an account registered under that email,\n please login instead");
     }
     window.location.assign('login.html');

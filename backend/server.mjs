@@ -56,6 +56,18 @@ const transporter = nodemailer.createTransport({
 
 /******************************** ROUTE HANDLERS ********************************************************************/
 
+
+app.get('/login-status', (req, res)=>{
+    if(req.session){
+        console.log("\nrequest session data:",req.session)
+        if(req.session.loggedIn){
+            res.status(200).json(true);
+            return;
+        }
+    }
+    res.status(200).json(false);
+})
+
 app.get('/get-user-email', (req, res)=>{
 
     try{

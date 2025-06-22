@@ -96,7 +96,6 @@ const delete_user = async(userEmail)=>{
 
 const get_my_projects = async(email, projectType)=>{
     let user = await find_existing_user(email);
-    console.log(user[0].current);
 
     if(projectType == 'current'){
         return user[0].current;

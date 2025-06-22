@@ -5,6 +5,7 @@ const PASSWORD_MIN = 8;
 
 
 document.addEventListener('DOMContentLoaded', ()=>{
+    check_user_login_status();
     generate_user_projects_page();
     backend_communication();
     home_page_listeners();
@@ -17,7 +18,42 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+const fetch_for_login_status = async()=>{
+    try{
+        let response = await fetch(endpoints.loginStatus, {
+            method: "GET",
+            credentials: "include"
+        });
+        if(response.status == 200){
+            return response;
+        }
+    }catch(error){
+        console.log(error);
+        return false;
+    }
+}
 
+const check_user_login_status = async()=>{
+    let loginStatus = await fetch_for_login_status();
+    if(!loginStatus){
+        if(window.location.pathname.endsWith('/userhome.html') || window.location.pathname.endsWith('/projects.html')){
+            window.location.assign('signup.html');
+            return;
+        }
+    }
+    loginStatus = await loginStatus.json();
+    console.log(loginStatus);
+    if(loginStatus){
+        if(window.location.pathname.endsWith('/login.html') || window.location.pathname.endsWith('/signup.html')){
+            window.location.assign('userhome.html');
+        }
+    }
+    else{
+        if(window.location.pathname.endsWith('/userhome.html') || window.location.pathname.endsWith('/projects.html')){
+            window.location.assign('signup.html');
+        }
+    }
+}
 
 const user_logout = async()=>{
     let logoutResponse = await fetch(endpoints.logout, {
@@ -36,15 +72,18 @@ const delete_account = async(user)=>{
 }
 
 const user_logout_and_account_removal = async()=>{
-    let user = await fetch_for_user_email();
-    let deleteResponse;
-    try{
-        user_logout();
-        delete_account(user);
-        window.location.assign('signup.html');
-    }catch(error){
-        console.log(error);
-        window.alert("unable to remove your account");
+    if(confirm("are you sure you want to PERMANENTLY delete your account?")){
+        if(confirm("confirm once more that you want to delete your account. \n you will loose ALL your data \n this cannot be undone !")){
+            let user = await fetch_for_user_email();
+            try{
+                user_logout();
+                delete_account(user);
+                window.location.assign('signup.html');
+            }catch(error){
+                console.log(error);
+                window.alert("unable to remove your account");
+            }
+        }
     }
 }
 
@@ -136,7 +175,7 @@ const fetch_for_user_email = async()=>{
 }
 
 const send_request_to_remove_a_link = async(title, user, linkText)=>{
-    response = await fetch(endpoints.link_remover, {
+    const response = await fetch(endpoints.link_remover, {
         method: 'DELETE',
         headers: {
             "Content-Type": "application/json"
@@ -147,6 +186,7 @@ const send_request_to_remove_a_link = async(title, user, linkText)=>{
             "link": linkText
         })
     });
+    return response;
 }
 
 const remove_a_link_from_a_project = async(projects, i, x)=>{
@@ -155,15 +195,18 @@ const remove_a_link_from_a_project = async(projects, i, x)=>{
     let linkText = projects[i].links[x];
     let response;
     try{
-        send_request_to_remove_a_link(title, user, linkText);
+        response = await send_request_to_remove_a_link(title, user, linkText);
     }catch(error){
         console.log(error);
-        window.alert("did not remove link from that project")
+        window.alert("did not remove link from that project");
     }
-    if(response.status != 200){
-        window.alert("could not remove link from that project")
+    if(response.status == 200){
+        window.alert("that link was successfully removed!");
+        window.location.reload();
+        return;
         
     }
+    window.alert("could not remove link from that project");
 }
 
 const populate_links_view = function(myProject, projects, i){
@@ -185,7 +228,7 @@ const populate_links_view = function(myProject, projects, i){
 }
 
 const send_a_request_to_insert_a_link = async(title, user, linkText)=>{
-    response = await fetch(endpoints.link_inserter, {
+    const response = await fetch(endpoints.link_inserter, {
         method: 'PUT',
         headers: {
             "Content-Type": "application/json"
@@ -196,9 +239,11 @@ const send_a_request_to_insert_a_link = async(title, user, linkText)=>{
             "link": linkText
         })
     });
+
+    return response;
 }
 
-const process_the_form_to_add_a_new_link = async(event)=>{
+const process_the_form_to_add_a_new_link = async(event, projects, i)=>{
     event.preventDefault();
     let linkText = event.target.elements['add-new-link-input'].value;
     let title = projects[i].title;
@@ -206,13 +251,15 @@ const process_the_form_to_add_a_new_link = async(event)=>{
 
     let response;
     try{
-        send_a_request_to_insert_a_link(title, user, linkText);
+        response = await send_a_request_to_insert_a_link(title, user, linkText);
     }catch(error){
         console.log(error);
         window.alert("did not add a new link to that project")
     }
     if(response.status == 200){
         event.target.elements['add-new-link-input'].value = '';
+        window.alert("a new link was successfully added to the project");
+        window.location.reload();
     }
 }
 
@@ -232,6 +279,49 @@ const populate_add_link_form_controls = function(myProject, projects, i){
     myForm.appendChild(subButton);
 
     myProject.appendChild(myForm);
+
+}
+
+
+const update_the_status_for_project_task = async(event, projects, i, x, text) => {
+    let user = await fetch_for_user_email();
+    let title = projects[i].title;
+    let index = x;
+    let mark;
+    if(event.target.checked){
+        mark = 1;
+    }
+    else{
+        mark = 0;
+    }
+    let serviceBresponse;
+    try{
+        serviceBresponse = await fetch(endpoints.taskManager, {
+            method: 'POST',
+            headers:{"Content-Type": "application/json"},
+            body: JSON.stringify({
+                "userEmail": user,
+                "projectTitle": title,
+                "index": index,
+                "statusMark": mark
+            })
+        });
+    }catch(error){
+        console.log(error);
+    }
+    if(serviceBresponse.status == 200 && mark){
+        text.style.textDecoration = 'line-through';
+        text.style.color = 'red';
+    }
+    else{
+        text.style.textDecoration = 'none';
+        text.style.color = 'var(--deep-blue)';
+
+    }
+    console.log("\nold proj:", projects);
+    projects = await get_updated_projects();
+    console.log("\nnew proj:", projects);
+    check_for_complete(projects, i, user)
 
 }
 
@@ -405,14 +495,10 @@ const build_project_delete_container = function(projects, i){
     return deleteProjectContainer;
 }
 
-
-
-
-
 const build_a_single_link = function(projects, i, x){
     const removeLinkButton = document.createElement('button');
     removeLinkButton.classList.add('remove-link-button');
-    removeLinkButton.addEventListener('click', remove_a_link_from_a_project(projects, i, x));
+    removeLinkButton.addEventListener('click', () => remove_a_link_from_a_project(projects, i, x));
 
     const linkText = document.createElement('a');
     linkText.target = '_blank';
@@ -429,9 +515,25 @@ const build_a_single_link = function(projects, i, x){
     return linkContainer;
 }
 
-const form_to_input_new_link = function(unordered_list){
-    
+const form_to_input_new_link = function(unordered_list, projects, i){
+    const newLinkInput = document.createElement('input');
+    newLinkInput.classList.add('new-project-link-input');
+    newLinkInput.type = 'text';
+    newLinkInput.placeholder = 'Paste your link here';
+    newLinkInput.name = 'add-new-link-input';
 
+
+    const submitNewLink = document.createElement('button');
+    submitNewLink.classList.add('new-project-link-submit');
+    submitNewLink.type = 'submit';
+    
+    const formContainer = document.createElement('form');
+    formContainer.addEventListener('submit',(event) => process_the_form_to_add_a_new_link(event, projects, i));
+    formContainer.classList.add('add-a-new-project-link-container');
+    formContainer.appendChild(newLinkInput);
+    formContainer.appendChild(submitNewLink);
+
+    unordered_list.appendChild(formContainer);
 }
 
 const build_project_links = function(projects, i){
@@ -441,8 +543,37 @@ const build_project_links = function(projects, i){
         const linkContainer = build_a_single_link(projects, i, x);
         unordered_list.appendChild(linkContainer);
     }
-    // form_to_input_new_link(unordered_list);
+    form_to_input_new_link(unordered_list, projects, i);
     return unordered_list;
+}
+
+const build_project_tasks = function(projects, i){
+    const projectTaskList = document.createElement('ol');
+    projectTaskList.classList.add('project-task-list');
+    for(let x = 0; x < projects[i].tasks.length; x++){
+        const taskText = document.createElement('p');
+        taskText.classList.add('task-text');
+        taskText.textContent = projects[i].tasks[x].task_description;
+
+        const checkboxButton = document.createElement('input');
+        checkboxButton.addEventListener('click', (event) => update_the_status_for_project_task(event, projects, i, x, taskText));
+        checkboxButton.type = 'checkbox';
+        checkboxButton.classList.add('task-checkbox');
+
+        const removeButton = document.createElement('button');
+        removeButton.classList.add('task-remove-button');
+
+        const taskContainer = document.createElement('div');
+        taskContainer.classList.add('task-container');
+        taskContainer.appendChild(taskText);
+        taskContainer.appendChild(checkboxButton);
+        taskContainer.appendChild(removeButton);
+
+        projectTaskList.appendChild(taskContainer);
+
+    }
+
+    return projectTaskList;
 }
 
 const populate_project_screen = function(projects){
@@ -462,6 +593,10 @@ const populate_project_screen = function(projects){
         if(localStorage.getItem('project-type') == 'current'){
             const projectLinks = build_project_links(projects, i);
             myProject.appendChild(projectLinks);
+
+            const projectTasks = build_project_tasks(projects, i);
+            myProject.appendChild(projectTasks);
+
 
         }
         
@@ -655,14 +790,16 @@ const logout_functionality = function(){
     if(logout){
         logout.addEventListener('click', async()=>{
             console.log("logout clicked");
-            try{
-                user_logout();
-            }catch(error){
-                console.log(error);
+            if(confirm("Are you sure you want to logout?")){
+                try{
+                    user_logout();
+                }catch(error){
+                    console.log(error);
+                }
+                setTimeout(()=>{
+                    window.location.assign('login.html');
+                }, 1000)
             }
-            setTimeout(()=>{
-                window.location.assign('login.html');
-            }, 1000)
         });
     }
     

@@ -4,7 +4,7 @@
 
 :root{
 
-    --border-color: rgba(255, 0, 0, 0);
+    --border-color: rgba(255, 0, 0, 1);
 
 
     --off-white: rgba(247, 249, 252, 1.0);
@@ -126,7 +126,7 @@
 .container-for-a-single-link{
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: flex-start;
     align-items: center;
     width: 100%;
     height: auto;
@@ -141,6 +141,71 @@
     height: auto;
     border: 2px dotted var(--border-color);
 
+}
+
+.add-a-new-project-link-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: auto;
+    height: 10vh;
+    border: 2px solid var(--border-color);
+}
+
+.new-project-link-submit{
+    background-image: url('../icons/plus-icon.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    height: 4vh;
+    width: 4vh;
+    margin-left: 2vw;
+    margin-right: 2vw;
+    border: 2px solid var(--deep-blue);
+}
+
+.new-project-link-input{
+    width: 25vw;
+    margin-left: 2vw;
+}
+
+.project-task-list{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    width: 75%;
+    border: 2px solid var(--border-color);
+}
+
+.task-text{
+    color: var(--deep-blue);
+    font-size: 1vw;
+}
+
+.task-checkbox{
+    height: 2vw;
+    width: 2vw;
+}
+
+.task-remove-button{
+    background-image: url('../icons/delete-icon.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 2vw;
+    width: 2vw;
+
+}
+
+.task-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
 }
 
 
@@ -628,7 +693,7 @@ footer{
     .requirements{
         font-size: 3vw;
     }
-    .header-options-container{
+    #header-options-container{
         width: 40%;
     }
     .darkmodeContainer{
@@ -641,6 +706,10 @@ footer{
     .home-screen-buttons{
         width: 50vw;
         font-size: 6vw;
+    }
+    #completed{
+        width: 30vw;
+        font-size: 3.6vw;
     }
     .header-title{
         font-size: 6vw;
@@ -661,6 +730,10 @@ footer{
     #home-button{
         width: 12vw;
     }
+    #h2-container{
+        width: 98%;
+    }
+
 }
 
 /**************************** animation functions ***********************************************************************/

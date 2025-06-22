@@ -614,26 +614,39 @@ const build_parent_container_for_a_task = function(taskText, checkboxButton, rem
     return taskContainer;
 }
 
+const form_to_add_a_new_task = function(projectTaskList){
+    const newTaskInput = document.createElement('input');
+    newTaskInput.type = 'text';
+    newTaskInput.name = '';
+
+    const addButton = document.createElement('button');
+    addButton.classList.add('button-to-add-a-new-task');
+    addButton.type = 'submit';
+
+    const addTaskForm = document.createElement('form');
+    addTaskForm.classList.add('form-to-add-a-new-task')
+    addTaskForm.appendChild(newTaskInput);
+    addTaskForm.appendChild(addButton);
+    //addTaskForm.addEventListener('submit', () => )
+
+    projectTaskList.appendChild(addTaskForm);
+
+}
+
 
 const build_project_tasks = function(projects, i){
     const projectTaskList = document.createElement('ol');
     projectTaskList.classList.add('project-task-list');
     for(let x = 0; x < projects[i].tasks.length; x++){
         const taskText = build_text_for_a_task(projects, i, x);
-
         const checkboxButton = build_checkbox_for_a_task(projects, i, x, taskText);
-
         const removeButton = build_remove_button_for_a_task(projects, i, x);
-
-        const taskContainer = document.createElement('div');
-        taskContainer.classList.add('task-container');
-        taskContainer.appendChild(taskText);
-        taskContainer.appendChild(checkboxButton);
-        taskContainer.appendChild(removeButton);
+        const taskContainer = build_parent_container_for_a_task(taskText, checkboxButton, removeButton);
 
         projectTaskList.appendChild(taskContainer);
 
     }
+    form_to_add_a_new_task(projectTaskList)
 
     return projectTaskList;
 }

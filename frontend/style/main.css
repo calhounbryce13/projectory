@@ -208,6 +208,30 @@
     width: 100%;
 }
 
+.input-for-a-new-task{
+    font-size: 2vw;
+    width: 70%;
+}
+
+.button-to-add-a-new-task{
+    height: 3vh;
+    width: 3vh;
+    background-image: url('../icons/plus-icon.svg');
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.form-to-add-a-new-task{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: auto;
+    width: 80%;
+    
+}
+
 
 
 /************************** name elements *************************************************************************/

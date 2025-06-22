@@ -460,7 +460,6 @@ const build_task_form_container = function(){
     return parent;
 }
 
-
 const build_project_delete_container = function(projects, i){
     const deleteProjectButton = document.createElement('button');
     deleteProjectButton.classList.add('remove-project-button');
@@ -547,21 +546,84 @@ const build_project_links = function(projects, i){
     return unordered_list;
 }
 
+
+const remove_a_task_from_a_project = async(projects, i, x) => {
+    if(confirm("are you sure you want to remove this task from this project?\n you cannot undo this action")){
+        let title = projects[i].title;
+        let index = x;
+        let user = await fetch_for_user_email();
+        let response;
+        try{
+            response = await fetch(endpoints.deletion,{
+                method: 'DELETE',
+                headers:{
+                    "Content-Type": "application/json",
+                    "x-user-email": user
+                },
+                body: JSON.stringify({
+                    "project-type": "current",
+                    "project-name": title,
+                    "task-index": index
+                })
+            })
+        }catch(error){
+            console.log(error);
+        }
+        if(response.status == 200){
+            window.location.reload();
+            return;
+        }
+        window.alert("having an issue communicating to the backend \n that task wasn't removed");
+    }
+
+
+}
+
+
+const build_text_for_a_task = function(projects, i, x){
+    const taskText = document.createElement('p');
+    taskText.classList.add('task-text');
+    taskText.textContent = projects[i].tasks[x].task_description;
+    return taskText;
+}
+
+const build_checkbox_for_a_task = function(projects, i, x, taskText){
+    const checkboxButton = document.createElement('input');
+    checkboxButton.addEventListener('click', (event) => update_the_status_for_project_task(event, projects, i, x, taskText));
+    checkboxButton.type = 'checkbox';
+    checkboxButton.classList.add('task-checkbox');
+
+    return checkboxButton;
+}
+
+const build_remove_button_for_a_task = function(projects, i, x){
+    const removeButton = document.createElement('button');
+    removeButton.classList.add('task-remove-button');
+    removeButton.addEventListener('click', () => remove_a_task_from_a_project(projects, i, x));
+
+    return removeButton;
+}
+
+const build_parent_container_for_a_task = function(taskText, checkboxButton, removeButton){
+    const taskContainer = document.createElement('div');
+    taskContainer.classList.add('task-container');
+    taskContainer.appendChild(taskText);
+    taskContainer.appendChild(checkboxButton);
+    taskContainer.appendChild(removeButton);
+
+    return taskContainer;
+}
+
+
 const build_project_tasks = function(projects, i){
     const projectTaskList = document.createElement('ol');
     projectTaskList.classList.add('project-task-list');
     for(let x = 0; x < projects[i].tasks.length; x++){
-        const taskText = document.createElement('p');
-        taskText.classList.add('task-text');
-        taskText.textContent = projects[i].tasks[x].task_description;
+        const taskText = build_text_for_a_task(projects, i, x);
 
-        const checkboxButton = document.createElement('input');
-        checkboxButton.addEventListener('click', (event) => update_the_status_for_project_task(event, projects, i, x, taskText));
-        checkboxButton.type = 'checkbox';
-        checkboxButton.classList.add('task-checkbox');
+        const checkboxButton = build_checkbox_for_a_task(projects, i, x, taskText);
 
-        const removeButton = document.createElement('button');
-        removeButton.classList.add('task-remove-button');
+        const removeButton = build_remove_button_for_a_task(projects, i, x);
 
         const taskContainer = document.createElement('div');
         taskContainer.classList.add('task-container');
@@ -575,6 +637,9 @@ const build_project_tasks = function(projects, i){
 
     return projectTaskList;
 }
+
+
+
 
 const populate_project_screen = function(projects){
     console.log(projects);
@@ -634,6 +699,28 @@ const populate_project_screen = function(projects){
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 const send_a_request_to_get_user_projects = async()=>{

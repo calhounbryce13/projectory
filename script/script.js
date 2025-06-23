@@ -37,20 +37,20 @@ const check_user_login_status = async()=>{
     let loginStatus = await fetch_for_login_status();
     if(!loginStatus){
         if(window.location.pathname.endsWith('/userhome.html') || window.location.pathname.endsWith('/projects.html')){
-            window.location.assign('signup.html');
+            window.location.assign('index.html');
             return;
         }
     }
     loginStatus = await loginStatus.json();
     console.log(loginStatus);
     if(loginStatus){
-        if(window.location.pathname.endsWith('/login.html') || window.location.pathname.endsWith('/signup.html')){
+        if(window.location.pathname.endsWith('/login.html') || window.location.pathname.endsWith('/index.html')){
             window.location.assign('userhome.html');
         }
     }
     else{
         if(window.location.pathname.endsWith('/userhome.html') || window.location.pathname.endsWith('/projects.html')){
-            window.location.assign('signup.html');
+            window.location.assign('index.html');
         }
     }
 }
@@ -78,7 +78,7 @@ const user_logout_and_account_removal = async()=>{
             try{
                 user_logout();
                 delete_account(user);
-                window.location.assign('signup.html');
+                window.location.assign('index.html');
             }catch(error){
                 console.log(error);
                 window.alert("unable to remove your account");
@@ -1199,7 +1199,7 @@ const send_completion_fetch = async(title, user)=>{
         console.log(error);
     }
     if(response.status == 200){
-        window.alert("Congradulations on completing a project!");
+        window.alert("Congrats on completing a project!");
         window.location.reload();
         return;
     }

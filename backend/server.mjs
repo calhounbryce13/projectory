@@ -1,6 +1,6 @@
 /*
 Author: Bryce Calhoun
-Description: Backend REST API/database controller for Projectory's frontend
+Description: Backend account services REST API/database controller for Projectory's frontend
 */
 
 

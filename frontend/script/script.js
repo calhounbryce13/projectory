@@ -282,7 +282,6 @@ const populate_add_link_form_controls = function(myProject, projects, i){
 
 }
 
-
 const update_the_status_for_project_task = async(event, projects, i, x, text) => {
     let user = await fetch_for_user_email();
     let title = projects[i].title;
@@ -410,7 +409,6 @@ const build_tasks = function(projects, i){
             else{
                 text.style.textDecoration = 'none';
                 text.style.color = 'var(--deep-blue)';
-
             }
             console.log("\nold proj:", projects);
             projects = await get_updated_projects();
@@ -463,32 +461,40 @@ const build_task_form_container = function(){
 const build_project_delete_container = function(projects, i){
     const deleteProjectButton = document.createElement('button');
     deleteProjectButton.classList.add('remove-project-button');
+    deleteProjectButton.classList.add('delete-data-button');
     deleteProjectButton.addEventListener('click', async()=>{
-        let title = projects[i].title;
-        let user = await fetch_for_user_email();
-        let response;
-        try{
-            response = await fetch(endpoints.deletion,{
-                method: 'DELETE',
-                headers:{
-                    "Content-Type": "application/json",
-                    "x-user-email": user
-                },
-                body: JSON.stringify({
-                    "project-type": "current",
-                    "project-name": title
+        if(confirm("Are you sure you want to delete this project?\n This cannot be undone")){
+            const type = localStorage.getItem('project-type');
+            let title = projects[i].title;
+            let user = await fetch_for_user_email();
+            let response;
+            try{
+                response = await fetch(endpoints.deletion,{
+                    method: 'DELETE',
+                    headers:{
+                        "Content-Type": "application/json",
+                        "x-user-email": user
+                    },
+                    body: JSON.stringify({
+                        "project-type": type,
+                        "project-name": title
+                    })
                 })
-            })
-        }catch(error){
-            console.log(error);
-        }
-        if(response.status != 200){
-            window.alert("unable to remove that project")
+            }catch(error){
+                console.log(error);
+            }
+            if(response.status == 200){
+                window.alert("successfully removed that project from your list");
+                window.location.reload();
+                return;
+            }
+            window.alert("unable to remove that project");
         }
     });
 
     const deleteProjectContainer = document.createElement('div');
     deleteProjectContainer.classList.add('remove-project-container');
+    deleteProjectContainer.classList.add('edit-features');
     deleteProjectContainer.appendChild(deleteProjectButton);
 
     return deleteProjectContainer;
@@ -497,6 +503,8 @@ const build_project_delete_container = function(projects, i){
 const build_a_single_link = function(projects, i, x){
     const removeLinkButton = document.createElement('button');
     removeLinkButton.classList.add('remove-link-button');
+    removeLinkButton.classList.add('delete-data-button');
+    removeLinkButton.classList.add('edit-features');
     removeLinkButton.addEventListener('click', () => remove_a_link_from_a_project(projects, i, x));
 
     const linkText = document.createElement('a');
@@ -529,6 +537,7 @@ const form_to_input_new_link = function(unordered_list, projects, i){
     const formContainer = document.createElement('form');
     formContainer.addEventListener('submit',(event) => process_the_form_to_add_a_new_link(event, projects, i));
     formContainer.classList.add('add-a-new-project-link-container');
+    formContainer.classList.add('edit-features');
     formContainer.appendChild(newLinkInput);
     formContainer.appendChild(submitNewLink);
 
@@ -599,6 +608,8 @@ const build_checkbox_for_a_task = function(projects, i, x, taskText){
 const build_remove_button_for_a_task = function(projects, i, x){
     const removeButton = document.createElement('button');
     removeButton.classList.add('task-remove-button');
+    removeButton.classList.add('delete-data-button');
+    removeButton.classList.add('edit-features');
     removeButton.addEventListener('click', () => remove_a_task_from_a_project(projects, i, x));
 
     return removeButton;
@@ -614,20 +625,42 @@ const build_parent_container_for_a_task = function(taskText, checkboxButton, rem
     return taskContainer;
 }
 
-const form_to_add_a_new_task = function(projectTaskList){
+const build_input_for_a_new_task = function(){
     const newTaskInput = document.createElement('input');
+    newTaskInput.classList.add('input-for-a-new-task')
     newTaskInput.type = 'text';
-    newTaskInput.name = '';
+    newTaskInput.name = 'new-task-input';
 
+    return newTaskInput;
+}
+
+const build_button_to_add_a_new_task = function(){
     const addButton = document.createElement('button');
     addButton.classList.add('button-to-add-a-new-task');
     addButton.type = 'submit';
 
+    return addButton;
+}
+
+const build_parent_container_form_for_new_task = function(i){
     const addTaskForm = document.createElement('form');
-    addTaskForm.classList.add('form-to-add-a-new-task')
+    addTaskForm.classList.add('form-to-add-a-new-task');
+    addTaskForm.classList.add('edit-features');
+    addTaskForm.addEventListener('submit', (event) => add_to_existing_project_fetch(event, i));
+    
+    return addTaskForm;
+
+}
+
+const form_to_add_a_new_task = function(projectTaskList, i){
+    const newTaskInput = build_input_for_a_new_task();
+
+    const addButton = build_button_to_add_a_new_task();
+
+    const addTaskForm = build_parent_container_form_for_new_task(i);
+
     addTaskForm.appendChild(newTaskInput);
     addTaskForm.appendChild(addButton);
-    //addTaskForm.addEventListener('submit', () => )
 
     projectTaskList.appendChild(addTaskForm);
 
@@ -646,9 +679,29 @@ const build_project_tasks = function(projects, i){
         projectTaskList.appendChild(taskContainer);
 
     }
-    form_to_add_a_new_task(projectTaskList)
+    form_to_add_a_new_task(projectTaskList, i)
 
     return projectTaskList;
+}
+
+const toggle_edit_features = function(){
+    const editFeatures = Array.from(document.getElementsByClassName('edit-features'));
+    for(let i = 0; i < editFeatures.length; i++){
+        editFeatures[i].classList.toggle('show-edits');
+    }
+
+}
+
+const build_edit_container = function(){
+    const editButton = document.createElement('button');
+    editButton.classList.add('edit-projects-button');
+    editButton.addEventListener('click', () => toggle_edit_features())
+
+    const editContainer = document.createElement('div');
+    editContainer.classList.add('edit-projects-container');
+    editContainer.appendChild(editButton);
+
+    return editContainer;
 }
 
 
@@ -656,11 +709,16 @@ const build_project_tasks = function(projects, i){
 
 const populate_project_screen = function(projects){
     console.log(projects);
+    let parentContainer = Array.from(document.getElementsByClassName('user-projects'))[0];
+    console.log(parentContainer);
+    const editButtonContainer = build_edit_container();
+    parentContainer.appendChild(editButtonContainer);
+
     for(let i = 0; i < projects.length; i++){
         let myProject = document.createElement('div');
         myProject.classList.add('my-project');
 
-        const deleteProjectContainer = build_project_delete_container();
+        const deleteProjectContainer = build_project_delete_container(projects, i);
         const projectTitle = build_project_title(projects, i);
         const projectGoal = build_goal(projects, i);
 
@@ -676,6 +734,10 @@ const populate_project_screen = function(projects){
             myProject.appendChild(projectTasks);
 
 
+        }
+        else if(localStorage.getItem('project-type') == 'completed'){
+            const addNewContainer = document.getElementById('add-new-container');
+            addNewContainer.style.display = 'none';
         }
         
         /*
@@ -700,17 +762,9 @@ const populate_project_screen = function(projects){
             myProject.appendChild(taskList);
             myProject.appendChild(taskFormContainer);
         }
-        */
-
-
-
-        //! the parent container to hold user projects is undefined here
-        let parentContainer = Array.from(document.getElementsByClassName('user-projects'))[0];
+        */    
         parentContainer.appendChild(myProject);
-
-        
     }
-
 }
 
 
@@ -959,7 +1013,9 @@ let error_message = function(message){
     
 }
 
-const add_to_existing_project_fetch = async(newText, i)=>{
+const add_to_existing_project_fetch = async(event, i)=>{
+    event.preventDefault();
+    const newText = event.target.elements['new-task-input'].value;
     let response;
     try{
         response = await fetch(endpoints.subtask_generator, {
@@ -970,17 +1026,15 @@ const add_to_existing_project_fetch = async(newText, i)=>{
             credentials: "include",
             body: JSON.stringify({"new task":newText, "index": i})
         });
-        if(response.status != 200){
-            error_message("There was an issue adding that last task to your project, please try again.")
-        }
-        else{
-            error_message("Success! A new task was added to your project");
+        if(response.status == 200){
+            window.alert("Success! A new task was added to your project");
+            window.location.reload();
+            return;
         }
     }catch(error){
         console.log(error);
-        error_message("There was an issue adding that last task to your project, please try again.")
     }
-
+    window.alert("There was an issue adding that last task to your project\n please try again.");
 
 }
 
@@ -1052,12 +1106,13 @@ const create_new_project_functionality = function(){
                 }
                 if(response){
                     if(response.status == 200){
-                        event.target.reset();
-                        error_message("success! new planned project has been saved");
+                        //event.target.reset();
+                        window.alert("success! new planned project has been saved");
+                        window.location.reload();
                         return;
                     }
                 }
-                error_message("there seems to have been an issue submitting your project, please try again");
+                window.alert("there seems to have been an issue submitting your project\n please try again");
                 
             }
             else{
@@ -1088,12 +1143,13 @@ const create_new_project_functionality = function(){
                 }
                 if(response){
                     if(response.status == 200){
-                        event.target.reset();
-                        error_message("success! new current project has been saved");
+                        //event.target.reset();
+                        window.alert("success! new current project has been saved");
+                        window.location.reload();
                         return;
                     }
                 }
-                error_message("there seems to have been an issue submitting your project, please try again");
+                window.alert("there seems to have been an issue submitting your project, please try again");
             }
         });
     }
@@ -1131,7 +1187,7 @@ const add_task_to_new_functionality = function(){
 const send_completion_fetch = async(title, user)=>{
     let response;
     try{
-        response = await fetch('http://127.0.0.1:5000/completed-project-manager', {
+        response = await fetch(endpoints.projectManager, {
             method: 'PUT',
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
@@ -1140,12 +1196,14 @@ const send_completion_fetch = async(title, user)=>{
             })
         });
     }catch(error){
-        return false;
+        console.log(error);
     }
     if(response.status == 200){
-        return true;
+        window.alert("Congradulations on completing a project!");
+        window.location.reload();
+        return;
     }
-
+    window.alert("There was an issue trying to move that project into the completed section\n please try again");
 }
 
 const check_for_complete = function(projects, i, user){
@@ -1156,7 +1214,9 @@ const check_for_complete = function(projects, i, user){
             return;
         }
     }
-    let result = send_completion_fetch(projects[i].title, user);
+    if(confirm("marking this step 'complete' will move the project into your completed section. Are you sure it's all done?")){
+        send_completion_fetch(projects[i].title, user);
+    }
 }
 
 const get_updated_projects = async()=>{

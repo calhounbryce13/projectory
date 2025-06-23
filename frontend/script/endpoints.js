@@ -17,5 +17,6 @@ export const endpoints = {
     link_inserter: host2 + "link-inserter",
     deletion: host3 + "deletion",
     loginStatus: host + "login-status",
-    taskManager: host4 + "task-manager"
+    taskManager: host4 + "task-manager",
+    projectManager: host4 + "completed-project-manager"
 }

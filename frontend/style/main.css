@@ -4,7 +4,7 @@
 
 :root{
 
-    --border-color: rgba(255, 0, 0, 1);
+    --border-color: rgba(255, 0, 0, 0);
 
 
     --off-white: rgba(247, 249, 252, 1.0);
@@ -53,9 +53,10 @@
     background-repeat: no-repeat;
     background-size: contain;
     height: 2vw;
-    width: 5vw;
+    width: 3vw;
     margin: 1vh;
     border: 2px solid var(--border-color);
+    display: none;
 
 }
 
@@ -76,7 +77,7 @@
 }
 
 .remove-project-container{
-    display: flex;
+    display: none;
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
@@ -103,6 +104,7 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
+    display: none;
 }
 
 .project-header-container{
@@ -126,7 +128,7 @@
 .container-for-a-single-link{
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     width: 100%;
     height: auto;
@@ -144,7 +146,7 @@
 }
 
 .add-a-new-project-link-container{
-    display: flex;
+    display: none;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
@@ -185,6 +187,10 @@
     font-size: 1vw;
 }
 
+ul{
+    padding-inline-start: 0px;
+}
+
 .task-checkbox{
     height: 2vw;
     width: 2vw;
@@ -196,7 +202,8 @@
     background-repeat: no-repeat;
     background-size: contain;
     height: 2vw;
-    width: 2vw;
+    width: 3vw;
+    display: none;
 
 }
 
@@ -223,13 +230,42 @@
 }
 
 .form-to-add-a-new-task{
-    display: flex;
+    display: none;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     height: auto;
-    width: 80%;
+    width: 90%;
     
+}
+
+.edit-projects-button{
+    height: 3vw;
+    width: 3vw;
+    background-image: url('../icons/edit-icon.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: grey;
+}
+
+.edit-projects-container{
+    margin-top: 2vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    height: auto;
+    width: 80%;
+    border: 2px solid var(--border-color);
+}
+
+.show-edits{
+    display: flex;
+}
+
+.delete-data-button{
+    background-color: red;
 }
 
 
@@ -696,6 +732,14 @@ footer{
     input{
         width: 45vw;
     }
+    .new-project-link-input{
+        width: 45vw;
+
+    }
+    .task-remove-button{
+        height: 6vw;
+        width: 6vw;
+    }
     label{
         font-size: 4.25vw;
     }
@@ -741,12 +785,26 @@ footer{
     .my-project{
         width: 90%;
     }
-    .project-title-container{
-        font-size: 6vw;
+    .project-title{
+        font-size: 8vw;
+    }
+    .project-goal{
+        font-size: 4vw;
+    }
+    .project-link-text{
+        font-size: 4vw;
+        max-width: 75%;
     }
     .subtask{
         width: 85%;
         margin-bottom: 2%;
+    }
+    .task-text{
+        font-size: 4vw;
+    }
+    .task-checkbox{
+        height: 8vw;
+        width: 8vw;
     }
     .add-new{
         width: 16vw;
@@ -756,6 +814,17 @@ footer{
     }
     #h2-container{
         width: 98%;
+    }
+    .user-projects{
+        width: 90%;
+    }
+    .edit-projects-button{
+        height: 12vw;
+        width: 12vw;
+    }
+    .remove-link-button{
+        height: 6vw;
+        width: 6vw;
     }
 
 }

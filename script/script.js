@@ -50,7 +50,7 @@ const check_user_login_status = async()=>{
     }
     else{
         if(window.location.pathname.endsWith('/userhome.html') || window.location.pathname.endsWith('/projects.html')){
-            window.location.assign('index.html');
+            //window.location.assign('index.html');
         }
     }
 }

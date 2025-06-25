@@ -164,7 +164,7 @@ const build_goal = function(projects, i){
 }
 
 const fetch_for_user_email = async()=>{
-    let response = await fetch('http://127.0.0.1:3000/get-user-email', {
+    let response = await fetch(endpoints.user_email, {
         method: 'GET',
         credentials: 'include'
     });

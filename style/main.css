@@ -435,11 +435,6 @@ footer{
     font-size: 1.5vw;
 }
 
-.formButton:hover{
-    color: var(--yellow-gold);
-    background-color: var(--deep-blue);
-}
-
 .formButtonAlt{
     margin-top: 4vh;
     margin-bottom: 4vh;
@@ -451,11 +446,18 @@ footer{
     animation: myanimation 1.2s ease-out forwards;
     animation-delay: 1000ms;
 }
-
-.formButtonAlt:hover{
-    color: var(--yellow-gold);
-    background-color: var(--deep-blue);
+@media(min-width:900px){
+    .formButton:hover{
+        color: var(--yellow-gold);
+        background-color: var(--deep-blue);
+    }
+    .formButtonAlt:hover{
+        color: var(--yellow-gold);
+        background-color: var(--deep-blue);
+    }
 }
+
+
 
 #requirements{
     height: 8%;
@@ -508,10 +510,7 @@ footer{
     width: 15%;
 }
 
-.logout-button:hover{
-    background-color: var(--deep-blue);
-    background-image: url('../icons/logout-icon-hover.svg');
-}
+
 
 .home-screen-buttons{
     height: 10vh;
@@ -523,9 +522,16 @@ footer{
     color: var(--deep-blue);
 }
 
-.home-screen-buttons:hover{
-    color: var(--yellow-gold);
-    background-color: var(--deep-blue);
+@media(min-width:900px){
+    .logout-button:hover{
+        background-color: var(--deep-blue);
+        background-image: url('../icons/logout-icon-hover.svg');
+    }
+    .home-screen-buttons:hover{
+        color: var(--yellow-gold);
+        background-color: var(--deep-blue);
+    }
+
 }
 
 #completed{

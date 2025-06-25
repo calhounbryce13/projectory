@@ -1,7 +1,2 @@
-/backend/node_modules
-
-backend/testing.http
-microservice-B/__pycache__/model.cpython-312.pyc
-microservice-B/config.py
-/.vscode
+.vscode
 

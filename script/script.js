@@ -389,7 +389,7 @@ const build_tasks = function(projects, i){
             }
             let serviceBresponse;
             try{
-                serviceBresponse = await fetch('http://127.0.0.1:5000/task-manager', {
+                serviceBresponse = await fetch(endpoints.taskManager, {
                     method: 'POST',
                     headers:{"Content-Type": "application/json"},
                     body: JSON.stringify({

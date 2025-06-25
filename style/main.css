@@ -5,6 +5,7 @@
 :root{
 
     --border-color: rgba(255, 0, 0, 0);
+    --edit-projects-button: rgb(204, 204, 204);
 
 
     --off-white: rgba(247, 249, 252, 1.0);
@@ -142,8 +143,18 @@
     text-overflow: ellipsis;
     height: auto;
     border: 2px dotted var(--border-color);
+}
+
+@media(min-width:900px){
+    .project-link-text:hover{
+        color: var(--yellow-gold);
+    }
+    .project-link-text:active{
+        color: var(--deep-blue);
+    }
 
 }
+
 
 .add-a-new-project-link-container{
     display: none;
@@ -246,7 +257,7 @@ ul{
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
-    background-color: grey;
+    background-color: var(--edit-projects-button);
 }
 
 .edit-projects-container{
@@ -794,6 +805,9 @@ footer{
     .project-link-text{
         font-size: 4vw;
         max-width: 75%;
+    }
+    .project-link-text:active{
+        color: var(--yellow-gold);
     }
     .subtask{
         width: 85%;

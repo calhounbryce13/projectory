@@ -1,7 +1,7 @@
 
 
 const host = "https://projectory-main-login-service-d59280e6043c.herokuapp.com/";
-const host2 = "http://127.0.0.1:4000/";
+const host2 = "https://projectory-hyperlink-service-94d5374366ce.herokuapp.com/";
 const host3 = "http://127.0.0.1:8000/";
 const host4 = "http://127.0.0.1:5000/";
 

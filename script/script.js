@@ -263,24 +263,6 @@ const process_the_form_to_add_a_new_link = async(event, projects, i)=>{
     }
 }
 
-const populate_add_link_form_controls = function(myProject, projects, i){
-    let textInput = document.createElement('input');
-    textInput.type = 'text';
-    textInput.placeholder = 'url link';
-    textInput.name = 'add-new-link-input';
-
-    let subButton = document.createElement('button');
-    subButton.type = 'submit';
-    subButton.classList.add('add-link-button');
-
-    let myForm = document.createElement('form');
-    myForm.addEventListener('submit', process_the_form_to_add_a_new_link(event))
-    myForm.appendChild(textInput);
-    myForm.appendChild(subButton);
-
-    myProject.appendChild(myForm);
-
-}
 
 const update_the_status_for_project_task = async(event, projects, i, x, text) => {
     let user = await fetch_for_user_email();
@@ -321,139 +303,6 @@ const update_the_status_for_project_task = async(event, projects, i, x, text) =>
     check_for_complete(projects, i, user)
 }
 
-const build_tasks = function(projects, i){
-    let taskList = document.createElement('ol');
-    for(let j = 0; j < projects[i].tasks.length; j++){
-
-        const text = document.createElement('p');
-        //text.classList.add('');
-        text.textContent = projects[i].tasks[j].task_description;
-
-        const checkBox = document.createElement('input');
-        checkBox.classList.add('task-completion-checkbox');
-        checkBox.type = 'checkbox';
-        if(projects[i].tasks[j].is_complete == 1){
-            checkBox.checked = true;
-            text.style.textDecoration = 'line-through';
-            text.style.color = 'red';
-        }
-
-        let taskContainer = document.createElement('div');
-        taskContainer.classList.add('subtask-container');
-        taskContainer.appendChild(text);
-        taskContainer.appendChild(checkBox);
-
-        const removeTaskButton = document.createElement('button');
-        removeTaskButton.classList.add('remove-task-button');
-        removeTaskButton.addEventListener('click', async()=>{
-            let title = projects[i].title;
-            let index = j;
-            let user = await fetch_for_user_email();
-            let response;
-            try{
-                response = await fetch('http://127.0.0.1:8000/deletion',{
-                    method: 'DELETE',
-                    headers:{
-                        "Content-Type": "application/json",
-                        "x-user-email": user
-                    },
-                    body: JSON.stringify({
-                        "project-type": "current",
-                        "project-name": title,
-                        "task-index": index
-                    })
-                })
-            }catch(error){
-                console.log(error);
-            }
-            if(response.status != 200){
-                window.alert("unable to remove that task")
-            }
-        })
-
-        taskContainer.appendChild(removeTaskButton);
-
-        checkBox.addEventListener('click', async(event)=>{
-            let user = await fetch_for_user_email();
-            let title = projects[i].title;
-            let index = j;
-            let mark;
-            if(event.target.checked){
-                mark = 1;
-            }
-            else{
-                mark = 0;
-            }
-            let serviceBresponse;
-            try{
-                serviceBresponse = await fetch(endpoints.taskManager, {
-                    method: 'POST',
-                    headers:{"Content-Type": "application/json"},
-                    body: JSON.stringify({
-                        "userEmail": user,
-                        "projectTitle": title,
-                        "index": index,
-                        "statusMark": mark
-                    })
-                });
-            }catch(error){
-                console.log(error);
-            }
-            if(serviceBresponse.status == 200 && mark){
-                text.style.textDecoration = 'line-through';
-                text.style.color = 'red';
-            }
-            else{
-                text.style.textDecoration = 'none';
-                text.style.color = 'var(--deep-blue)';
-            }
-            console.log("\nold proj:", projects);
-            projects = await get_updated_projects();
-            console.log("\nnew proj:", projects);
-            check_for_complete(projects, i, user)
-
-        });
-
-        let index = document.createElement('li');
-        index.appendChild(taskContainer);
-        taskList.appendChild(index);
-    }
-    return taskList;
-}
-
-const build_task_form_container = function(){
-    const label = document.createElement('label');
-    label.textContent = 'Task: ';
-
-    const input = document.createElement('input');
-    input.type = 'text';
-    input.name = 'a-new-task';
-
-    const container = document.createElement('div');
-    container.appendChild(label);
-    container.appendChild(input);
-
-    const buttonContainer = document.createElement('div');
-
-    const button = document.createElement('button');
-    button.classList.add('new-task-button');
-    button.type = 'button';
-    button.textContent = 'add to project';
-
-    buttonContainer.appendChild(button);
-
-    const fieldset = document.createElement('fieldset');
-    fieldset.classList.add('additional-task-fieldset');
-    fieldset.appendChild(container);
-    fieldset.appendChild(buttonContainer);
-
-
-    const parent = document.createElement('div');
-    parent.appendChild(fieldset);
-    parent.classList.add('additional-task-container');
-
-    return parent;
-}
 
 const build_project_delete_container = function(projects, i){
     const deleteProjectButton = document.createElement('button');
@@ -702,8 +551,6 @@ const build_edit_container = function(){
 }
 
 
-
-
 const populate_project_screen = function(projects){
     console.log(projects);
     let parentContainer = Array.from(document.getElementsByClassName('user-projects'))[0];
@@ -736,54 +583,9 @@ const populate_project_screen = function(projects){
             const addNewContainer = document.getElementById('add-new-container');
             addNewContainer.style.display = 'none';
         }
-        
-        /*
-
-        let projectHeaderContainer = document.createElement('div');
-        projectHeaderContainer.classList.add('container');
-        projectHeaderContainer.classList.add('project-header-container');
-        projectHeaderContainer.appendChild(removeProjectButton);
-
-        
-
-        myProject.appendChild(projectHeaderContainer);
-        myProject.appendChild(titleContainer);
-        myProject.appendChild(goalContainer);
-        
-
-        if(localStorage.getItem('project-type') == 'current'){
-            populate_links_view(myProject, projects, i);
-            populate_add_link_form_controls(myProject, projects, i);
-            let taskList = build_tasks(projects, i);
-            let taskFormContainer = build_task_form_container();
-            myProject.appendChild(taskList);
-            myProject.appendChild(taskFormContainer);
-        }
-        */    
         parentContainer.appendChild(myProject);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -906,8 +708,6 @@ const registration_and_login_fetch = async(email, pass, endpoint)=>{
         return response;
     }catch(error){
         console.log(error);
-        
-
         error_message("There seems to be an issue connecting to backend web services at the moment :/");
         return null;
     }
@@ -975,19 +775,7 @@ const restore_body = function(oldBody){
 
 const styled_container = function(){
     const res = document.createElement('div');
-    const styler = res.style;
-    styler.width = '30%'
-    styler.display = 'flex';
-    styler.justifyContent = 'center';
-    styler.alignItems = 'center';
-    styler.height = 'auto';
-    styler.backgroundColor = 'var(--strong-blue)';
-    styler.borderRadius = '20px';
-    styler.marginTop = "30vh";
-    styler.color = 'var(--yellow-gold)';
-    styler.fontSize = '250%';
-    styler.textAlign = 'center';
-    styler.padding = '3%';
+    res.classList.add('system-message-container');
     return res;
 }
 

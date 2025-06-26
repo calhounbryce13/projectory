@@ -756,7 +756,7 @@ footer{
         font-size: 7vw;
     }
     h3{
-        font-size: 6.0vw;
+        font-size: 4.0vw;
         max-width: 50vw;
     }
     form{
@@ -861,6 +861,9 @@ footer{
     .remove-link-button{
         height: 6vw;
         width: 6vw;
+    }
+    .user-home-header-text{
+        font-size: 6.0vw;
     }
 
 }

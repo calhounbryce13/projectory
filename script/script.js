@@ -317,11 +317,8 @@ const update_the_status_for_project_task = async(event, projects, i, x, text) =>
         console.log(error);
         window.alert("There is an issue communicating with the server\n that update was not saved.");
     }
-    console.log("\nold proj:", projects);
     projects = await get_updated_projects();
-    console.log("\nnew proj:", projects);
     check_for_complete(projects, i, user)
-
 }
 
 const build_tasks = function(projects, i){

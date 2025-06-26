@@ -305,17 +305,17 @@ const update_the_status_for_project_task = async(event, projects, i, x, text) =>
                 "statusMark": mark
             })
         });
+        if(serviceBresponse.status == 200 && mark){
+            text.style.textDecoration = 'line-through';
+            text.style.color = 'red';
+        }
+        else{
+            text.style.textDecoration = 'none';
+            text.style.color = 'var(--deep-blue)';
+        }
     }catch(error){
         console.log(error);
-    }
-    if(serviceBresponse.status == 200 && mark){
-        text.style.textDecoration = 'line-through';
-        text.style.color = 'red';
-    }
-    else{
-        text.style.textDecoration = 'none';
-        text.style.color = 'var(--deep-blue)';
-
+        window.alert("There is an issue communicating with the server\n that update was not saved.");
     }
     console.log("\nold proj:", projects);
     projects = await get_updated_projects();

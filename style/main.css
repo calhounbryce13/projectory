@@ -108,7 +108,7 @@
     height: 50%;
     width: 25%;
     background-image: url('../icons/delete-icon.svg');
-    background-color: red;
+    background-color: var(--delete-data-color);
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;

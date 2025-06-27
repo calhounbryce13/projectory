@@ -253,7 +253,7 @@ ul{
 .edit-projects-button{
     height: 3vw;
     width: 3vw;
-    background-image: url('../icons/edit-icon.png');
+    background-image: url('../icons/edit-icon.svg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
@@ -847,6 +847,7 @@ footer{
     }
     #home-button{
         width: 12vw;
+        height: 12vw;
     }
     #h2-container{
         width: 98%;

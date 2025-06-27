@@ -837,6 +837,8 @@ footer{
     }
     .task-text{
         font-size: 4vw;
+        max-width: 70%;
+        height: auto;
     }
     .task-checkbox{
         height: 8vw;

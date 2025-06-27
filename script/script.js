@@ -63,7 +63,7 @@ const user_logout = async()=>{
 }
 
 const delete_account = async(user)=>{
-    deleteResponse = await fetch('http://127.0.0.1:8000/deletion',{
+    deleteResponse = await fetch(endpoints.deletion,{
         method: 'DELETE',
         headers:{
             "x-user-email": user
@@ -303,40 +303,42 @@ const update_the_status_for_project_task = async(event, projects, i, x, text) =>
     check_for_complete(projects, i, user)
 }
 
-
-const build_project_delete_container = function(projects, i){
-    const deleteProjectButton = document.createElement('button');
-    deleteProjectButton.classList.add('remove-project-button');
-    deleteProjectButton.classList.add('delete-data-button');
-    deleteProjectButton.addEventListener('click', async()=>{
-        if(confirm("Are you sure you want to delete this project?\n This cannot be undone")){
-            const type = localStorage.getItem('project-type');
-            let title = projects[i].title;
-            let user = await fetch_for_user_email();
-            let response;
-            try{
-                response = await fetch(endpoints.deletion,{
-                    method: 'DELETE',
-                    headers:{
-                        "Content-Type": "application/json",
-                        "x-user-email": user
-                    },
-                    body: JSON.stringify({
-                        "project-type": type,
-                        "project-name": title
-                    })
+const delete_user_project = async(projects, i) => {
+    if(confirm("Are you sure you want to delete this project?\n This cannot be undone")){
+        const type = localStorage.getItem('project-type');
+        let title = projects[i].title;
+        let user = await fetch_for_user_email();
+        let response;
+        try{
+            response = await fetch(endpoints.deletion,{
+                method: 'DELETE',
+                headers:{
+                    "Content-Type": "application/json",
+                    "x-user-email": user
+                },
+                body: JSON.stringify({
+                    "project-type": type,
+                    "project-name": title
                 })
-            }catch(error){
-                console.log(error);
-            }
+            });
             if(response.status == 200){
                 window.alert("successfully removed that project from your list");
                 window.location.reload();
                 return;
             }
-            window.alert("unable to remove that project");
+        }catch(error){
+            console.log(error);
         }
-    });
+        window.alert("unable to remove that project");
+    }
+}
+
+
+const build_project_delete_container = function(projects, i){
+    const deleteProjectButton = document.createElement('button');
+    deleteProjectButton.classList.add('remove-project-button');
+    deleteProjectButton.classList.add('delete-data-button');
+    deleteProjectButton.addEventListener('click', () => delete_user_project(projects, i));
 
     const deleteProjectContainer = document.createElement('div');
     deleteProjectContainer.classList.add('remove-project-container');

@@ -178,7 +178,7 @@ const send_request_to_remove_a_link = async(title, user, linkText)=>{
     const response = await fetch(endpoints.link_remover, {
         method: 'DELETE',
         headers: {
-            "Content-Type": "application/json"
+            "Content-type": "application/json"
         },
         body: JSON.stringify({
             "userEmail": user,
@@ -231,7 +231,7 @@ const send_a_request_to_insert_a_link = async(title, user, linkText)=>{
     const response = await fetch(endpoints.link_inserter, {
         method: 'PUT',
         headers: {
-            "Content-Type": "application/json"
+            "Content-type": "application/json"
         },
         body: JSON.stringify({
             "userEmail": user,
@@ -279,7 +279,7 @@ const update_the_status_for_project_task = async(event, projects, i, x, text) =>
     try{
         serviceBresponse = await fetch(endpoints.taskManager, {
             method: 'POST',
-            headers:{"Content-Type": "application/json"},
+            headers:{"Content-type": "application/json"},
             body: JSON.stringify({
                 "userEmail": user,
                 "projectTitle": title,
@@ -313,7 +313,7 @@ const delete_user_project = async(projects, i) => {
             response = await fetch(endpoints.deletion,{
                 method: 'DELETE',
                 headers:{
-                    "Content-Type": "application/json",
+                    "Content-type": "application/json",
                     "x-user-email": user
                 },
                 body: JSON.stringify({
@@ -414,7 +414,7 @@ const remove_a_task_from_a_project = async(projects, i, x) => {
             response = await fetch(endpoints.deletion,{
                 method: 'DELETE',
                 headers:{
-                    "Content-Type": "application/json",
+                    "Content-type": "application/json",
                     "x-user-email": user
                 },
                 body: JSON.stringify({
@@ -469,8 +469,10 @@ const build_parent_container_for_a_task = function(taskText, checkboxButton, rem
     taskContainer.appendChild(taskText);
     taskContainer.appendChild(checkboxButton);
     taskContainer.appendChild(removeButton);
+    const listIndex = document.createElement('li');
+    listIndex.appendChild(taskContainer);
 
-    return taskContainer;
+    return listIndex;
 }
 
 const build_input_for_a_new_task = function(){
@@ -478,6 +480,7 @@ const build_input_for_a_new_task = function(){
     newTaskInput.classList.add('input-for-a-new-task')
     newTaskInput.type = 'text';
     newTaskInput.name = 'new-task-input';
+    newTaskInput.placeholder = 'Additional step here';
 
     return newTaskInput;
 }
@@ -699,7 +702,7 @@ const registration_and_login_fetch = async(email, pass, endpoint)=>{
             body: JSON.stringify({"userEmail": email, "userPassword": pass}),
             credentials: "include",
             headers: {
-                "Content-Type": "application/json",
+                "Content-type": "application/json",
             }
         });
         return response;
@@ -971,7 +974,7 @@ const send_completion_fetch = async(title, user)=>{
     try{
         response = await fetch(endpoints.projectManager, {
             method: 'PUT',
-            headers: {"Content-Type": "application/json"},
+            headers: {"Content-type": "application/json"},
             body: JSON.stringify({
                     "userEmail": user,
                     "projectTitle": title

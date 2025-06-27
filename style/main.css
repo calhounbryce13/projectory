@@ -22,12 +22,19 @@
     --yellow-gold: #ffb703;
     --gold: #fb8500;
 
+    --light-crimson: #f56991;
+    --mint-green: #adebb3;
+    --delete-data-color: var(--light-crimson);
+    --add-data-color: var(--mint-green);
+
 }
 
 
 *{
     font-family: 'Cal Sans';
 }
+
+
 .container{
     display: flex;
     justify-content: center;
@@ -162,12 +169,16 @@
     justify-content: space-between;
     align-items: center;
     width: auto;
+    max-width: 100%;
     height: 10vh;
     border: 2px solid var(--border-color);
+    background-color: var(--add-data-color);
+    margin-top: 3vh;
+    margin-bottom: 3vh;
 }
 
 .new-project-link-submit{
-    background-image: url('../icons/plus-icon.svg');
+    background-image: url('../icons/submit-icon.svg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
@@ -227,17 +238,19 @@ ul{
 }
 
 .input-for-a-new-task{
-    font-size: 2vw;
+    font-size: 1vw;
     width: 70%;
+
 }
 
 .button-to-add-a-new-task{
-    height: 3vh;
-    width: 3vh;
-    background-image: url('../icons/plus-icon.svg');
+    height: 3.5vh;
+    width: 3.5vh;
+    background-image: url('../icons/submit-icon.svg');
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
+    border: 2px solid var(--deep-blue);
 }
 
 .form-to-add-a-new-task{
@@ -247,6 +260,10 @@ ul{
     align-items: center;
     height: auto;
     width: 90%;
+    background-color: var(--add-data-color);
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    padding: 2vh;
     
 }
 
@@ -276,7 +293,7 @@ ul{
 }
 
 .delete-data-button{
-    background-color: red;
+    background-color: var(--delete-data-color);
 }
 
 .system-message-container{
@@ -415,6 +432,9 @@ ol{
     flex-direction: column;
     align-items: flex-start;
     border: 2px solid var(--border-color);
+}
+li{
+    width: 100%;
 }
 
 footer{
@@ -770,8 +790,8 @@ footer{
 
     }
     .task-remove-button{
-        height: 6vw;
-        width: 6vw;
+        height: 8vw;
+        width: 8vw;
     }
     label{
         font-size: 4.25vw;
@@ -867,6 +887,14 @@ footer{
     }
     .user-home-header-text{
         font-size: 6.0vw;
+    }
+    .input-for-a-new-task{
+        font-size: 3vw;
+        width: 80%;
+    
+    }
+    .form-to-add-a-new-task{
+        width: 80%;
     }
 
 }

@@ -606,20 +606,15 @@ const send_a_request_to_get_user_projects = async()=>{
 }
 
 const get_project_data = async()=>{
-    console.log(localStorage.getItem("project-type"))
-
-    let projects;
+    console.log(localStorage.getItem("project-type"));
     try{
-        projects = await send_a_request_to_get_user_projects();
+        let projects = await send_a_request_to_get_user_projects();
+        if(projects){
+            let userProjects = await projects.json();
+            populate_project_screen(userProjects);
+        }
     }catch(error){
         console.log(error);
-    }
-    if(projects){
-        let userProjects = await projects.json();
-        populate_project_screen(userProjects);
-    }
-    else{
-        //show_error_message();
     }
     const addNewProjectButton = Array.from(document.getElementsByClassName('add-new'))[0];
     addNewProjectButton.addEventListener('click', (event)=>{

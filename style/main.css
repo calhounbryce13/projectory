@@ -765,7 +765,6 @@ footer{
 
 @media(max-width:900px){
     body{
-        padding: 0%;
         padding-bottom: 2%;
     }
     #projects-main{

@@ -63,12 +63,18 @@ const user_logout = async()=>{
 }
 
 const delete_account = async(user)=>{
-    deleteResponse = await fetch(endpoints.deletion,{
-        method: 'DELETE',
-        headers:{
-            "x-user-email": user
-        }
-    });
+    try{
+        deleteResponse = await fetch(endpoints.deletion,{
+            method: 'DELETE',
+            headers:{
+                "x-user-email": user
+            }
+        });
+        return deleteResponse;
+    }catch(error){
+        console.log(error);
+    }
+
 }
 
 const user_logout_and_account_removal = async()=>{
@@ -77,12 +83,14 @@ const user_logout_and_account_removal = async()=>{
             let user = await fetch_for_user_email();
             try{
                 user_logout();
-                delete_account(user);
-                window.location.assign('index.html');
+                if(delete_account(user)){
+                    window.location.assign('index.html');
+                    return;
+                }
             }catch(error){
                 console.log(error);
-                window.alert("unable to remove your account");
             }
+            window.alert("unable to remove your account");
         }
     }
 }

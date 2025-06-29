@@ -316,7 +316,7 @@ const delete_user_project = async(projects, i) => {
             response = await fetch(endpoints.deletion,{
                 method: 'DELETE',
                 headers:{
-                    "Content-type": "application/json",
+                    "Content-Type": "application/json",
                     "x-user-email": user
                 },
                 body: JSON.stringify({

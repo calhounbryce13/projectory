@@ -295,13 +295,8 @@ const update_the_status_for_project_task = async(event, projects, i, x, text) =>
                 "statusMark": mark
             })
         });
-        if(serviceBresponse.status == 200 && mark){
-            text.style.textDecoration = 'line-through';
-            text.style.color = 'red';
-        }
-        else{
-            text.style.textDecoration = 'none';
-            text.style.color = 'var(--deep-blue)';
+        if(serviceBresponse.status == 200){
+            text.classList.toggle('completed-task');
         }
     }catch(error){
         console.log(error);
@@ -532,6 +527,10 @@ const build_project_tasks = function(projects, i){
     for(let x = 0; x < projects[i].tasks.length; x++){
         const taskText = build_text_for_a_task(projects, i, x);
         const checkboxButton = build_checkbox_for_a_task(projects, i, x, taskText);
+        if(projects[i].taskList[x].is_complete == 1){
+            taskText.classList.add('completed-task');
+            checkboxButton.checked = true;
+        }
         const removeButton = build_remove_button_for_a_task(projects, i, x);
         const taskContainer = build_parent_container_for_a_task(taskText, checkboxButton, removeButton);
 

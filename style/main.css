@@ -4,7 +4,7 @@
 
 :root{
 
-    --border-color: rgba(255, 0, 0, 0);
+    --border-color: rgba(255, 0, 0, 1);
     --edit-projects-button: rgb(204, 204, 204);
 
 
@@ -318,6 +318,21 @@ ul{
     background-color: var(--deep-blue);
     margin-top: 4vh;
     margin-bottom: 4vh;
+}
+
+.project-resources{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    height: auto;
+    width: auto;
+    border: 2px solid var(--border-color);
+
+}
+.completed-task{
+    color: red;
+    text-decoration: line-through;
 }
 
 

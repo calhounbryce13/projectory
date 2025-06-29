@@ -527,7 +527,7 @@ const build_project_tasks = function(projects, i){
     for(let x = 0; x < projects[i].tasks.length; x++){
         const taskText = build_text_for_a_task(projects, i, x);
         const checkboxButton = build_checkbox_for_a_task(projects, i, x, taskText);
-        if(projects[i].taskList[x].is_complete == 1){
+        if(projects[i].tasks[x].is_complete == 1){
             taskText.classList.add('completed-task');
             checkboxButton.checked = true;
         }

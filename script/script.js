@@ -563,6 +563,35 @@ const build_edit_container = function(){
     return editContainer;
 }
 
+const build_project_card = function(projects, i, parentContainer){
+    let myProject = document.createElement('div');
+    myProject.classList.add('my-project');
+
+    const deleteProjectContainer = build_project_delete_container(projects, i);
+    const projectTitle = build_project_title(projects, i);
+    const projectGoal = build_goal(projects, i);
+
+    myProject.appendChild(deleteProjectContainer);
+    myProject.appendChild(projectTitle);
+    myProject.appendChild(projectGoal);
+
+    if(localStorage.getItem('project-type') == 'current'){
+        const projectLinks = build_project_links(projects, i);
+        myProject.appendChild(projectLinks);
+
+        const projectTasks = build_project_tasks(projects, i);
+        myProject.appendChild(projectTasks);
+    }
+
+    parentContainer.appendChild(myProject);
+}
+
+const insert_spacer = function(parentContainer){
+    const spacer = document.createElement('div');
+    spacer.classList.add('spacer');
+    parentContainer.appendChild(spacer);
+}
+
 
 const populate_project_screen = function(projects){
     console.log(projects);
@@ -572,31 +601,14 @@ const populate_project_screen = function(projects){
     parentContainer.appendChild(editButtonContainer);
 
     for(let i = 0; i < projects.length; i++){
-        let myProject = document.createElement('div');
-        myProject.classList.add('my-project');
-
-        const deleteProjectContainer = build_project_delete_container(projects, i);
-        const projectTitle = build_project_title(projects, i);
-        const projectGoal = build_goal(projects, i);
-
-        myProject.appendChild(deleteProjectContainer);
-        myProject.appendChild(projectTitle);
-        myProject.appendChild(projectGoal);
-
-        if(localStorage.getItem('project-type') == 'current'){
-            const projectLinks = build_project_links(projects, i);
-            myProject.appendChild(projectLinks);
-
-            const projectTasks = build_project_tasks(projects, i);
-            myProject.appendChild(projectTasks);
-
-
+        build_project_card(projects, i, parentContainer);
+        if(i < (projects.length - 1)){
+            insert_spacer(parentContainer);
         }
-        else if(localStorage.getItem('project-type') == 'completed'){
-            const addNewContainer = document.getElementById('add-new-container');
-            addNewContainer.style.display = 'none';
-        }
-        parentContainer.appendChild(myProject);
+    }
+    if(localStorage.getItem('project-type') == 'completed'){
+        const addNewContainer = document.getElementById('add-new-container');
+        addNewContainer.style.display = 'none';
     }
 }
 

@@ -311,6 +311,15 @@ ul{
 
 }
 
+.spacer{
+    height: 10vh;
+    width: 10vh;
+    border-radius: 50%;
+    background-color: var(--deep-blue);
+    margin-top: 4vh;
+    margin-bottom: 4vh;
+}
+
 
 
 /************************** name elements *************************************************************************/

@@ -209,9 +209,7 @@
     font-size: 1vw;
 }
 
-ul{
-    padding-inline-start: 0px;
-}
+
 
 .task-checkbox{
     height: 2vw;
@@ -335,6 +333,22 @@ ul{
     text-decoration: line-through;
 }
 
+.mockup-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 95%;
+    height: auto;
+    border: 2px solid var(--border-color);
+    margin-bottom: 15vh;
+}
+
+#device-mockups{
+    height: 60vh;
+    width: 60vw;
+    max-width: 100%;
+}
+
 
 
 /************************** name elements *************************************************************************/
@@ -399,6 +413,10 @@ h3{
 strong{
     font-weight: 500;
     color: var(--yellow-gold);
+}
+
+ul{
+    padding-inline-start: 0px;
 }
 
 form{
@@ -918,6 +936,19 @@ footer{
     }
     .form-to-add-a-new-task{
         width: 80%;
+    }
+    .mockup-container{
+        width: 95%;
+        height: auto;
+        border: 2px solid var(--border-color);
+        margin-bottom: 15vh;
+        margin-top: 3vh;
+    }
+    
+    #device-mockups{
+        height: 25vh;
+        width: 90vw;
+        max-width: 100%;
     }
 
 }

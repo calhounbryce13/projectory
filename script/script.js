@@ -605,7 +605,7 @@ const populate_project_screen = function(projects){
             insert_spacer(parentContainer);
         }
     }
-    if(localStorage.getItem('project-type') == 'completed'){
+    if(localStorage.getItem('project-type') == 'complete'){
         const addNewContainer = document.getElementById('add-new-container');
         addNewContainer.style.display = 'none';
     }
@@ -1050,7 +1050,7 @@ const get_buttons = function(){
     let res = [];
     res.push(document.getElementById('current'));
     res.push(document.getElementById('planned'));
-    res.push(document.getElementById('completed'));
+    res.push(document.getElementById('complete'));
     return res;
 }
 

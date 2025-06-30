@@ -716,6 +716,7 @@ const signup_functionality = function(){
 const registration_and_login_fetch = async(email, pass, endpoint)=>{
     
     try{
+        console.log("sending a request to account services");
         let response = await fetch(endpoint,{
             method: 'POST',
             body: JSON.stringify({"userEmail": email, "userPassword": pass}),

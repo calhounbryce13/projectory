@@ -728,7 +728,7 @@ const registration_and_login_fetch = async(email, pass, endpoint)=>{
         return response;
     }catch(error){
         console.log(error);
-        window.alert("There seems to be an issue connecting to backend web services at the moment :/");
+        error_message("There seems to be an issue connecting to backend web services at the moment :/");
         return null;
     }
 }

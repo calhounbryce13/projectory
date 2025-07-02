@@ -418,6 +418,7 @@ const build_project_links = function(projects, i){
 
     const resourceLabel = document.createElement('p');
     resourceLabel.textContent = 'resources';
+    resourceLabel.classList.add('resource-links-label');
     const resourceLabelContainer = document.createElement('div');
     resourceLabelContainer.classList.add('container', 'project-resources-label');
     resourceLabelContainer.appendChild(resourceLabel);

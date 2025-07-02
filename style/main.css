@@ -286,9 +286,6 @@
     border: 2px solid var(--border-color);
 }
 
-.show-edits{
-    display: flex;
-}
 
 .delete-data-button{
     background-color: var(--delete-data-color);
@@ -389,6 +386,10 @@
     height: auto;
 }
 
+
+.show-edits{
+    display: flex;
+}
 
 
 /************************** name elements *************************************************************************/

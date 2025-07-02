@@ -404,7 +404,6 @@ const form_to_input_new_link = function(unordered_list, projects, i){
     const formContainer = document.createElement('form');
     formContainer.addEventListener('submit',(event) => process_the_form_to_add_a_new_link(event, projects, i));
     formContainer.classList.add('add-a-new-project-link-container');
-    formContainer.classList.add('edit-features');
     formContainer.appendChild(newLinkInput);
     formContainer.appendChild(submitNewLink);
 

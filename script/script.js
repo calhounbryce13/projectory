@@ -383,6 +383,8 @@ const wrap_data_entry_form_in_an_instruction_block = function(form, instructions
 
     instructionBlock.appendChild(instructionText);
     instructionBlock.appendChild(form);
+
+    return instructionBlock;
 }
 
 const form_to_input_new_link = function(unordered_list, projects, i){
@@ -405,9 +407,9 @@ const form_to_input_new_link = function(unordered_list, projects, i){
     formContainer.appendChild(submitNewLink);
 
     const instructions = 'use this field to add an additional resource to this set of project resources';
-    wrap_data_entry_form_in_an_instruction_block(formContainer, instructions);
+    const instructionBlock = wrap_data_entry_form_in_an_instruction_block(formContainer, instructions);
 
-    unordered_list.appendChild(formContainer);
+    unordered_list.appendChild(instructionBlock);
 }
 
 const build_project_links = function(projects, i){
@@ -530,9 +532,9 @@ const build_parent_container_form_for_new_task = function(i){
     addTaskForm.classList.add('edit-features');
     addTaskForm.addEventListener('submit', (event) => add_to_existing_project_fetch(event, i));
     const instructions = 'use this field to add a new subtask to the end of this project';
-    wrap_data_entry_form_in_an_instruction_block(addTaskForm, instructions);
+    const instructionBlock = wrap_data_entry_form_in_an_instruction_block(addTaskForm, instructions);
     
-    return addTaskForm;
+    return instructionBlock;
 
 }
 

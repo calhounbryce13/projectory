@@ -405,7 +405,7 @@ const form_to_input_new_link = function(unordered_list, projects, i){
     formContainer.appendChild(submitNewLink);
 
     const instructions = 'use this field to add an additional resource to this set of project resources';
-    wrap_data_entry_form_in_an_instruction_block(formContainer);
+    wrap_data_entry_form_in_an_instruction_block(formContainer, instructions);
 
     unordered_list.appendChild(formContainer);
 }

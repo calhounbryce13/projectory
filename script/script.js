@@ -404,6 +404,7 @@ const form_to_input_new_link = function(unordered_list, projects, i){
     const formContainer = document.createElement('form');
     formContainer.addEventListener('submit',(event) => process_the_form_to_add_a_new_link(event, projects, i));
     formContainer.classList.add('add-a-new-project-link-container');
+    formContainer.classList.add('edit-features');
     formContainer.appendChild(newLinkInput);
     formContainer.appendChild(submitNewLink);
 
@@ -530,6 +531,7 @@ const build_button_to_add_a_new_task = function(){
 const build_parent_container_form_for_new_task = function(i){
     const addTaskForm = document.createElement('form');
     addTaskForm.classList.add('form-to-add-a-new-task');
+    addTaskForm.classList.add('edit-features');
     addTaskForm.addEventListener('submit', (event) => add_to_existing_project_fetch(event, i));
     const instructions = 'use this field to add a new subtask to the end of this project';
     const instructionBlock = wrap_data_entry_form_in_an_instruction_block(addTaskForm, instructions);

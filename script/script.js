@@ -376,6 +376,8 @@ const build_a_single_link = function(projects, i, x){
 const wrap_data_entry_form_in_an_instruction_block = function(form, instructions){
     const instructionBlock = document.createElement('div');
     instructionBlock.classList.add('new-data-form-block');
+    instructionBlock.classList.add('edit-features');
+
 
     const instructionText = document.createElement('p');
     instructionText.textContent = instructions;
@@ -529,7 +531,6 @@ const build_button_to_add_a_new_task = function(){
 const build_parent_container_form_for_new_task = function(i){
     const addTaskForm = document.createElement('form');
     addTaskForm.classList.add('form-to-add-a-new-task');
-    addTaskForm.classList.add('edit-features');
     addTaskForm.addEventListener('submit', (event) => add_to_existing_project_fetch(event, i));
     const instructions = 'use this field to add a new subtask to the end of this project';
     const instructionBlock = wrap_data_entry_form_in_an_instruction_block(addTaskForm, instructions);

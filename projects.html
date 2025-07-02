@@ -28,11 +28,12 @@
                 <h2></h2>
             </div>
             <div class="container user-projects">
-
-
                 <!--
 
                 for designing purposes
+
+
+
                 <div class="my-project">
                     <div class="remove-project-container edit-features show-edits">
                         <button class="remove-project-button delete-data-button"></button>
@@ -45,7 +46,9 @@
                     </div>
 
                     <div class="project-resources">
-                        <p>resources</p>
+                        <div class="container project-resources-label">
+                            <p>resources</p>
+                        </div>
                         <ul class="project-links-list">
                             <div class="container-for-a-single-link">
                                 <button class="remove-link-button delete-data-button edit-features show-edits"></button>
@@ -55,10 +58,13 @@
                                 <button class="remove-link-button delete-data-button edit-features show-edits"></button>
                                 <a target="_blank" class="project-link-text" href="https://www.canva.com/website-builder/">https://www.canva.com/website-builder/</a>
                             </div>
-                            <form class="add-a-new-project-link-container edit-features show-edits">
-                                <input class="new-project-link-input" type="text" placeholder="Paste your link here" name="add-new-link-input">
-                                <button class="new-project-link-submit" type="submit"></button>
-                            </form>
+                            <div class="new-data-form-block">
+                                <p class="new-data-form-instructions">use this field to add an additional resource to this set of project resources</p>
+                                <form class="add-a-new-project-link-container edit-features show-edits">
+                                    <input class="new-project-link-input" type="text" placeholder="Paste your link here" name="add-new-link-input">
+                                    <button class="new-project-link-submit" type="submit"></button>
+                                </form>
+                            </div>
                         </ul>
                     </div>
 
@@ -79,10 +85,14 @@
                             <input type="checkbox" class="task-checkbox">
                             <button class="task-remove-button delete-data-button edit-features show-edits"></button>
                         </div>
-                        <form class="form-to-add-a-new-task edit-features show-edits">
-                            <input class="input-for-a-new-task" type="text" name="new-task-input" placeholder="Additional step here">
-                            <button class="button-to-add-a-new-task" type="submit"></button>
-                        </form>
+                        <div class="new-data-form-block">
+                            <p class="new-data-form-instructions">use this field to add a new subtask to the end of this project</p>
+                            <form class="form-to-add-a-new-task edit-features show-edits">
+                                <input class="input-for-a-new-task" type="text" name="new-task-input" placeholder="Additional step here">
+                                <button class="button-to-add-a-new-task" type="submit"></button>
+                            </form>
+                        </div>
+                        
                     </ol>
                 </div>
 

@@ -373,6 +373,18 @@ const build_a_single_link = function(projects, i, x){
     return linkContainer;
 }
 
+const wrap_data_entry_form_in_an_instruction_block = function(form, instructions){
+    const instructionBlock = document.createElement('div');
+    instructionBlock.classList.add('new-data-form-block');
+
+    const instructionText = document.createElement('p');
+    instructionText.textContent = instructions;
+    instructionText.classList.add('new-data-form-instructions');
+
+    instructionBlock.appendChild(instructionText);
+    instructionBlock.appendChild(form);
+}
+
 const form_to_input_new_link = function(unordered_list, projects, i){
     const newLinkInput = document.createElement('input');
     newLinkInput.classList.add('new-project-link-input');
@@ -392,10 +404,20 @@ const form_to_input_new_link = function(unordered_list, projects, i){
     formContainer.appendChild(newLinkInput);
     formContainer.appendChild(submitNewLink);
 
+    const instructions = 'use this field to add an additional resource to this set of project resources';
+    wrap_data_entry_form_in_an_instruction_block(formContainer);
+
     unordered_list.appendChild(formContainer);
 }
 
 const build_project_links = function(projects, i){
+
+    const resourceLabel = document.createElement('p');
+    resourceLabel.textContent = 'resources';
+    const resourceLabelContainer = document.createElement('div');
+    resourceLabelContainer.classList.add('container', 'project-resources-label');
+    resourceLabelContainer.appendChild(resourceLabel);
+
     const unordered_list = document.createElement('ul');
     unordered_list.classList.add('project-links-list');
     for(let x = 0; x < projects[i].links.length; x++){
@@ -403,7 +425,13 @@ const build_project_links = function(projects, i){
         unordered_list.appendChild(linkContainer);
     }
     form_to_input_new_link(unordered_list, projects, i);
-    return unordered_list;
+
+    const projectResources = document.createElement('div');
+    projectResources.classList.add('project-resources');
+    projectResources.appendChild(resourceLabelContainer);
+    projectResources.appendChild(unordered_list);
+
+    return projectResources;
 }
 
 
@@ -501,6 +529,8 @@ const build_parent_container_form_for_new_task = function(i){
     addTaskForm.classList.add('form-to-add-a-new-task');
     addTaskForm.classList.add('edit-features');
     addTaskForm.addEventListener('submit', (event) => add_to_existing_project_fetch(event, i));
+    const instructions = 'use this field to add a new subtask to the end of this project';
+    wrap_data_entry_form_in_an_instruction_block(addTaskForm, instructions);
     
     return addTaskForm;
 

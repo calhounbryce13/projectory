@@ -91,7 +91,7 @@ const user_logout_and_account_removal = async()=>{
             }catch(error){
                 console.log(error);
             }
-            window.alert("unable to remove your account");
+            show_toast("Sorry", "unable to remove your account, please try again");
         }
     }
 }
@@ -205,17 +205,15 @@ const remove_a_link_from_a_project = async(projects, i, x)=>{
     let response;
     try{
         response = await send_request_to_remove_a_link(title, user, linkText);
+        if(response.status == 200){
+            show_toast("Confirmed", "that link was successfully removed!");
+            window.location.reload();
+            return;
+        }
     }catch(error){
         console.log(error);
-        window.alert("did not remove link from that project");
     }
-    if(response.status == 200){
-        window.alert("that link was successfully removed!");
-        window.location.reload();
-        return;
-        
-    }
-    window.alert("could not remove link from that project");
+    show_toast("Sorry", "did not remove link from that project");
 }
 
 const populate_links_view = function(myProject, projects, i){
@@ -263,11 +261,11 @@ const process_the_form_to_add_a_new_link = async(event, projects, i)=>{
         response = await send_a_request_to_insert_a_link(title, user, linkText);
     }catch(error){
         console.log(error);
-        window.alert("did not add a new link to that project")
+        show_toast("Sorry", "unable to add a new link to that project")
     }
     if(response.status == 200){
         event.target.elements['add-new-link-input'].value = '';
-        window.alert("a new link was successfully added to the project");
+        show_toast("Perfect!", "a new link was successfully added to the project");
         window.location.reload();
     }
 }
@@ -301,7 +299,7 @@ const update_the_status_for_project_task = async(event, projects, i, x, text) =>
         }
     }catch(error){
         console.log(error);
-        window.alert("There is an issue communicating with the server\n that update was not saved.");
+        show_toast("Sorry", "There is an issue communicating with the server\n that update was not saved.");
     }
     projects = await get_updated_projects();
     check_for_complete(projects, i, user)
@@ -326,14 +324,14 @@ const delete_user_project = async(projects, i) => {
                 })
             });
             if(response.status == 200){
-                window.alert("successfully removed that project from your list");
+                show_toast("Confirmed", "successfully removed that project from your list");
                 window.location.reload();
                 return;
             }
         }catch(error){
             console.log(error);
         }
-        window.alert("unable to remove that project");
+        show_toast("Sorry", "unable to remove that project");
     }
 }
 
@@ -467,7 +465,7 @@ const remove_a_task_from_a_project = async(projects, i, x) => {
             window.location.reload();
             return;
         }
-        window.alert("having an issue communicating to the backend \n that task wasn't removed");
+        show_toast("Sorry", "having an issue communicating to the backend \n that task wasn't removed");
     }
 
 
@@ -729,7 +727,7 @@ const process_signup_data = async(event)=>{
             inform_user(response);
         }
         else{
-            error_message("there was an error trying to make an account for you, please try again");
+            show_toast("I'm sorry","there was an error trying to make an account for you, please try again");
         }
     }
 }
@@ -777,7 +775,7 @@ const login_functionality = function(){
                         window.location.assign('userhome.html');
                     }
                     else{
-                        error_message("wrong email and/or password");
+                        show_toast("Uh Oh!", "wrong email and/or password");
                     }
                 }
             }
@@ -851,70 +849,6 @@ function dismiss_modal(){
     });
 }
 
-
-
-
-const strip_body = function(){
-    const body = document.body;
-    const oldBody = [];
-    while(body.children.length > 1){
-        oldBody.push(body.lastChild);
-        body.removeChild(body.lastChild);
-    }
-    return oldBody;
-}
-
-const restore_body = function(oldBody){
-    const body = document.body;
-    for(let i = (oldBody.length - 1); i >= 0; i--){
-        body.appendChild(oldBody[i]);
-    }
-}
-
-const styled_container = function(){
-    const res = document.createElement('div');
-    res.classList.add('system-message-container');
-    return res;
-}
-
-let error_message = function(message){
-    let timer = 2000;
-    const oldBody = strip_body();
-    const errorMessage = document.createElement('p');
-    errorMessage.textContent = message;
-    if(message.length > 40){
-        timer = timer + 1000;
-    }
-    const messageContainer = styled_container();
-    messageContainer.appendChild(errorMessage);
-
-    document.body.appendChild(messageContainer);
-    setTimeout(()=>{
-        document.body.removeChild(document.body.lastChild);
-        restore_body(oldBody);
-    }, timer);
-    
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 const add_to_existing_project_fetch = async(event, i)=>{
     event.preventDefault();
     const newText = event.target.elements['new-task-input'].value;
@@ -929,14 +863,14 @@ const add_to_existing_project_fetch = async(event, i)=>{
             body: JSON.stringify({"new task":newText, "index": i})
         });
         if(response.status == 200){
-            window.alert("Success! A new task was added to your project");
+            show_toast("Perfect!", "A new task was added to your project");
             window.location.reload();
             return;
         }
     }catch(error){
         console.log(error);
     }
-    window.alert("There was an issue adding that last task to your project\n please try again.");
+    show_toast("Sorry", "There was an issue adding that last task to your project\n please try again.");
 
 }
 
@@ -947,14 +881,6 @@ const attach_event_listener = function(buttons){
             if(inputs[i].value != ""){
                 add_to_existing_project_fetch(inputs[i].value, i);
                 update_user_projects_view();
-
-                /*
-                setTimeout(()=>{
-                    inputs[i].value = "";
-                }, 3000);
-
-                */
-                
             }
         });
     }
@@ -986,7 +912,7 @@ const create_new_project_functionality = function(){
             console.log("a")
             event.preventDefault();
             if((form.elements['project-title'].value == "") || (form.elements['project-goal'].value == "")){
-                error_message("please fill out the entire form!");
+                show_toast("Uh Oh!", "please fill out the entire form!");
                 return;
             }
             if(localStorage.getItem('project-type') == 'planned'){
@@ -1008,20 +934,19 @@ const create_new_project_functionality = function(){
                 }
                 if(response){
                     if(response.status == 200){
-                        //event.target.reset();
-                        window.alert("success! new planned project has been saved");
+                        show_toast("Perfect!", "new planned project has been saved");
                         window.location.reload();
                         return;
                     }
                 }
-                window.alert("there seems to have been an issue submitting your project\n please try again");
+                show_toast("Sorry", "there seems to have been an issue submitting your project\n please try again");
                 
             }
             else{
                 console.log("hello")
                 const inputs = Array.from(document.getElementsByClassName('subtask-input'));
                 if(inputs[0].value == ""){
-                    error_message("Please fill out at least the first subtask!");
+                    show_toast("Uh Oh!","Please fill out at least the first subtask!");
                     return;
                 }
                 const taskList = create_list_of_tasks(inputs);
@@ -1045,13 +970,12 @@ const create_new_project_functionality = function(){
                 }
                 if(response){
                     if(response.status == 200){
-                        //event.target.reset();
-                        window.alert("success! new current project has been saved");
+                        show_toast("Perfect!","new current project has been saved");
                         window.location.reload();
                         return;
                     }
                 }
-                window.alert("there seems to have been an issue submitting your project, please try again");
+                show_toast("Uh Oh!", "there seems to have been an issue submitting your project, please try again");
             }
         });
     }
@@ -1101,11 +1025,11 @@ const send_completion_fetch = async(title, user)=>{
         console.log(error);
     }
     if(response.status == 200){
-        window.alert("Congrats on completing a project!");
+        show_toast("Congrats!", "You just completed a project!");
         window.location.reload();
         return;
     }
-    window.alert("There was an issue trying to move that project into the completed section\n please try again");
+    show_toast("Sorry", "There was an issue trying to move that project into the completed section\n please try again");
 }
 
 const check_for_complete = function(projects, i, user){
@@ -1168,10 +1092,10 @@ const home_page_listeners = function(){
 const inform_user = async(response)=>{
     let data = await response.json();
     if(data.message == "true"){
-        window.alert("account made successfully!");
+        show_toast("Perfect!", "account made successfully!");
     }
     else if(data.message == "already has an account"){
-        window.alert("there is already an account registered under that email,\n please login instead");
+        show_toast("Uh Oh!", "there is already an account registered under that email,\n please login instead");
     }
     window.location.assign('login.html');
 }
@@ -1193,11 +1117,11 @@ const password_validation = function(email, pass, passConfirm){
     const isEmpty = check_for_empty(email, pass);
     if(isEmpty != 1){
         if(Array.from(pass.value).length < PASSWORD_MIN){
-            error_message("passwords must be at least 8 characters long!");
+            show_toast("Uh Oh!", "passwords must be at least 8 characters long!");
             return 0;
         }
         if(pass.value !== passConfirm.value){
-            error_message("passwords must match!");
+            show_toast("Uh Oh!", "passwords must match!");
             return 0;
         }
         else{

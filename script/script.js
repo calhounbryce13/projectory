@@ -5,6 +5,7 @@ const PASSWORD_MIN = 8;
 
 
 document.addEventListener('DOMContentLoaded', ()=>{
+    dismiss_modal();
     check_user_login_status();
     generate_user_projects_page();
     backend_communication();
@@ -536,23 +537,16 @@ const build_parent_container_form_for_new_task = function(i){
     addTaskForm.addEventListener('submit', (event) => add_to_existing_project_fetch(event, i));
     const instructions = 'use this field to add a new subtask to the end of this project';
     const instructionBlock = wrap_data_entry_form_in_an_instruction_block(addTaskForm, instructions);
-    
     return instructionBlock;
-
 }
 
 const form_to_add_a_new_task = function(projectTaskList, i){
     const newTaskInput = build_input_for_a_new_task();
-
     const addButton = build_button_to_add_a_new_task();
-
     const addTaskForm = build_parent_container_form_for_new_task(i);
-
     addTaskForm.appendChild(newTaskInput);
     addTaskForm.appendChild(addButton);
-
     projectTaskList.appendChild(addTaskForm);
-
 }
 
 
@@ -811,6 +805,55 @@ const logout_functionality = function(){
     
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function show_toast(header, message){
+    Array.from(document.getElementsByClassName('toast-subject'))[0].textContent = header;
+    Array.from(document.getElementsByClassName('toast-mssg'))[0].textContent = message;
+    const toast = Array.from(document.getElementsByClassName('notification'))[0];
+    setTimeout(()=>{
+        toast.classList.add('toast-show');
+        setTimeout(()=>{
+            toast.classList.remove('toast-show');
+            Array.from(document.getElementsByClassName('toast-subject'))[0].textContent = '';
+            Array.from(document.getElementsByClassName('toast-mssg'))[0].textContent = '';
+        }, 2500);
+    }, 500);
+}
+
+function show_modal(header, message){
+    Array.from(document.getElementsByClassName('toast-subject'))[1].textContent = header;
+    Array.from(document.getElementsByClassName('toast-mssg'))[1].textContent = message;
+    const modal = Array.from(document.getElementsByClassName('notification'))[1];
+    setTimeout(()=>{
+        modal.classList.add('toast-show');
+    }, 500);
+
+}
+
+function dismiss_modal(){
+    const dismissModal = Array.from(document.getElementsByClassName('dismiss'))[1];
+    dismissModal.addEventListener('click', ()=>{
+        const modal = Array.from(document.getElementsByClassName('notification'))[1];
+        modal.classList.remove('toast-show');
+    });
+}
+
+
+
+
 const strip_body = function(){
     const body = document.body;
     const oldBody = [];
@@ -852,6 +895,25 @@ let error_message = function(message){
     }, timer);
     
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const add_to_existing_project_fetch = async(event, i)=>{
     event.preventDefault();
@@ -1117,7 +1179,9 @@ const inform_user = async(response)=>{
 const check_for_empty = function(email, pass){
     if(email && pass){
         if(email.value == "" || pass.value == ""){
-            error_message("Please fill out the entire form!");
+            //show_toast("Uh Oh!","Please fill out the entire form");
+            show_modal("Uh Oh!","Please fill out the entire form");
+
             return 1;
         }
         return 0;

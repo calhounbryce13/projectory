@@ -35,6 +35,148 @@
 }
 
 
+
+
+
+
+
+
+
+.notification{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    width: 80vw;
+    padding: 5vw;
+    border-radius: 70px;
+    background-color: var(--deep-blue);
+    color: var(--ice-blue);
+
+    position: absolute;
+    top: -500%;
+    transition: top .35s ease-in-out;
+}
+
+
+
+.toast-show{
+    top: 30%;
+}
+
+.toast-dismiss-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    height: auto;
+    width: 90%;
+
+
+    border: 2px solid var(--border-color);
+}
+
+.toast-dismiss-button{
+    background-image: url('../icons/close-icon.svg');
+    color: var(--ice-blue);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: rgba(0,0,0,0);
+    border: none;
+    height: 10vw;
+    width: 10vw;
+}
+
+.toast-subject-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    width: 90%;
+
+
+    border: 2px solid var(--border-color);
+}
+
+
+.toast-subject{
+    font-size: 10vw;
+    font-weight: 900;
+    text-align: center;
+}
+
+
+.toast-mssg-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    width: 90%;
+
+
+    border: 2px solid var(--border-color);
+}
+
+
+.toast-mssg{
+    text-align: center;
+    font-size: 4vw;
+    font-weight: 100;
+}
+
+
+.toast-accept-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    width: 90%;
+    padding: 0%;
+
+}
+
+.toast-accept-button{
+    font-size: 5vw;
+    background-color: black;
+    border-radius: 60px;
+    color: var(--ice-blue);
+    min-height: 5vh;
+    height: auto;
+    width: 100%;
+    margin: 0%;
+    margin-top: 3vh;
+}
+
+@media(min-width:900px){
+    .notification{
+        width: 30vw;
+    }
+    .toast-subject{
+        font-size: 2vw;
+    }
+    .toast-mssg{
+        font-size: 1vw;
+    }
+    .toast-dismiss-button{
+        height: 2vw;
+        width: 2vw;
+    }
+    .toast-accept-button{
+        font-size: 1.5vw;
+    }
+    .toast-show{
+        top: 60%;
+    }
+}
+
+
+
+
+
+
+
 .container{
     display: flex;
     justify-content: center;

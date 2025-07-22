@@ -62,6 +62,7 @@
 
 
 .toast-show{
+    position: fixed;
     top: 30%;
 }
 

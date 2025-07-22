@@ -73,7 +73,7 @@ const delete_account = async(user)=>{
         });
         return deleteResponse;
     }catch(error){
-        console.log(error);
+        console.log(error)
     }
 
 }

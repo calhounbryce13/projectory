@@ -63,7 +63,7 @@
 
 .toast-show{
     position: fixed;
-    top: 30%;
+    top: 30% !important; 
 }
 
 .toast-dismiss-container{

@@ -60,10 +60,14 @@
 }
 
 
-
-.toast-show{
+.modal-show{
     position: fixed;
     top: 30% !important; 
+
+}
+.toast-show{
+    position: fixed;
+    top: 10% !important; 
 }
 
 .toast-dismiss-container{

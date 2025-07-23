@@ -836,7 +836,7 @@ function show_modal(header, message){
     Array.from(document.getElementsByClassName('toast-mssg'))[1].textContent = message;
     const modal = Array.from(document.getElementsByClassName('notification'))[1];
     setTimeout(()=>{
-        modal.classList.add('toast-show');
+        modal.classList.add('modal-show');
     }, 500);
 
 }

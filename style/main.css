@@ -1116,6 +1116,9 @@ footer{
         height: 12vw;
         width: 12vw;
     }
+    .edit-projects-container{
+        justify-content: flex-end;
+    }
     .remove-link-button{
         height: 6vw;
         width: 6vw;

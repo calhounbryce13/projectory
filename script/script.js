@@ -847,7 +847,7 @@ function dismiss_modal(){
         for(let x = 0; x < dismissModalButtons.length; x++){
             dismissModalButtons[x].addEventListener('click', ()=>{
                 const modal = Array.from(document.getElementsByClassName('notification'))[1];
-                modal.classList.remove('toast-show');
+                modal.classList.remove('modal-show');
             });
         }
     }catch(error){

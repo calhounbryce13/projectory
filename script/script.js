@@ -842,11 +842,17 @@ function show_modal(header, message){
 }
 
 function dismiss_modal(){
-    const dismissModal = Array.from(document.getElementsByClassName('dismiss'))[1];
-    dismissModal.addEventListener('click', ()=>{
-        const modal = Array.from(document.getElementsByClassName('notification'))[1];
-        modal.classList.remove('toast-show');
-    });
+    try{
+        const dismissModalButtons = Array.from(document.getElementsByClassName('dismiss'));
+        for(let x = 0; x < dismissModalButtons.length; x++){
+            dismissModalButtons[x].addEventListener('click', ()=>{
+                const modal = Array.from(document.getElementsByClassName('notification'))[1];
+                modal.classList.remove('toast-show');
+            });
+        }
+    }catch(error){
+        console.log(error);
+    }
 }
 
 const add_to_existing_project_fetch = async(event, i)=>{

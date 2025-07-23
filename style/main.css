@@ -828,7 +828,8 @@ footer{
     margin-bottom: 2vh;
     padding: 1vh;
     border-radius: 20px;
-    border: 3px solid var(--yellow-gold);
+    border: 3px solid var(--soft-sage);
+    background-color: var(--soft-sage);
 }
 
 .project-title{

@@ -412,6 +412,7 @@
 }
 
 .edit-projects-button{
+    border: 2px solid var(--deep-blue);
     height: 3vw;
     width: 3vw;
     background-image: url('../icons/edit-icon.svg');

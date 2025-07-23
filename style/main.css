@@ -932,6 +932,7 @@ footer{
 .project-form-show{
     display: flex;
     padding: 1vh;
+    margin-bottom: 4vh;
 }
 
 #project-form-add-more{
@@ -941,6 +942,7 @@ footer{
     background-size: contain;
     height: 4vh;
     width: 4vh;
+    border: 2px solid var(--deep-blue);
 }
 
 #project-form-add-more:hover{

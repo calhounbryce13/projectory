@@ -1,6 +1,6 @@
 
 
-const host = "https://projectory-main-login-service-d59280e6043c.herokuapp.com/";
+const host = "https://projectory-account-services.onrender.com";
 const host2 = "https://projectory-hyperlink-service-94d5374366ce.herokuapp.com/";
 const host3 = "https://projectory-del-services-a3df6b550989.herokuapp.com/";
 const host4 = "https://projectory-mgmt-services-c494222e89b0.herokuapp.com/";

@@ -82,14 +82,18 @@ const user_logout_and_account_removal = async()=>{
     if(confirm("are you sure you want to PERMANENTLY delete your account?")){
         if(confirm("confirm once more that you want to delete your account. \n you will loose ALL your data \n this cannot be undone !")){
             let user = await fetch_for_user_email();
-            try{
-                user_logout();
-                if(delete_account(user)){
-                    window.location.assign('index.html');
-                    return;
+            if(user){
+                try{
+                    user_logout();
+                    if(delete_account(user)){
+                        window.location.assign('index.html');
+                        return;
+                    }
+                }catch(error){
+                    console.log(error);
                 }
-            }catch(error){
-                console.log(error);
+                show_toast("Sorry", "unable to remove your account, please try again");
+                return;
             }
             show_toast("Sorry", "unable to remove your account, please try again");
         }
@@ -173,14 +177,18 @@ const build_goal = function(projects, i){
 }
 
 const fetch_for_user_email = async()=>{
-    let response = await fetch(endpoints.user_email, {
-        method: 'GET',
-        credentials: 'include'
-    });
-    if(response.status == 200){
-        return await response.json();
+    try{
+        let response = await fetch(endpoints.user_email, {
+            method: 'GET',
+            credentials: 'include'
+        });
+        if(response.status == 200){
+            return await response.json();
+        }
+    }catch(error){
+        console.log(error);
     }
-    return null;
+    return false;
 }
 
 const send_request_to_remove_a_link = async(title, user, linkText)=>{
@@ -201,17 +209,21 @@ const send_request_to_remove_a_link = async(title, user, linkText)=>{
 const remove_a_link_from_a_project = async(projects, i, x)=>{
     let title = projects[i].title;
     let user = await fetch_for_user_email();
-    let linkText = projects[i].links[x];
-    let response;
-    try{
-        response = await send_request_to_remove_a_link(title, user, linkText);
-        if(response.status == 200){
-            show_toast("Confirmed", "that link was successfully removed!");
-            window.location.reload();
-            return;
+    if(user){
+        let linkText = projects[i].links[x];
+        let response;
+        try{
+            response = await send_request_to_remove_a_link(title, user, linkText);
+            if(response.status == 200){
+                show_toast("Confirmed", "that link was successfully removed!");
+                window.location.reload();
+                return;
+            }
+        }catch(error){
+            console.log(error);
         }
-    }catch(error){
-        console.log(error);
+        show_toast("Sorry", "did not remove link from that project");
+        return;
     }
     show_toast("Sorry", "did not remove link from that project");
 }
@@ -255,54 +267,61 @@ const process_the_form_to_add_a_new_link = async(event, projects, i)=>{
     let linkText = event.target.elements['add-new-link-input'].value;
     let title = projects[i].title;
     let user = await fetch_for_user_email();
-
-    let response;
-    try{
-        response = await send_a_request_to_insert_a_link(title, user, linkText);
-    }catch(error){
-        console.log(error);
-        show_toast("Sorry", "unable to add a new link to that project")
+    if(user){
+        let response;
+        try{
+            response = await send_a_request_to_insert_a_link(title, user, linkText);
+            if(response.status == 200){
+                event.target.elements['add-new-link-input'].value = '';
+                show_toast("Perfect!", "a new link was successfully added to the project");
+                window.location.reload();
+                return;
+            }
+        }catch(error){
+            console.log(error);
+        }
     }
-    if(response.status == 200){
-        event.target.elements['add-new-link-input'].value = '';
-        show_toast("Perfect!", "a new link was successfully added to the project");
-        window.location.reload();
-    }
+    show_toast("Sorry", "unable to add a new link to that project")
 }
 
 
 const update_the_status_for_project_task = async(event, projects, i, x, text) => {
     let user = await fetch_for_user_email();
-    let title = projects[i].title;
-    let index = x;
-    let mark;
-    if(event.target.checked){
-        mark = 1;
-    }
-    else{
-        mark = 0;
-    }
-    let serviceBresponse;
-    try{
-        serviceBresponse = await fetch(endpoints.taskManager, {
-            method: 'POST',
-            headers:{"Content-type": "application/json"},
-            body: JSON.stringify({
-                "userEmail": user,
-                "projectTitle": title,
-                "index": index,
-                "statusMark": mark
-            })
-        });
-        if(serviceBresponse.status == 200){
-            text.classList.toggle('completed-task');
+    if(user){
+        let title = projects[i].title;
+        let index = x;
+        let mark;
+        if(event.target.checked){
+            mark = 1;
         }
-    }catch(error){
-        console.log(error);
-        show_toast("Sorry", "There is an issue communicating with the server\n that update was not saved.");
+        else{
+            mark = 0;
+        }
+        let serviceBresponse;
+        try{
+            serviceBresponse = await fetch(endpoints.taskManager, {
+                method: 'POST',
+                headers:{"Content-type": "application/json"},
+                body: JSON.stringify({
+                    "userEmail": user,
+                    "projectTitle": title,
+                    "index": index,
+                    "statusMark": mark
+                })
+            });
+            if(serviceBresponse.status == 200){
+                text.classList.toggle('completed-task');
+            }
+        }catch(error){
+            console.log(error);
+            show_toast("Sorry", "There is an issue communicating with the server\n that update was not saved.");
+        }
+        projects = await get_updated_projects();
+        check_for_complete(projects, i, user);
+        return;
     }
-    projects = await get_updated_projects();
-    check_for_complete(projects, i, user)
+    show_toast("Sorry", "There is an issue communicating with the server\n that update was not saved.");
+
 }
 
 const delete_user_project = async(projects, i) => {
@@ -310,28 +329,33 @@ const delete_user_project = async(projects, i) => {
         const type = localStorage.getItem('project-type');
         let title = projects[i].title;
         let user = await fetch_for_user_email();
-        let response;
-        try{
-            response = await fetch(endpoints.deletion,{
-                method: 'DELETE',
-                headers:{
-                    "Content-Type": "application/json",
-                    "x-user-email": user
-                },
-                body: JSON.stringify({
-                    "project-type": type,
-                    "project-name": title
-                })
-            });
-            if(response.status == 200){
-                show_toast("Confirmed", "successfully removed that project from your list");
-                window.location.reload();
-                return;
+        if(user){
+            let response;
+            try{
+                response = await fetch(endpoints.deletion,{
+                    method: 'DELETE',
+                    headers:{
+                        "Content-Type": "application/json",
+                        "x-user-email": user
+                    },
+                    body: JSON.stringify({
+                        "project-type": type,
+                        "project-name": title
+                    })
+                });
+                if(response.status == 200){
+                    show_toast("Confirmed", "successfully removed that project from your list");
+                    window.location.reload();
+                    return;
+                }
+            }catch(error){
+                console.log(error);
             }
-        }catch(error){
-            console.log(error);
+            show_toast("Sorry", "unable to remove that project");
+            return;
         }
-        show_toast("Sorry", "unable to remove that project");
+        show_toast("Sorry", "There seems to have been an issue trying to complete your request");
+        
     }
 }
 
@@ -444,31 +468,33 @@ const remove_a_task_from_a_project = async(projects, i, x) => {
         let title = projects[i].title;
         let index = x;
         let user = await fetch_for_user_email();
-        let response;
-        try{
-            response = await fetch(endpoints.deletion,{
-                method: 'DELETE',
-                headers:{
-                    "Content-type": "application/json",
-                    "x-user-email": user
-                },
-                body: JSON.stringify({
-                    "project-type": "current",
-                    "project-name": title,
-                    "task-index": index
+        if(user){
+            let response;
+            try{
+                response = await fetch(endpoints.deletion,{
+                    method: 'DELETE',
+                    headers:{
+                        "Content-type": "application/json",
+                        "x-user-email": user
+                    },
+                    body: JSON.stringify({
+                        "project-type": "current",
+                        "project-name": title,
+                        "task-index": index
+                    })
                 })
-            })
-        }catch(error){
-            console.log(error);
-        }
-        if(response.status == 200){
-            window.location.reload();
+            }catch(error){
+                console.log(error);
+            }
+            if(response.status == 200){
+                window.location.reload();
+                return;
+            }
+            show_toast("Sorry", "having an issue communicating to the backend \n that task wasn't removed");
             return;
         }
-        show_toast("Sorry", "having an issue communicating to the backend \n that task wasn't removed");
+        show_toast("Sorry", "There seems to have been an issue completing your request \n please try again");
     }
-
-
 }
 
 

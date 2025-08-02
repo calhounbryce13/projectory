@@ -2,7 +2,7 @@
 
 const host = "https://projectory-account-services.onrender.com/";
 const host2 = "https://projectory-hyperlink-service-94d5374366ce.herokuapp.com/";
-const host3 = "https://projectory-del-services-a3df6b550989.herokuapp.com/";
+const host3 = "https://projectory-data-removal-services.onrender.com/";
 const host4 = "https://projectory-project-management-services.onrender.com/";
 
 export const endpoints = {

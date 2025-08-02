@@ -1,0 +1,151 @@
+
+
+:root{
+    --border1: rgba(255,0,0,1);
+    --border2: rgba(0,255,0,1);
+    --border3: rgba(0,0,255,1);
+
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    border: 2px solid var(--border1);
+}
+
+.project-card{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 15px;
+    height: auto;
+    width: 85%;
+    border: 2px solid var(--border2);
+}
+
+.project-title-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    height: auto;
+    width: 100%;
+}
+
+.project-title{
+    font-size: 8vw;
+    font-weight: 800;
+    color: black;
+    max-width: 60%;
+
+}
+
+.project-goal-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    height: auto;
+    width: 100%;
+
+
+}
+
+.project-goal{
+    font-size: 4vw;
+    font-weight: 400;
+    color: black;
+    max-width: 85%;
+
+}
+
+
+
+.project-section-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: auto;
+    width: 100%;
+
+
+}
+
+.project-section-text{
+    font-size: 3vw;
+    font-weight: 100;
+    color: black;
+    max-width: 50%;
+
+}
+
+.toggle-project-resources{
+    height: 6vw;
+    width: 6vw;
+    background-color: black;
+    border-radius: 10px;
+
+}
+
+.project-resources{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    max-height: 0vh;
+
+
+}
+
+.project-individual-resource{
+    max-width: 80%;
+    overflow-x: hidden;
+
+}
+
+.project-resource-link{
+    font-size: 3vw;
+
+}
+
+.toggle-project-steps{
+    height: 6vw;
+    width: 6vw;
+    background-color: black;
+    border-radius: 10px;
+
+}
+
+.project-steps{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    max-height: 0vh;
+
+}
+
+.project-individual-subtask{
+    max-width: 80%;
+    overflow-x: hidden;
+
+}
+
+.project-subtask-text{
+    font-size: 3vw;
+    font-weight: 100;
+    color: black;
+    max-width: 50%;
+
+}

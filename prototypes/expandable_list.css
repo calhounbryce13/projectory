@@ -1,0 +1,33 @@
+:root{
+    --border1: rgba(255,0,0,1);
+    --border2: rgba(0,255,0,1);
+    --border3: rgba(0,0,255,1);
+
+}
+
+
+html,body{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    border: 2px solid var(--border1);
+
+}
+
+button{
+    border: 2px solid var(--border2);
+    height: 5%;
+    width: 5%;
+
+}
+ol{
+    border: 2px solid var(--border2);
+    width: 30%;
+    height: auto;
+    max-height: 10vh;
+    overflow-y: hidden;
+    transition: max-height 1s ease-in-out;
+}

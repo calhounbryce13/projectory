@@ -102,6 +102,7 @@ body{
     width: 100%;
     height: auto;
     max-height: 0vh;
+    transition: max-height 1.5s ease-in-out;
 
 
 }
@@ -137,15 +138,24 @@ body{
 }
 
 .project-individual-subtask{
-    max-width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    height: auto;
     overflow-x: hidden;
 
 }
 
 .project-subtask-text{
-    font-size: 3vw;
-    font-weight: 100;
+    font-size: 4vw;
+    font-weight: 400;
     color: black;
-    max-width: 50%;
+    max-width: 70%;
+}
 
+.subtask-checkbox{
+    height: 2vw;
+    width: 2vw;
 }

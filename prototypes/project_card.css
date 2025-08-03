@@ -3,7 +3,7 @@
 :root{
     --border1: rgba(255,0,0,1);
     --border2: rgba(0,255,0,1);
-    --border3: rgba(0,0,255,1);
+    --border3: rgba(0,0,255,0);
 
 }
 
@@ -15,6 +15,8 @@ body{
     height: 100%;
     width: 100%;
     border: 2px solid var(--border1);
+
+    padding: 20px;
 }
 
 .project-card{
@@ -27,6 +29,7 @@ body{
     height: auto;
     width: 85%;
     border: 2px solid var(--border2);
+    background-color: var(--border2);
 }
 
 .project-title-container{
@@ -79,10 +82,11 @@ body{
 }
 
 .project-section-text{
-    font-size: 3vw;
+    font-size: 4vw;
     font-weight: 100;
     color: black;
     max-width: 50%;
+    opacity: 0.50;
 
 }
 
@@ -103,8 +107,6 @@ body{
     height: auto;
     max-height: 0vh;
     transition: max-height 1.5s ease-in-out;
-
-
 }
 
 .project-individual-resource{
@@ -131,9 +133,12 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    width: 90%;
     height: auto;
     max-height: 0vh;
+
+    transition: max-height 1.5s ease-in-out;
+
 
 }
 
@@ -145,6 +150,9 @@ body{
     width: 80%;
     height: auto;
     overflow-x: hidden;
+    overflow-y: hidden;
+
+    border: 2px solid var(--border3);
 
 }
 
@@ -152,10 +160,11 @@ body{
     font-size: 4vw;
     font-weight: 400;
     color: black;
-    max-width: 70%;
+    max-width: 90%;
 }
 
 .subtask-checkbox{
-    height: 2vw;
-    width: 2vw;
+    height: 6vw;
+    width: 6vw;
+    
 }

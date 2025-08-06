@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="edit_modal.css">
+        <script src="edit_modal.js"></script>
+    </head>
+    <body>
+        <div class="edit-project-modal">
+            <div class="edit-modal-title-container">
+                <p class="edit-modal-title">Editing your project: </p>
+            </div>
+            <div class="project-title-container">
+                <p class="project-title">
+                    Plan a trip to Jamaica!
+                </p>
+            </div>
+            <div class="project-section-header">
+                <p class="project-section-text">
+                    resources
+                </p>
+                <button class="toggle-project-resources"></button>
+            </div>
+            <ul class="project-resources-edit-modal">
+                <li class="project-add-new-text">
+                    <div class="edit-project-input-container">
+                        <textarea name="new-resource-textarea" class="edit-form-textarea" placeholder="paste/type a new url here and click 'save' to add it to your set of resources"></textarea>
+                        <button class="save-new-data-button">save</button>
+                    </div>
+                </li>
+                <li class="project-individual-resource">
+                    <div>
+                        <a class="edit-a-project-resource-link">www.example.com/longurlresource?user=Mike&Schmidt</a>
+                        <button class="remove-a-project-resource-button">delete</button>
+                    </div>
+                </li>
+                <li class="project-individual-resource">
+                    <div>
+                        <a class="edit-a-project-resource-link">www.example.com/longurlresource?user=Mike&Schmidt</a>
+                        <button class="remove-a-project-resource-button">delete</button>
+                    </div>
+                </li>
+                <li class="project-individual-resource">
+                    <div>
+                        <a class="edit-a-project-resource-link">www.example.com/longurlresource?user=Mike&Schmidt</a>
+                        <button class="remove-a-project-resource-button">delete</button>
+                    </div>
+                </li>
+                <!--more items here-->
+            </ul>
+            <div class="project-section-header">
+                <p class="project-section-text">
+                    steps
+                </p>
+                <button class="toggle-project-steps"></button>
+            </div>
+            <ol class="project-steps-edit-modal">
+                <li class="project-add-new-text"></li>
+                    <div class="edit-project-input-container">
+                        <textarea class="edit-form-textarea" placeholder="paste/type a new url here and click 'save' to add it to your set of resources"></textarea>
+                        <button class="save-new-data-button">save</button>
+                    </div>
+                </li>
+                <li class="project-individual-subtask">
+                    <textarea class="project-subtask-text">Decide on which province to visit</textarea>
+                    <button>delete</button>
+                </li>
+                <li class="project-individual-subtask">
+                    <textarea class="project-subtask-text">Decide on which province to visit</textarea>
+                    <button>delete</button>
+                </li>
+                <li class="project-individual-subtask">
+                    <textarea class="project-subtask-text">Decide on which province to visit</textarea>
+                    <button>delete</button>
+                </li>
+                <li class="project-individual-subtask">
+                    <textarea class="project-subtask-text">Decide on which province to visit</textarea>
+                    <button>delete</button>
+                </li>
+            </ol>
+            <div class="edit-form-controls-container">
+                <button class="delete-project-button"></button>
+                <button class="cancel-edits-button"></button>
+                <button class="save-edits-button"></button>
+            </div>
+        </div>
+    </body>
+</html>

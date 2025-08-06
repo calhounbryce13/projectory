@@ -3,7 +3,7 @@
 :root{
     --border1: rgba(255,0,0,1);
     --border2: rgba(0,255,0,1);
-    --border3: rgba(0,0,255,0);
+    --border3: rgba(0,0,255,1);
 
 }
 
@@ -19,7 +19,7 @@ body{
     padding: 20px;
 }
 
-.project-card{
+.edit-project-modal{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -29,7 +29,23 @@ body{
     height: auto;
     width: 85%;
     border: 2px solid var(--border2);
-    background-color: var(--border2);
+    background-color: rgb(108, 175, 202)
+}
+
+.edit-modal-title-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    height: auto;
+    width: 100%;
+    border: 2px solid red;
+}
+
+.edit-modal-title{
+    font-size: 5vw;
+    font-weight: 100;
+
 }
 
 .project-title-container{
@@ -39,13 +55,14 @@ body{
     align-items: center;
     height: auto;
     width: 100%;
+    border-bottom: 2px solid black;
 }
 
 .project-title{
-    font-size: 8vw;
-    font-weight: 800;
+    font-size: 6vw;
+    font-weight: 100;
     color: black;
-    max-width: 60%;
+    max-width: 80%;
 
 }
 
@@ -98,15 +115,45 @@ body{
 
 }
 
-.project-resources{
+.project-add-new-text{
+    margin-bottom: 2vh;
+    width: 90%;
+}
+
+.project-resources-edit-modal{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
     height: auto;
-    max-height: 0vh;
     transition: max-height 0.3s ease-in-out;
+    padding-inline-start: 0%;
+
+    border-bottom: 2px solid black;
+}
+
+
+.edit-project-input-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    height: auto;
+    width: 100%;
+    border: 2px solid red;
+}
+
+.edit-form-textarea{
+    height: 20vh;
+    width: 80%;
+    font-size: 4vw;
+    margin-bottom: 2vh;
+
+}
+
+.project-add-a-new-resource{
+    width: 100%;
 }
 
 .project-individual-resource{
@@ -120,6 +167,14 @@ body{
 
 }
 
+.save-new-data-button{
+    height: 4vh;
+    width: 25%;
+    font-size: 4vw;
+    min-height: 3vh;
+    overflow: hidden
+}
+
 .toggle-project-steps{
     height: 6vw;
     width: 6vw;
@@ -128,16 +183,18 @@ body{
 
 }
 
-.project-steps{
+.project-steps-edit-modal{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 90%;
     height: auto;
-    max-height: 0vh;
 
     transition: max-height 0.3s ease-in-out;
+    border-bottom: 2px solid black;
+    padding-inline-start: 0%;
+
 
 }
 

@@ -4,8 +4,13 @@
 
 
 document.addEventListener('DOMContentLoaded', () => {
+
+    expandable_list_functionality();
+
+})
+
+const expandable_list_functionality = function(){
     const button = Array.from(document.getElementsByTagName('button'))[0];
-    console.log(button);
     button.addEventListener('click', () => {
         const list = Array.from(document.getElementsByTagName('ol'))[0];
         const numChildren = Array.from(list.children).length;
@@ -17,4 +22,4 @@ document.addEventListener('DOMContentLoaded', () => {
             list.style.maxHeight = '10vh';
         }
     });
-})
+}

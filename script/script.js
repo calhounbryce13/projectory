@@ -5,7 +5,7 @@ const PASSWORD_MIN = 8;
 
 
 document.addEventListener('DOMContentLoaded', ()=>{
-    dismiss_modal();
+    dismiss_modal_functionality();
     check_user_login_status();
     generate_user_projects_page();
     backend_communication();
@@ -830,20 +830,7 @@ const logout_functionality = function(){
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-function show_toast(header, message){
+const show_toast = function(header, message){
     Array.from(document.getElementsByClassName('toast-subject'))[0].textContent = header;
     Array.from(document.getElementsByClassName('toast-mssg'))[0].textContent = message;
     const toast = Array.from(document.getElementsByClassName('notification'))[0];
@@ -853,11 +840,11 @@ function show_toast(header, message){
             toast.classList.remove('toast-show');
             Array.from(document.getElementsByClassName('toast-subject'))[0].textContent = '';
             Array.from(document.getElementsByClassName('toast-mssg'))[0].textContent = '';
-        }, 2500);
+        }, 7000);
     }, 500);
 }
 
-function show_modal(header, message){
+const show_modal = function(header, message){
     Array.from(document.getElementsByClassName('toast-subject'))[1].textContent = header;
     Array.from(document.getElementsByClassName('toast-mssg'))[1].textContent = message;
     const modal = Array.from(document.getElementsByClassName('notification'))[1];
@@ -867,7 +854,7 @@ function show_modal(header, message){
 
 }
 
-function dismiss_modal(){
+const dismiss_modal_functionality = function(){
     try{
         const dismissModalButtons = Array.from(document.getElementsByClassName('dismiss'));
         for(let x = 0; x < dismissModalButtons.length; x++){
@@ -944,7 +931,7 @@ const create_new_project_functionality = function(){
             console.log("a")
             event.preventDefault();
             if((form.elements['project-title'].value == "") || (form.elements['project-goal'].value == "")){
-                show_toast("Uh Oh!", "please fill out the entire form!");
+                show_modal("Uh Oh!", "please fill out the entire form!");
                 return;
             }
             if(localStorage.getItem('project-type') == 'planned'){
@@ -978,7 +965,7 @@ const create_new_project_functionality = function(){
                 console.log("hello")
                 const inputs = Array.from(document.getElementsByClassName('subtask-input'));
                 if(inputs[0].value == ""){
-                    show_toast("Uh Oh!","Please fill out at least the first subtask!");
+                    show_modal("Uh Oh!","Please fill out at least the first subtask!");
                     return;
                 }
                 const taskList = create_list_of_tasks(inputs);
@@ -1149,11 +1136,11 @@ const password_validation = function(email, pass, passConfirm){
     const isEmpty = check_for_empty(email, pass);
     if(isEmpty != 1){
         if(Array.from(pass.value).length < PASSWORD_MIN){
-            show_toast("Uh Oh!", "passwords must be at least 8 characters long!");
+            show_modal("Uh Oh!", "passwords must be at least 8 characters long!");
             return 0;
         }
         if(pass.value !== passConfirm.value){
-            show_toast("Uh Oh!", "passwords must match!");
+            show_modal("Uh Oh!", "passwords must match!");
             return 0;
         }
         else{

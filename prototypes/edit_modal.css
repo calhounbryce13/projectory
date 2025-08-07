@@ -1,9 +1,9 @@
 
 
 :root{
-    --border1: rgba(255,0,0,1);
-    --border2: rgba(0,255,0,1);
-    --border3: rgba(0,0,255,1);
+    --border1: rgba(255,0,0,0);
+    --border2: rgba(0,255,0,0);
+    --border3: rgba(0,0,255,0);
 
 }
 
@@ -39,7 +39,7 @@ body{
     align-items: center;
     height: auto;
     width: 100%;
-    border: 2px solid red;
+    border: 2px solid var(--border1);
 }
 
 .edit-modal-title{
@@ -131,7 +131,7 @@ body{
     padding-inline-start: 0%;
 
     border-bottom: 2px solid black;
-    border: 2px solid red;
+    border: 2px solid var(--border1);
 }
 
 
@@ -142,7 +142,7 @@ body{
     align-items: flex-start;
     height: auto;
     width: 100%;
-    border: 2px solid red;
+    border: 2px solid var(--border1);
 }
 
 .edit-form-textarea{
@@ -260,7 +260,7 @@ body{
     align-items: center;
     height: auto;
     width: 100%;
-    border: 2px solid red;
+    border: 2px solid var(--border1);
     border-top: 2px solid black;
     margin-top: 2vh;
     margin-bottom: 2vh;
@@ -273,4 +273,12 @@ body{
     align-items: center;
     height: 3vh;
     font-size: 3vw;
+}
+
+.edit-modal-button{
+    border-radius: 10px;
+}
+
+textarea{
+    border-radius: 10px;
 }

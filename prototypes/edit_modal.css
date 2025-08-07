@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Cal+Sans&family=Fredoka:wght@300..700&display=swap');
 
 
 :root{
@@ -7,6 +8,12 @@
 
 }
 
+
+*{
+    font-family: 'Cal Sans';
+
+
+}
 body{
     display: flex;
     flex-direction: column;
@@ -129,7 +136,6 @@ body{
     height: auto;
     transition: max-height 0.3s ease-in-out;
     padding-inline-start: 0%;
-
     border-bottom: 2px solid black;
     border: 2px solid var(--border1);
 }

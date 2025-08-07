@@ -131,6 +131,7 @@ body{
     padding-inline-start: 0%;
 
     border-bottom: 2px solid black;
+    border: 2px solid red;
 }
 
 
@@ -192,7 +193,6 @@ body{
     height: auto;
 
     transition: max-height 0.3s ease-in-out;
-    border-bottom: 2px solid black;
     padding-inline-start: 0%;
 
 
@@ -217,10 +217,60 @@ body{
     font-weight: 400;
     color: black;
     max-width: 90%;
+    resize: vertical;
+    overflow-y: hidden;
 }
 
 .subtask-checkbox{
     height: 6vw;
     width: 6vw;
-    
+}
+
+.edit-a-project-resource-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: auto;
+    width: 100%;
+}
+
+.edit-a-project-resource-link{
+    overflow: hidden;
+    max-width: 75%;
+    font-size: 4vw;
+    height: auto;
+    word-wrap: break-word;     
+    white-space: normal;
+}
+
+.remove-a-project-element-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 3.5vh;
+    width: 15%;
+    font-size: 3vw;
+}
+
+.edit-form-controls-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: auto;
+    width: 100%;
+    border: 2px solid red;
+    border-top: 2px solid black;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+
+}
+
+.edit-form-control-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 3vh;
+    font-size: 3vw;
 }

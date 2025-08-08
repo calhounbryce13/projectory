@@ -68,7 +68,7 @@ const user_logout = async()=>{
 }
 
 const delete_account = async(user)=>{
-    show_loading();
+    const animationInstance = show_loading();
     try{
         deleteResponse = await fetch(endpoints.deletion,{
             method: 'DELETE',
@@ -80,7 +80,7 @@ const delete_account = async(user)=>{
     }catch(error){
         console.log(error)
     }finally{
-        dismiss_loading();
+        dismiss_loading(animationInstance);
     }
 
 }
@@ -184,7 +184,7 @@ const build_goal = function(projects, i){
 }
 
 const fetch_for_user_email = async()=>{
-    show_loading();
+    const animationInstance = show_loading();
     try{
         let response = await fetch(endpoints.user_email, {
             method: 'GET',
@@ -196,13 +196,13 @@ const fetch_for_user_email = async()=>{
     }catch(error){
         console.log(error);
     }finally{
-        dismiss_loading();
+        dismiss_loading(animationInstance);
     }
     return false;
 }
 
 const send_request_to_remove_a_link = async(title, user, linkText)=>{
-    show_loading();
+    const animationInstance = show_loading();
     try{
         const response = await fetch(endpoints.link_remover, {
             method: 'DELETE',
@@ -219,7 +219,7 @@ const send_request_to_remove_a_link = async(title, user, linkText)=>{
     }catch(error){
         console.log(error);
     }finally{
-        dismiss_loading();
+        dismiss_loading(animationInstance);
     }
     return false;
 
@@ -266,7 +266,7 @@ const populate_links_view = function(myProject, projects, i){
 }
 
 const send_a_request_to_insert_a_link = async(title, user, linkText)=>{
-    show_loading();
+    const animationInstance = show_loading();
     try{
         const response = await fetch(endpoints.link_inserter, {
             method: 'PUT',
@@ -286,7 +286,7 @@ const send_a_request_to_insert_a_link = async(title, user, linkText)=>{
         console.log(error);
 
     }finally{
-        dismiss_loading();
+        dismiss_loading(animationInstance);
     }
 
 }
@@ -327,7 +327,7 @@ const update_the_status_for_project_task = async(event, projects, i, x, text) =>
             mark = 0;
         }
         let serviceBresponse;
-        show_loading();
+        const animationInstance = show_loading();
         try{
             serviceBresponse = await fetch(endpoints.taskManager, {
                 method: 'POST',
@@ -346,7 +346,7 @@ const update_the_status_for_project_task = async(event, projects, i, x, text) =>
             console.log(error);
             show_toast("Sorry", "There is an issue communicating with the server\n that update was not saved.");
         }finally{
-            dismiss_loading();
+            dismiss_loading(animationInstance);
         }
         projects = await get_updated_projects();
         check_for_complete(projects, i, user);
@@ -363,7 +363,7 @@ const delete_user_project = async(projects, i) => {
         let user = await fetch_for_user_email();
         if(user){
             let response;
-            show_loading();
+            const animationInstance = show_loading();
             try{
                 response = await fetch(endpoints.deletion,{
                     method: 'DELETE',
@@ -384,7 +384,7 @@ const delete_user_project = async(projects, i) => {
             }catch(error){
                 console.log(error);
             }finally{
-                dismiss_loading();
+                dismiss_loading(animationInstance);
             }
             show_toast("Sorry", "unable to remove that project");
             return;
@@ -505,7 +505,7 @@ const remove_a_task_from_a_project = async(projects, i, x) => {
         let user = await fetch_for_user_email();
         if(user){
             let response;
-            show_loading();
+            const animationInstance = show_loading();
             try{
                 response = await fetch(endpoints.deletion,{
                     method: 'DELETE',
@@ -522,7 +522,7 @@ const remove_a_task_from_a_project = async(projects, i, x) => {
             }catch(error){
                 console.log(error);
             }finally{
-                dismiss_loading();
+                dismiss_loading(animationInstance);
             }
             if(response.status == 200){
                 window.location.reload();
@@ -720,7 +720,7 @@ const send_a_request_to_get_user_projects = async()=>{
     }catch(error){
         console.log(error);
     }finally{
-        dismiss_loading(animationInstance)
+        dismiss_loading(animationInstance);
     }
 }
 
@@ -916,7 +916,7 @@ const add_to_existing_project_fetch = async(event, i)=>{
     event.preventDefault();
     const newText = event.target.elements['new-task-input'].value;
     let response;
-    show_loading();
+    const animationInstance = show_loading();
     try{
         response = await fetch(endpoints.subtask_generator, {
             headers:{
@@ -934,7 +934,7 @@ const add_to_existing_project_fetch = async(event, i)=>{
     }catch(error){
         console.log(error);
     }finally{
-        dismiss_loading();
+        dismiss_loading(animationInstance);
     }
     show_toast("Sorry", "There was an issue adding that last task to your project\n please try again.");
 
@@ -983,7 +983,7 @@ const create_new_project_functionality = function(){
             }
             if(localStorage.getItem('project-type') == 'planned'){
                 let response;
-                show_loading();
+                const animationInstance = show_loading();
                 try{
                     response = await fetch(endpoints.planned_projects_generator,{
                         method: "POST",
@@ -999,7 +999,7 @@ const create_new_project_functionality = function(){
                 }catch(error){
                     console.log(error);
                 }finally{
-                    dismiss_loading();
+                    dismiss_loading(animationInstance);
                 }
                 if(response){
                     if(response.status == 200){
@@ -1019,7 +1019,7 @@ const create_new_project_functionality = function(){
                 }
                 const taskList = create_list_of_tasks(inputs);
                 let response;
-                show_loading();
+                const animationInstance = show_loading();
                 try{
                     response = await fetch(endpoints.current_projects_generator,{
                         method: "POST",
@@ -1036,7 +1036,7 @@ const create_new_project_functionality = function(){
                 }catch(error){
                     console.log(error);
                 }finally{
-                    dismiss_loading();
+                    dismiss_loading(animationInstance);
                 }
                 if(response){
                     if(response.status == 200){
@@ -1082,7 +1082,7 @@ const add_task_to_new_functionality = function(){
 
 const send_completion_fetch = async(title, user)=>{
     let response;
-    show_loading();
+    const animationInstance = show_loading();
     try{
         response = await fetch(endpoints.projectManager, {
             method: 'PUT',
@@ -1095,7 +1095,7 @@ const send_completion_fetch = async(title, user)=>{
     }catch(error){
         console.log(error);
     }finally{
-        dismiss_loading();
+        dismiss_loading(animationInstance);
     }
     if(response.status == 200){
         show_toast("Congrats!", "You just completed a project!");
@@ -1120,7 +1120,7 @@ const check_for_complete = function(projects, i, user){
 
 const get_updated_projects = async()=>{
     let projects;
-    show_loading();
+    const animationInstance = show_loading();
     try{
         projects = await fetch(endpoints.projects_view,{
             headers:{
@@ -1134,7 +1134,7 @@ const get_updated_projects = async()=>{
     }catch(error){
         console.log(error);
     }finally{
-        dismiss_loading();
+        dismiss_loading(animationInstance);
     }
     if(projects){
         return await projects.json();

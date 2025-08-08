@@ -1230,13 +1230,14 @@ const dismiss_loading = function(){
 
     animation.style.display = 'none';
     animationContainer.style.display = 'none';
-    lottie.loadAnimation({
+    const actualAnimation = lottie.loadAnimation({
         container: animation,
         renderer: 'svg',
         loop: true,
         autoplay: false,
         path: '../projectory/icons/Loading_sand_clock.json'
     });
+    actualAnimation.destroy();
 }
 
 const backend_communication = function(){

@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const fetch_for_login_status = async()=>{
-    show_loading();
+    const animationInstance = show_loading();
     try{
         let response = await fetch(endpoints.loginStatus, {
             method: "GET",
@@ -34,7 +34,7 @@ const fetch_for_login_status = async()=>{
         console.log(error);
         return false;
     }finally{
-        dismiss_loading();
+        dismiss_loading(animationInstance);
     }
 }
 
@@ -1214,7 +1214,7 @@ const show_loading = function(){
 
     animationContainer.style.display = 'flex';
     animation.style.display = 'flex';
-    lottie.loadAnimation({
+    return lottie.loadAnimation({
         container: animation,
         renderer: 'svg',
         loop: true,
@@ -1224,20 +1224,12 @@ const show_loading = function(){
 
 }
 
-const dismiss_loading = function(){
+const dismiss_loading = function(animationInstance){
     const animation = document.getElementById('lottie-loading-animation');
     const animationContainer = document.getElementById('lottie-parent');
-
     animation.style.display = 'none';
     animationContainer.style.display = 'none';
-    const actualAnimation = lottie.loadAnimation({
-        container: animation,
-        renderer: 'svg',
-        loop: true,
-        autoplay: false,
-        path: '../projectory/icons/Loading_sand_clock.json'
-    });
-    actualAnimation.destroy();
+    animationInstance.destroy();
 }
 
 const backend_communication = function(){

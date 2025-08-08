@@ -1219,7 +1219,7 @@ const show_loading = function(){
         renderer: 'svg',
         loop: true,
         autoplay: true,
-        path: '../icons/Loading_sand_clock.json'
+        path: '../projectory/icons/Loading_sand_clock.json'
     });
 
 }
@@ -1235,7 +1235,7 @@ const dismiss_loading = function(){
         renderer: 'svg',
         loop: true,
         autoplay: false,
-        path: '../icons/Loading_sand_clock.json'
+        path: '../projectory/icons/Loading_sand_clock.json'
     });
 }
 

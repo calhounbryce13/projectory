@@ -705,7 +705,7 @@ const populate_project_screen = function(projects){
 
 
 const send_a_request_to_get_user_projects = async()=>{
-    show_loading();
+    const animationInstance = show_loading();
     try{
         let projects = await fetch(endpoints.projects_view,{
             headers:{
@@ -720,7 +720,7 @@ const send_a_request_to_get_user_projects = async()=>{
     }catch(error){
         console.log(error);
     }finally{
-        dismiss_loading()
+        dismiss_loading(animationInstance)
     }
 }
 

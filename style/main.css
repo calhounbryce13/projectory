@@ -46,7 +46,6 @@
     border-radius: 70px;
     background-color: var(--deep-blue);
     color: var(--ice-blue);
-
     position: absolute;
     top: -500%;
     transition: top .35s ease-in-out;
@@ -91,8 +90,6 @@
     align-items: center;
     height: auto;
     width: 90%;
-
-
     border: 2px solid var(--border-color);
 }
 
@@ -110,8 +107,6 @@
     align-items: center;
     height: auto;
     width: 90%;
-
-
     border: 2px solid var(--border-color);
 }
 

@@ -5,6 +5,7 @@ const PASSWORD_MIN = 8;
 
 
 document.addEventListener('DOMContentLoaded', ()=>{
+
     dismiss_modal_functionality();
     check_user_login_status();
     generate_user_projects_page();
@@ -20,6 +21,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const fetch_for_login_status = async()=>{
+    show_loading();
     try{
         let response = await fetch(endpoints.loginStatus, {
             method: "GET",
@@ -31,6 +33,8 @@ const fetch_for_login_status = async()=>{
     }catch(error){
         console.log(error);
         return false;
+    }finally{
+        dismiss_loading();
     }
 }
 
@@ -64,6 +68,7 @@ const user_logout = async()=>{
 }
 
 const delete_account = async(user)=>{
+    show_loading();
     try{
         deleteResponse = await fetch(endpoints.deletion,{
             method: 'DELETE',
@@ -74,6 +79,8 @@ const delete_account = async(user)=>{
         return deleteResponse;
     }catch(error){
         console.log(error)
+    }finally{
+        dismiss_loading();
     }
 
 }
@@ -177,6 +184,7 @@ const build_goal = function(projects, i){
 }
 
 const fetch_for_user_email = async()=>{
+    show_loading();
     try{
         let response = await fetch(endpoints.user_email, {
             method: 'GET',
@@ -187,23 +195,34 @@ const fetch_for_user_email = async()=>{
         }
     }catch(error){
         console.log(error);
+    }finally{
+        dismiss_loading();
     }
     return false;
 }
 
 const send_request_to_remove_a_link = async(title, user, linkText)=>{
-    const response = await fetch(endpoints.link_remover, {
-        method: 'DELETE',
-        headers: {
-            "Content-type": "application/json"
-        },
-        body: JSON.stringify({
-            "userEmail": user,
-            "projectTitle": title,
-            "link": linkText
-        })
-    });
-    return response;
+    show_loading();
+    try{
+        const response = await fetch(endpoints.link_remover, {
+            method: 'DELETE',
+            headers: {
+                "Content-type": "application/json"
+            },
+            body: JSON.stringify({
+                "userEmail": user,
+                "projectTitle": title,
+                "link": linkText
+            })
+        });
+        return response;
+    }catch(error){
+        console.log(error);
+    }finally{
+        dismiss_loading();
+    }
+    return false;
+
 }
 
 const remove_a_link_from_a_project = async(projects, i, x)=>{
@@ -247,19 +266,29 @@ const populate_links_view = function(myProject, projects, i){
 }
 
 const send_a_request_to_insert_a_link = async(title, user, linkText)=>{
-    const response = await fetch(endpoints.link_inserter, {
-        method: 'PUT',
-        headers: {
-            "Content-type": "application/json"
-        },
-        body: JSON.stringify({
-            "userEmail": user,
-            "projectTitle": title,
-            "link": linkText
-        })
-    });
+    show_loading();
+    try{
+        const response = await fetch(endpoints.link_inserter, {
+            method: 'PUT',
+            headers: {
+                "Content-type": "application/json"
+            },
+            body: JSON.stringify({
+                "userEmail": user,
+                "projectTitle": title,
+                "link": linkText
+            })
+        });
+    
+        return response;
 
-    return response;
+    }catch(error){
+        console.log(error);
+
+    }finally{
+        dismiss_loading();
+    }
+
 }
 
 const process_the_form_to_add_a_new_link = async(event, projects, i)=>{
@@ -298,6 +327,7 @@ const update_the_status_for_project_task = async(event, projects, i, x, text) =>
             mark = 0;
         }
         let serviceBresponse;
+        show_loading();
         try{
             serviceBresponse = await fetch(endpoints.taskManager, {
                 method: 'POST',
@@ -315,6 +345,8 @@ const update_the_status_for_project_task = async(event, projects, i, x, text) =>
         }catch(error){
             console.log(error);
             show_toast("Sorry", "There is an issue communicating with the server\n that update was not saved.");
+        }finally{
+            dismiss_loading();
         }
         projects = await get_updated_projects();
         check_for_complete(projects, i, user);
@@ -331,6 +363,7 @@ const delete_user_project = async(projects, i) => {
         let user = await fetch_for_user_email();
         if(user){
             let response;
+            show_loading();
             try{
                 response = await fetch(endpoints.deletion,{
                     method: 'DELETE',
@@ -350,6 +383,8 @@ const delete_user_project = async(projects, i) => {
                 }
             }catch(error){
                 console.log(error);
+            }finally{
+                dismiss_loading();
             }
             show_toast("Sorry", "unable to remove that project");
             return;
@@ -470,6 +505,7 @@ const remove_a_task_from_a_project = async(projects, i, x) => {
         let user = await fetch_for_user_email();
         if(user){
             let response;
+            show_loading();
             try{
                 response = await fetch(endpoints.deletion,{
                     method: 'DELETE',
@@ -485,6 +521,8 @@ const remove_a_task_from_a_project = async(projects, i, x) => {
                 })
             }catch(error){
                 console.log(error);
+            }finally{
+                dismiss_loading();
             }
             if(response.status == 200){
                 window.location.reload();
@@ -667,17 +705,23 @@ const populate_project_screen = function(projects){
 
 
 const send_a_request_to_get_user_projects = async()=>{
-    let projects = await fetch(endpoints.projects_view,{
-        headers:{
-            "Content-type": "application/json"
-        },
-        credentials: 'include',
-        method: 'POST',
-        body: JSON.stringify({"project-type": localStorage.getItem("project-type")})
-        
-    });
-    return projects;
-
+    show_loading();
+    try{
+        let projects = await fetch(endpoints.projects_view,{
+            headers:{
+                "Content-type": "application/json"
+            },
+            credentials: 'include',
+            method: 'POST',
+            body: JSON.stringify({"project-type": localStorage.getItem("project-type")})
+            
+        });
+        return projects;
+    }catch(error){
+        console.log(error);
+    }finally{
+        dismiss_loading()
+    }
 }
 
 const get_project_data = async()=>{
@@ -872,6 +916,7 @@ const add_to_existing_project_fetch = async(event, i)=>{
     event.preventDefault();
     const newText = event.target.elements['new-task-input'].value;
     let response;
+    show_loading();
     try{
         response = await fetch(endpoints.subtask_generator, {
             headers:{
@@ -888,6 +933,8 @@ const add_to_existing_project_fetch = async(event, i)=>{
         }
     }catch(error){
         console.log(error);
+    }finally{
+        dismiss_loading();
     }
     show_toast("Sorry", "There was an issue adding that last task to your project\n please try again.");
 
@@ -936,6 +983,7 @@ const create_new_project_functionality = function(){
             }
             if(localStorage.getItem('project-type') == 'planned'){
                 let response;
+                show_loading();
                 try{
                     response = await fetch(endpoints.planned_projects_generator,{
                         method: "POST",
@@ -950,6 +998,8 @@ const create_new_project_functionality = function(){
                     });
                 }catch(error){
                     console.log(error);
+                }finally{
+                    dismiss_loading();
                 }
                 if(response){
                     if(response.status == 200){
@@ -962,7 +1012,6 @@ const create_new_project_functionality = function(){
                 
             }
             else{
-                console.log("hello")
                 const inputs = Array.from(document.getElementsByClassName('subtask-input'));
                 if(inputs[0].value == ""){
                     show_modal("Uh Oh!","Please fill out at least the first subtask!");
@@ -970,8 +1019,8 @@ const create_new_project_functionality = function(){
                 }
                 const taskList = create_list_of_tasks(inputs);
                 let response;
+                show_loading();
                 try{
-                    console.log("here")
                     response = await fetch(endpoints.current_projects_generator,{
                         method: "POST",
                         credentials: "include",
@@ -986,6 +1035,8 @@ const create_new_project_functionality = function(){
                     });
                 }catch(error){
                     console.log(error);
+                }finally{
+                    dismiss_loading();
                 }
                 if(response){
                     if(response.status == 200){
@@ -1031,6 +1082,7 @@ const add_task_to_new_functionality = function(){
 
 const send_completion_fetch = async(title, user)=>{
     let response;
+    show_loading();
     try{
         response = await fetch(endpoints.projectManager, {
             method: 'PUT',
@@ -1042,6 +1094,8 @@ const send_completion_fetch = async(title, user)=>{
         });
     }catch(error){
         console.log(error);
+    }finally{
+        dismiss_loading();
     }
     if(response.status == 200){
         show_toast("Congrats!", "You just completed a project!");
@@ -1066,6 +1120,7 @@ const check_for_complete = function(projects, i, user){
 
 const get_updated_projects = async()=>{
     let projects;
+    show_loading();
     try{
         projects = await fetch(endpoints.projects_view,{
             headers:{
@@ -1078,6 +1133,8 @@ const get_updated_projects = async()=>{
         });
     }catch(error){
         console.log(error);
+    }finally{
+        dismiss_loading();
     }
     if(projects){
         return await projects.json();
@@ -1148,6 +1205,38 @@ const password_validation = function(email, pass, passConfirm){
         }
     }
     return 0;
+}
+
+
+const show_loading = function(){
+    const animation = document.getElementById('lottie-loading-animation');
+    const animationContainer = document.getElementById('lottie-parent');
+
+    animationContainer.style.display = 'flex';
+    animation.style.display = 'flex';
+    lottie.loadAnimation({
+        container: animation,
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: '../icons/Loading_sand_clock.json'
+    });
+
+}
+
+const dismiss_loading = function(){
+    const animation = document.getElementById('lottie-loading-animation');
+    const animationContainer = document.getElementById('lottie-parent');
+
+    animation.style.display = 'none';
+    animationContainer.style.display = 'none';
+    lottie.loadAnimation({
+        container: animation,
+        renderer: 'svg',
+        loop: true,
+        autoplay: false,
+        path: '../icons/Loading_sand_clock.json'
+    });
 }
 
 const backend_communication = function(){

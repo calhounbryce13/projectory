@@ -34,6 +34,34 @@
     font-family: 'Cal Sans';
 }
 
+#lottie-parent{
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0%;
+    left: 0%;
+    z-index: 1000;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0,0,0,0.2);
+
+}
+
+
+#lottie-loading-animation{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    height: 20%;
+    width: 20%;
+
+}
+
 
 .notification{
     display: flex;
@@ -1155,6 +1183,12 @@ footer{
     }
     .toast-accept-button:active{
         background-color: var(--ice-blue);
+    }
+    #lottie-loading-animation{
+        top: 20%;
+        height: 40%;
+        width: 40%;
+
     }
 
 }

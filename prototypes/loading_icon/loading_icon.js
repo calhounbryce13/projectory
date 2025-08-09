@@ -3,14 +3,21 @@
 
 document.addEventListener('DOMContentLoaded', ()=>{
 
-    show_loading();
 
-    setTimeout(()=>{
-        console.log("dismissing loading")
-        dismiss_loading();
-    }, 5000)
+    //* this will show the loading icon after a short delay to
+    //* prevent icon from flashing during quick requests
+    let animationInstance;
+    let loadingIconShown = false;
+    const requestDelayTimer = setTimeout(()=>{
+        animationInstance = show_loading();
+        loadingIconShown = true;
+    }, 500);
 
-
+    //* this will conditionally dismiss the loading icon if it was displayed
+    clearTimeout(requestDelayTimer);
+    if(loadingIconShown){
+        dismiss_loading(animationInstance);
+    }
 
 
 });
@@ -22,8 +29,8 @@ const show_loading = function(){
 
     animationContainer.style.display = 'flex';
     animation.style.display = 'flex';
-    lottie.loadAnimation({
-        container: document.getElementById('testing-lottie-animation'),
+    return lottie.loadAnimation({
+        container: animation,
         renderer: 'svg',
         loop: true,
         autoplay: true,
@@ -32,17 +39,10 @@ const show_loading = function(){
 
 }
 
-const dismiss_loading = function(){
+const dismiss_loading = function(animationInstance){
     const animation = document.getElementById('testing-lottie-animation');
     const animationContainer = document.getElementById('lottie-parent');
-
     animation.style.display = 'none';
     animationContainer.style.display = 'none';
-    lottie.loadAnimation({
-        container: document.getElementById('testing-lottie-animation'),
-        renderer: 'svg',
-        loop: true,
-        autoplay: false,
-        path: 'loading_icon.json'
-    });
+    animationInstance.destroy();
 }

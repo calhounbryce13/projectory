@@ -27,8 +27,7 @@ const fetch_for_login_status = async()=>{
     const requestDelayTimer = setTimeout(()=>{
         animationInstance = show_loading();
         loadingIconShown = true;
-    }, 500);
-
+    }, 1000);
     try{
         let response = await fetch(endpoints.loginStatus, {
             method: "GET",

@@ -2,6 +2,7 @@
 import {endpoints} from './endpoints.js'
 
 const PASSWORD_MIN = 8;
+const LOADING_ANIMATION_DELAY = 1000; // in ms
 
 
 document.addEventListener('DOMContentLoaded', ()=>{
@@ -27,7 +28,7 @@ const fetch_for_login_status = async()=>{
     const requestDelayTimer = setTimeout(()=>{
         animationInstance = show_loading();
         loadingIconShown = true;
-    }, 1000);
+    }, LOADING_ANIMATION_DELAY);
     try{
         let response = await fetch(endpoints.loginStatus, {
             method: "GET",
@@ -336,7 +337,12 @@ const update_the_status_for_project_task = async(event, projects, i, x, text) =>
             mark = 0;
         }
         let serviceBresponse;
-        const animationInstance = show_loading();
+        let animationInstance;
+        let loadingIconShown = false;
+        const requestDelayTimer = setTimeout(()=>{
+            animationInstance = show_loading();
+            loadingIconShown = true;
+        }, LOADING_ANIMATION_DELAY);
         try{
             serviceBresponse = await fetch(endpoints.taskManager, {
                 method: 'POST',
@@ -355,7 +361,10 @@ const update_the_status_for_project_task = async(event, projects, i, x, text) =>
             console.log(error);
             show_toast("Sorry", "There is an issue communicating with the server\n that update was not saved.");
         }finally{
-            dismiss_loading(animationInstance);
+            clearTimeout(requestDelayTimer);
+            if(loadingIconShown){
+                dismiss_loading(animationInstance);
+            }
         }
         projects = await get_updated_projects();
         check_for_complete(projects, i, user);

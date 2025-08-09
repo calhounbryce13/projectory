@@ -21,7 +21,11 @@ document.addEventListener('DOMContentLoaded', ()=>{
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const fetch_for_login_status = async()=>{
-    const animationInstance = show_loading();
+    let animationInstance;
+    const requestDelayTimer = setTimeout(()=>{
+        animationInstance = show_loading();
+    }, 500);
+
     try{
         let response = await fetch(endpoints.loginStatus, {
             method: "GET",
@@ -34,6 +38,7 @@ const fetch_for_login_status = async()=>{
         console.log(error);
         return false;
     }finally{
+        clearTimeout(requestDelayTimer);
         dismiss_loading(animationInstance);
     }
 }

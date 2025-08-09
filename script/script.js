@@ -21,9 +21,12 @@ document.addEventListener('DOMContentLoaded', ()=>{
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const fetch_for_login_status = async()=>{
+
     let animationInstance;
+    let loadingIconShown = false;
     const requestDelayTimer = setTimeout(()=>{
         animationInstance = show_loading();
+        loadingIconShown = true;
     }, 500);
 
     try{
@@ -39,7 +42,9 @@ const fetch_for_login_status = async()=>{
         return false;
     }finally{
         clearTimeout(requestDelayTimer);
-        dismiss_loading(animationInstance);
+        if(loadingIconShown){
+            dismiss_loading(animationInstance);
+        }
     }
 }
 

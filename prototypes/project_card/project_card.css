@@ -19,6 +19,10 @@ body{
     padding: 20px;
 }
 
+.user-projects{
+    width: 90%;
+}
+
 .project-card{
     display: flex;
     flex-direction: column;

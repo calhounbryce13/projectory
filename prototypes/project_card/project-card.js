@@ -32,6 +32,7 @@ const build_title = function(singleProject){
     const projectTitle = document.createElement('p');
     projectTitle.classList.add('project-title');
     projectTitle.textContent = singleProject.title;
+
     const container = document.createElement('div');
     container.classList.add('project-title-container');
     container.appendChild(projectTitle);
@@ -43,6 +44,7 @@ const build_goal = function(singleProject){
     const projectGoal = document.createElement('p');
     projectGoal.classList.add('project-goal');
     projectGoal.textContent = singleProject.goal;
+
     const container = document.createElement('div');
     container.classList.add('project-goal-container');
     container.appendChild(projectGoal);
@@ -54,8 +56,10 @@ const build_section_header = function(sectionText, toggleClassName){
     const sectionHeaderText = document.createElement('p');
     sectionHeaderText.classList.add('project-section-text');
     sectionHeaderText.textContent = sectionText;
+
     const toggleButton = document.createElement('button'); 
     toggleButton.classList.add(toggleClassName);
+
     const container = document.createElement('div');
     container.classList.add('project-section-header');
     container.appendChild(sectionHeaderText);
@@ -67,6 +71,7 @@ const build_section_header = function(sectionText, toggleClassName){
 const build_single_resource = function(singleResource, listOfResources){
     const listIndexElement = document.createElement('li');
     listIndexElement.classList.add('project-individual-resource');
+
     const anchor = document.createElement('a');
     anchor.classList.add('project-resource-link');
     anchor.textContent = singleResource;
@@ -82,12 +87,40 @@ const build_resources = function(singleProject){
     return listOfResources;
 }
 
+const build_single_subtask = function(singleSubtask, listOfSteps){
+    const listIndexElement = document.createElement('li');
+    listIndexElement.classList.add('project-individual-subtask');
+
+    const subtaskText = document.createElement('p');
+    subtaskText.classList.add('project-subtask-text');
+    subtaskText.textContent = singleSubtask.task_description;
+
+    const checkBox = document.createElement('input');
+    checkBox.classList.add('subtask-checkbox');
+    checkBox.type = 'checkbox';
+    checkBox.name = 'task';
+    listIndexElement.appendChild(subtaskText);
+    listIndexElement.appendChild(checkBox);
+    listOfSteps.appendChild(listIndexElement);
+
+}
+
+const build_subtasks = function(singleProject){
+    const listOfSteps = document.createElement('ol');
+    listOfSteps.classList.add('project-steps');
+    singleProject.steps.forEach((singleSubtask) => build_single_subtask(singleSubtask, listOfSteps));
+    return listOfSteps;
+
+}
+
 const build_project_card = function(singleProject){
     const parent = build_parent_container();
     const title = build_title(singleProject);
     parent.appendChild(title);
     const goal = build_goal(singleProject);
     parent.appendChild(goal);
+
+    
 
     if(singleProject.resources){
         if(singleProject.resources.length > 0){
@@ -97,12 +130,17 @@ const build_project_card = function(singleProject){
             parent.appendChild(resources);
         }
     }
+
     if(singleProject.steps){
         if(singleProject.steps.length > 0){
+            const sectionHeader = build_section_header('steps','toggle-project-steps');
+            parent.appendChild(sectionHeader);
             const subtaskSection = build_subtasks(singleProject);
             parent.appendChild(subtaskSection);
         }
     }
+
+    Array.from(document.getElementsByClassName('user-projects'))[0].appendChild(parent);
 
 
 }

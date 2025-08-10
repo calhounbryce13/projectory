@@ -28,6 +28,60 @@ const build_parent_container = function(){
     return parent;
 }
 
+const build_title = function(singleProject){
+    const projectTitle = document.createElement('p');
+    projectTitle.classList.add('project-title');
+    projectTitle.textContent = singleProject.title;
+    const container = document.createElement('div');
+    container.classList.add('project-title-container');
+    container.appendChild(projectTitle);
+
+    return container;
+}
+
+const build_goal = function(singleProject){
+    const projectGoal = document.createElement('p');
+    projectGoal.classList.add('project-goal');
+    projectGoal.textContent = singleProject.goal;
+    const container = document.createElement('div');
+    container.classList.add('project-goal-container');
+    container.appendChild(projectGoal);
+
+    return container;
+}
+
+const build_section_header = function(sectionText, toggleClassName){
+    const sectionHeaderText = document.createElement('p');
+    sectionHeaderText.classList.add('project-section-text');
+    sectionHeaderText.textContent = sectionText;
+    const toggleButton = document.createElement('button'); 
+    toggleButton.classList.add(toggleClassName);
+    const container = document.createElement('div');
+    container.classList.add('project-section-header');
+    container.appendChild(sectionHeaderText);
+    container.appendChild(toggleButton);
+
+    return container;
+}
+
+const build_single_resource = function(singleResource, listOfResources){
+    const listIndexElement = document.createElement('li');
+    listIndexElement.classList.add('project-individual-resource');
+    const anchor = document.createElement('a');
+    anchor.classList.add('project-resource-link');
+    anchor.textContent = singleResource;
+    anchor.href = singleResource;
+    listIndexElement.appendChild(anchor);
+    listOfResources.appendChild(listIndexElement);
+}
+
+const build_resources = function(singleProject){
+    const listOfResources = document.createElement('ul');
+    listOfResources.classList.add('project-resources');
+    singleProject.resources.forEach((singleResource) => build_single_resource(singleResource, listOfResources));
+    return listOfResources;
+}
+
 const build_project_card = function(singleProject){
     const parent = build_parent_container();
     const title = build_title(singleProject);
@@ -37,8 +91,10 @@ const build_project_card = function(singleProject){
 
     if(singleProject.resources){
         if(singleProject.resources.length > 0){
-            const resourceSection = build_resources(singleProject);
-            parent.appendChild(resourceSection);
+            const sectionHeader = build_section_header('resources','toggle-project-resources');
+            parent.appendChild(sectionHeader);
+            const resources = build_resources(singleProject);
+            parent.appendChild(resources);
         }
     }
     if(singleProject.steps){

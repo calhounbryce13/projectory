@@ -1,24 +1,10 @@
 'use strict';
 
-
-
 import {examples} from './test_projects.js';
-
-
 
 document.addEventListener("DOMContentLoaded", ()=>{
 
     build_project_view(examples);
-
-
-
-
-
-    //* dynamically add projects, THEN assign button functionality
-
-    expanded_list_functionality('toggle-project-resources', 'project-resources');
-
-    expanded_list_functionality('toggle-project-steps', 'project-steps');
 
 });
 
@@ -152,8 +138,8 @@ const build_project_view = function(examples){
     convertedProjects.forEach((singleProject) => build_project_card(singleProject));
     //? can possibly attach event listeners here, better for decoupling structure from function
 
-
-
+    expanded_list_functionality('toggle-project-resources', 'project-resources');
+    expanded_list_functionality('toggle-project-steps', 'project-steps');
 
 }
 
@@ -166,8 +152,10 @@ const toggle_list_height = function(projectResourcesList, i){
     INPUT(S): An array of expandable lists from the whole page (array), an index in the list (integer)
     OUTPUT(S): None
     */
+   //! the first child's height is not necessarily the tallest child, need the max height for extension
     const numChildren = projectResourcesList[i].children.length;
     const heightOfSingleLink = projectResourcesList[i].children[0].children[0].getBoundingClientRect().height;
+    console.log(heightOfSingleLink);
     const newMaxHeight = (numChildren * heightOfSingleLink) + 10;
     console.log(getComputedStyle(projectResourcesList[i]).maxHeight)
     if(getComputedStyle(projectResourcesList[i]).maxHeight == '0px'){

@@ -1,7 +1,20 @@
 'use strict';
 
 
+
+import {examples} from './test_projects.js';
+
+
+
 document.addEventListener("DOMContentLoaded", ()=>{
+
+    build_project_view(examples);
+
+
+
+
+
+    //* dynamically add projects, THEN assign button functionality
 
     expanded_list_functionality('toggle-project-resources', 'project-resources');
 
@@ -9,13 +22,54 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
 });
 
+const build_parent_container = function(){
+    const parent = document.createElement('div');
+    parent.classList.add('project-card');
+    return parent;
+}
+
+const build_project_card = function(singleProject){
+    const parent = build_parent_container();
+    const title = build_title(singleProject);
+    parent.appendChild(title);
+    const goal = build_goal(singleProject);
+    parent.appendChild(goal);
+
+    if(singleProject.resources){
+        if(singleProject.resources.length > 0){
+            const resourceSection = build_resources(singleProject);
+            parent.appendChild(resourceSection);
+        }
+    }
+    if(singleProject.steps){
+        if(singleProject.steps.length > 0){
+            const subtaskSection = build_subtasks(singleProject);
+            parent.appendChild(subtaskSection);
+        }
+    }
+
+
+}
+
+
+
+const build_project_view = function(examples){
+    const convertedProjects = Array.from(examples);
+    convertedProjects.forEach((singleProject) => build_project_card(singleProject));
+    //? can possibly attach event listeners here, better for decoupling structure from function
+
+
+
+
+}
+
 
 
 const toggle_list_height = function(projectResourcesList, i){
     /* 
     DESCRIPTION: Function defined to re-assign the max height of the given 
                 list to expand or contract on click
-    INPUT(S): A list of project resource sets (array), and index in the list (integer)
+    INPUT(S): An array of expandable lists from the whole page (array), an index in the list (integer)
     OUTPUT(S): None
     */
     const numChildren = projectResourcesList[i].children.length;
@@ -32,7 +86,7 @@ const toggle_list_height = function(projectResourcesList, i){
 const expanded_list_functionality = function(buttonClassName, containerClassName){
     /* 
     DESCRIPTION: Function defined to access all the expansion buttons on the page and apply event listeners
-    INPUT(S): None
+    INPUT(S): class for toggle button(s) to call event listener on (string), class for the container(s) to expand (string)
     OUTPUT(S): None
     */
     let expandProjectButtonList = document.getElementsByClassName(buttonClassName);

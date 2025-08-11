@@ -532,7 +532,7 @@ const build_single_subtask = function(singleSubtask, listOfSteps){
 const build_subtasks = function(singleProject){
     const listOfSteps = document.createElement('ol');
     listOfSteps.classList.add('project-steps');
-    singleProject.steps.forEach((singleSubtask) => build_single_subtask(singleSubtask, listOfSteps));
+    singleProject.tasks.forEach((singleSubtask) => build_single_subtask(singleSubtask, listOfSteps));
     return listOfSteps;
 
 }

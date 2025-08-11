@@ -983,11 +983,7 @@ footer{
 }
 
 .toggle-project-resources{
-    height: 8vw;
-    width: 8vw;
-    background-color: black;
     border-radius: 5px;
-    background-color: var(--deep-blue);
 
 }
 
@@ -1013,13 +1009,23 @@ footer{
 }
 
 .toggle-project-steps{
-    height: 8vw;
-    width: 8vw;
-    background-color: black;
     border-radius: 5px;
-    background-color: var(--deep-blue);
+}
 
+.toggle-button{
+    background-color: rgba(0,0,0,0);
+    background-image: url('../icons/drop_down_arrow_icon.svg');
+    transform: rotate(0.25turn);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    border: none;
+    height: 6vw;
+    width: 6vw;
+}
 
+.toggle-button-expanded{
+    transform: rotate(0.00turn);
 }
 
 .project-steps{

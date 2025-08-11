@@ -44,7 +44,9 @@ const build_section_header = function(sectionText, toggleClassName){
     sectionHeaderText.textContent = sectionText;
 
     const toggleButton = document.createElement('button'); 
+    toggleButton.classList.add('toggle-button');
     toggleButton.classList.add(toggleClassName);
+
 
     const container = document.createElement('div');
     container.classList.add('project-section-header');
@@ -189,8 +191,9 @@ const expanded_list_functionality = function(buttonClassName, containerClassName
         expandProjectButtonList = Array.from(expandProjectButtonList);
         const projectList = Array.from(document.getElementsByClassName(containerClassName));
         for(let i = 0; i < expandProjectButtonList.length; i++){
-            expandProjectButtonList[i].addEventListener('click', ()=>{
+            expandProjectButtonList[i].addEventListener('click', (event)=>{
                 toggle_list_height(projectList, i);
+                event.target.classList.toggle('toggle-button-expanded');
             });
         }
     }

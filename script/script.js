@@ -482,6 +482,7 @@ const build_section_header = function(sectionText, toggleClassName){
     sectionHeaderText.textContent = sectionText;
 
     const toggleButton = document.createElement('button'); 
+    toggleButton.classList.add('toggle-button');
     toggleButton.classList.add(toggleClassName);
 
     const container = document.createElement('div');
@@ -612,10 +613,21 @@ const expanded_list_functionality = function(buttonClassName, containerClassName
         for(let i = 0; i < expandProjectButtonList.length; i++){
             expandProjectButtonList[i].addEventListener('click', ()=>{
                 toggle_list_height(projectList, i);
+                event.target.classList.toggle('toggle-button-expanded');
+
             });
         }
     }
 }
+
+//!
+const update_subtask_status_functionality = function(){
+    const checkBoxes = Array.from(document.getElementsByClassName('subtask-checkbox'));
+    checkBoxes.forEach((singleCheckBox) => {
+        singleCheckBox.addEventListener('click', (event) => data_acquisition(event))
+    });
+}
+//!
 
 const populate_project_screen = function(projects){
     const convertedProjects = Array.from(projects);

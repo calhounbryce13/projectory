@@ -593,7 +593,7 @@ const toggle_list_height = function(projectResourcesList, i){
     const newMaxHeight = (numChildren * heightOfTallestChild) + 10;
     console.log(getComputedStyle(projectResourcesList[i]).maxHeight);
     if(getComputedStyle(projectResourcesList[i]).maxHeight == '0px'){
-        projectResourcesList[i].style.maxHeight = newMaxHeight + 'px';
+        projectResourcesList[i].style.maxHeight = newMaxHeight + 'vh';
         return;
     }
     projectResourcesList[i].style.maxHeight = '0px';

@@ -819,10 +819,13 @@ footer{
     border-radius: 10px;
 }
 
-#home-button:hover{
-    background-color: var(--deep-blue);
-    background-image: url('../icons/home-icon-hover.svg');
+@media(min-width: 900px){
+    #home-button:hover{
+        background-color: var(--deep-blue);
+        background-image: url('../icons/home-icon-hover.svg');
+    }
 }
+
 
 #home-button-container{
     flex-direction: row;

@@ -499,6 +499,7 @@ const build_single_resource = function(singleResource, listOfResources){
     const anchor = document.createElement('a');
     anchor.classList.add('project-resource-link');
     anchor.textContent = singleResource;
+    console.log(singleResource);
     anchor.href = singleResource;
     listIndexElement.appendChild(anchor);
     listOfResources.appendChild(listIndexElement);
@@ -507,6 +508,7 @@ const build_single_resource = function(singleResource, listOfResources){
 const build_resources = function(singleProject){
     const listOfResources = document.createElement('ul');
     listOfResources.classList.add('project-resources');
+    console.log(singleProject.tasks);
     singleProject.tasks.forEach((singleResource) => build_single_resource(singleResource, listOfResources));
     return listOfResources;
 }

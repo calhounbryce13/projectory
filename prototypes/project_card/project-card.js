@@ -106,8 +106,6 @@ const build_project_card = function(singleProject, index, array){
     const goal = build_goal(singleProject);
     parent.appendChild(goal);
 
-    
-
     if(singleProject.resources){
         if(singleProject.resources.length > 0){
             const sectionHeader = build_section_header('resources','toggle-project-resources');
@@ -130,8 +128,6 @@ const build_project_card = function(singleProject, index, array){
     if(index < array.length - 1){
         //insert_spacer(parentContainer);
     }
-
-
 }
 
 
@@ -153,6 +149,15 @@ const build_project_view = function(examples){
 }
 
 
+const get_max_height = function(list){
+    let max = 0;
+    for(let x = 0; x < list.children.length; x++){
+        if(list.children[x].scrollHeight > max){
+            max = list.children[x].scrollHeight;
+        }
+    }
+    return max;
+}
 
 const toggle_list_height = function(projectResourcesList, i){
     /* 
@@ -161,12 +166,11 @@ const toggle_list_height = function(projectResourcesList, i){
     INPUT(S): An array of expandable lists from the whole page (array), an index in the list (integer)
     OUTPUT(S): None
     */
-   //! the first child's height is not necessarily the tallest child, need the max height for extension
     const numChildren = projectResourcesList[i].children.length;
-    const heightOfSingleLink = projectResourcesList[i].children[0].children[0].getBoundingClientRect().height;
-    console.log("height of a single link",heightOfSingleLink);
-    const newMaxHeight = (numChildren * heightOfSingleLink) + 10;
-    console.log(getComputedStyle(projectResourcesList[i]).maxHeight)
+    const heightOfTallestChild = get_max_height(projectResourcesList[i]);
+    console.log("height of a single link",heightOfTallestChild);
+    const newMaxHeight = (numChildren * heightOfTallestChild) + 10;
+    console.log(getComputedStyle(projectResourcesList[i]).maxHeight);
     if(getComputedStyle(projectResourcesList[i]).maxHeight == '0px'){
         projectResourcesList[i].style.maxHeight = newMaxHeight + 'px';
         return;
@@ -190,5 +194,4 @@ const expanded_list_functionality = function(buttonClassName, containerClassName
             });
         }
     }
-
 }

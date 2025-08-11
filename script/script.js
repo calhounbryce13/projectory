@@ -167,7 +167,7 @@ const populate_form_controls = function(){
     }
     add_fields_for_subtasks();
 }
-
+/*
 const build_project_title = function(projects, i){
     const title = document.createElement('p');
     title.textContent = projects[i].title;
@@ -192,6 +192,7 @@ const build_goal = function(projects, i){
 
     return goalContainer;
 }
+*/
 
 const fetch_for_user_email = async()=>{
     const animationInstance = show_loading();
@@ -255,24 +256,6 @@ const remove_a_link_from_a_project = async(projects, i, x)=>{
         return;
     }
     show_toast("Sorry", "did not remove link from that project");
-}
-
-const populate_links_view = function(myProject, projects, i){
-    let unordered_list = document.createElement('ol');
-    unordered_list.classList.add('container');
-    for(let x = 0; x < projects[i].links.length; x++){
-
-        let index = document.createElement('li');
-        index.textContent = projects[i].links[x];
-        let removeLinkButton = document.createElement('button');
-        removeLinkButton.classList.add('remove-link-button');
-        removeLinkButton.textContent = 'remove';
-
-        removeLinkButton.addEventListener('click', remove_a_link_from_a_project(projects, i, x));
-        index.appendChild(removeLinkButton);
-        unordered_list.appendChild(index);
-    }
-    myProject.appendChild(unordered_list);
 }
 
 const send_a_request_to_insert_a_link = async(title, user, linkText)=>{
@@ -413,109 +396,6 @@ const delete_user_project = async(projects, i) => {
 }
 
 
-const build_project_delete_container = function(projects, i){
-    const deleteProjectButton = document.createElement('button');
-    deleteProjectButton.classList.add('remove-project-button');
-    deleteProjectButton.classList.add('delete-data-button');
-    deleteProjectButton.addEventListener('click', () => delete_user_project(projects, i));
-
-    const deleteProjectContainer = document.createElement('div');
-    deleteProjectContainer.classList.add('remove-project-container');
-    deleteProjectContainer.classList.add('edit-features');
-    deleteProjectContainer.appendChild(deleteProjectButton);
-
-    return deleteProjectContainer;
-}
-
-const build_a_single_link = function(projects, i, x){
-    const removeLinkButton = document.createElement('button');
-    removeLinkButton.classList.add('remove-link-button');
-    removeLinkButton.classList.add('delete-data-button');
-    removeLinkButton.classList.add('edit-features');
-    removeLinkButton.addEventListener('click', () => remove_a_link_from_a_project(projects, i, x));
-
-    const linkText = document.createElement('a');
-    linkText.target = '_blank';
-    linkText.classList.add('project-link-text');
-    linkText.href = projects[i].links[x];
-    linkText.textContent = linkText.href;
-
-    const linkContainer = document.createElement('div');
-    linkContainer.classList.add('container-for-a-single-link');
-
-    linkContainer.appendChild(removeLinkButton);
-    linkContainer.appendChild(linkText);
-
-    return linkContainer;
-}
-
-const wrap_data_entry_form_in_an_instruction_block = function(form, instructions){
-    const instructionBlock = document.createElement('div');
-    instructionBlock.classList.add('new-data-form-block');
-    instructionBlock.classList.add('edit-features');
-
-
-    const instructionText = document.createElement('p');
-    instructionText.textContent = instructions;
-    instructionText.classList.add('new-data-form-instructions');
-
-    instructionBlock.appendChild(instructionText);
-    instructionBlock.appendChild(form);
-
-    return instructionBlock;
-}
-
-const form_to_input_new_link = function(unordered_list, projects, i){
-    const newLinkInput = document.createElement('input');
-    newLinkInput.classList.add('new-project-link-input');
-    newLinkInput.type = 'text';
-    newLinkInput.placeholder = 'Paste your link here';
-    newLinkInput.name = 'add-new-link-input';
-
-
-    const submitNewLink = document.createElement('button');
-    submitNewLink.classList.add('new-project-link-submit');
-    submitNewLink.type = 'submit';
-    
-    const formContainer = document.createElement('form');
-    formContainer.addEventListener('submit',(event) => process_the_form_to_add_a_new_link(event, projects, i));
-    formContainer.classList.add('add-a-new-project-link-container');
-    formContainer.classList.add('edit-features');
-    formContainer.appendChild(newLinkInput);
-    formContainer.appendChild(submitNewLink);
-
-    const instructions = 'use this field to add an additional resource to this set of project resources';
-    const instructionBlock = wrap_data_entry_form_in_an_instruction_block(formContainer, instructions);
-
-    unordered_list.appendChild(instructionBlock);
-}
-
-const build_project_links = function(projects, i){
-
-    const resourceLabel = document.createElement('p');
-    resourceLabel.textContent = 'resources';
-    resourceLabel.classList.add('resource-links-label');
-    const resourceLabelContainer = document.createElement('div');
-    resourceLabelContainer.classList.add('container', 'project-resources-label');
-    resourceLabelContainer.appendChild(resourceLabel);
-
-    const unordered_list = document.createElement('ul');
-    unordered_list.classList.add('project-links-list');
-    for(let x = 0; x < projects[i].links.length; x++){
-        const linkContainer = build_a_single_link(projects, i, x);
-        unordered_list.appendChild(linkContainer);
-    }
-    form_to_input_new_link(unordered_list, projects, i);
-
-    const projectResources = document.createElement('div');
-    projectResources.classList.add('project-resources');
-    projectResources.appendChild(resourceLabelContainer);
-    projectResources.appendChild(unordered_list);
-
-    return projectResources;
-}
-
-
 const remove_a_task_from_a_project = async(projects, i, x) => {
     if(confirm("are you sure you want to remove this task from this project?\n you cannot undo this action")){
         let title = projects[i].title;
@@ -554,166 +434,192 @@ const remove_a_task_from_a_project = async(projects, i, x) => {
 }
 
 
-const build_text_for_a_task = function(projects, i, x){
-    const taskText = document.createElement('p');
-    taskText.classList.add('task-text');
-    taskText.textContent = projects[i].tasks[x].task_description;
-    return taskText;
-}
-
-const build_checkbox_for_a_task = function(projects, i, x, taskText){
-    const checkboxButton = document.createElement('input');
-    checkboxButton.addEventListener('click', (event) => update_the_status_for_project_task(event, projects, i, x, taskText));
-    checkboxButton.type = 'checkbox';
-    checkboxButton.classList.add('task-checkbox');
-
-    return checkboxButton;
-}
-
-const build_remove_button_for_a_task = function(projects, i, x){
-    const removeButton = document.createElement('button');
-    removeButton.classList.add('task-remove-button');
-    removeButton.classList.add('delete-data-button');
-    removeButton.classList.add('edit-features');
-    removeButton.addEventListener('click', () => remove_a_task_from_a_project(projects, i, x));
-
-    return removeButton;
-}
-
-const build_parent_container_for_a_task = function(taskText, checkboxButton, removeButton){
-    const taskContainer = document.createElement('div');
-    taskContainer.classList.add('task-container');
-    taskContainer.appendChild(taskText);
-    taskContainer.appendChild(checkboxButton);
-    taskContainer.appendChild(removeButton);
-    const listIndex = document.createElement('li');
-    listIndex.appendChild(taskContainer);
-
-    return listIndex;
-}
-
-const build_input_for_a_new_task = function(){
-    const newTaskInput = document.createElement('input');
-    newTaskInput.classList.add('input-for-a-new-task')
-    newTaskInput.type = 'text';
-    newTaskInput.name = 'new-task-input';
-    newTaskInput.placeholder = 'Additional step here';
-
-    return newTaskInput;
-}
-
-const build_button_to_add_a_new_task = function(){
-    const addButton = document.createElement('button');
-    addButton.classList.add('button-to-add-a-new-task');
-    addButton.type = 'submit';
-
-    return addButton;
-}
-
-const build_parent_container_form_for_new_task = function(i){
-    const addTaskForm = document.createElement('form');
-    addTaskForm.classList.add('form-to-add-a-new-task');
-    addTaskForm.classList.add('edit-features');
-    addTaskForm.addEventListener('submit', (event) => add_to_existing_project_fetch(event, i));
-    const instructions = 'use this field to add a new subtask to the end of this project';
-    const instructionBlock = wrap_data_entry_form_in_an_instruction_block(addTaskForm, instructions);
-    return instructionBlock;
-}
-
-const form_to_add_a_new_task = function(projectTaskList, i){
-    const newTaskInput = build_input_for_a_new_task();
-    const addButton = build_button_to_add_a_new_task();
-    const addTaskForm = build_parent_container_form_for_new_task(i);
-    addTaskForm.appendChild(newTaskInput);
-    addTaskForm.appendChild(addButton);
-    projectTaskList.appendChild(addTaskForm);
-}
-
-
-const build_project_tasks = function(projects, i){
-    const projectTaskList = document.createElement('ol');
-    projectTaskList.classList.add('project-task-list');
-    for(let x = 0; x < projects[i].tasks.length; x++){
-        const taskText = build_text_for_a_task(projects, i, x);
-        const checkboxButton = build_checkbox_for_a_task(projects, i, x, taskText);
-        if(projects[i].tasks[x].is_complete == 1){
-            taskText.classList.add('completed-task');
-            checkboxButton.checked = true;
-        }
-        const removeButton = build_remove_button_for_a_task(projects, i, x);
-        const taskContainer = build_parent_container_for_a_task(taskText, checkboxButton, removeButton);
-
-        projectTaskList.appendChild(taskContainer);
-
-    }
-    form_to_add_a_new_task(projectTaskList, i)
-
-    return projectTaskList;
-}
-
-const toggle_edit_features = function(){
-    const editFeatures = Array.from(document.getElementsByClassName('edit-features'));
-    for(let i = 0; i < editFeatures.length; i++){
-        editFeatures[i].classList.toggle('show-edits');
-    }
-
-}
-
-const build_edit_container = function(){
-    const editButton = document.createElement('button');
-    editButton.classList.add('edit-projects-button');
-    editButton.addEventListener('click', () => toggle_edit_features())
-
-    const editContainer = document.createElement('div');
-    editContainer.classList.add('edit-projects-container');
-    editContainer.appendChild(editButton);
-
-    return editContainer;
-}
-
-const build_project_card = function(projects, i, parentContainer){
-    let myProject = document.createElement('div');
-    myProject.classList.add('my-project');
-
-    const deleteProjectContainer = build_project_delete_container(projects, i);
-    const projectTitle = build_project_title(projects, i);
-    const projectGoal = build_goal(projects, i);
-
-    myProject.appendChild(deleteProjectContainer);
-    myProject.appendChild(projectTitle);
-    myProject.appendChild(projectGoal);
-
-    if(localStorage.getItem('project-type') == 'current'){
-        const projectLinks = build_project_links(projects, i);
-        myProject.appendChild(projectLinks);
-
-        const projectTasks = build_project_tasks(projects, i);
-        myProject.appendChild(projectTasks);
-    }
-
-    parentContainer.appendChild(myProject);
-}
-
 const insert_spacer = function(parentContainer){
     const spacer = document.createElement('div');
     spacer.classList.add('spacer');
     parentContainer.appendChild(spacer);
 }
 
+const build_parent_container = function(){
+    const parent = document.createElement('div');
+    parent.classList.add('project-card');
+    return parent;
+}
 
-const populate_project_screen = function(projects){
-    console.log(projects);
-    let parentContainer = Array.from(document.getElementsByClassName('user-projects'))[0];
-    console.log(parentContainer);
-    const editButtonContainer = build_edit_container();
-    parentContainer.appendChild(editButtonContainer);
+const build_title = function(singleProject){
+    const projectTitle = document.createElement('p');
+    projectTitle.classList.add('project-title');
+    projectTitle.textContent = singleProject.title;
 
-    for(let i = 0; i < projects.length; i++){
-        build_project_card(projects, i, parentContainer);
-        if(i < (projects.length - 1)){
-            insert_spacer(parentContainer);
+    const container = document.createElement('div');
+    container.classList.add('project-title-container');
+    container.appendChild(projectTitle);
+
+    return container;
+}
+
+const build_goal = function(singleProject){
+    const projectGoal = document.createElement('p');
+    projectGoal.classList.add('project-goal');
+    projectGoal.textContent = singleProject.goal;
+
+    const container = document.createElement('div');
+    container.classList.add('project-goal-container');
+    container.appendChild(projectGoal);
+
+    return container;
+}
+
+const build_section_header = function(sectionText, toggleClassName){
+    const sectionHeaderText = document.createElement('p');
+    sectionHeaderText.classList.add('project-section-text');
+    sectionHeaderText.textContent = sectionText;
+
+    const toggleButton = document.createElement('button'); 
+    toggleButton.classList.add(toggleClassName);
+
+    const container = document.createElement('div');
+    container.classList.add('project-section-header');
+    container.appendChild(sectionHeaderText);
+    container.appendChild(toggleButton);
+
+    return container;
+}
+
+const build_single_resource = function(singleResource, listOfResources){
+    const listIndexElement = document.createElement('li');
+    listIndexElement.classList.add('project-individual-resource');
+
+    const anchor = document.createElement('a');
+    anchor.classList.add('project-resource-link');
+    anchor.textContent = singleResource;
+    anchor.href = singleResource;
+    listIndexElement.appendChild(anchor);
+    listOfResources.appendChild(listIndexElement);
+}
+
+const build_resources = function(singleProject){
+    const listOfResources = document.createElement('ul');
+    listOfResources.classList.add('project-resources');
+    singleProject.resources.forEach((singleResource) => build_single_resource(singleResource, listOfResources));
+    return listOfResources;
+}
+
+const build_single_subtask = function(singleSubtask, listOfSteps){
+    const listIndexElement = document.createElement('li');
+    listIndexElement.classList.add('project-individual-subtask');
+
+    const subtaskText = document.createElement('p');
+    subtaskText.classList.add('project-subtask-text');
+    subtaskText.textContent = singleSubtask.task_description;
+
+    const checkBox = document.createElement('input');
+    checkBox.classList.add('subtask-checkbox');
+    checkBox.type = 'checkbox';
+    checkBox.name = 'task';
+    listIndexElement.appendChild(subtaskText);
+    listIndexElement.appendChild(checkBox);
+    listOfSteps.appendChild(listIndexElement);
+
+}
+
+const build_subtasks = function(singleProject){
+    const listOfSteps = document.createElement('ol');
+    listOfSteps.classList.add('project-steps');
+    singleProject.steps.forEach((singleSubtask) => build_single_subtask(singleSubtask, listOfSteps));
+    return listOfSteps;
+
+}
+
+const build_project_card = function(singleProject, index, array){
+    const parent = build_parent_container();
+    const title = build_title(singleProject);
+    parent.appendChild(title);
+    const goal = build_goal(singleProject);
+    parent.appendChild(goal);
+
+    if(singleProject.resources){
+        if(singleProject.resources.length > 0){
+            const sectionHeader = build_section_header('resources','toggle-project-resources');
+            parent.appendChild(sectionHeader);
+            const resources = build_resources(singleProject);
+            parent.appendChild(resources);
         }
     }
+
+    if(singleProject.steps){
+        if(singleProject.steps.length > 0){
+            const sectionHeader = build_section_header('steps','toggle-project-steps');
+            parent.appendChild(sectionHeader);
+            const subtaskSection = build_subtasks(singleProject);
+            parent.appendChild(subtaskSection);
+        }
+    }
+
+    Array.from(document.getElementsByClassName('user-projects'))[0].appendChild(parent);
+    if(index < array.length - 1){
+        insert_spacer(document.getElementsByClassName('user-projects')[0]);
+    }
+}
+
+const get_max_height = function(list){
+    let max = 0;
+    for(let x = 0; x < list.children.length; x++){
+        if(list.children[x].scrollHeight > max){
+            max = list.children[x].scrollHeight;
+        }
+    }
+    return max;
+}
+
+const toggle_list_height = function(projectResourcesList, i){
+    /* 
+    DESCRIPTION: Function defined to re-assign the max height of the given 
+                list to expand or contract on click
+    INPUT(S): An array of expandable lists from the whole page (array), an index in the list (integer)
+    OUTPUT(S): None
+    */
+    const numChildren = projectResourcesList[i].children.length;
+    const heightOfTallestChild = get_max_height(projectResourcesList[i]);
+    console.log("height of a single link",heightOfTallestChild);
+    const newMaxHeight = (numChildren * heightOfTallestChild) + 10;
+    console.log(getComputedStyle(projectResourcesList[i]).maxHeight);
+    if(getComputedStyle(projectResourcesList[i]).maxHeight == '0px'){
+        projectResourcesList[i].style.maxHeight = newMaxHeight + 'px';
+        return;
+    }
+    projectResourcesList[i].style.maxHeight = '0px';
+}
+
+const expanded_list_functionality = function(buttonClassName, containerClassName){
+    /* 
+    DESCRIPTION: Function defined to access all the expansion buttons on the page and apply event listeners
+    INPUT(S): class for toggle button(s) to call event listener on (string), class for the container(s) to expand (string)
+    OUTPUT(S): None
+    */
+    let expandProjectButtonList = document.getElementsByClassName(buttonClassName);
+    if(expandProjectButtonList){
+        expandProjectButtonList = Array.from(expandProjectButtonList);
+        const projectList = Array.from(document.getElementsByClassName(containerClassName));
+        for(let i = 0; i < expandProjectButtonList.length; i++){
+            expandProjectButtonList[i].addEventListener('click', ()=>{
+                toggle_list_height(projectList, i);
+            });
+        }
+    }
+}
+
+const populate_project_screen = function(projects){
+    const convertedProjects = Array.from(projects);
+    convertedProjects.forEach((singleProject, index, array) => build_project_card(singleProject, index, array));
+    //? can possibly attach event listeners here, better for decoupling structure from function
+
+    expanded_list_functionality('toggle-project-resources', 'project-resources');
+    expanded_list_functionality('toggle-project-steps', 'project-steps');
+    //update_subtask_status_functionality();
+
+
+
     if(localStorage.getItem('project-type') == 'complete'){
         const addNewContainer = document.getElementById('add-new-container');
         addNewContainer.style.display = 'none';

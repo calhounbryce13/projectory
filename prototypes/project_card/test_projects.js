@@ -34,13 +34,16 @@ export const examples = [
         ],
         steps: [
             {
-                'decide on whichdecide on whichdecide on whichdecide on whichdecide on whichdecide on whichdecide on whichdecide on whichdecide on whichdecide on whichdecide on whichdecide on whichdecide on whichdecide on which airline to trust': 0
+                task_description:'decide on whichdecide on whichdecide on whichdecide on whichdecide on whichdecide on whichdecide on whichdecide on whichdecide on whichdecide on whichdecide on whichdecide on whichdecide on whichdecide on which airline to trust',
+                is_complete: 0
             },
             {
-                'get tickets for the whole gang': 0
+                task_description: 'get tickets for the whole gang',
+                is_complete: 0
             },
             {
-                'find a way to add your best friends luggage to your luggage so that you can save on the total cost of luggage': 0
+                task_description: 'find a way to add your best friends luggage to your luggage so that you can save on the total cost of luggage',
+                is_complete: 0
             }
         ]
     }

@@ -27,6 +27,8 @@
     --delete-data-color: var(--light-crimson);
     --add-data-color: var(--mint-green);
 
+    --expanding-container-animation-time: 0.5s;
+
 }
 
 
@@ -995,7 +997,7 @@ footer{
     width: 100%;
     height: auto;
     max-height: 0vh;
-    transition: max-height 0.3s ease-in-out;
+    transition: max-height var(--expanding-container-animation-time) ease-in-out;
 }
 
 .project-individual-resource{
@@ -1025,7 +1027,7 @@ footer{
     height: auto;
     max-height: 0vh;
 
-    transition: max-height 0.3s ease-in-out;
+    transition: max-height var(--expanding-container-animation-time) ease-in-out;
 
 }
 

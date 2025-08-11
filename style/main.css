@@ -982,10 +982,10 @@ footer{
 }
 
 .toggle-project-resources{
-    height: 6vw;
-    width: 6vw;
+    height: 8vw;
+    width: 8vw;
     background-color: black;
-    border-radius: 10px;
+    border-radius: 5px;
 
 }
 
@@ -1011,10 +1011,10 @@ footer{
 }
 
 .toggle-project-steps{
-    height: 6vw;
-    width: 6vw;
+    height: 8vw;
+    width: 8vw;
     background-color: black;
-    border-radius: 10px;
+    border-radius: 5px;
 
 }
 

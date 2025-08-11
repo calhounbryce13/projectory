@@ -508,8 +508,8 @@ const build_single_resource = function(singleResource, listOfResources){
 const build_resources = function(singleProject){
     const listOfResources = document.createElement('ul');
     listOfResources.classList.add('project-resources');
-    console.log(singleProject.tasks);
-    singleProject.tasks.forEach((singleResource) => build_single_resource(singleResource, listOfResources));
+    console.log(singleProject.links);
+    singleProject.links.forEach((singleResource) => build_single_resource(singleResource, listOfResources));
     return listOfResources;
 }
 

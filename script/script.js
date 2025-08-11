@@ -544,8 +544,8 @@ const build_project_card = function(singleProject, index, array){
     const goal = build_goal(singleProject);
     parent.appendChild(goal);
 
-    if(singleProject.resources){
-        if(singleProject.resources.length > 0){
+    if(singleProject.links){
+        if(singleProject.links.length > 0){
             const sectionHeader = build_section_header('resources','toggle-project-resources');
             parent.appendChild(sectionHeader);
             const resources = build_resources(singleProject);
@@ -553,8 +553,8 @@ const build_project_card = function(singleProject, index, array){
         }
     }
 
-    if(singleProject.steps){
-        if(singleProject.steps.length > 0){
+    if(singleProject.tasks){
+        if(singleProject.tasks.length > 0){
             const sectionHeader = build_section_header('steps','toggle-project-steps');
             parent.appendChild(sectionHeader);
             const subtaskSection = build_subtasks(singleProject);

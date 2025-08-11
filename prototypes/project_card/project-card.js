@@ -99,7 +99,7 @@ const build_subtasks = function(singleProject){
 
 }
 
-const build_project_card = function(singleProject){
+const build_project_card = function(singleProject, index, array){
     const parent = build_parent_container();
     const title = build_title(singleProject);
     parent.appendChild(title);
@@ -127,19 +127,28 @@ const build_project_card = function(singleProject){
     }
 
     Array.from(document.getElementsByClassName('user-projects'))[0].appendChild(parent);
+    if(index < array.length - 1){
+        //insert_spacer(parentContainer);
+    }
 
 
 }
 
 
-
 const build_project_view = function(examples){
     const convertedProjects = Array.from(examples);
-    convertedProjects.forEach((singleProject) => build_project_card(singleProject));
+    convertedProjects.forEach((singleProject, index, array) => build_project_card(singleProject, index, array));
     //? can possibly attach event listeners here, better for decoupling structure from function
 
     expanded_list_functionality('toggle-project-resources', 'project-resources');
     expanded_list_functionality('toggle-project-steps', 'project-steps');
+    //update_subtask_status_functionality();
+
+    
+    /*if(localStorage.getItem('project-type') == 'complete'){
+        const addNewContainer = document.getElementById('add-new-container');
+        addNewContainer.style.display = 'none';
+    }*/
 
 }
 
@@ -155,7 +164,7 @@ const toggle_list_height = function(projectResourcesList, i){
    //! the first child's height is not necessarily the tallest child, need the max height for extension
     const numChildren = projectResourcesList[i].children.length;
     const heightOfSingleLink = projectResourcesList[i].children[0].children[0].getBoundingClientRect().height;
-    console.log(heightOfSingleLink);
+    console.log("height of a single link",heightOfSingleLink);
     const newMaxHeight = (numChildren * heightOfSingleLink) + 10;
     console.log(getComputedStyle(projectResourcesList[i]).maxHeight)
     if(getComputedStyle(projectResourcesList[i]).maxHeight == '0px'){

@@ -23,7 +23,7 @@ export const examples = [
                 is_complete: 0
             }
         ]
-    }/*,
+    },
     {
         title: 'Plan a trip to trip to trip to trip to trip to trip to Fuiji',
         goal: 'Plan a trip to the island of Fujitrip to the island of Fujitrip to the island of Fujitrip to the island of Fuji with Jake and Blake sometime in May or June',
@@ -43,5 +43,5 @@ export const examples = [
                 'find a way to add your best friends luggage to your luggage so that you can save on the total cost of luggage': 0
             }
         ]
-    }*/
+    }
 ]

@@ -925,6 +925,7 @@ footer{
     background-color: var(--soft-sage);
     margin-top: 2vh;
     margin-bottom: 2vh;
+    color: var(--deep-blue);
 }
 
 .project-title-container{
@@ -986,6 +987,7 @@ footer{
     width: 8vw;
     background-color: black;
     border-radius: 5px;
+    background-color: var(--deep-blue);
 
 }
 
@@ -1015,6 +1017,8 @@ footer{
     width: 8vw;
     background-color: black;
     border-radius: 5px;
+    background-color: var(--deep-blue);
+
 
 }
 

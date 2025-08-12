@@ -101,8 +101,23 @@ const build_subtasks = function(singleProject){
 
 }
 
+const build_edit_container = function(){
+    const editContainer = document.createElement('div');
+    editContainer.classList.add('edit-button-container');
+    const editButton = document.createElement('button');
+    editButton.classList.add('edit-button');
+    editContainer.appendChild(editButton);
+    return editContainer;
+
+}
+
 const build_project_card = function(singleProject, index, array){
     const parent = build_parent_container();
+
+    const editContainer = build_edit_container();
+    parent.appendChild(editContainer);
+
+
     const title = build_title(singleProject);
     parent.appendChild(title);
     const goal = build_goal(singleProject);

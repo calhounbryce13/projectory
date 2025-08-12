@@ -50,6 +50,33 @@ body{
     margin-bottom: 2vh;
 }
 
+
+
+
+.edit-button-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    height: auto;
+    width: 100%;
+}
+
+.edit-button{
+    background-color: rgba(0,0,0,0);
+    background-image: url('edit_pencil_icon.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    border: none;
+    height: 6vw;
+    width: 6vw;
+}
+
+
+
+
+
 .project-title-container{
     display: flex;
     flex-direction: row;

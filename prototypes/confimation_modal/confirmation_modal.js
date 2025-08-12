@@ -33,7 +33,6 @@ const listen_for_click = async() => {
                 resolve(false);
             }
         }, {once:true});
-
     })
 }
 

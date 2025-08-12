@@ -1,0 +1,119 @@
+
+:root{
+
+    --border-color: rgba(255, 0, 0, 0);
+
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid var(--border-color);
+    width: 100vw;
+    padding: 0%;
+
+    background-color:aquamarine ;
+}
+
+.modal{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    width: 80vw;
+    padding: 5vw;
+    border-radius: 90px;
+    background-color: pink;
+
+    position: absolute;
+    top: -50%;
+    transition: top .35s ease-in-out;
+}
+
+.modal-show{
+    top: 30%;
+}
+
+.modal-dismiss-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    height: auto;
+    width: 90%;
+
+
+    border: 2px solid var(--border-color);
+}
+
+.modal-dismiss-button{
+    background-image: url('close-icon.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: rgba(0,0,0,0);
+    border: none;
+    height: 10vw;
+    width: 10vw;
+}
+
+.modal-subject-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    width: 90%;
+
+
+    border: 2px solid var(--border-color);
+}
+
+
+.modal-subject{
+    font-size: 10vw;
+    font-weight: 900;
+}
+
+
+.modal-mssg-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    width: 90%;
+
+
+    border: 2px solid var(--border-color);
+}
+
+
+.modal-mssg{
+    text-align: center;
+    font-size: 4vw;
+    font-weight: 100;
+}
+
+.modal-accept-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    width: 90%;
+    padding: 0%;
+
+}
+
+.modal-accept-button{
+    font-size: 5vw;
+    background-color: black;
+    border-radius: 60px;
+    color: bisque;
+    min-height: 5vh;
+    height: auto;
+    width: 100%;
+    margin: 0%;
+    margin-top: 3vh;
+}

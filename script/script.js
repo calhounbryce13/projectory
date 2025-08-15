@@ -167,32 +167,6 @@ const populate_form_controls = function(){
     }
     add_fields_for_subtasks();
 }
-/*
-const build_project_title = function(projects, i){
-    const title = document.createElement('p');
-    title.textContent = projects[i].title;
-    title.classList.add('project-title');
-
-    const titleContainer = document.createElement('div');
-    titleContainer.classList.add('project-title-container');
-    titleContainer.appendChild(title);
-
-    return titleContainer;
-}
-
-const build_goal = function(projects, i){
-    let goalText = document.createElement('p');
-    goalText.textContent = projects[i].goal;
-    goalText.classList.add('project-goal');
-
-    let goalContainer = document.createElement('div');
-    goalContainer.classList.add('project-goal-container');
-    goalContainer.appendChild(goalText);
-
-
-    return goalContainer;
-}
-*/
 
 const fetch_for_user_email = async()=>{
     const animationInstance = show_loading();
@@ -489,8 +463,8 @@ const build_single_resource = function(singleResource, listOfResources){
 
     const anchor = document.createElement('a');
     anchor.classList.add('project-resource-link');
+    anchor.target = '_blank';
     anchor.textContent = singleResource;
-    console.log(singleResource);
     anchor.href = singleResource;
     listIndexElement.appendChild(anchor);
     listOfResources.appendChild(listIndexElement);

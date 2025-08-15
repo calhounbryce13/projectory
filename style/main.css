@@ -951,6 +951,16 @@ footer{
     width: 6vw;
 }
 
+@media(min-width: 900px){
+    .edit-button{
+        height: 2vw;
+        width: 2vw;
+    }
+
+}
+
+
+
 .project-title-container{
     display: flex;
     flex-direction: row;
@@ -965,6 +975,12 @@ footer{
     font-weight: 800;
     color: black;
     max-width: 60%;
+
+}
+@media(min-width: 900px){
+    .project-title{
+        font-size: 3vw;
+    }
 
 }
 
@@ -986,6 +1002,13 @@ footer{
 
 }
 
+@media(min-width: 900px){
+    .project-goal{
+        font-size: 2vw;
+    }
+
+}
+
 .project-section-header{
     display: flex;
     flex-direction: row;
@@ -1003,6 +1026,12 @@ footer{
     max-width: 50%;
     opacity: 0.50;
 
+}
+
+@media(min-width: 900px){
+    .project-section-text{
+        font-size: 2vw;
+    }
 }
 
 .toggle-project-resources{
@@ -1045,6 +1074,13 @@ footer{
     border: none;
     height: 6vw;
     width: 6vw;
+}
+
+@media(min-width: 900px){
+    .toggle-button{
+        height: 3vw;
+        width: 3vw;
+    }
 }
 
 .toggle-button-expanded{
@@ -1170,9 +1206,6 @@ footer{
     }
     .my-project{
         width: 100%;
-    }
-    .project-title{
-        font-size: 8vw;
     }
     .project-goal{
         font-size: 4vw;

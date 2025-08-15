@@ -147,6 +147,93 @@ const build_project_card = function(singleProject, index, array){
     }
 }
 
+const get_the_subtask_index = function(event){
+    let index;
+    const checkBox = event.target;
+    const parentOrderedListContainer = checkBox.parentNode.parentNode;
+    for(let i = 0; i < parentOrderedListContainer.childNodes.length; i++){
+        console.log(parentOrderedListContainer.childNodes[i].childNodes[1]);
+        if(parentOrderedListContainer.childNodes[i].childNodes[1] == checkBox){
+            index = i;
+            break;
+        }
+    }
+    return index;
+}
+
+const get_the_project_title = function(event){
+    const title = event.target.parentNode.parentNode.parentNode.childNodes[1].childNodes[0].textContent;
+    console.log(title);
+    return title;
+
+}
+
+const assign_status = function(event){
+    if(event.target.checked) return 1;
+    return 0;
+}
+
+const fetch_to_update_a_subtask_status = async(title, index, status, email) => {
+    if(email){
+        let animationInstance;
+        let loadingIconShown = false;
+        const requestDelayTimer = setTimeout(()=>{
+            animationInstance = show_loading();
+            loadingIconShown = true;
+        }, LOADING_ANIMATION_DELAY);
+        try{
+            let serviceBresponse = await fetch(endpoints.taskManager, {
+                method: 'POST',
+                headers:{"Content-type": "application/json"},
+                body: JSON.stringify({
+                    "userEmail": user,
+                    "projectTitle": title,
+                    "index": index,
+                    "statusMark": mark
+                })
+            });
+            if(serviceBresponse.status == 200){
+                text.classList.toggle('completed-task');
+            }
+        }catch(error){
+            console.log(error);
+            show_toast("Sorry", "There is an issue communicating with the server\n that update was not saved.");
+        }finally{
+            clearTimeout(requestDelayTimer);
+            if(loadingIconShown){
+                dismiss_loading(animationInstance);
+            }
+        }
+
+    }
+    show_toast("Sorry", "There is an issue communicating with the server\n that update was not saved.");
+
+}
+
+
+const data_acquisition = function(event){
+    // go to the parent of the given checkbox
+    // get a list of the children checkboxes
+    // use the list to get the index of the given checkbox
+    
+    //*const email = await fetch_for_user_email();
+    const index = get_the_subtask_index(event);
+    const title = get_the_project_title(event);
+    const status = assign_status(event);
+    fetch_to_update_a_subtask_status(title, index, status, email);
+
+
+}
+
+
+const update_subtask_status_functionality = function(){
+    const checkBoxes = Array.from(document.getElementsByClassName('subtask-checkbox'));
+    checkBoxes.forEach((singleCheckBox) => {
+        singleCheckBox.addEventListener('click', (event) => data_acquisition(event));
+    });
+}
+
+
 
 const build_project_view = function(examples){
     const convertedProjects = Array.from(examples);
@@ -155,7 +242,7 @@ const build_project_view = function(examples){
 
     expanded_list_functionality('toggle-project-resources', 'project-resources');
     expanded_list_functionality('toggle-project-steps', 'project-steps');
-    //update_subtask_status_functionality();
+    update_subtask_status_functionality();
 
     
     /*if(localStorage.getItem('project-type') == 'complete'){

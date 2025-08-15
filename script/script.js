@@ -310,16 +310,6 @@ const process_the_form_to_add_a_new_link = async(event, projects, i)=>{
 const update_the_status_for_project_task = async(event, projects, i, x, text) => {
     let user = await fetch_for_user_email();
     if(user){
-        let title = projects[i].title;
-        let index = x;
-        let mark;
-        if(event.target.checked){
-            mark = 1;
-        }
-        else{
-            mark = 0;
-        }
-        let serviceBresponse;
         let animationInstance;
         let loadingIconShown = false;
         const requestDelayTimer = setTimeout(()=>{
@@ -327,7 +317,7 @@ const update_the_status_for_project_task = async(event, projects, i, x, text) =>
             loadingIconShown = true;
         }, LOADING_ANIMATION_DELAY);
         try{
-            serviceBresponse = await fetch(endpoints.taskManager, {
+            let serviceBresponse = await fetch(endpoints.taskManager, {
                 method: 'POST',
                 headers:{"Content-type": "application/json"},
                 body: JSON.stringify({
@@ -632,14 +622,22 @@ const expanded_list_functionality = function(buttonClassName, containerClassName
     }
 }
 
-//!
+const data_acquisition = function(event){
+    // go to the parent of the given checkbox
+    // get a list of the children checkboxes
+    // use the list to get the index of the given checkbox
+    const box = event.target;
+    
+
+
+}
 const update_subtask_status_functionality = function(){
     const checkBoxes = Array.from(document.getElementsByClassName('subtask-checkbox'));
     checkBoxes.forEach((singleCheckBox) => {
-        singleCheckBox.addEventListener('click', (event) => data_acquisition(event))
+        singleCheckBox.addEventListener('click', (event) => data_acquisition(event));
     });
 }
-//!
+
 
 const populate_project_screen = function(projects){
     const convertedProjects = Array.from(projects);

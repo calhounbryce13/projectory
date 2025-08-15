@@ -1060,6 +1060,13 @@ footer{
     font-size: 3vw;
 }
 
+@media(min-width: 900px){
+    .project-resource-link{
+        font-size: 2vw;
+    }
+
+}
+
 .toggle-project-steps{
     border-radius: 5px;
 }
@@ -1121,9 +1128,22 @@ footer{
     width: 90%;
 }
 
+@media(min-width: 900px){
+    .project-subtask-text{
+        font-size: 2vw;
+    }
+
+}
+
 .subtask-checkbox{
     height: 6vw;
     width: 6vw;
+}
+@media(min-width: 900px){
+    .subtask-checkbox{
+        height: 3vw;
+        width: 3vw;
+    }
 }
 
 /*--------------------------------------------------------------------------------------------------------------------*/

@@ -973,7 +973,6 @@ footer{
 .project-title{
     font-size: 8vw;
     font-weight: 800;
-    color: black;
     max-width: 60%;
 
 }
@@ -997,7 +996,6 @@ footer{
 .project-goal{
     font-size: 4vw;
     font-weight: 400;
-    color: black;
     max-width: 85%;
 
 }
@@ -1022,7 +1020,6 @@ footer{
 .project-section-text{
     font-size: 4vw;
     font-weight: 100;
-    color: black;
     max-width: 50%;
     opacity: 0.50;
 
@@ -1124,7 +1121,6 @@ footer{
 .project-subtask-text{
     font-size: 4vw;
     font-weight: 400;
-    color: black;
     width: 90%;
 }
 

@@ -1,0 +1,118 @@
+
+
+
+:root{
+    --border1: rgba(255,0,0,0);
+    --border2: rgba(0,255,0,0);
+    --border3: rgba(0,0,255,0);
+
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    border: 2px solid var(--border1);
+
+    padding: 20px;
+}
+
+.start-project-modal{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 15px;
+    height: auto;
+    width: 85%;
+    border: 2px solid var(--border2);
+    background-color: rgb(108, 175, 202)
+}
+
+
+.start-modal-title-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    height: auto;
+    width: 100%;
+    border: 2px solid var(--border1);
+}
+
+.start-modal-title{
+    font-size: 5vw;
+    font-weight: 100;
+
+}
+
+.project-title-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    height: auto;
+    width: 100%;
+}
+
+.project-title{
+    font-size: 6vw;
+    font-weight: 100;
+    color: black;
+    max-width: 80%;
+
+}
+
+.project-goal-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    height: auto;
+    width: 100%;
+    border-bottom: 2px solid black;
+}
+
+.project-goal{
+    font-size: 4vw;
+    font-weight: 400;
+    color: black;
+    max-width: 85%;
+
+}
+
+.textarea-start-project-first-step{
+    border-radius: 10px;
+    font-size: 4vw;
+    font-weight: 400;
+    color: black;
+    width: 90%;
+    resize: vertical;
+    overflow-y: hidden;
+    margin-top: 3vh;
+
+}
+
+.start-project-options-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border: 2px solid var(--border2);
+    height: auto;
+    width: 100%;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+}
+
+.start-project-options-button-class{
+    height: auto;
+    font-size: 6vw;
+    border-radius: 10px;
+
+}
+

@@ -637,8 +637,8 @@ const update_subtask_status_functionality = function(){
 
 
 const populate_modal_to_start_planned_project = function(event){
-    const title = event.parentNode.parentNode.childNodes[1].childNodes[0].textContent;
-    const goal = event.parentNode.parentNode.childNodes[2].childNodes[0].textContent;
+    const title = event.target.parentNode.parentNode.childNodes[1].childNodes[0].textContent;
+    const goal = event.target.parentNode.parentNode.childNodes[2].childNodes[0].textContent;
 
     const modal = Array.from(document.getElementsByClassName('start-project-modal'))[0];
     modal.childNodes[1].childNodes[0].textContent = title;

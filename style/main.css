@@ -1192,7 +1192,9 @@ footer{
     border: 2px solid var(--border3);
 
     opacity: 0;
-    transition: opacity 1s ease-in-out;
+    transition: opacity 1s ease-in-out, 
+                
+                z-index 0s linear 1s;
 
 }
 .modal-overlay-backdrop-show{

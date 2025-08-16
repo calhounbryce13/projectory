@@ -1081,6 +1081,12 @@ footer{
     width: auto;
 }
 
+@media(min-width: 900px){
+    .start-button{
+        font-size: 3vw;
+    }
+}
+
 .toggle-project-steps{
     border-radius: 5px;
 }

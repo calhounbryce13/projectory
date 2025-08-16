@@ -1211,7 +1211,7 @@ footer{
     height: auto;
     width: 85%;
     border: 2px solid var(--border2);
-    background-color: rgb(108, 175, 202);
+    background-color: var(--light-grey-blue);
     transition: left 1.5s ease-in-out;
 }
 

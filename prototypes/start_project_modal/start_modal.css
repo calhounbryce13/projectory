@@ -20,7 +20,37 @@ body{
     padding: 20px;
 }
 
+.modal-overlay-backdrop{
+    position: fixed;
+    top: 0%;
+    left: 0%;
+
+    height: 100%;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: -500;
+    background-color: rgba(0,0,0,0.2);
+    border: 2px solid var(--border3);
+
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+
+}
+.modal-overlay-backdrop-show{
+    opacity: 1;
+    z-index: 500;
+}
+
 .start-project-modal{
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: 250%;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -30,7 +60,12 @@ body{
     height: auto;
     width: 85%;
     border: 2px solid var(--border2);
-    background-color: rgb(108, 175, 202)
+    background-color: rgb(108, 175, 202);
+    transition: left 1.5s ease-in-out;
+}
+
+.start-project-modal-show{
+    left: 50%;
 }
 
 

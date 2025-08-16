@@ -3,29 +3,37 @@
         <head>
             <link rel="stylesheet" href="start_modal.css">
             <script src="start_modal.js"></script>
-
         </head>
         <body>
-            <div class="start-project-modal">
-                <div class="start-modal-title-container">
-                    <p class="start-modal-title">Starting your project: </p>
-                </div>
-                <div class="project-title-container">
-                    <p class="project-title">
-                        Plan a trip to Jamaica!
-                    </p>
-                </div>
-                <div class="project-goal-container">
-                    <p class="project-goal">
-                        Plan a vacation to Jamaica with Ryan and Lucas sometime in November or December to save on flight costs.
-                    </p>
-                </div>
-                <textarea name="planned-project-first-step-text" class="textarea-start-project-first-step" placeholder="Add your first step to officially start your project, you can add more steps later after you have begun"></textarea>
-                <div class="start-project-options-container">
-                    <button class="start-project-options-button-class">cancel</button>
-                    <button class="start-project-options-button-class">start</button>
+
+
+
+            <div class="modal-overlay-backdrop">
+                <div class="start-project-modal">
+                    <div class="start-modal-title-container">
+                        <p class="start-modal-title">Starting your project: </p>
+                    </div>
+                    <div class="project-title-container">
+                        <p class="project-title">
+                            Plan a trip to Jamaica!
+                        </p>
+                    </div>
+                    <div class="project-goal-container">
+                        <p class="project-goal">
+                            Plan a vacation to Jamaica with Ryan and Lucas sometime in November or December to save on flight costs.
+                        </p>
+                    </div>
+                    <textarea name="planned-project-first-step-text" class="dynamic-height-textarea textarea-start-project-first-step" placeholder="Add your first step to officially start your project, you can add more steps later after you have begun"></textarea>
+                    <div class="start-project-options-container">
+                        <button class="start-project-options-button-class" id="start-modal-close">cancel</button>
+                        <button class="start-project-options-button-class" id="start-modal-initiate">start</button>
+                    </div>
                 </div>
             </div>
 
+
+
+
+            
         </body>
     </html>

@@ -632,14 +632,79 @@ const update_subtask_status_functionality = function(){
 }
 
 
+
+
+
+
+const populate_modal_to_start_planned_project = function(event){
+    const title = event.parentNode.parentNode.childNodes[1].childNodes[0].textContent;
+    const goal = event.parentNode.parentNode.childNodes[2].childNodes[0].textContent;
+
+    const modal = Array.from(document.getElementsByClassName('start-project-modal'))[0];
+    modal.childNodes[1].childNodes[0].textContent = title;
+    modal.childNodes[2].childNodes[0].textContent = goal;
+
+}
+
+const show_modal_to_start_planned_project = function(event){
+    populate_modal_to_start_planned_project(event);
+    const parent = Array.from(document.getElementsByClassName('modal-overlay-backdrop'))[0];
+    parent.classList.add('modal-overlay-backdrop-show');
+
+    const startProjectModal = Array.from(document.getElementsByClassName('start-project-modal'))[0];
+    startProjectModal.classList.add('start-project-modal-show');
+
+
+    textarea_dynamic_height_functionality(); //! needs to be called after the element(s) are displayed !//
+
+}
+
+const textarea_dynamic_height_functionality = function(){
+    const textareas = Array.from(document.getElementsByClassName('dynamic-height-textarea'));
+    textareas.forEach(textarea => {
+        textarea.style.height = 'auto';
+        textarea.style.height = textarea.scrollHeight + 'px'; 
+        textarea.addEventListener('input', () => {
+            textarea.style.height = 'auto';
+            textarea.style.height = textarea.scrollHeight + 'px';
+        });
+    });
+}
+
+const close_start_modal_functionality = function(){
+    const dismissModal = document.getElementById('start-modal-close');
+    dismissModal.addEventListener('click', () => {
+        const startProjectModal = Array.from(document.getElementsByClassName('start-project-modal'))[0];
+        startProjectModal.classList.remove('start-project-modal-show');
+
+        const parent = Array.from(document.getElementsByClassName('modal-overlay-backdrop'))[0];
+        parent.classList.remove('modal-overlay-backdrop-show');
+    });
+}
+
+const start_a_planned_project_functionality = function(){
+    const startButtons = document.querySelectorAll('.start-button');
+    startButtons.forEach((singleButton) => {
+        singleButton.addEventListener('click', (event) => show_modal_to_start_planned_project(event));
+    });
+    close_start_modal_functionality();
+}
+
+
 const populate_project_screen = function(projects){
     const convertedProjects = Array.from(projects);
     convertedProjects.forEach((singleProject, index, array) => build_project_card(singleProject, index, array));
     //? can possibly attach event listeners here, better for decoupling structure from function
 
-    expanded_list_functionality('toggle-project-resources', 'project-resources');
-    expanded_list_functionality('toggle-project-steps', 'project-steps');
-    //update_subtask_status_functionality();
+    if(localStorage.getItem('project-type') == 'current'){
+        expanded_list_functionality('toggle-project-resources', 'project-resources');
+        expanded_list_functionality('toggle-project-steps', 'project-steps');
+        //update_subtask_status_functionality();
+    }
+    else if(localStorage.getItem('project-type') == 'planned'){
+        start_a_planned_project_functionality();
+    }
+    
 
     if(localStorage.getItem('project-type') == 'complete'){
         const addNewContainer = document.getElementById('add-new-container');

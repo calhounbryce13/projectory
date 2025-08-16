@@ -641,6 +641,8 @@ const populate_modal_to_start_planned_project = function(event){
     const goal = event.target.parentNode.parentNode.childNodes[2].childNodes[0].textContent;
 
     const modal = Array.from(document.getElementsByClassName('start-project-modal'))[0];
+    console.log(modal);
+    console.log(modal.childNodes[1].childNodes[0]);
     modal.childNodes[1].childNodes[0].textContent = title;
     modal.childNodes[2].childNodes[0].textContent = goal;
 

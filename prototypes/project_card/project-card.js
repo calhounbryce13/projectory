@@ -111,6 +111,17 @@ const build_edit_container = function(){
 
 }
 
+const build_project_start_container = function(){
+    const projectStartContainer = document.createElement('div');
+    projectStartContainer.classList.add('start-button-container');
+    
+    const projectStartButton = document.createElement('button');
+    projectStartButton.classList.add('start-button');
+    projectStartButton.textContent = 'start';
+    projectStartContainer.appendChild(projectStartButton);
+    return projectStartContainer;
+}
+
 const build_project_card = function(singleProject, index, array){
     const parent = build_parent_container();
 
@@ -126,19 +137,27 @@ const build_project_card = function(singleProject, index, array){
     if(singleProject.resources){
         if(singleProject.resources.length > 0){
             const sectionHeader = build_section_header('resources','toggle-project-resources');
-            parent.appendChild(sectionHeader);
+            //parent.appendChild(sectionHeader);
             const resources = build_resources(singleProject);
-            parent.appendChild(resources);
+            //parent.appendChild(resources);
         }
     }
 
     if(singleProject.steps){
         if(singleProject.steps.length > 0){
             const sectionHeader = build_section_header('steps','toggle-project-steps');
-            parent.appendChild(sectionHeader);
+            //parent.appendChild(sectionHeader);
             const subtaskSection = build_subtasks(singleProject);
-            parent.appendChild(subtaskSection);
+            //parent.appendChild(subtaskSection);
         }
+    }
+
+
+    //! change this condition obviously !
+    if(true){
+        const startProjectOption = build_project_start_container();
+        parent.appendChild(startProjectOption);
+
     }
 
     Array.from(document.getElementsByClassName('user-projects'))[0].appendChild(parent);

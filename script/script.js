@@ -514,12 +514,25 @@ const build_edit_container = function(){
 
 }
 
+const build_project_start_container = function(){
+    const projectStartContainer = document.createElement('div');
+    projectStartContainer.classList.add('start-button-container');
+    
+    const projectStartButton = document.createElement('button');
+    projectStartButton.classList.add('start-button');
+    projectStartButton.textContent = 'start';
+    projectStartContainer.appendChild(projectStartButton);
+    return projectStartContainer;
+}
+
 const build_project_card = function(singleProject, index, array){
     const parent = build_parent_container();
     const editContainer = build_edit_container();
     parent.appendChild(editContainer);
+
     const title = build_title(singleProject);
     parent.appendChild(title);
+
     const goal = build_goal(singleProject);
     parent.appendChild(goal);
 
@@ -539,6 +552,12 @@ const build_project_card = function(singleProject, index, array){
             const subtaskSection = build_subtasks(singleProject);
             parent.appendChild(subtaskSection);
         }
+    }
+
+    if(localStorage.getItem('project-type') == 'planned'){
+        const startProjectOption = build_project_start_container();
+        parent.appendChild(startProjectOption);
+        
     }
 
     Array.from(document.getElementsByClassName('user-projects'))[0].appendChild(parent);

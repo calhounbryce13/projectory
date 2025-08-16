@@ -1064,6 +1064,23 @@ footer{
 
 }
 
+.start-button-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    height: auto;
+    width: 100%;
+}
+
+.start-button{
+    border-radius: 10px;
+    padding: 2%;
+    font-size: 5vw;
+    height: auto;
+    width: auto;
+}
+
 .toggle-project-steps{
     border-radius: 5px;
 }

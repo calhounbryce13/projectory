@@ -1085,6 +1085,10 @@ footer{
     .start-button{
         font-size: 3vw;
     }
+    .start-button:hover{
+        background-color: var(--deep-blue);
+        color: var(--yellow-gold);
+    }
 }
 
 .toggle-project-steps{

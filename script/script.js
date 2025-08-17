@@ -624,17 +624,18 @@ const data_acquisition = function(event){
 
 
 }
-const update_subtask_status_functionality = function(){
-    const checkBoxes = Array.from(document.getElementsByClassName('subtask-checkbox'));
-    checkBoxes.forEach((singleCheckBox) => {
-        singleCheckBox.addEventListener('click', (event) => data_acquisition(event));
-    });
+const update_subtask_status = function(event){
+    data_acquisition(event);
+
 }
 
 
-
-
-
+const update_subtask_status_functionality = function(){
+    const checkBoxes = Array.from(document.getElementsByClassName('subtask-checkbox'));
+    checkBoxes.forEach((singleCheckBox) => {
+        singleCheckBox.addEventListener('click', (event) => update_subtask_status(event));
+    });
+}
 
 const populate_modal_to_start_planned_project = function(event){
     const title = event.target.parentNode.parentNode.children[1].children[0].textContent;
@@ -677,6 +678,8 @@ const close_start_modal_functionality = function(){
     dismissModal.addEventListener('click', () => {
         const startProjectModal = Array.from(document.getElementsByClassName('start-project-modal'))[0];
         startProjectModal.classList.remove('start-project-modal-show');
+        const textArea = Array.from(document.getElementsByClassName('textarea-start-project-first-step'))[0];
+        textArea.textContent = '';
 
         const parent = Array.from(document.getElementsByClassName('modal-overlay-backdrop'))[0];
         parent.classList.remove('modal-overlay-backdrop-show');

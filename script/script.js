@@ -679,7 +679,7 @@ const close_start_modal_functionality = function(){
         const startProjectModal = Array.from(document.getElementsByClassName('start-project-modal'))[0];
         startProjectModal.classList.remove('start-project-modal-show');
         const textArea = Array.from(document.getElementsByClassName('textarea-start-project-first-step'))[0];
-        textArea.textContent = '';
+        textArea.value = '';
 
         const parent = Array.from(document.getElementsByClassName('modal-overlay-backdrop'))[0];
         parent.classList.remove('modal-overlay-backdrop-show');

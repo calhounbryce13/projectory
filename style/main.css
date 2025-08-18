@@ -1203,6 +1203,7 @@ footer{
 }
 
 .start-project-modal{
+    overflow-x: hidden;
     position: absolute;
     top: 50%;
     transform: translate(-50%, -50%);
@@ -1252,7 +1253,21 @@ footer{
     resize: vertical;
     overflow-y: hidden;
     margin-top: 3vh;
+}
 
+@media(min-width: 900px){
+    .textarea-start-project-first-step{
+        font-size: 2vw;
+    }
+    .start-project-modal{
+        width: 35%;
+    }
+    .start-project-options-button-class{
+        font-size: 2vw;
+    }
+    .start-modal-title{
+        font-size: 2vw;
+    }
 }
 
 .start-project-options-container{

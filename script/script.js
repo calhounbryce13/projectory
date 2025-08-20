@@ -321,42 +321,32 @@ const update_the_status_for_project_task = async(event, projects, i, x, text) =>
 
 }
 
-const delete_user_project = async(projects, i) => {
-    if(confirm("Are you sure you want to delete this project?\n This cannot be undone")){
-        const type = localStorage.getItem('project-type');
-        let title = projects[i].title;
-        let user = await fetch_for_user_email();
-        if(user){
-            let response;
-            const animationInstance = show_loading();
-            try{
-                response = await fetch(endpoints.deletion,{
-                    method: 'DELETE',
-                    headers:{
-                        "Content-Type": "application/json",
-                        "x-user-email": user
-                    },
-                    body: JSON.stringify({
-                        "project-type": type,
-                        "project-name": title
-                    })
-                });
-                if(response.status == 200){
-                    show_toast("Confirmed", "successfully removed that project from your list");
-                    window.location.reload();
-                    return;
-                }
-            }catch(error){
-                console.log(error);
-            }finally{
-                dismiss_loading(animationInstance);
-            }
-            show_toast("Sorry", "unable to remove that project");
-            return;
+
+const request_to_delete_user_project = async(type, title) => {
+    const animationInstance = show_loading();
+    try{
+        let response = await fetch(endpoints.deletion,{
+            method: 'DELETE',
+            headers:{
+                "Content-Type": "application/json",
+                "x-user-email": user
+            },
+            body: JSON.stringify({
+                "project-type": type,
+                "project-name": title
+            })
+        });
+        if(response.status == 200){
+            //show_toast("Confirmed", "successfully removed that project from your list");
+            return true;
         }
-        show_toast("Sorry", "There seems to have been an issue trying to complete your request");
-        
+    }catch(error){
+        console.log(error);
+    }finally{
+        dismiss_loading(animationInstance);
     }
+    //show_toast("Sorry", "unable to remove that project");
+    return false;
 }
 
 
@@ -686,12 +676,40 @@ const close_start_modal_functionality = function(){
     });
 }
 
+const starting_project = function(){
+    const startButton = document.getElementById('start-modal-initiate');
+    startButton.addEventListener('click', (event) => {
+        const textarea = event.target.parentNode.parentNode.children[3];
+        if(textarea.value == ''){
+            show_modal("Uh Oh!","Please fill out the entire form");
+            return;
+        }
+        const title = event.target.parentNode.parentNode.children[1].children[0].textContent;
+        const goal = event.target.parentNode.parentNode.children[2].children[0].textContent;
+        const steps = [];
+        steps.push(textarea.value);
+
+
+        if(send_request_to_make_current_project(title, goal, steps)){
+            if(request_to_delete_user_project(localStorage.getItem('project-type'), title)){
+                window.location.reload();
+                return;
+            }
+            show_toast("Sorry", "unable to remove that project");
+        }
+        return;
+    
+    });
+
+}
+
 const start_a_planned_project_functionality = function(){
     const startButtons = document.querySelectorAll('.start-button');
     startButtons.forEach((singleButton) => {
         singleButton.addEventListener('click', (event) => show_modal_to_start_planned_project(event));
     });
     close_start_modal_functionality();
+    starting_project();
 }
 
 
@@ -708,8 +726,6 @@ const populate_project_screen = function(projects){
     else if(localStorage.getItem('project-type') == 'planned'){
         start_a_planned_project_functionality();
     }
-    
-
     if(localStorage.getItem('project-type') == 'complete'){
         const addNewContainer = document.getElementById('add-new-container');
         addNewContainer.style.display = 'none';
@@ -987,6 +1003,37 @@ const create_list_of_tasks = function(inputs){
         }
     }
     return res;
+}
+
+const send_request_to_make_current_project = async(title, goal, steps) => {
+    const animationInstance = show_loading();
+    try{
+        let response = await fetch(endpoints.current_projects_generator,{
+            method: "POST",
+            credentials: "include",
+            headers:{
+                "Content-type": "application/json"
+            },
+            body:JSON.stringify({
+                "title": title,
+                "goal": goal,
+                "tasks": steps
+            })
+        });
+        if(response){
+            if(response.status == 200){
+                show_toast("Perfect!","new current project has been saved");
+                return true;
+            }
+        }
+        
+    }catch(error){
+        console.log(error);
+    }finally{
+        dismiss_loading(animationInstance);
+    }
+    show_toast("Uh Oh!", "there seems to have been an issue submitting your project, please try again");
+    return false;
 }
 
 const create_new_project_functionality = function(){

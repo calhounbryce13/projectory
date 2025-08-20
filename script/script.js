@@ -680,6 +680,10 @@ const starting_project = function(){
     const startButton = document.getElementById('start-modal-initiate');
     startButton.addEventListener('click', (event) => {
         const textarea = event.target.parentNode.parentNode.children[3];
+        console.log('\n starting here', event.target);
+        console.log(textarea);
+        console.log(textarea.value);
+
         if(textarea.value == ''){
             show_modal("Uh Oh!","Please fill out the entire form");
             return;
@@ -688,6 +692,10 @@ const starting_project = function(){
         const goal = event.target.parentNode.parentNode.children[2].children[0].textContent;
         const steps = [];
         steps.push(textarea.value);
+        console.log(title);
+        console.log(steps, '\n');
+
+
 
 
         if(send_request_to_make_current_project(title, goal, steps)){

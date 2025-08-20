@@ -39,6 +39,36 @@ const show_modal_to_start_planned_project = function(){
 
     textarea_dynamic_height_functionality(); //! needs to be called after the element(s) are displayed !//
 
+
+    const startButton = document.getElementById('start-modal-initiate');
+    startButton.addEventListener('click', (event) => {
+        const textarea = event.target.parentNode.parentNode.children[3];
+        console.log('\n starting here', event.target);
+        console.log(textarea);
+        console.log(textarea.value);
+
+        if(textarea.value == ''){
+            show_modal("Uh Oh!","Please fill out the entire form");
+            return;
+        }
+        const title = event.target.parentNode.parentNode.children[1].children[0].textContent;
+        const goal = event.target.parentNode.parentNode.children[2].children[0].textContent;
+        const steps = [];
+        steps.push(textarea.value);
+        console.log(title);
+        console.log(steps, '\n');
+    })
+
+
+
+
+
+
+
+
+
+
+
 }
 
 const textarea_dynamic_height_functionality = function(){

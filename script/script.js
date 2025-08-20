@@ -322,7 +322,7 @@ const update_the_status_for_project_task = async(event, projects, i, x, text) =>
 }
 
 
-const request_to_delete_user_project = async(type, title) => {
+const request_to_delete_user_project = async(type, title, user) => {
     const animationInstance = show_loading();
     try{
         let response = await fetch(endpoints.deletion,{
@@ -678,7 +678,7 @@ const close_start_modal_functionality = function(){
 
 const starting_project = function(){
     const startButton = document.getElementById('start-modal-initiate');
-    startButton.addEventListener('click', (event) => {
+    startButton.addEventListener('click', async(event) => {
         const textarea = event.target.parentNode.parentNode.children[3];
         console.log('\n starting here', event.target);
         console.log(textarea);
@@ -695,11 +695,9 @@ const starting_project = function(){
         console.log(title);
         console.log(steps, '\n');
 
-
-
-
         if(send_request_to_make_current_project(title, goal, steps)){
-            if(request_to_delete_user_project(localStorage.getItem('project-type'), title)){
+            const user = await fetch_for_user_email();
+            if(request_to_delete_user_project(localStorage.getItem('project-type'), title, user)){
                 window.location.reload();
                 return;
             }

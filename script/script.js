@@ -5,10 +5,10 @@ const PASSWORD_MIN = 8;
 const LOADING_ANIMATION_DELAY = 1000; // in ms
 
 
-document.addEventListener('DOMContentLoaded', ()=>{
+document.addEventListener('DOMContentLoaded', async()=>{
 
     dismiss_modal_functionality();
-    check_user_login_status();
+    await check_user_login_status();
     generate_user_projects_page();
     backend_communication();
     home_page_listeners();

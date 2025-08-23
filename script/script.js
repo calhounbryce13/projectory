@@ -8,7 +8,7 @@ const LOADING_ANIMATION_DELAY = 1000; // in ms
 document.addEventListener('DOMContentLoaded', async()=>{
 
     dismiss_modal_functionality();
-    await check_user_login_status();
+    check_user_login_status();
     generate_user_projects_page();
     backend_communication();
     home_page_listeners();

@@ -819,13 +819,12 @@ const update_user_projects_view = async()=>{
 
 const generate_user_projects_page = async() => {
     console.log("\ngenerating user projects\n");
-    window.addEventListener('load', async()=>{
-        if(window.location.pathname.endsWith("/projects.html")){
-            update_header_text();
-            populate_form_controls();
-            get_project_data();
-        }
-    });
+    
+    if(window.location.pathname.endsWith("/projects.html")){
+        update_header_text();
+        populate_form_controls();
+        get_project_data();
+    }
 }
 
 const process_signup_data = async(event)=>{

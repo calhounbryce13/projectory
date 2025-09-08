@@ -67,7 +67,7 @@
 
 }
 
-.project-title-container{
+.project-title-container-edit-modal{
     display: flex;
     flex-direction: row;
     justify-content: flex-start;

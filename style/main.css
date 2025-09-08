@@ -36,6 +36,268 @@
     font-family: 'Cal Sans';
 }
 
+
+
+.edit-project-modal{
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 15px;
+    height: auto;
+    width: 85%;
+    border: 2px solid var(--border2);
+    background-color: rgb(108, 175, 202)
+}
+
+.edit-modal-title-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    height: auto;
+    width: 100%;
+    border: 2px solid var(--border1);
+}
+
+.edit-modal-title{
+    font-size: 5vw;
+    font-weight: 100;
+
+}
+
+.project-title-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    height: auto;
+    width: 100%;
+    border-bottom: 2px solid black;
+}
+
+.project-title{
+    font-size: 6vw;
+    font-weight: 100;
+    color: black;
+    max-width: 80%;
+
+}
+
+.project-goal-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    height: auto;
+    width: 100%;
+
+
+}
+
+.project-goal{
+    font-size: 4vw;
+    font-weight: 400;
+    color: black;
+    max-width: 85%;
+
+}
+
+
+
+.project-section-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: auto;
+    width: 100%;
+
+
+}
+
+.project-section-text{
+    font-size: 4vw;
+    font-weight: 100;
+    color: black;
+    max-width: 50%;
+    opacity: 0.50;
+
+}
+
+.toggle-project-resources{
+    height: 6vw;
+    width: 6vw;
+    background-color: black;
+    border-radius: 10px;
+
+}
+
+.project-add-new-text{
+    margin-bottom: 2vh;
+    width: 90%;
+}
+
+.project-resources-edit-modal{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    transition: max-height 0.3s ease-in-out;
+    padding-inline-start: 0%;
+    border-bottom: 2px solid black;
+    border: 2px solid var(--border1);
+}
+
+
+.edit-project-input-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    height: auto;
+    width: 100%;
+    border: 2px solid var(--border1);
+}
+
+.edit-form-textarea{
+    height: 20vh;
+    width: 80%;
+    font-size: 4vw;
+    margin-bottom: 2vh;
+
+}
+
+.project-add-a-new-resource{
+    width: 100%;
+}
+
+.project-individual-resource{
+    max-width: 80%;
+    overflow-x: hidden;
+
+}
+
+.project-resource-link{
+    font-size: 3vw;
+
+}
+
+.save-new-data-button{
+    height: 4vh;
+    width: 25%;
+    font-size: 4vw;
+    min-height: 3vh;
+    overflow: hidden
+}
+
+.toggle-project-steps{
+    height: 6vw;
+    width: 6vw;
+    background-color: black;
+    border-radius: 10px;
+
+}
+
+.project-steps-edit-modal{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+
+    transition: max-height 0.3s ease-in-out;
+    padding-inline-start: 0%;
+
+
+}
+
+.project-individual-subtask{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    height: auto;
+    overflow-x: hidden;
+    overflow-y: hidden;
+
+    border: 2px solid var(--border3);
+
+}
+
+.project-subtask-text{
+    font-size: 4vw;
+    font-weight: 400;
+    color: black;
+    max-width: 90%;
+    resize: vertical;
+    overflow-y: hidden;
+}
+
+.subtask-checkbox{
+    height: 6vw;
+    width: 6vw;
+}
+
+.edit-a-project-resource-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: auto;
+    width: 100%;
+}
+
+.edit-a-project-resource-link{
+    overflow: hidden;
+    max-width: 75%;
+    font-size: 4vw;
+    height: auto;
+    word-wrap: break-word;     
+    white-space: normal;
+}
+
+.remove-a-project-element-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 3.5vh;
+    width: 15%;
+    font-size: 3vw;
+}
+
+.edit-form-controls-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: auto;
+    width: 100%;
+    border: 2px solid var(--border1);
+    border-top: 2px solid black;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    padding-top: 1vh;
+
+}
+
+.edit-form-control-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 3vh;
+    font-size: 3vw;
+}
+
+.edit-modal-button{
+    border-radius: 10px;
+}
+
 #lottie-parent{
     display: none;
     justify-content: center;

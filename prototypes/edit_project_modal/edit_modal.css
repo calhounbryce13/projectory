@@ -11,8 +11,6 @@
 
 *{
     font-family: 'Cal Sans';
-
-
 }
 body{
     display: flex;
@@ -25,6 +23,8 @@ body{
 
     padding: 20px;
 }
+
+
 
 .edit-project-modal{
     display: flex;
@@ -283,9 +283,5 @@ body{
 }
 
 .edit-modal-button{
-    border-radius: 10px;
-}
-
-textarea{
     border-radius: 10px;
 }

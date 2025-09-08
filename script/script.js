@@ -8,8 +8,8 @@ const LOADING_ANIMATION_DELAY = 1000; // in ms
 document.addEventListener('DOMContentLoaded', async()=>{
 
     dismiss_modal_functionality();
-    check_user_login_status();
-    generate_user_projects_page();
+    await check_user_login_status();
+    await generate_user_projects_page();
     backend_communication();
     home_page_listeners();
     setTimeout(()=>{
@@ -49,6 +49,8 @@ const fetch_for_login_status = async()=>{
 }
 
 const check_user_login_status = async()=>{
+    console.log("\nchecking user login status\n");
+
     let loginStatus = await fetch_for_login_status();
     if(!loginStatus){
         if(window.location.pathname.endsWith('/userhome.html') || window.location.pathname.endsWith('/projects.html')){
@@ -815,7 +817,8 @@ const update_user_projects_view = async()=>{
     }
 }
 
-const generate_user_projects_page = function(){
+const generate_user_projects_page = async() => {
+    console.log("\ngenerating user projects\n");
     window.addEventListener('load', async()=>{
         if(window.location.pathname.endsWith("/projects.html")){
             update_header_text();

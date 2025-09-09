@@ -46,9 +46,7 @@
 /*------------------------------------------------------------------------------------------------*/
 
 
-.edit-modal-show{
-    display: flex;
-}
+
 .edit-project-modal{
     display: none;
     flex-direction: column;
@@ -60,6 +58,9 @@
     width: 85%;
     border: 2px solid var(--border2);
     background-color: rgb(108, 175, 202)
+}
+.edit-modal-show{
+    display: flex;
 }
 
 .edit-modal-title-container{

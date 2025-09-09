@@ -606,7 +606,7 @@ const expanded_list_functionality = function(buttonClassName, containerClassName
         }
     }
 }
-
+//!
 const data_acquisition = function(event){
     // go to the parent of the given checkbox
     // get a list of the children checkboxes
@@ -616,12 +616,13 @@ const data_acquisition = function(event){
 
 
 }
+//!
 const update_subtask_status = function(event){
     data_acquisition(event);
 
 }
 
-
+//!
 const update_subtask_status_functionality = function(){
     const checkBoxes = Array.from(document.getElementsByClassName('subtask-checkbox'));
     checkBoxes.forEach((singleCheckBox) => {
@@ -649,7 +650,7 @@ const show_modal_to_start_planned_project = function(event){
     startProjectModal.classList.add('start-project-modal-show');
 
 
-    textarea_dynamic_height_functionality(); //! needs to be called after the element(s) are displayed !//
+    textarea_dynamic_height_functionality(); //* needs to be called after the element(s) are displayed *//
 
 }
 
@@ -730,6 +731,12 @@ const show_modal_to_edit_a_project = function(event){
 
 
 const populate_project_screen = function(projects){
+    /* 
+    Description: This is the function to handle the dynamic rendering of the user's 
+                view with their project data.
+    Input(s): A list of projects (objects), based on the page they are on (current, planned, or complete)
+    Output(s): None
+    */
     const convertedProjects = Array.from(projects);
     convertedProjects.forEach((singleProject, index, array) => build_project_card(singleProject, index, array));
     //? can possibly attach event listeners here, better for decoupling structure from function

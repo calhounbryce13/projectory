@@ -721,10 +721,25 @@ const start_a_planned_project_functionality = function(){
 }
 
 
+const show_modal_to_edit_a_project = function(event){
+    //populate_modal(event);
+    //todo
+    const editModal = Array.from(document.getElementsByClassName('edit-project-modal'))[0];
+    editModal.classList.add('edit-modal-show');
+}
+
+
 const populate_project_screen = function(projects){
     const convertedProjects = Array.from(projects);
     convertedProjects.forEach((singleProject, index, array) => build_project_card(singleProject, index, array));
     //? can possibly attach event listeners here, better for decoupling structure from function
+
+
+    const editProjectButtonList = Array.from(document.getElementsByClassName('edit-button'));
+    editProjectButtonList.forEach((button) => {
+        button.addEventListener('click', (event) => show_modal_to_edit_a_project(event));
+    });
+    
 
     if(localStorage.getItem('project-type') == 'current'){
         expanded_list_functionality('toggle-project-resources', 'project-resources');

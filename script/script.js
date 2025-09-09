@@ -729,6 +729,27 @@ const show_modal_to_edit_a_project = function(event){
     editModal.classList.add('edit-modal-show');
 }
 
+const save_a_new_resource = function(){
+    const button = document.getElementById('add-a-new-project-resource-button');
+    button.addEventListener('click', async() => {
+        const textArea = button.parentNode.children[0];
+        if(textArea.value != ''){
+            const user = await fetch_for_user_email();
+            const title = button.parentNode.parentNode.parentNode.parentNode.children[1].children[0].textContent;
+            send_a_request_to_insert_a_link(title, user, textArea.value);
+
+        }
+        show_modal("Uh Oh!", "Please enter a valid URL in order to save");
+        return;
+
+    })
+}
+
+
+const edit_a_single_project_functionality = function(){
+    save_a_new_resource();
+}
+
 
 const populate_project_screen = function(projects){
     /* 
@@ -746,6 +767,9 @@ const populate_project_screen = function(projects){
     editProjectButtonList.forEach((button) => {
         button.addEventListener('click', (event) => show_modal_to_edit_a_project(event));
     });
+
+
+    edit_a_single_project_functionality();
     
 
     if(localStorage.getItem('project-type') == 'current'){

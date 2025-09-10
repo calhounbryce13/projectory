@@ -763,13 +763,16 @@ const populate_project_screen = function(projects){
     //? can possibly attach event listeners here, better for decoupling structure from function
 
 
+
+    /*
+    Need to re-design the edit modal for each page planned
+    
     const editProjectButtonList = Array.from(document.getElementsByClassName('edit-button'));
     editProjectButtonList.forEach((button) => {
         button.addEventListener('click', (event) => show_modal_to_edit_a_project(event));
     });
-
-
     edit_a_single_project_functionality();
+    */
     
 
     if(localStorage.getItem('project-type') == 'current'){

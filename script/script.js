@@ -1080,7 +1080,10 @@ const send_request_to_make_current_project = async(title, goal, steps) => {
                 "tasks": steps
             })
         });
+        console.log("here");
         console.log(response);
+        console.log("there");
+
 
         if(response){
             if(response.status == 200){

@@ -1063,7 +1063,10 @@ const create_list_of_tasks = function(inputs){
 }
 
 const send_request_to_make_current_project = async(title, goal, steps) => {
+    console.log("entered function");
     const animationInstance = show_loading();
+    console.log("A");
+
     try{
         let response = await fetch(endpoints.current_projects_generator,{
             method: "POST",
@@ -1077,8 +1080,12 @@ const send_request_to_make_current_project = async(title, goal, steps) => {
                 "tasks": steps
             })
         });
+        console.log(response);
+
         if(response){
             if(response.status == 200){
+                console.log("status is 200");
+
                 show_toast("Perfect!","new current project has been saved");
                 return true;
             }
@@ -1089,6 +1096,8 @@ const send_request_to_make_current_project = async(title, goal, steps) => {
     }finally{
         dismiss_loading(animationInstance);
     }
+    console.log("B");
+
     show_toast("Uh Oh!", "there seems to have been an issue submitting your project, please try again");
     return false;
 }

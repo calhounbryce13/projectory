@@ -778,13 +778,13 @@ const populate_modal = function(event, editModal){
     let resources = [];
     let steps = [];
     if(ul){
-        ul.children.forEach((listIndex) => {
+        Array.from(ul.children).forEach((listIndex) => {
             resources.push(listIndex.children[0].textContent);
             console.log(listIndex.children[0].textContent);
         });
     }
     if(ol){
-        ol.children.forEach((listIndex) => {
+        Array.from(ol.children).forEach((listIndex) => {
             steps.push(listIndex.children[0].textContent);
             console.log(listIndex.children[0].textContent);
         });

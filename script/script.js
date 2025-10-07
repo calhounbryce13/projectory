@@ -679,7 +679,7 @@ const close_start_modal_functionality = function(){
     });
 }
 
-const starting_project = function(){
+const starting_project = async() => {
     const startButton = document.getElementById('start-modal-initiate');
     startButton.addEventListener('click', async(event) => {
         const textarea = event.target.parentNode.parentNode.children[3];
@@ -698,9 +698,9 @@ const starting_project = function(){
         console.log(title);
         console.log(steps, '\n');
 
-        if(send_request_to_make_current_project(title, goal, steps)){
+        if(await send_request_to_make_current_project(title, goal, steps)){
             const user = await fetch_for_user_email();
-            if(request_to_delete_user_project(localStorage.getItem('project-type'), title, user)){
+            if(await request_to_delete_user_project(localStorage.getItem('project-type'), title, user)){
                 window.location.reload();
                 return;
             }
@@ -712,6 +712,7 @@ const starting_project = function(){
 
 }
 
+
 const start_a_planned_project_functionality = function(){
     const startButtons = document.querySelectorAll('.start-button');
     startButtons.forEach((singleButton) => {
@@ -722,34 +723,103 @@ const start_a_planned_project_functionality = function(){
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const populate_modal = function(event, editModal){
+    /* 
+    description: Function to populate the edit project modal with the relevant data
+    input(s); The clicked event
+    output(s): None
+    */
+    const projectCard = event.target.parentNode.parentNode;
+    const title = projectCard.children[1].children[0];
+    //const goal = get_goal();
+    //const resources = get_resources();
+    //const steps = get_steps();
+
+    const titleField = editModal.children[1].children[0];
+    titleField.textContent = title;
+
+
+}
+
+
+
 const show_modal_to_edit_a_project = function(event){
-    //populate_modal(event);
-    //todo
-    const editModal = Array.from(document.getElementsByClassName('edit-project-modal'))[0];
-    editModal.classList.add('edit-modal-show');
+    if(localStorage.getItem('project-type') == 'current'){ //! temporary fix to stop the modal from showing on the planned or complete pages where there is nothing yet to edit
+        const editModal = Array.from(document.getElementsByClassName('edit-project-modal'))[0];
+        populate_modal(event, editModal);
+        editModal.classList.add('edit-modal-show');
+
+    }
+
 }
 
 const save_a_new_resource = function(){
     const button = document.getElementById('add-a-new-project-resource-button');
-    button.addEventListener('click', async() => {
-        const textArea = button.parentNode.children[0];
-        if(textArea.value != ''){
-            const user = await fetch_for_user_email();
-            const title = button.parentNode.parentNode.parentNode.parentNode.children[1].children[0].textContent;
-            send_a_request_to_insert_a_link(title, user, textArea.value);
-
-        }
-        show_modal("Uh Oh!", "Please enter a valid URL in order to save");
-        return;
-
-    })
+    if(button){
+        button.addEventListener('click', async() => {
+            const textArea = button.parentNode.children[0];
+            if(textArea.value != ''){
+                const user = await fetch_for_user_email();
+                const title = button.parentNode.parentNode.parentNode.parentNode.children[1].children[0].textContent;
+                send_a_request_to_insert_a_link(title, user, textArea.value);
+            }
+            show_modal("Uh Oh!", "Please enter a valid URL in order to save");
+            return;
+        });
+    }
 }
-
 
 const edit_a_single_project_functionality = function(){
+    /*
+    description: Adding the event listeners for the functionality 
+    of the elements on the edit modal for any given page.
+    input(s): None
+    output(s): None
+     */
     save_a_new_resource();
 }
-
 
 const populate_project_screen = function(projects){
     /* 
@@ -764,15 +834,13 @@ const populate_project_screen = function(projects){
 
 
 
-    /*
-    Need to re-design the edit modal for each page planned
+    //Need to re-design the edit modal for each page planned
     
     const editProjectButtonList = Array.from(document.getElementsByClassName('edit-button'));
     editProjectButtonList.forEach((button) => {
         button.addEventListener('click', (event) => show_modal_to_edit_a_project(event));
     });
-    edit_a_single_project_functionality();
-    */
+    //edit_a_single_project_functionality();
     
 
     if(localStorage.getItem('project-type') == 'current'){
@@ -788,6 +856,57 @@ const populate_project_screen = function(projects){
         addNewContainer.style.display = 'none';
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

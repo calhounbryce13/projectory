@@ -773,12 +773,20 @@ const populate_modal = function(event, editModal){
     */
     const projectCard = event.target.parentNode.parentNode;
     const title = projectCard.children[1].children[0].textContent;
-    //const goal = get_goal();
-    //const resources = get_resources();
+    const ul = projectCard.children[4];
+    let resources = [];
+    if(ul){
+        ul.children.forEach((listIndex) => {
+            resources.push(listIndex.children[0].textContent);
+            console.log(listIndex.children[0].textContent);
+        });
+    }
     //const steps = get_steps();
 
     const titleField = editModal.children[1].children[0];
     titleField.textContent = title;
+
+
 
 
 }

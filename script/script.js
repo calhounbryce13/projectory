@@ -772,7 +772,7 @@ const populate_modal = function(event, editModal){
     output(s): None
     */
     const projectCard = event.target.parentNode.parentNode;
-    const title = projectCard.children[1].children[0];
+    const title = projectCard.children[1].children[0].textContent;
     //const goal = get_goal();
     //const resources = get_resources();
     //const steps = get_steps();

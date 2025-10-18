@@ -794,7 +794,7 @@ const populate_modal = function(event, editModal){
     //todo: populate the resources and steps sections of the 'edit project' modal
     if(resources.length > 0){
         resources.forEach((aSingleURL) => {
-            const element = build_index_element_for_the_editing_modal(aSingleURL);
+            //const element = build_index_element_for_the_editing_modal(aSingleURL);
             //todo: this should return a <li> element to match the prototype specs with the url text inserted
             //todo: after, append the element to the edit card modal within this loop.
         });

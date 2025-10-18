@@ -59,7 +59,12 @@
     border: 2px solid var(--border2);
     background-color: rgb(108, 175, 202)
 }
-.edit-modal-show{
+.edit-modal-show{ 
+    z-index: 600;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     display: flex;
 }
 

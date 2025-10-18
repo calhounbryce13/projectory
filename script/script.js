@@ -780,22 +780,26 @@ const populate_modal = function(event, editModal){
     if(ul){
         Array.from(ul.children).forEach((listIndex) => {
             resources.push(listIndex.children[0].textContent);
-            console.log(listIndex.children[0].textContent);
         });
     }
     if(ol){
         Array.from(ol.children).forEach((listIndex) => {
             steps.push(listIndex.children[0].textContent);
-            console.log(listIndex.children[0].textContent);
         });
     }
-
-    //const steps = get_steps();
 
     const titleField = editModal.children[1].children[0];
     titleField.textContent = title;
 
-
+    //todo: populate the resources and steps sections of the 'edit project' modal
+    if(resources.length > 0){
+        resources.forEach((aSingleURL) => {
+            const element = build_index_element_for_the_editing_modal(aSingleURL);
+            //todo: this should return a <li> element to match the prototype specs with the url text inserted
+            //todo: after, append the element to the edit card modal within this loop.
+        });
+        
+    }
 
 
 }
@@ -806,8 +810,9 @@ const show_modal_to_edit_a_project = function(event){
     if(localStorage.getItem('project-type') == 'current'){ //! temporary fix to stop the modal from showing on the planned or complete pages where there is nothing yet to edit
         const editModal = Array.from(document.getElementsByClassName('edit-project-modal'))[0];
         populate_modal(event, editModal);
+        const backdrop = Array.from(document.getElementsByClassName('modal-overlay-backdrop'))[1];
+        backdrop.classList.add('modal-overlay-backdrop-show');
         editModal.classList.add('edit-modal-show');
-
     }
 
 }
@@ -868,7 +873,7 @@ const populate_project_screen = function(projects){
     else if(localStorage.getItem('project-type') == 'planned'){
         start_a_planned_project_functionality();
     }
-    if(localStorage.getItem('project-type') == 'complete'){
+    else if(localStorage.getItem('project-type') == 'complete'){
         const addNewContainer = document.getElementById('add-new-container');
         addNewContainer.style.display = 'none';
     }

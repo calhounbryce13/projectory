@@ -59,7 +59,7 @@
     max-height: 60%;
     width: 85%;
     border: 2px solid var(--border2);
-    background-color: darkgrey
+    background-color: rgba(66, 76, 81, 1);
 }
 
 .edit-project-modal > * {

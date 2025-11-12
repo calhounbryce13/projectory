@@ -66,8 +66,6 @@ const fetch_for_login_status = async()=>{
 }
 
 const check_user_login_status = async()=>{
-    console.log("\nchecking user login status\n");
-
     let loginStatus = await fetch_for_login_status();
     if(!loginStatus){
         if(window.location.pathname.endsWith('/userhome.html') || window.location.pathname.endsWith('/projects.html')){
@@ -76,7 +74,6 @@ const check_user_login_status = async()=>{
         }
     }
     loginStatus = await loginStatus.json();
-    console.log(loginStatus);
     if(loginStatus){
         if(window.location.pathname.endsWith('/login.html') || window.location.pathname.endsWith('/index.html')){
             window.location.assign('userhome.html');
@@ -988,7 +985,6 @@ const send_a_request_to_get_user_projects = async()=>{
 }
 
 const get_project_data = async()=>{
-    console.log(localStorage.getItem("project-type"));
     try{
         let projects = await send_a_request_to_get_user_projects();
         if(projects){
@@ -1039,7 +1035,6 @@ const update_user_projects_view = async()=>{
 }
 
 const generate_user_projects_page = async() => {
-    console.log("\ngenerating user projects\n");
     
     if(window.location.pathname.endsWith("/projects.html")){
         update_header_text();

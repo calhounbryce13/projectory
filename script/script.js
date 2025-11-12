@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', async()=>{
         console.log("hhhhere")
 
         closeTheEditorButton = Array.from(closeTheEditorButton)[0];
-        closeTheEditorButton.addEventListener('click', () => toggle_project_editor);
+        closeTheEditorButton.addEventListener('click',toggle_project_editor);
     }
     setTimeout(()=>{
         add_task_to_existing_functionality();

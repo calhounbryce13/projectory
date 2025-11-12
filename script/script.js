@@ -12,6 +12,12 @@ document.addEventListener('DOMContentLoaded', async()=>{
     await generate_user_projects_page();
     backend_communication();
     home_page_listeners();
+
+    let closeTheEditorButton = document.getElementsByClassName('delete-project');
+    if(closeTheEditorButton){
+        closeTheEditorButton = Array.from(closeTheEditorButton)[0];
+        closeTheEditorButton.addEventListener('click', () => toggle_project_editor);
+    }
     setTimeout(()=>{
         add_task_to_existing_functionality();
     }, 3000);
@@ -20,6 +26,14 @@ document.addEventListener('DOMContentLoaded', async()=>{
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+const toggle_project_editor = function(){
+    const editModal = Array.from(document.getElementsByClassName('edit-project-modal'))[0];
+    const backdrop = Array.from(document.getElementsByClassName('modal-overlay-backdrop'))[1];
+    backdrop.classList.toggle('modal-overlay-backdrop-show');
+    editModal.classList.toggle('edit-modal-show');
+}
 
 const fetch_for_login_status = async()=>{
 

@@ -861,9 +861,13 @@ const populate_project_screen = function(projects){
 
 
 const project_functions = function(){
+    console.log("calling project functions")
     /*
     Description: Function defined to facilitate the various functionalities
-                that the user project cards need.
+                that the user project cards need. 
+                1.) toggling te edit modal
+                2.) expand and contract the lists
+                3.) start a planned project
     Input(s): None
     Output(s): None
     */

@@ -775,6 +775,7 @@ const populate_modal = function(event, editModal){
     const title = projectCard.children[1].children[0].textContent;
     const ul = projectCard.children[4];
     const ol = projectCard.children[6];
+    
     let resources = [];
     let steps = [];
     if(ul){
@@ -809,8 +810,9 @@ const populate_modal = function(event, editModal){
 const show_modal_to_edit_a_project = function(event){
     if(localStorage.getItem('project-type') == 'current'){ //! temporary fix to stop the modal from showing on the planned or complete pages where there is nothing yet to edit
         const editModal = Array.from(document.getElementsByClassName('edit-project-modal'))[0];
-        populate_modal(event, editModal);
         const backdrop = Array.from(document.getElementsByClassName('modal-overlay-backdrop'))[1];
+
+        populate_modal(event, editModal);
         backdrop.classList.add('modal-overlay-backdrop-show');
         editModal.classList.add('edit-modal-show');
     }

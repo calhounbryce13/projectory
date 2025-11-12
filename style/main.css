@@ -54,7 +54,9 @@
     align-items: center;
     padding: 1rem;
     border-radius: 15px;
+    overflow-y: scroll;
     height: auto;
+    max-height: 90%;
     width: 85%;
     border: 2px solid var(--border2);
     background-color: rgb(108, 175, 202)

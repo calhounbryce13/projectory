@@ -891,6 +891,10 @@ button:active{
     color: #B8FFFF;
 }
 
+.delete-project{
+    background-color: red;
+}
+
 a{
     text-decoration: none;
     color: var(--deep-blue);

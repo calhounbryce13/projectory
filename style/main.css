@@ -82,7 +82,6 @@
     align-items: center;
     height: auto;
     width: 100%;
-    border: 2px solid red;
 }
 
 .edit-modal-title{
@@ -888,7 +887,7 @@ button:active{
 }
 
 .edit-project-modal > * {
-    color: #B8FFFF;
+    color: var(--yellow-gold);
 }
 
 .delete-project{

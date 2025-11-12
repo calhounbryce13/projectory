@@ -359,7 +359,7 @@
     height: auto;
     width: 80vw;
     padding: 2vw;
-    border-radius: 70px;
+    border-radius: 10px;
     background-color: var(--deep-blue);
     color: var(--ice-blue);
     position: absolute;

@@ -86,7 +86,7 @@
     align-items: center;
     height: auto;
     width: 100%;
-    border: 2px solid var(--border1);
+    border: 2px solid red;
 }
 
 .edit-modal-title{

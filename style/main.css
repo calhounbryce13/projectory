@@ -411,6 +411,7 @@
 
 
 .toast-subject{
+    margin-block: 0px;
     font-size: 10vw;
     font-weight: 900;
     text-align: center;

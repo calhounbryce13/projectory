@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', async()=>{
     dismiss_modal_functionality();
     await check_user_login_status();
     await generate_user_projects_page();
-    project_functions();
     backend_communication();
     home_page_listeners();
     setTimeout(()=>{
@@ -860,6 +859,8 @@ const populate_project_screen = function(projects){
     userProjectsArray.forEach((singleProject, index, array) => build_project_card(singleProject, index, array));
     const addNewContainer = document.getElementById('add-new-container');
     addNewContainer.style.display = 'none';
+    project_functions();
+
 }
 
 

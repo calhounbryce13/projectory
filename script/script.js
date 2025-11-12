@@ -809,6 +809,9 @@ const populate_modal = function(event, editModal){
 
 
 const show_modal_to_edit_a_project = function(event){
+    console.log("calling modal show");
+
+
     if(localStorage.getItem('project-type') == 'current'){ //! temporary fix to stop the modal from showing on the planned or complete pages where there is nothing yet to edit
         const editModal = Array.from(document.getElementsByClassName('edit-project-modal'))[0];
         const backdrop = Array.from(document.getElementsByClassName('modal-overlay-backdrop'))[1];
@@ -861,7 +864,7 @@ const populate_project_screen = function(projects){
 
 
 const project_functions = function(){
-    console.log("calling project functions")
+    console.log("calling project functions");
     /*
     Description: Function defined to facilitate the various functionalities
                 that the user project cards need. 

@@ -875,7 +875,10 @@ const project_functions = function(){
     Output(s): None
     */
     const editProjectButtonList = Array.from(document.getElementsByClassName('edit-button'));
+    console.log(editProjectButtonList);
     editProjectButtonList.forEach((button) => {
+        console.log("adding event listener for editing");
+
         button.addEventListener('click', (event) => show_modal_to_edit_a_project(event));
     });
     

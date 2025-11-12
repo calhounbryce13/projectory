@@ -811,7 +811,7 @@ const show_modal_to_edit_a_project = function(event){
     console.log("calling modal show");
 
 
-    if(localStorage.getItem('project-type') == 'current'){ //! temporary fix to stop the modal from showing on the planned or complete pages where there is nothing yet to edit
+    if(localStorage.getItem('project-type') != 'completed'){ //! temporary fix to stop the modal from showing on the planned or complete pages where there is nothing yet to edit
         const editModal = Array.from(document.getElementsByClassName('edit-project-modal'))[0];
         const backdrop = Array.from(document.getElementsByClassName('modal-overlay-backdrop'))[1];
 

@@ -15,6 +15,8 @@ document.addEventListener('DOMContentLoaded', async()=>{
 
     let closeTheEditorButton = document.getElementsByClassName('delete-project');
     if(closeTheEditorButton){
+        console.log("hhhhere")
+
         closeTheEditorButton = Array.from(closeTheEditorButton)[0];
         closeTheEditorButton.addEventListener('click', () => toggle_project_editor);
     }
@@ -29,6 +31,7 @@ document.addEventListener('DOMContentLoaded', async()=>{
 
 
 const toggle_project_editor = function(){
+    console.log("here")
     const editModal = Array.from(document.getElementsByClassName('edit-project-modal'))[0];
     const backdrop = Array.from(document.getElementsByClassName('modal-overlay-backdrop'))[1];
     backdrop.classList.toggle('modal-overlay-backdrop-show');

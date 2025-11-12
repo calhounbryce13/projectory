@@ -50,7 +50,6 @@
 .edit-project-modal{
     display: none;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     padding: 1rem;
     border-radius: 15px;
@@ -62,10 +61,7 @@
     background-color: rgba(66, 76, 81, 1);
 }
 
-.edit-project-modal > * {
-    border: 2px solid red;
-    color: var(--ice-blue);
-}
+
 
 .edit-project-modal > button{
     color: var(--ice-blue);
@@ -889,6 +885,11 @@ button{
 }
 button:active{
     filter: brightness(85%);
+}
+
+.edit-project-modal > * {
+    border: 2px solid red;
+    color: #B8FFFF;
 }
 
 a{

@@ -285,3 +285,20 @@ body{
 .edit-modal-button{
     border-radius: 10px;
 }
+
+
+.modal-overlay-backdrop{
+    position: fixed;
+    top: 0%;
+    left: 0%;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: -500;
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 2px solid var(--border3);
+    opacity: 0;
+    transition: opacity 1s ease-in-out, z-index 0s linear 1s;
+}

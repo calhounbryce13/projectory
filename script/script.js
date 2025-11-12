@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', async()=>{
     dismiss_modal_functionality();
     await check_user_login_status();
     await generate_user_projects_page();
+    project_functions();
     backend_communication();
     home_page_listeners();
     setTimeout(()=>{
@@ -852,32 +853,32 @@ const populate_project_screen = function(projects){
     Input(s): A list of projects (objects), based on the page they are on (current, planned, or complete)
     Output(s): None
     */
-    const convertedProjects = Array.from(projects);
-    convertedProjects.forEach((singleProject, index, array) => build_project_card(singleProject, index, array));
-    //? can possibly attach event listeners here, better for decoupling structure from function
+    const userProjectsArray = Array.from(projects);
+    userProjectsArray.forEach((singleProject, index, array) => build_project_card(singleProject, index, array));
+    const addNewContainer = document.getElementById('add-new-container');
+    addNewContainer.style.display = 'none';
+}
 
 
-
-    //Need to re-design the edit modal for each page planned
-    
+const project_functions = function(){
+    /*
+    Description: Function defined to facilitate the various functionalities
+                that the user project cards need.
+    Input(s): None
+    Output(s): None
+    */
     const editProjectButtonList = Array.from(document.getElementsByClassName('edit-button'));
     editProjectButtonList.forEach((button) => {
         button.addEventListener('click', (event) => show_modal_to_edit_a_project(event));
     });
-    //edit_a_single_project_functionality();
     
 
     if(localStorage.getItem('project-type') == 'current'){
         expanded_list_functionality('toggle-project-resources', 'project-resources');
         expanded_list_functionality('toggle-project-steps', 'project-steps');
-        //update_subtask_status_functionality();
     }
     else if(localStorage.getItem('project-type') == 'planned'){
         start_a_planned_project_functionality();
-    }
-    else if(localStorage.getItem('project-type') == 'complete'){
-        const addNewContainer = document.getElementById('add-new-container');
-        addNewContainer.style.display = 'none';
     }
 }
 

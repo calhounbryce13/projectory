@@ -3,6 +3,12 @@
 
 document.addEventListener('DOMContentLoaded', ()=>{
     textarea_dynamic_height_functionality();
+
+
+    const backdrop = Array.from(document.getElementsByClassName('modal-overlay-backdrop'))[1];
+    backdrop.classList.add('modal-overlay-backdrop-show');
+
+
 });
 
 

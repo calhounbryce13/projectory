@@ -63,6 +63,11 @@
 }
 
 .edit-project-modal > * {
+    border: 2px solid red;
+    color: var(--ice-blue);
+}
+
+.edit-project-modal > button{
     color: var(--ice-blue);
 }
 .edit-modal-show{ 

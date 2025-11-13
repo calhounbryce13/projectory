@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', async()=>{
     backend_communication();
     home_page_listeners();
 
-    let closeTheEditorButton = document.getElementsByClassName('delete-project');
+    let closeTheEditorButton = document.querySelectorAll('.delete-project');
     if(closeTheEditorButton){
         console.log("a")
 

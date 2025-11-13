@@ -39,6 +39,14 @@
 
 
 
+.delete-project-icon{
+    background-image: url('../icons/delete-icon.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    
+}
+
 
 /*------------------------------------------------------------------------------------------------*/
 /*------------------------------------------------------------------------------------------------*/

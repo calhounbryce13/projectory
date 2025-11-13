@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', async()=>{
     home_page_listeners();
 
     console.log("a")
-    const closeTheEditorButton = Array.from(document.querySelectorAll('.delete-project'))[0];
+    const closeTheEditorButton = Array.from(document.getElementsByClassName('close-editor'))[0];
     closeTheEditorButton.addEventListener('click', remove_project_editor);
     
 

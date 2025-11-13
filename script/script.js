@@ -13,17 +13,12 @@ document.addEventListener('DOMContentLoaded', async()=>{
     backend_communication();
     home_page_listeners();
 
-    let closeTheEditorButton = document.querySelectorAll('.delete-project');
-    if(closeTheEditorButton){
-        console.log("a")
-
-        closeTheEditorButton = Array.from(closeTheEditorButton)[0];
-        closeTheEditorButton.addEventListener('click', remove_project_editor());
-    }
-
+    console.log("a")
+    const closeTheEditorButton = Array.from(document.querySelectorAll('.delete-project'))[0];
+    closeTheEditorButton.addEventListener('click', remove_project_editor);
+    
 
     setTimeout(()=>{
-
         add_task_to_existing_functionality();
     }, 2000);
     

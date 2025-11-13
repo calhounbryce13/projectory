@@ -13,17 +13,17 @@ document.addEventListener('DOMContentLoaded', async()=>{
     backend_communication();
     home_page_listeners();
 
+    let closeTheEditorButton = document.getElementsByClassName('delete-project');
+    if(closeTheEditorButton){
+        console.log("hhhhere")
 
+        closeTheEditorButton = Array.from(closeTheEditorButton)[0];
+        closeTheEditorButton.addEventListener('click', () => remove_project_editor());
+    }
 
 
     setTimeout(()=>{
-        let closeTheEditorButton = document.getElementsByClassName('delete-project');
-        if(closeTheEditorButton){
-            console.log("hhhhere")
-    
-            closeTheEditorButton = Array.from(closeTheEditorButton)[0];
-            closeTheEditorButton.addEventListener('click', () => toggle_project_editor());
-        }
+
         add_task_to_existing_functionality();
     }, 2000);
     
@@ -33,12 +33,12 @@ document.addEventListener('DOMContentLoaded', async()=>{
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-const toggle_project_editor = function(){
+const remove_project_editor = function(){
     console.log("here")
     const editModal = Array.from(document.getElementsByClassName('edit-project-modal'))[0];
     const backdrop = Array.from(document.getElementsByClassName('modal-overlay-backdrop'))[1];
-    backdrop.classList.toggle('modal-overlay-backdrop-show');
-    editModal.classList.toggle('edit-modal-show');
+    backdrop.classList.remove('modal-overlay-backdrop-show');
+    editModal.classList.remove('edit-modal-show');
 }
 
 const fetch_for_login_status = async()=>{

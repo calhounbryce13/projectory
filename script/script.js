@@ -879,7 +879,7 @@ const populate_project_screen = function(projects){
     userProjectsArray.forEach((singleProject, index, array) => build_project_card(singleProject, index, array));
 
 
-    if(localStorage.getItem('project-type') == 'completed'){
+    if(localStorage.getItem('project-type') == 'complete'){
         const addNewContainer = document.getElementById('add-new-container');
         addNewContainer.style.display = 'none';
     }

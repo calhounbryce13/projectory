@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', async()=>{
 const remove_user_project = async(event) => {
     if(confirm("Are you sure you want to PERMANENTLY delete this project? This cannot be undone.")){
         const user = await fetch_for_user_email();
-        const title = event.target.parentNode.parentNode.children[1].children[0].textContent;
+        const title = event.target.parentNode.parentNode.children[2].children[0].textContent;
         const type = localStorage.getItem('project-type');
         const status = await request_to_delete_user_project(type, title, user);
         if(status){
@@ -812,7 +812,7 @@ const populate_modal = function(event, editModal){
         });
     }
 
-    const titleField = editModal.children[1].children[0];
+    const titleField = editModal.children[2].children[0];
     titleField.textContent = title;
 
     //todo: populate the resources and steps sections of the 'edit project' modal

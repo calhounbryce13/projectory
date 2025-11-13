@@ -13,9 +13,11 @@ document.addEventListener('DOMContentLoaded', async()=>{
     backend_communication();
     home_page_listeners();
 
-    console.log("a")
     const closeTheEditorButton = Array.from(document.getElementsByClassName('close-editor'))[0];
     closeTheEditorButton.addEventListener('click', remove_project_editor);
+
+    const deleteProjectButton = Array.from(document.getElementsByClassName('delete-project'))[0];
+    deleteProjectButton.addEventListener('click', (event) => remove_user_project(event));
     
 
     setTimeout(()=>{
@@ -27,9 +29,28 @@ document.addEventListener('DOMContentLoaded', async()=>{
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+const remove_user_project = async(event) => {
+    if(confirm("Are you sure you want to PERMANENTLY delete this project? This cannot be undone.")){
+        const user = await fetch_for_user_email();
+        const title = event.target.parentNode.parentNode.children[1].children[0].textContent;
+        const type = localStorage.getItem('project-type');
+        const status = await request_to_delete_user_project(type, title, user);
+        if(status){
+            show_toast("All Done", "That project was successfully removed from your collection");
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
+        }
+        else{
+            show_toast("Uh Oh", "There was an issue removing that project from your collection");
+        }
+    }
+}
+
+
+
 
 const remove_project_editor = function(){
-    console.log("b")
     const editModal = Array.from(document.getElementsByClassName('edit-project-modal'))[0];
     const backdrop = Array.from(document.getElementsByClassName('modal-overlay-backdrop'))[1];
     backdrop.classList.remove('modal-overlay-backdrop-show');
@@ -351,7 +372,6 @@ const request_to_delete_user_project = async(type, title, user) => {
             })
         });
         if(response.status == 200){
-            //show_toast("Confirmed", "successfully removed that project from your list");
             return true;
         }
     }catch(error){
@@ -359,7 +379,6 @@ const request_to_delete_user_project = async(type, title, user) => {
     }finally{
         dismiss_loading(animationInstance);
     }
-    //show_toast("Sorry", "unable to remove that project");
     return false;
 }
 

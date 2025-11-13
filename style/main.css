@@ -38,12 +38,32 @@
 
 
 
+.close-editor-container{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: auto;
+    width: 90%;
+
+}
+
+.close-editor{
+    background-image: url('../icons/close-icon.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 3vw;
+
+}
+
 
 .delete-project-icon{
     background-image: url('../icons/delete-icon.svg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
+    height: 3vw;
+
     
 }
 
@@ -109,13 +129,6 @@
     border-bottom: 2px solid black;
 }
 
-/*
-.project-title{
-    font-size: 6vw;
-    font-weight: 100;
-    max-width: 80%;
-
-}*/
 
 .project-goal-container{
     display: flex;

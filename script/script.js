@@ -877,8 +877,12 @@ const populate_project_screen = function(projects){
     */
     const userProjectsArray = Array.from(projects);
     userProjectsArray.forEach((singleProject, index, array) => build_project_card(singleProject, index, array));
-    const addNewContainer = document.getElementById('add-new-container');
-    addNewContainer.style.display = 'none';
+
+
+    if(localStorage.getItem('project-type') == 'completed'){
+        const addNewContainer = document.getElementById('add-new-container');
+        addNewContainer.style.display = 'none';
+    }
     project_functions();
 
 }

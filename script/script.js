@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', async()=>{
 
     let closeTheEditorButton = document.getElementsByClassName('delete-project');
     if(closeTheEditorButton){
-        console.log("hhhhere")
+        console.log("a")
 
         closeTheEditorButton = Array.from(closeTheEditorButton)[0];
         closeTheEditorButton.addEventListener('click', () => remove_project_editor());
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', async()=>{
 
 
 const remove_project_editor = function(){
-    console.log("here")
+    console.log("b")
     const editModal = Array.from(document.getElementsByClassName('edit-project-modal'))[0];
     const backdrop = Array.from(document.getElementsByClassName('modal-overlay-backdrop'))[1];
     backdrop.classList.remove('modal-overlay-backdrop-show');
@@ -482,7 +482,6 @@ const build_single_resource = function(singleResource, listOfResources){
 const build_resources = function(singleProject){
     const listOfResources = document.createElement('ul');
     listOfResources.classList.add('project-resources');
-    console.log(singleProject.links);
     singleProject.links.forEach((singleResource) => build_single_resource(singleResource, listOfResources));
     return listOfResources;
 }
@@ -594,9 +593,7 @@ const toggle_list_height = function(projectResourcesList, i){
     */
     const numChildren = projectResourcesList[i].children.length;
     const heightOfTallestChild = get_max_height(projectResourcesList[i]);
-    console.log("height of a single link",heightOfTallestChild);
     const newMaxHeight = (numChildren * heightOfTallestChild) + 10;
-    console.log(getComputedStyle(projectResourcesList[i]).maxHeight);
     if(getComputedStyle(projectResourcesList[i]).maxHeight == '0px'){
         projectResourcesList[i].style.maxHeight = newMaxHeight + 'vh';
         return;
@@ -700,9 +697,6 @@ const starting_project = async() => {
     const startButton = document.getElementById('start-modal-initiate');
     startButton.addEventListener('click', async(event) => {
         const textarea = event.target.parentNode.parentNode.children[3];
-        console.log('\n starting here', event.target);
-        console.log(textarea);
-        console.log(textarea.value);
 
         if(textarea.value == ''){
             show_modal("Uh Oh!","Please fill out the entire form");
@@ -712,8 +706,6 @@ const starting_project = async() => {
         const goal = event.target.parentNode.parentNode.children[2].children[0].textContent;
         const steps = [];
         steps.push(textarea.value);
-        console.log(title);
-        console.log(steps, '\n');
 
         if(await send_request_to_make_current_project(title, goal, steps)){
             const user = await fetch_for_user_email();
@@ -825,10 +817,7 @@ const populate_modal = function(event, editModal){
 
 
 const show_modal_to_edit_a_project = function(event){
-    console.log("calling modal show");
-
-
-    if(localStorage.getItem('project-type') != 'completed'){ //! temporary fix to stop the modal from showing on the planned or complete pages where there is nothing yet to edit
+    if(localStorage.getItem('project-type') != 'completed'){
         const editModal = Array.from(document.getElementsByClassName('edit-project-modal'))[0];
         const backdrop = Array.from(document.getElementsByClassName('modal-overlay-backdrop'))[1];
 
@@ -1011,22 +1000,15 @@ const clear_container = function(container){
 }
 
 const update_user_projects_view = async()=>{
-    console.log("a");
     let container = Array.from(document.getElementsByClassName('user-projects'))[0];
     if(container){
-        console.log("b");
 
         //container = Array.from(container)[0];
-        console.log("container pre clearing:", container);
         clear_container(container);
-        console.log("c");
-
         try{
             let projects = await send_a_request_to_get_user_projects();
             projects = await projects.json();
             populate_project_screen(projects);
-            console.log("d");
-
         }catch(error){
             console.log(error);
         }
@@ -1070,7 +1052,6 @@ const signup_functionality = function(){
 const registration_and_login_fetch = async(email, pass, endpoint)=>{
     
     try{
-        console.log("sending a request to account services");
         let response = await fetch(endpoint,{
             method: 'POST',
             body: JSON.stringify({"userEmail": email, "userPassword": pass}),
@@ -1114,7 +1095,6 @@ const logout_functionality = function(){
     const logout = document.getElementsByClassName('logout-button')[0];
     if(logout){
         logout.addEventListener('click', async()=>{
-            console.log("logout clicked");
             if(confirm("Are you sure you want to logout?")){
                 try{
                     user_logout();
@@ -1229,10 +1209,7 @@ const create_list_of_tasks = function(inputs){
 }
 
 const send_request_to_make_current_project = async(title, goal, steps) => {
-    console.log("entered function");
     const animationInstance = show_loading();
-    console.log("A");
-
     try{
         let response = await fetch(endpoints.current_projects_generator,{
             method: "POST",
@@ -1246,15 +1223,8 @@ const send_request_to_make_current_project = async(title, goal, steps) => {
                 "tasks": steps
             })
         });
-        console.log("here");
-        console.log(response);
-        console.log("there");
-
-
         if(response){
             if(response.status == 200){
-                console.log("status is 200");
-
                 show_toast("Perfect!","new current project has been saved");
                 return true;
             }
@@ -1265,8 +1235,6 @@ const send_request_to_make_current_project = async(title, goal, steps) => {
     }finally{
         dismiss_loading(animationInstance);
     }
-    console.log("B");
-
     show_toast("Uh Oh!", "there seems to have been an issue submitting your project, please try again");
     return false;
 }
@@ -1275,7 +1243,6 @@ const create_new_project_functionality = function(){
     const form = Array.from(document.getElementsByClassName('project-form'))[0];
     if(form){
         form.addEventListener('submit', async(event)=>{
-            console.log("a")
             event.preventDefault();
             if((form.elements['project-title'].value == "") || (form.elements['project-goal'].value == "")){
                 show_modal("Uh Oh!", "please fill out the entire form!");
@@ -1407,12 +1374,11 @@ const send_completion_fetch = async(title, user)=>{
 
 const check_for_complete = function(projects, i, user){
     const tasks = Array.from(projects[i].tasks);
-    for(let x = 0; x < tasks.length; x++){
-        console.log("checking...")
-        if(tasks[x].is_complete == 0){
+    tasks.forEach((task) => {
+        if(task.is_complete == 0){
             return;
         }
-    }
+    })
     if(confirm("marking this step 'complete' will move the project into your completed section. Are you sure it's all done?")){
         send_completion_fetch(projects[i].title, user);
     }

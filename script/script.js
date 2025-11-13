@@ -13,16 +13,19 @@ document.addEventListener('DOMContentLoaded', async()=>{
     backend_communication();
     home_page_listeners();
 
-    let closeTheEditorButton = document.getElementsByClassName('delete-project');
-    if(closeTheEditorButton){
-        console.log("hhhhere")
 
-        closeTheEditorButton = Array.from(closeTheEditorButton)[0];
-        closeTheEditorButton.addEventListener('click', () => toggle_project_editor());
-    }
+
+
     setTimeout(()=>{
+        let closeTheEditorButton = document.getElementsByClassName('delete-project');
+        if(closeTheEditorButton){
+            console.log("hhhhere")
+    
+            closeTheEditorButton = Array.from(closeTheEditorButton)[0];
+            closeTheEditorButton.addEventListener('click', () => toggle_project_editor());
+        }
         add_task_to_existing_functionality();
-    }, 3000);
+    }, 2000);
     
 });
 

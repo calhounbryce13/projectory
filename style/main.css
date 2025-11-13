@@ -308,11 +308,18 @@
 }
 
 .edit-form-control-button{
+    padding: 5%;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 3vh;
     font-size: 3vw;
+}
+
+@media(max-width: 900px){
+    .edit-form-control-button{
+        font-size: 6vw;
+    }
 }
 
 .edit-modal-button{

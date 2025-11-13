@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', async()=>{
         console.log("a")
 
         closeTheEditorButton = Array.from(closeTheEditorButton)[0];
-        closeTheEditorButton.addEventListener('click', () => remove_project_editor());
+        closeTheEditorButton.addEventListener('click', remove_project_editor());
     }
 
 

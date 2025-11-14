@@ -48,13 +48,13 @@ const is_unique_title = function(title){
     return true;
 }
 
-const update_project_title_functionality = function(){
+const update_project_title_functionality = async() => {
     const updateButton = document.getElementById('update-title');
     updateButton.addEventListener('click', (event) => {
         const textarea = document.getElementById('name-of-project-to-edit');
         if(is_not_empty(textarea.value)){
             if(is_unique_title(textarea.value)){
-                show_toast("Nice", " Valid title");
+                //! I need to be able to access the OLD title before I send the request !
                 return;
             }
             show_toast("Uh Oh", "There is another project with this title already, please try again");

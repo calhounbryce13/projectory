@@ -45,6 +45,7 @@ const update_project_title_functionality = function(){
         if(is_not_empty(textarea.value)){
             console.log(textarea.value);
             show_toast("nice", textarea.value);
+            return;
 
         }
         show_toast("Uh Oh", "This field can't be empty, please add some text");

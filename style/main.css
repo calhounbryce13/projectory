@@ -29,6 +29,12 @@
 
     --expanding-container-animation-time: 0.5s;
 
+
+    --color-1:#031718;
+    --color-2:#0A7075;
+
+
+
 }
 
 
@@ -94,7 +100,7 @@
     max-height: 60%;
     width: 85%;
     border: 2px solid var(--border2);
-    background-color: rgba(66, 76, 81, 1);
+    background-color: var(--color-1);
 }
 
 
@@ -933,7 +939,7 @@ button:active{
 }
 
 .edit-project-modal > * {
-    color: var(--yellow-gold);
+    color: var(--color-2);
 }
 
 .delete-project{

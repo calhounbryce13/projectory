@@ -37,6 +37,12 @@
 }
 
 
+#update-title{
+    font-size: 7vw;
+    padding: 3%;
+}
+
+
 
 .close-editor-container{
     display: flex;

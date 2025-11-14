@@ -1142,7 +1142,7 @@ footer{
 #add-new-container{
     flex-direction: row;
     justify-content: flex-end;
-    width: 75%;
+    width: 90%;
     margin-bottom: 2vh;
 }
 
@@ -1754,7 +1754,7 @@ footer{
         width: 8vw;
     }
     .add-new{
-        width: 16vw;
+        width: 100%;
     }
     #home-button{
         width: 12vw;

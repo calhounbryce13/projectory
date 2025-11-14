@@ -40,10 +40,11 @@ const is_not_empty = function(field){
 const update_project_title_functionality = function(){
     const updateButton = document.getElementById('update-title');
     updateButton.addEventListener('click', (event) => {
-        const field = document.getElementById('name-of-project-to-edit');
-        if(is_not_empty(field.value)){
-            console.log(field.value);
-            show_toast("nice", field.value);
+        const textarea = document.getElementById('name-of-project-to-edit');
+        console.log(textarea.value);
+        if(is_not_empty(textarea.value)){
+            console.log(textarea.value);
+            show_toast("nice", textarea.value);
 
         }
         show_toast("Uh Oh", "This field can't be empty, please add some text");

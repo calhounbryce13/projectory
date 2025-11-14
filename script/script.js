@@ -33,8 +33,8 @@ document.addEventListener('DOMContentLoaded', async()=>{
 
 
 const is_not_empty = function(field){
-    if(field != '' || field != ' ') return true;
-    return false;
+    if(field.trim() == '') return false;
+    return true;
 }
 
 const update_project_title_functionality = function(){

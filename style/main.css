@@ -129,6 +129,11 @@
     width: 100%;
     border-bottom: 2px solid black;
 }
+.project-title-container-edit-modal > *{
+    width: 100%;
+    margin-bottom: 1vh;
+}
+
 
 
 .project-goal-container{

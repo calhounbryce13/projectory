@@ -40,6 +40,7 @@ const is_not_empty = function(field){
 const is_unique_title = function(title){
     const projectCards = Array.from(document.getElementsByClassName('project-card'));
     projectCards.forEach((card) => {
+        console.log(card.children[1].children[0])
         if(((card.children[1].children[0].textContent).toLowerCase()).trim() == (title.toLowerCase()).trim()){
             return false;
         }

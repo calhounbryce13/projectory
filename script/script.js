@@ -22,12 +22,33 @@ document.addEventListener('DOMContentLoaded', async()=>{
 
     setTimeout(()=>{
         add_task_to_existing_functionality();
+        update_project_title_functionality();
     }, 2000);
     
 });
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+const is_not_empty = function(field){
+    if(field != '' || field != ' ') return true;
+    return false;
+}
+
+const update_project_title_functionality = function(){
+    const updateButton = document.getElementById('update-title');
+    updateButton.addEventListener('click', (event) => {
+        const field = document.getElementById('name-of-project-to-edit');
+        if(is_not_empty(field.value)){
+            console.log(field.value);
+            show_toast("nice", field.value);
+
+        }
+        show_toast("Uh Oh", "This field can't be empty, please add some text");
+    })
+}
 
 const remove_user_project = async(event) => {
     if(confirm("Are you sure you want to PERMANENTLY delete this project? This cannot be undone.")){

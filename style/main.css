@@ -942,7 +942,7 @@ button:active{
 }
 
 .edit-project-modal > * {
-    color: var(--color-2);
+    color: var(--color-3)
 }
 
 .delete-project{

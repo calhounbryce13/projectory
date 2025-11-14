@@ -32,6 +32,8 @@
 
     --color-1:#031718;
     --color-2:#0A7075;
+    --color-3:#0C969C;
+
 
 
 
@@ -46,6 +48,7 @@
 #update-title{
     font-size: 7vw;
     padding: 3%;
+    background-color: var(--color-3);
 }
 
 

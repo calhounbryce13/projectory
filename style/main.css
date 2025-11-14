@@ -51,6 +51,12 @@
     background-color: var(--color-3);
 }
 
+#update-goal{
+    font-size: 7vw;
+    padding: 3%;
+    background-color: var(--color-3);
+}
+
 
 
 .close-editor-container{

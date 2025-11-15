@@ -44,6 +44,10 @@
     font-family: 'Cal Sans';
 }
 
+.yellow-button{
+    background-color: var(--yellow-gold);
+}
+
 
 #update-title{
     font-size: 7vw;

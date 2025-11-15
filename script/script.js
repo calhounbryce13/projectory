@@ -70,6 +70,7 @@ const request_to_update_project_title = async(email, newTitle) => {
             },
             body: {
                 "user": email,
+                "category":JSON.parse(localStorage.getItem("Projectory"))["project-type"],
                 "old-title": JSON.parse(localStorage.getItem("Projectory"))["project-title"],
                 "new-title": newTitle
             }

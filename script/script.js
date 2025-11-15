@@ -7,6 +7,9 @@ const LOADING_ANIMATION_DELAY = 1000; // in ms
 
 document.addEventListener('DOMContentLoaded', async()=>{
 
+
+    check_local_storage();
+
     dismiss_modal_functionality();
     await check_user_login_status();
     await generate_user_projects_page();
@@ -30,6 +33,15 @@ document.addEventListener('DOMContentLoaded', async()=>{
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+const check_local_storage = function(){
+    if(!(localStorage.getItem("Projectory"))){
+        localStorage.setItem("Projectory", JSON.stringify({
+            "project-type":"",
+            "project-title": ""
+        }));
+    }
+}
 
 
 const is_not_empty = function(field){
@@ -69,7 +81,7 @@ const remove_user_project = async(event) => {
     if(confirm("Are you sure you want to PERMANENTLY delete this project? This cannot be undone.")){
         const user = await fetch_for_user_email();
         const title = event.target.parentNode.parentNode.children[2].children[0].textContent;
-        const type = localStorage.getItem('project-type');
+        const type = JSON.parse(localStorage.getItem("Projectory"))["project-type"];
         const status = await request_to_delete_user_project(type, title, user);
         if(status){
             show_toast("All Done", "That project was successfully removed from your collection");
@@ -198,7 +210,7 @@ const remove_user_account_functionality = function(){
 
 const update_header_text = function(){
     const header = document.getElementsByTagName('h2')[0];
-    header.textContent = `My ${localStorage.getItem("project-type")} projects`;
+    header.textContent = `My ${JSON.parse(localStorage.getItem("Projectory"))["project-type"]} projects`;
 }
 
 const build_add_more_container = function(){
@@ -232,7 +244,7 @@ const add_fields_for_subtasks = function(){
 }
 
 const populate_form_controls = function(){
-    const projectType = localStorage.getItem('project-type');
+    const projectType = JSON.parse(localStorage.getItem("Projectory"))["project-type"];
     if(projectType == 'planned'){
         return;
     }
@@ -612,7 +624,7 @@ const build_project_card = function(singleProject, index, array){
         }
     }
 
-    if(localStorage.getItem('project-type') == 'planned'){
+    if(JSON.parse(localStorage.getItem("Projectory"))["project-type"] == 'planned'){
         const startProjectOption = build_project_start_container();
         parent.appendChild(startProjectOption);
         
@@ -759,7 +771,7 @@ const starting_project = async() => {
 
         if(await send_request_to_make_current_project(title, goal, steps)){
             const user = await fetch_for_user_email();
-            if(await request_to_delete_user_project(localStorage.getItem('project-type'), title, user)){
+            if(await request_to_delete_user_project(JSON.parse(localStorage.getItem("Projectory"))["project-type"], title, user)){
                 window.location.reload();
                 return;
             }
@@ -867,7 +879,11 @@ const populate_modal = function(event, editModal){
 
 
 const show_modal_to_edit_a_project = function(event){
-    if(localStorage.getItem('project-type') != 'completed'){
+    if(JSON.parse(localStorage.getItem("Projectory"))["project-type"] != 'completed'){
+        const localObj = JSON.parse(localStorage.getItem("Projectory"));
+        localObj["project-title"] == (event.target).parentNode.parentNode.children[1].children[0].textContent;
+        localStorage.setItem("Projectory", JSON.stringify(localObj));
+
         const editModal = Array.from(document.getElementsByClassName('edit-project-modal'))[0];
         const backdrop = Array.from(document.getElementsByClassName('modal-overlay-backdrop'))[1];
 
@@ -915,7 +931,7 @@ const populate_project_screen = function(projects){
     userProjectsArray.forEach((singleProject, index, array) => build_project_card(singleProject, index, array));
 
 
-    if(localStorage.getItem('project-type') == 'complete'){
+    if(JSON.parse(localStorage.getItem("Projectory"))["project-type"] == 'complete'){
         const addNewContainer = document.getElementById('add-new-container');
         addNewContainer.style.display = 'none';
     }
@@ -940,11 +956,11 @@ const project_functions = function(){
     });
     
 
-    if(localStorage.getItem('project-type') == 'current'){
+    if(JSON.parse(localStorage.getItem("Projectory"))["project-type"] == 'current'){
         expanded_list_functionality('toggle-project-resources', 'project-resources');
         expanded_list_functionality('toggle-project-steps', 'project-steps');
     }
-    else if(localStorage.getItem('project-type') == 'planned'){
+    else if(JSON.parse(localStorage.getItem("Projectory"))["project-type"] == 'planned'){
         start_a_planned_project_functionality();
     }
 }
@@ -1015,7 +1031,7 @@ const send_a_request_to_get_user_projects = async()=>{
             },
             credentials: 'include',
             method: 'POST',
-            body: JSON.stringify({"project-type": localStorage.getItem("project-type")})
+            body: JSON.stringify({"project-type": JSON.parse(localStorage.getItem("Projectory"))["project-type"]})
             
         });
         return projects;
@@ -1302,7 +1318,7 @@ const create_new_project_functionality = function(){
                 show_modal("Uh Oh!", "please fill out the entire form!");
                 return;
             }
-            if(localStorage.getItem('project-type') == 'planned'){
+            if(JSON.parse(localStorage.getItem("Projectory"))["project-type"] == 'planned'){
                 let response;
                 const animationInstance = show_loading();
                 try{
@@ -1477,7 +1493,9 @@ const home_page_listeners = function(){
     for(let x = 0; x < buttons.length; x++){
         if(buttons[x]){
             buttons[x].addEventListener('click',()=>{
-                localStorage.setItem("project-type", buttons[x].id);
+                const localObj = JSON.parse(localStorage.getItem("Projectory"));
+                localObj["project-type"] = buttons[x].id;
+                localStorage.setItem("Projectory", JSON.stringify(localObj));
                 window.location.assign("projects.html");
             });
         }

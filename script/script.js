@@ -881,7 +881,7 @@ const populate_modal = function(event, editModal){
 const show_modal_to_edit_a_project = function(event){
     if(JSON.parse(localStorage.getItem("Projectory"))["project-type"] != 'completed'){
         const localObj = JSON.parse(localStorage.getItem("Projectory"));
-        localObj["project-title"] == (event.target).parentNode.parentNode.children[1].children[0].textContent;
+        localObj["project-title"] = (event.target).parentNode.parentNode.children[1].children[0].textContent;
         localStorage.setItem("Projectory", JSON.stringify(localObj));
 
         const editModal = Array.from(document.getElementsByClassName('edit-project-modal'))[0];

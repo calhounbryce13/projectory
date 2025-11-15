@@ -75,11 +75,18 @@ const request_to_update_project_title = async(email, newTitle) => {
                 "new-title": newTitle
             }
         });
-        if(response.status == 200){
-            show_toast("All Good", "Your new project title has been successfully saved");
-        }
-        else{
-            console.log(response.status);
+        switch(response.status){
+            case 200:
+                show_toast("All Good :)","Your new title has been saved !");
+                break;
+            case 400:
+                show_toast("Uh Oh :/","There seems to have been an issue with that request, please try again");
+                break;
+            case 500:
+                show_toast("Uh Oh :/","There seems to have been an isse with the server, please try again");
+                break;
+            default:
+                show_toast("Uh Oh :/","An unexpected error occurred, please try again");
         }
     }catch(error){
         console.log(error);

@@ -60,13 +60,42 @@ const is_unique_title = function(title){
     return true;
 }
 
-const update_project_title_functionality = async() => {
+const request_to_update_project_title = async(email, newTitle) => {
+    const animation = show_loading();
+    try{
+        const response = await fetch(endpoints.titleUpdate, {
+            method: "PUT",
+            headers: {
+                "Content-type":"application/json"
+            },
+            body: {
+                "user": email,
+                "old-title": JSON.parse(localStorage.getItem("Projectory"))["project-title"],
+                "new-title": newTitle
+            }
+        });
+        if(response.status == 200){
+            show_toast("All Good", "Your new project title has been successfully saved");
+        }
+        else{
+            console.log(response.status);
+        }
+    }catch(error){
+        console.log(error);
+        show_toast("Sorry", "There seems to have been an issue sending that request, please try again");
+    }finally{
+        dismiss_loading(animation);
+    }
+}
+
+const update_project_title_functionality = function(){
     const updateButton = document.getElementById('update-title');
-    updateButton.addEventListener('click', (event) => {
+    updateButton.addEventListener('click', async(event) => {
         const textarea = document.getElementById('name-of-project-to-edit');
         if(is_not_empty(textarea.value)){
             if(is_unique_title(textarea.value)){
-                //! I need to be able to access the OLD title before I send the request !
+                const email = await fetch_for_user_email();
+                request_to_update_project_title(email, textarea.value);
                 return;
             }
             show_toast("Uh Oh", "There is another project with this title already, please try again");

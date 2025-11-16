@@ -52,13 +52,11 @@
 #update-title{
     font-size: 7vw;
     padding: 3%;
-    background-color: var(--color-3);
 }
 
 #update-goal{
     font-size: 7vw;
     padding: 3%;
-    background-color: var(--color-3);
 }
 
 
@@ -113,7 +111,7 @@
     max-height: 60%;
     width: 85%;
     border: 2px solid var(--border2);
-    background-color: var(--color-1);
+    background-color: var(--deep-blue);
 }
 
 
@@ -952,7 +950,7 @@ button:active{
 }
 
 .edit-project-modal > * {
-    color: var(--color-3)
+    color: var(--yellow-gold)
 }
 
 .delete-project{

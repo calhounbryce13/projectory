@@ -136,8 +136,18 @@ const remove_user_project = async(event) => {
 const clear_the_modal = function(modal){
     const titleField = modal.children[2].children[0];
     const goalField = modal.children[3].children[0];
-    titleField.textContent = '';
-    goalField.textContent = '';
+    if(titleField.value === titleField.textContent){
+        titleField.textContent = '';
+    }
+    else{
+        titleField.value = '';
+    }
+    if(goalField.value === goalField.textContent){
+        goalField.textContent = '';
+    }
+    else{
+        goalField.value = '';
+    }
 }
 
 

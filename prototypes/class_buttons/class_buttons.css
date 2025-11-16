@@ -1,0 +1,63 @@
+
+
+
+
+body, html{
+    height: 100%;
+    width: 100%;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+#icon{
+    height: 100%;
+    width: 30%;
+    background-image: url('../../icons/add-icon-hover.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+
+.horizontal{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.vertical{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+div{
+
+    height: 5vh;
+    padding: 0px;
+    margin: 0px;
+    width: 100%;
+}
+
+button{
+    font-size: 6vw;
+    width: 50vw;
+    background-color: yellow;
+    border-radius: 10px;
+    color: black;
+    height: 10vh;
+}
+
+p{
+    margin: 0px;
+    margin-block-start: 0px;
+}

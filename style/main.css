@@ -1094,6 +1094,16 @@ footer{
     border: 2px solid var(--border-color);
     font-size: 2.5vw;
     color: var(--deep-blue);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.vertical{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 @media(min-width:900px){

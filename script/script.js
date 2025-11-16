@@ -872,13 +872,13 @@ const dynamic_textarea_heights = function(titleField, goalField){
     titleField.style.height = titleField.scrollHeight + 'px';
     goalField.style.height = 'auto';
     goalField.style.height = titleField.scrollHeight + 'px';
-    titleField.addEventListener('input', (event) => {
-        event.target.style.height = 'auto';
-        event.target.style.height = titleField.scrollHeight + 'px';
+    titleField.addEventListener('input', () => {
+        titleField.style.height = 'auto';
+        titleField.style.height = titleField.scrollHeight + 'px';
     });
-    goalField.addEventListener('input', (event) => {
-        event.target.style.height = 'auto';
-        event.target.style.height = titleField.scrollHeight + 'px';
+    goalField.addEventListener('input', () => {
+        goalField.style.height = 'auto';
+        goalField.style.height = titleField.scrollHeight + 'px';
     });
 }
 

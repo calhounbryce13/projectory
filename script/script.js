@@ -892,7 +892,7 @@ const populate_the_title_and_goal = function(projectCard, editModal){
     goalField.textContent = goal;
     setTimeout(() => {
         dynamic_textarea_heights(titleField, goalField);
-    }, 5000)
+    }, 500)
 }
 
 const populate_modal = function(event, editModal){

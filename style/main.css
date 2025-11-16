@@ -1112,6 +1112,19 @@ footer{
     align-items: center;
 }
 
+#current-icon{
+    background-image: url('../icons/icons8-current-100.png');
+
+}
+#completed-icon{
+
+}
+#planned-icon{
+    background-image: url('../icons/icons8-future-100.png');
+
+
+}
+
 @media(min-width:900px){
     .logout-button:hover{
         background-color: var(--deep-blue);

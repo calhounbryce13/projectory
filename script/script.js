@@ -138,10 +138,7 @@ const clear_the_modal = function(modal){
     const goalField = modal.children[3].children[0];
 
     titleField.value = '';
-    titleField.textContent = '';
-
     goalField.value = '';
-    goalField.textContent = '';
 }
 
 
@@ -900,8 +897,8 @@ const populate_the_title_and_goal = function(projectCard, editModal){
     const goal = projectCard.children[2].children[0].textContent;
     const titleField = editModal.children[2].children[0];
     const goalField = editModal.children[3].children[0];
-    titleField.textContent = title;
-    goalField.textContent = goal;
+    titleField.value = title;
+    goalField.value = goal;
     setTimeout(() => {
         dynamic_textarea_heights(titleField, goalField);
     }, 500)

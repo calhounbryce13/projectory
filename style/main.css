@@ -1110,6 +1110,10 @@ footer{
 
 }
 
+.data{
+    height: 6vh;
+}
+
 .data > * {
     display: flex;
     justify-content: center;

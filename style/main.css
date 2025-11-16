@@ -1087,7 +1087,7 @@ footer{
 
 
 .home-screen-buttons{
-    height: 10vh;
+    height: 12vh;
     width: 20vw;
     margin-top: 4vh;
     margin-bottom: 4vh;
@@ -1100,8 +1100,12 @@ footer{
 }
 
 .home-screen-buttons > * {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     border: 2px solid var(--border-color);
-    height: 10vh;
+    height: 100%;
     margin: 0px;
 
 }
@@ -1115,14 +1119,12 @@ footer{
 
 }
 
-.vertical{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+
+.data-container{
+
 }
 
-.icon{
+.icon-container{
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;

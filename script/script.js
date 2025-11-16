@@ -870,47 +870,54 @@ const start_a_planned_project_functionality = function(){
 
 
 
+const populate_the_title_and_goal = function(projectCard, editModal){
+    const title = projectCard.children[1].children[0].textContent;
+    const goal = projectCard.children[2].children[0].textContent;
+    const titleField = editModal.children[2].children[0];
+    const goalField = editModal.children[3].children[0];
+    titleField.textContent = title;
+    goalField.textContent = goal;
+}
+
 
 
 
 const populate_modal = function(event, editModal){
     /* 
     description: Function to populate the edit project modal with the relevant data
-    input(s); The clicked event
+    input(s); The clicked event, modal element
     output(s): None
     */
     const projectCard = event.target.parentNode.parentNode;
-    const title = projectCard.children[1].children[0].textContent;
-    const ul = projectCard.children[4];
-    const ol = projectCard.children[6];
-    
-    let resources = [];
-    let steps = [];
-    if(ul){
-        Array.from(ul.children).forEach((listIndex) => {
-            resources.push(listIndex.children[0].textContent);
-        });
-    }
-    if(ol){
-        Array.from(ol.children).forEach((listIndex) => {
-            steps.push(listIndex.children[0].textContent);
-        });
-    }
+    populate_the_title_and_goal(projectCard, editModal);
 
-    const titleField = editModal.children[2].children[0];
-    titleField.textContent = title;
-
-    //todo: populate the resources and steps sections of the 'edit project' modal
-    if(resources.length > 0){
-        resources.forEach((aSingleURL) => {
-            //const element = build_index_element_for_the_editing_modal(aSingleURL);
-            //todo: this should return a <li> element to match the prototype specs with the url text inserted
-            //todo: after, append the element to the edit card modal within this loop.
-        });
+    if(JSON.parse(localStorage.getItem("Projectory"))["project-type"] != "planned"){
+        const ul = projectCard.children[4];
+        const ol = projectCard.children[6];
         
+        let resources = [];
+        let steps = [];
+        if(ul){
+            Array.from(ul.children).forEach((listIndex) => {
+                resources.push(listIndex.children[0].textContent);
+            });
+        }
+        if(ol){
+            Array.from(ol.children).forEach((listIndex) => {
+                steps.push(listIndex.children[0].textContent);
+            });
+        }
+    
+    
+        //todo: populate the resources and steps sections of the 'edit project' modal
+        if(resources.length > 0){
+            resources.forEach((aSingleURL) => {
+                //const element = build_index_element_for_the_editing_modal(aSingleURL);
+                //todo: this should return a <li> element to match the prototype specs with the url text inserted
+                //todo: after, append the element to the edit card modal within this loop.
+            });   
+        }
     }
-
-
 }
 
 

@@ -68,12 +68,12 @@ const request_to_update_project_title = async(email, newTitle) => {
             headers: {
                 "Content-type":"application/json"
             },
-            body: {
+            body: JSON.stringify({
                 "user": email,
                 "category":JSON.parse(localStorage.getItem("Projectory"))["project-type"],
                 "old-title": JSON.parse(localStorage.getItem("Projectory"))["project-title"],
                 "new-title": newTitle
-            }
+            })
         });
         switch(response.status){
             case 200:
@@ -878,9 +878,6 @@ const populate_the_title_and_goal = function(projectCard, editModal){
     titleField.textContent = title;
     goalField.textContent = goal;
 }
-
-
-
 
 const populate_modal = function(event, editModal){
     /* 

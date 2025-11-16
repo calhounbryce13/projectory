@@ -1100,9 +1100,13 @@ footer{
 }
 
 .home-screen-buttons > * {
-    height: 5vh;
+    height: 10vh;
     margin: 0px;
 
+}
+
+.data > * {
+    height: 5vh;
 }
 
 .vertical{

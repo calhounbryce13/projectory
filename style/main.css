@@ -1113,16 +1113,18 @@ footer{
 }
 
 #current-icon{
+    width: 30%;
     background-image: url('../icons/icons8-current-100.png');
 
 }
 #completed-icon{
+    width: 30%;
+
 
 }
 #planned-icon{
+    width: 30%;
     background-image: url('../icons/icons8-future-100.png');
-
-
 }
 
 @media(min-width:900px){

@@ -133,10 +133,18 @@ const remove_user_project = async(event) => {
 }
 
 
+const clear_the_modal = function(modal){
+    titleField = modal.children[2].children[0];
+    goalField = modal.children[3].children[0];
+    titleField.textContent = '';
+    goalField.textContent = '';
+}
+
 
 
 const remove_project_editor = function(){
     const editModal = Array.from(document.getElementsByClassName('edit-project-modal'))[0];
+    clear_the_modal(editModal);
     const backdrop = Array.from(document.getElementsByClassName('modal-overlay-backdrop'))[1];
     backdrop.classList.remove('modal-overlay-backdrop-show');
     editModal.classList.remove('edit-modal-show');

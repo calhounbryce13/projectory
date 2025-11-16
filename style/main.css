@@ -4,7 +4,7 @@
 
 :root{
 
-    --border-color: rgba(255, 0, 0, 0);
+    --border-color: rgba(255, 0, 0, 1);
     --edit-projects-button: rgb(204, 204, 204);
 
 
@@ -1100,6 +1100,7 @@ footer{
 }
 
 .home-screen-buttons > * {
+    border: 2px solid var(--border-color);
     height: 10vh;
     margin: 0px;
 
@@ -1107,6 +1108,8 @@ footer{
 
 .data > * {
     height: 5vh;
+    border: 2px solid var(--border-color);
+
 }
 
 .vertical{

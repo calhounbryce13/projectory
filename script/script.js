@@ -867,7 +867,20 @@ const start_a_planned_project_functionality = function(){
 
 
 
-
+const dynamic_textarea_heights = function(titleField, goalField){
+    titleField.style.height = 'auto';
+    titleField.style.height = titleField.scrollHeight + 'px';
+    goalField.style.height = 'auto';
+    goalField.style.height = titleField.scrollHeight + 'px';
+    titleField.addEventListener('input', (event) => {
+        event.target.style.height = 'auto';
+        event.target.style.height = titleField.scrollHeight + 'px';
+    });
+    goalField.addEventListener('input', (event) => {
+        event.target.style.height = 'auto';
+        event.target.style.height = titleField.scrollHeight + 'px';
+    });
+}
 
 
 const populate_the_title_and_goal = function(projectCard, editModal){
@@ -877,6 +890,7 @@ const populate_the_title_and_goal = function(projectCard, editModal){
     const goalField = editModal.children[3].children[0];
     titleField.textContent = title;
     goalField.textContent = goal;
+    dynamic_textarea_heights(titleField, goalField);
 }
 
 const populate_modal = function(event, editModal){
@@ -887,6 +901,7 @@ const populate_modal = function(event, editModal){
     */
     const projectCard = event.target.parentNode.parentNode;
     populate_the_title_and_goal(projectCard, editModal);
+
 
     if(JSON.parse(localStorage.getItem("Projectory"))["project-type"] != "planned"){
         const ul = projectCard.children[4];

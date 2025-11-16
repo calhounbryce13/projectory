@@ -636,6 +636,7 @@ const build_project_start_container = function(){
     
     const projectStartButton = document.createElement('button');
     projectStartButton.classList.add('start-button');
+    projectStartButton.classList.add('yellow-button');
     projectStartButton.textContent = 'start';
     projectStartContainer.appendChild(projectStartButton);
     return projectStartContainer;

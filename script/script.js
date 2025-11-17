@@ -78,7 +78,10 @@ const request_to_update_project_title = async(email, newTitle) => {
         switch(response.status){
             case 200:
                 show_toast("All Good :)","Your new title has been saved !");
-                break;
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500);
+                return;
             case 400:
                 show_toast("Uh Oh :/","There seems to have been an issue with that request, please try again");
                 break;

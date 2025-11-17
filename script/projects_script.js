@@ -6,8 +6,8 @@ import { endpoints } from "./endpoints.js";
 document.addEventListener("DOMContentLoaded", () => {
     update_project_title_functionality();
     update_project_goal_functionality();
-
-
+    delete_project_functionality();
+    closing_the_editor_functionality();
 });
 
 const dismiss_loading = function(animationInstance){
@@ -76,6 +76,78 @@ const show_toast = function(header, message){
 ////////////////////////////
 ////////////////////////////
 
+
+const request_to_delete_user_project = async(type, title, user) => {
+    const animationInstance = show_loading();
+    try{
+        let response = await fetch(endpoints.deletion,{
+            method: 'DELETE',
+            headers:{
+                "Content-Type": "application/json",
+                "x-user-email": user
+            },
+            body: JSON.stringify({
+                "project-type": type,
+                "project-name": title
+            })
+        });
+        if(response.status == 200){
+            return true;
+        }
+    }catch(error){
+        console.log(error);
+    }finally{
+        dismiss_loading(animationInstance);
+    }
+    return false;
+}
+
+const remove_user_project = async(event) => {
+    if(confirm("Are you sure you want to PERMANENTLY delete this project? This cannot be undone.")){
+        const user = await fetch_for_user_email();
+        const title = event.target.parentNode.parentNode.children[2].children[0].textContent;
+        const type = JSON.parse(localStorage.getItem("Projectory"))["project-type"];
+        const status = await request_to_delete_user_project(type, title, user);
+        if(status){
+            show_toast("All Done", "That project was successfully removed from your collection");
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
+        }
+        else{
+            show_toast("Uh Oh", "There was an issue removing that project from your collection");
+        }
+    }
+}
+
+const delete_project_functionality = function(){
+    const deleteProjectButton = Array.from(document.getElementsByClassName('delete-project'))[0];
+    deleteProjectButton.addEventListener('click', (event) => remove_user_project(event));
+}
+
+
+const clear_the_modal = function(modal){
+    const titleField = modal.children[2].children[0];
+    const goalField = modal.children[3].children[0];
+
+    titleField.value = '';
+    goalField.value = '';
+}
+
+
+
+const remove_project_editor = function(){
+    const editModal = Array.from(document.getElementsByClassName('edit-project-modal'))[0];
+    clear_the_modal(editModal);
+    const backdrop = Array.from(document.getElementsByClassName('modal-overlay-backdrop'))[1];
+    backdrop.classList.remove('modal-overlay-backdrop-show');
+    editModal.classList.remove('edit-modal-show');
+}
+
+const closing_the_editor_functionality = function(){
+    const closeTheEditorButton = Array.from(document.getElementsByClassName('close-editor'))[0];
+    closeTheEditorButton.addEventListener('click', remove_project_editor);
+}
 
 const is_not_empty = function(field){
     if(field.trim() == '') return false;

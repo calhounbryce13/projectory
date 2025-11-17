@@ -16,12 +16,6 @@ document.addEventListener('DOMContentLoaded', async()=>{
     backend_communication();
     home_page_listeners();
 
-    const closeTheEditorButton = Array.from(document.getElementsByClassName('close-editor'))[0];
-    closeTheEditorButton.addEventListener('click', remove_project_editor);
-
-    const deleteProjectButton = Array.from(document.getElementsByClassName('delete-project'))[0];
-    deleteProjectButton.addEventListener('click', (event) => remove_user_project(event));
-    
 
     setTimeout(()=>{
         add_task_to_existing_functionality();
@@ -63,23 +57,7 @@ const remove_user_project = async(event) => {
 }
 
 
-const clear_the_modal = function(modal){
-    const titleField = modal.children[2].children[0];
-    const goalField = modal.children[3].children[0];
 
-    titleField.value = '';
-    goalField.value = '';
-}
-
-
-
-const remove_project_editor = function(){
-    const editModal = Array.from(document.getElementsByClassName('edit-project-modal'))[0];
-    clear_the_modal(editModal);
-    const backdrop = Array.from(document.getElementsByClassName('modal-overlay-backdrop'))[1];
-    backdrop.classList.remove('modal-overlay-backdrop-show');
-    editModal.classList.remove('edit-modal-show');
-}
 
 const fetch_for_login_status = async()=>{
 
@@ -380,31 +358,6 @@ const update_the_status_for_project_task = async(event, projects, i, x, text) =>
 
 }
 
-
-const request_to_delete_user_project = async(type, title, user) => {
-    const animationInstance = show_loading();
-    try{
-        let response = await fetch(endpoints.deletion,{
-            method: 'DELETE',
-            headers:{
-                "Content-Type": "application/json",
-                "x-user-email": user
-            },
-            body: JSON.stringify({
-                "project-type": type,
-                "project-name": title
-            })
-        });
-        if(response.status == 200){
-            return true;
-        }
-    }catch(error){
-        console.log(error);
-    }finally{
-        dismiss_loading(animationInstance);
-    }
-    return false;
-}
 
 
 const remove_a_task_from_a_project = async(projects, i, x) => {

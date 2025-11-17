@@ -1,5 +1,5 @@
 'use strict';
-import { endpoints } from 'endpoints.js';
+import { endpoints } from './endpoints.js';
 
 
 document.addEventListener("DOMContentLoaded", async() => {

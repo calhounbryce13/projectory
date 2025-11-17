@@ -10,6 +10,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
+const show_loading = function(){
+    const animation = document.getElementById('lottie-loading-animation');
+    const animationContainer = document.getElementById('lottie-parent');
+
+    animationContainer.style.display = 'flex';
+    animation.style.display = 'flex';
+    return lottie.loadAnimation({
+        container: animation,
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: '../projectory/icons/Loading_sand_clock.json'
+    });
+
+}
+
 const fetch_for_user_email = async()=>{
     const animationInstance = show_loading();
     try{

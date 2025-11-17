@@ -1,5 +1,5 @@
 'use strict';
-import { endpoints } from "./endpoints";
+import { endpoints } from "./endpoints.js";
 
 
 

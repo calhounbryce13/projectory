@@ -71,9 +71,16 @@
 }
 
 .close-editor{
-
-    height: 12vw;
-    width: 12vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 8vw;
+    width: 8vw;
+    font-size: 7vw;
+    font-family: inherit;
+    background-color: var(--yellow-gold);
+    color: var(--deep-blue);
+    border-radius: 10px;
 
 }
 

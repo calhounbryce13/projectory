@@ -71,10 +71,7 @@
 }
 
 .close-editor{
-    background-image: url('../icons/close-icon.svg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
+
     height: 12vw;
     width: 12vw;
 

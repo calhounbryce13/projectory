@@ -10,6 +10,49 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
+const fetch_for_user_email = async()=>{
+    const animationInstance = show_loading();
+    try{
+        let response = await fetch(endpoints.user_email, {
+            method: 'GET',
+            credentials: 'include'
+        });
+        if(response.status == 200){
+            return await response.json();
+        }
+    }catch(error){
+        console.log(error);
+    }finally{
+        dismiss_loading(animationInstance);
+    }
+    return false;
+}
+
+
+const show_toast = function(header, message){
+    Array.from(document.getElementsByClassName('toast-subject'))[0].textContent = header;
+    Array.from(document.getElementsByClassName('toast-mssg'))[0].textContent = message;
+    const toast = Array.from(document.getElementsByClassName('notification'))[0];
+    setTimeout(()=>{
+        toast.classList.add('toast-show');
+        setTimeout(()=>{
+            toast.classList.remove('toast-show');
+            Array.from(document.getElementsByClassName('toast-subject'))[0].textContent = '';
+            Array.from(document.getElementsByClassName('toast-mssg'))[0].textContent = '';
+        }, 7000);
+    }, 500);
+}
+
+////////////////////////////
+////////////////////////////
+////////////////////////////
+////////////////////////////
+////////////////////////////
+////////////////////////////
+////////////////////////////
+////////////////////////////
+
+
 const is_not_empty = function(field){
     if(field.trim() == '') return false;
     return true;
@@ -129,6 +172,7 @@ const update_project_goal_functionality = function(){
     updateButton.addEventListener('click', async(event) => {
         const textarea = document.getElementById('goal-of-project-to-edit');
         if(is_not_empty(textarea.value)){
+            const email = await fetch_for_user_email();
             request_to_update_project_goal(email, textarea.value);
             return;
         }

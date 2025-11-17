@@ -20,6 +20,7 @@ export const endpoints = {
     loginStatus: host + "login-status",
     taskManager: host4 + "task-manager",
     projectManager: host4 + "completed-project-manager",
-    titleUpdate: host4 + "title-update"
+    titleUpdate: host4 + "title-update",
+    goalUpdate: host4 + "goal-update"
 
 }

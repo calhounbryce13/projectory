@@ -1153,10 +1153,10 @@ footer{
 
 }
 #completed-icon{
-    background-image: url('../icons/icons8-done-100.png');
+    background-image: url('../icons/completed-icon.png');
 }
 #planned-icon{
-    background-image: url('../icons/icons8-future-100.png');
+    background-image: url('../icons/planned-icon.png');
 }
 
 @media(min-width:900px){
@@ -1612,7 +1612,7 @@ footer{
     align-items: center;
 
     z-index: -500;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0,0,0,0.2);
     border: 2px solid var(--border3);
 
     opacity: 0;

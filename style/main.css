@@ -441,8 +441,8 @@
     width: 80vw;
     padding: 2vw;
     border-radius: 10px;
-    background-color: var(--deep-blue);
-    color: var(--yellow-gold);
+    color: var(--deep-blue);
+    background-color: var(--yellow-gold);
     position: absolute;
     top: -500%;
     transition: top .35s ease-in-out;

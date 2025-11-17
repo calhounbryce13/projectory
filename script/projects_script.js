@@ -10,6 +10,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
+const dismiss_loading = function(animationInstance){
+    const animation = document.getElementById('lottie-loading-animation');
+    const animationContainer = document.getElementById('lottie-parent');
+    animation.style.display = 'none';
+    animationContainer.style.display = 'none';
+    animationInstance.destroy();
+}
+
 const show_loading = function(){
     const animation = document.getElementById('lottie-loading-animation');
     const animationContainer = document.getElementById('lottie-parent');

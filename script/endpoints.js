@@ -14,6 +14,7 @@ export const endpoints = {
     current_projects_generator: host + "current-projects-generator",
     subtask_generator: host + "subtask-generator",
     user_email: host + "get-user-email",
+    get_nums: host + 'get-amounts',
     link_remover: host2 + "link-remover",
     link_inserter: host2 + "link-inserter",
     deletion: host3 + "deletion",

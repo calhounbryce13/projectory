@@ -36,29 +36,6 @@ const check_local_storage = function(){
     }
 }
 
-
-
-const remove_user_project = async(event) => {
-    if(confirm("Are you sure you want to PERMANENTLY delete this project? This cannot be undone.")){
-        const user = await fetch_for_user_email();
-        const title = event.target.parentNode.parentNode.children[2].children[0].textContent;
-        const type = JSON.parse(localStorage.getItem("Projectory"))["project-type"];
-        const status = await request_to_delete_user_project(type, title, user);
-        if(status){
-            show_toast("All Done", "That project was successfully removed from your collection");
-            setTimeout(() => {
-                window.location.reload();
-            }, 2000);
-        }
-        else{
-            show_toast("Uh Oh", "There was an issue removing that project from your collection");
-        }
-    }
-}
-
-
-
-
 const fetch_for_login_status = async()=>{
 
     let animationInstance;
@@ -612,29 +589,7 @@ const expanded_list_functionality = function(buttonClassName, containerClassName
         }
     }
 }
-//!
-const data_acquisition = function(event){
-    // go to the parent of the given checkbox
-    // get a list of the children checkboxes
-    // use the list to get the index of the given checkbox
-    const box = event.target;
-    
 
-
-}
-//!
-const update_subtask_status = function(event){
-    data_acquisition(event);
-
-}
-
-//!
-const update_subtask_status_functionality = function(){
-    const checkBoxes = Array.from(document.getElementsByClassName('subtask-checkbox'));
-    checkBoxes.forEach((singleCheckBox) => {
-        singleCheckBox.addEventListener('click', (event) => update_subtask_status(event));
-    });
-}
 
 const populate_modal_to_start_planned_project = function(event){
     const title = event.target.parentNode.parentNode.children[1].children[0].textContent;
@@ -722,43 +677,6 @@ const start_a_planned_project_functionality = function(){
     close_start_modal_functionality();
     starting_project();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 const dynamic_textarea_heights = function(titleField, goalField){
     titleField.style.height = 'auto';
@@ -915,55 +833,6 @@ const project_functions = function(){
         start_a_planned_project_functionality();
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

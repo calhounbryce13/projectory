@@ -18,8 +18,8 @@ document.addEventListener("DOMContentLoaded", async() => {
 
 const populate_labels = function(data){
     const plannedButton = document.getElementById('planned');
-    const currentButton = document.getElementById('planned');
-    const completeButton = document.getElementById('planned');
+    const currentButton = document.getElementById('current');
+    const completeButton = document.getElementById('complete');
     plannedButton.children[1].children[1].textContent = data[0];
     currentButton.children[1].children[1].textContent = data[1];
     completeButton.children[1].children[1].textContent = data[2];

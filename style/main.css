@@ -906,11 +906,19 @@ h2{
 }
 
 h3{
-    font-size: 1.5vw;
+    font-size: 6.0vw;
     border: 2px solid var(--border-color);
-    max-width: 20vw;
+    max-width: 80%;
     text-align: center;
     font-weight: 100;
+    height: auto;
+}
+
+@media(min-width: 900px){
+    h3{
+        max-width: 90%;
+        font-size: 4.5vw;
+    }
 }
 
 strong{
@@ -1731,10 +1739,6 @@ footer{
     h2{
         font-size: 7vw;
     }
-    h3{
-        font-size: 4.0vw;
-        max-width: 50vw;
-    }
     form{
         width: auto;
     }
@@ -1840,9 +1844,6 @@ footer{
     .remove-link-button{
         height: 6vw;
         width: 6vw;
-    }
-    .user-home-header-text{
-        font-size: 6.0vw;
     }
     .input-for-a-new-task{
         font-size: 3vw;

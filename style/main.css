@@ -855,19 +855,23 @@
 
 /************************** name elements *************************************************************************/
 
+
+html,body{
+    height: auto;
+    width: 100%;
+    overflow-x: hidden;
+
+
+}
 body{
-    margin-top: 0px;
-    height: 100%;
-    width: 90vw;
     flex-direction: column;
     justify-content: space-between;
+    align-items: center;
     border: 2px solid var(--border-color);
-    overflow-x: hidden;
-    padding: 5%;
-    padding-top: 0%;
     background-color: var(--ice-blue);
     color: var(--deep-blue);
     font-family: 'Cal Sans';
+    margin: auto;
 }
 
 main{
@@ -894,6 +898,14 @@ main{
     border: 2px solid var(--border-color);
     padding-right: 5%;
     padding-left: 5%;
+}
+#feedback{
+    height: 90%;
+    width: 20%;
+    background-image: url('../icons/icons8-feedback-100\ \(1\).png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
 }
 
 h1{

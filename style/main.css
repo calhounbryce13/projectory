@@ -174,10 +174,11 @@
 
 .project-add-new-text{
     margin-bottom: 2vh;
-    width: 90%;
+    width: 100%;
 }
 
 .project-resources-edit-modal{
+    list-style: none;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -201,9 +202,10 @@
 }
 
 .edit-form-textarea{
-    height: 20vh;
-    width: 80%;
-    font-size: 4vw;
+    overflow-y: hidden;
+    height: auto;
+    width: 100%;
+    font-size: 6vw;
     margin-bottom: 2vh;
 
 }
@@ -213,7 +215,8 @@
 }
 
 .project-individual-resource{
-    max-width: 80%;
+    height: auto;
+    width: 100%;
     overflow-x: hidden;
 
 }
@@ -224,11 +227,9 @@
 }
 
 .save-new-data-button{
-    height: 4vh;
-    width: 25%;
-    font-size: 4vw;
-    min-height: 3vh;
-    overflow: hidden
+    height: auto;
+    width: 100%;
+    font-size: 7vw;
 }
 
 .toggle-project-steps{
@@ -1441,12 +1442,6 @@ footer{
     height: auto;
     max-height: 0vh;
     transition: max-height var(--expanding-container-animation-time) ease-in-out;
-}
-
-.project-individual-resource{
-    max-width: 80%;
-    overflow-x: hidden;
-
 }
 
 .project-resource-link{

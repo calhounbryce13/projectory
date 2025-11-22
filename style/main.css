@@ -177,7 +177,7 @@ a{
     margin-bottom: 1vh;
 }
 
-.project-title-container-edit-modal > *{
+.project-title-container-edit-modal > button{
     font-size: 7vw;
     border-radius: 10px;
     width: 100%;

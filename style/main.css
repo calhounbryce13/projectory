@@ -49,6 +49,7 @@
 }
 .blue-button{
     background-color: var(--deep-blue);
+    color: var(--deep-blue);
 }
 
 
@@ -134,10 +135,6 @@ a{
 }
 
 
-
-.edit-project-modal > button{
-    color: var(--ice-blue);
-}
 .edit-modal-show{ 
     z-index: 600;
     position: fixed;

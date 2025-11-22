@@ -1416,8 +1416,6 @@ footer{
     font-size: 7vw;
     font-weight: 100;
     max-width: 50%;
-    opacity: 0.50;
-
 }
 
 @media(min-width: 900px){

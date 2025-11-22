@@ -133,15 +133,10 @@ const clear_the_modal = function(modal){
     titleField.value = '';
     goalField.value = '';
 
-
-    console.log(document.getElementsByClassName('project-resources-edit-modal'));
-    console.log(Array.from(document.getElementsByClassName('project-resources-edit-modal'))[0]);
-    console.log(Array.from(Array.from(document.getElementsByClassName('project-resources-edit-modal'))[0]));
     const ul = Array.from(Array.from(document.getElementsByClassName('project-resources-edit-modal'))[0].children);
     ul.forEach((element) => {
-        console.log("here");
         console.log(element);
-        if(ul[ul.length - 1] != 'project-add-new-text'){
+        if(ul[ul.length - 1].classList[0] != 'project-add-new-text'){
             ul.pop();
         }
     });

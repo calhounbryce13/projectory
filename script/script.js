@@ -714,9 +714,10 @@ const populate_modal = function(event, editModal){
     */
     const projectCard = event.target.parentNode.parentNode;
     populate_the_title_and_goal(projectCard, editModal);
+    const projectType = JSON.parse(localStorage.getItem("Projectory"))["project-type"];
 
 
-    if(JSON.parse(localStorage.getItem("Projectory"))["project-type"] != "planned"){
+    if( projectType != "planned" && projectType != 'complete'){
         const ul = projectCard.children[4];
         const ol = projectCard.children[6];
         if(ul){

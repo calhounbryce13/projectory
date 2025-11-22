@@ -141,8 +141,8 @@ const clear_the_modal = function(modal){
     ul.forEach((element) => {
         console.log("here");
         console.log(element);
-        if(element.classList[0] != 'project-add-new-text'){
-            ul.remove(element);
+        if(ul[ul.length - 1] != 'project-add-new-text'){
+            ul.pop();
         }
     });
 

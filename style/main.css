@@ -169,6 +169,14 @@ a{
     width: 100%;
     margin-bottom: 3vh;
 }
+
+.edit-project-modal > textarea{
+    font-size: 7vw;
+    border-radius: 10px;
+    width: 100%;
+    margin-bottom: 1vh;
+}
+
 .project-title-container-edit-modal > *{
     font-size: 7vw;
     border-radius: 10px;

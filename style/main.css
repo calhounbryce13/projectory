@@ -207,7 +207,7 @@ a{
 }
 
 textarea{
-    border: 3px solid var(--deep-blue);
+    border: 4px solid var(--deep-blue);
 }
 
 .edit-form-textarea{

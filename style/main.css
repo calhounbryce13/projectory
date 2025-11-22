@@ -311,6 +311,7 @@ textarea{
 }
 
 .remove-a-project-element-button{
+    background-color: rgba(225, 0, 0, 1);
     display: flex;
     justify-content: center;
     align-items: center;

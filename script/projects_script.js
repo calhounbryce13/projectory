@@ -133,6 +133,8 @@ const clear_the_modal = function(modal){
     titleField.value = '';
     goalField.value = '';
 
+
+    console.log(document.getElementsByClassName('peoject-resources-edit-modal'));
     const ul = Array.from(document.getElementsByClassName('peoject-resources-edit-modal'))[0];
     ul.forEach((element) => {
         if(element.classList[0] != 'project-add-new-text'){

@@ -137,6 +137,8 @@ const clear_the_modal = function(modal){
     console.log(document.getElementsByClassName('project-resources-edit-modal'));
     const ul = Array.from(Array.from(document.getElementsByClassName('project-resources-edit-modal'))[0]);
     ul.forEach((element) => {
+        console.log("here");
+        console.log(element);
         if(element.classList[0] != 'project-add-new-text'){
             ul.remove(element);
         }

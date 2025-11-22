@@ -100,8 +100,12 @@
     background-repeat: no-repeat;
     background-size: contain;
     height: 3vw;
+}
 
-    
+a{
+    text-decoration: none;
+    color: var(--deep-blue);
+    border: 2px solid var(--border-color);
 }
 
 
@@ -292,6 +296,7 @@
 }
 
 .edit-a-project-resource-link{
+    color: var(--yellow-gold);
     overflow: hidden;
     max-width: 75%;
     font-size: 4vw;
@@ -941,11 +946,7 @@ button:active{
     background-color: rgb(225, 0, 0);
 }
 
-a{
-    text-decoration: none;
-    color: var(--deep-blue);
-    border: 2px solid var(--border-color);
-}
+
 
 label{
     font-size: 1.7vw;

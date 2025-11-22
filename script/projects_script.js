@@ -135,6 +135,8 @@ const clear_the_modal = function(modal){
 
 
     console.log(document.getElementsByClassName('project-resources-edit-modal'));
+    console.log(Array.from(document.getElementsByClassName('project-resources-edit-modal'))[0]);
+    console.log(Array.from(Array.from(document.getElementsByClassName('project-resources-edit-modal'))[0]));
     const ul = Array.from(Array.from(document.getElementsByClassName('project-resources-edit-modal'))[0]);
     ul.forEach((element) => {
         console.log("here");

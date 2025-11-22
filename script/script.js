@@ -719,12 +719,31 @@ const populate_modal = function(event, editModal){
     if(JSON.parse(localStorage.getItem("Projectory"))["project-type"] != "planned"){
         const ul = projectCard.children[4];
         const ol = projectCard.children[6];
-        
-        let resources = [];
-        let steps = [];
         if(ul){
             Array.from(ul.children).forEach((listIndex) => {
-                resources.push(listIndex.children[0].textContent);
+
+                const url = listIndex.children[0].textContent;
+                const anchor = document.createElement('a');
+                anchor.classList.add('edit-a-project-resource-link');
+                anchor.textContent = url;
+
+                const button = document.createElement('button');
+                button.classList.add('edit-modal-button');
+                button.classList.add('remove-a-project-element-button');
+                button.textContent = 'delete';
+
+                const container = document.createElement('div');
+                container.classList.add('edit-a-project-resource-container');
+                container.appendChild(anchor);
+                container.appendChild(button);
+
+                const editIndex = document.createElement('li');
+                editIndex.classList.add('project-individual-resource');
+                editIndex.appendChild(container);
+
+                const editor = Array.from(document.getElementsByClassName('project-resources-edit-modal'))[0];
+                editor.appendChild(editIndex);
+
             });
         }
         if(ol){
@@ -733,15 +752,6 @@ const populate_modal = function(event, editModal){
             });
         }
     
-    
-        //todo: populate the resources and steps sections of the 'edit project' modal
-        if(resources.length > 0){
-            resources.forEach((aSingleURL) => {
-                //const element = build_index_element_for_the_editing_modal(aSingleURL);
-                //todo: this should return a <li> element to match the prototype specs with the url text inserted
-                //todo: after, append the element to the edit card modal within this loop.
-            });   
-        }
     }
 }
 

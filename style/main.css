@@ -206,6 +206,10 @@ a{
     border: 2px solid var(--border1);
 }
 
+textarea{
+    border: 3px solid var(--deep-blue);
+}
+
 .edit-form-textarea{
     overflow-y: hidden;
     height: auto;

@@ -47,6 +47,9 @@
 .yellow-button{
     background-color: var(--yellow-gold);
 }
+.blue-button{
+    background-color: var(--deep-blue);
+}
 
 
 #update-title{
@@ -76,7 +79,6 @@
     width: 8vw;
     font-size: 7vw;
     font-family: inherit;
-    background-color: var(--yellow-gold);
     color: var(--deep-blue);
     border-radius: 10px;
 }
@@ -941,7 +943,7 @@ button:active{
 }
 
 .edit-project-modal > * {
-    color: var(--yellow-gold)
+    color: var(--deep-blue)
 }
 
 .delete-project{

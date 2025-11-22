@@ -747,11 +747,13 @@ const populate_modal = function(event, editModal){
 
             });
         }
+        /*
         if(ol){
             Array.from(ol.children).forEach((listIndex) => {
                 steps.push(listIndex.children[0].textContent);
             });
         }
+            */
     
     }
 }

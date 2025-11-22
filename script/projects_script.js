@@ -132,6 +132,14 @@ const clear_the_modal = function(modal){
 
     titleField.value = '';
     goalField.value = '';
+
+    const ul = Array.from(Array.from(document.getElementsByClassName('peoject-resources-edit-modal'))[0]);
+    ul.forEach((element) => {
+        if(element.classList[0] != 'project-add-new-text'){
+            ul.remove(element);
+        }
+    });
+
 }
 
 

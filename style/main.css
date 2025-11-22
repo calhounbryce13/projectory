@@ -297,7 +297,7 @@ a{
 }
 
 .edit-a-project-resource-link{
-    color: var(--yellow-gold);
+    color: var(--deep-blue);
     overflow: hidden;
     max-width: 75%;
     font-size: 4vw;

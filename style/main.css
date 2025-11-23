@@ -80,7 +80,6 @@
     width: 8vw;
     font-size: 7vw;
     font-family: inherit;
-    color: var(--deep-blue);
     border-radius: 10px;
 }
 @media(min-width: 900px){

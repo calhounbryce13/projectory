@@ -344,7 +344,7 @@ textarea{
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 3vh;
+    height: auto;
     font-size: 3vw;
 }
 

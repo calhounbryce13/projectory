@@ -76,7 +76,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 8vw;
+    height: auto;
     width: 8vw;
     font-size: 7vw;
     font-family: inherit;

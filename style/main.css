@@ -17,7 +17,7 @@
     --soft-sage: rgba(232, 240, 230, 1.0);
 
     --ice-blue: #8ecae6;
-    --strong-blue: 	#219ebc;
+    --frosted-blue: 	#dfebf6;
     --deep-blue: #023047;
     --yellow-gold: #ffb703;
     --gold: #fb8500;
@@ -49,7 +49,7 @@
 }
 .blue-button{
     background-color: var(--deep-blue);
-    color: var(--strong-blue);
+    color: var(--frosted-blue);
 }
 
 
@@ -131,7 +131,7 @@ a{
     max-height: 60%;
     width: 75%;
     border: 2px solid var(--border2);
-    background-color: var(--strong-blue);
+    background-color: var(--frosted-blue);
 }
 
 
@@ -713,7 +713,7 @@ textarea{
     justify-content: center;
     align-items: center;
     height: auto;
-    background-color: var(--strong-blue);
+    background-color: var(--frosted-blue);
     border-radius: 20px;
     margin-top: 30vh;
     color: var(--yellow-gold);
@@ -910,7 +910,7 @@ form{
     height: auto;
     width: 30vw;
     border: 2px solid var(--border-color);
-    background-color: var(--strong-blue);
+    background-color: var(--frosted-blue);
     border-radius: 20px;
     opacity: 0;
     animation: myanimation .6s ease-out forwards;

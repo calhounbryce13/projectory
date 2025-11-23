@@ -91,11 +91,7 @@
 }
 
 .close-editor{
-    display: flex;
-    justify-content: center;
-    align-items: center;
     height: auto;
-    width: 8vw;
     font-size: 7vw;
     font-family: inherit;
     border-radius: 10px;

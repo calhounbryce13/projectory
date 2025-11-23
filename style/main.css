@@ -335,10 +335,11 @@ textarea{
     margin-top: 2vh;
     margin-bottom: 2vh;
     padding-top: 1vh;
-
 }
 
+
 .edit-form-controls-container > *{
+    margin-bottom: 2vh;
     width: 100%;
 }
 

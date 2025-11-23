@@ -154,9 +154,12 @@ a{
 }
 
 .edit-modal-title{
+    font-size: 7vw;
+    font-weight: 600;
+}
+.edit-modal-supporting-text{
     font-size: 5vw;
     font-weight: 100;
-
 }
 
 .project-title-container-edit-modal{

@@ -55,6 +55,21 @@
     color: var(--frosted-blue);
 }
 
+.editing-icon{
+    height: 90%;
+    width: 15%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+#title{
+    background-image: url('../icons/icons8-title-100.png');
+}
+#goal{
+    background-image: url('../icons/icons8-goal-100.png');
+}
+
 
 #update-title{
     font-size: 7vw;

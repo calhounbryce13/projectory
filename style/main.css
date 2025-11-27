@@ -942,7 +942,7 @@ fieldset{
 input{
     border-radius: 10px;
     height: 3vh;
-    width: 12vw;
+    width: 95%;
 }
 
 input:focus{
@@ -1722,9 +1722,6 @@ footer{
     }
     form{
         width: auto;
-    }
-    input{
-        width: 95%;
     }
     .new-project-link-input{
         width: 45vw;

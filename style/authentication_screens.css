@@ -3,6 +3,12 @@
 }
 
 
+
+input::placeholder{
+    opacity: 0.3;
+}
+
+
 #fieldsetSignup input{
     font-size: 2vw;
     height: auto;

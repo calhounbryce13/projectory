@@ -21,7 +21,7 @@ form button{
 }
 
 @media(max-width: 900px){
-    #fieldsetSignup input{
+    fieldset input{
         font-size: 7vw;
     }
 }

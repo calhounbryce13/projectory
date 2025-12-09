@@ -1081,7 +1081,7 @@ footer{
 }
 
 .formButtonAlt{
-    font-size: 1vw;
+    font-size: 3vw;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1090,13 +1090,18 @@ footer{
     padding-top: 2vh;
     padding-bottom: 2vh;
     height: auto;
-    width: 10%;
+    width: 35%;
     border-radius: 10px;
     opacity: 0;
     animation: myanimation 1.2s ease-out forwards;
     animation-delay: 1000ms;
 }
 @media(min-width:900px){
+
+    .formButtonAlt{
+        font-size: 1vw;
+        width: 10%;
+    }
     .formButton:hover{
         color: var(--yellow-gold);
         background-color: var(--deep-blue);

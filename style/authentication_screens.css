@@ -9,7 +9,7 @@ input::placeholder{
 }
 
 
-#fieldsetSignup input{
+fieldset input{
     font-size: 2vw;
     height: auto;
     width: 100%;

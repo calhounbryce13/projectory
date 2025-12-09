@@ -147,6 +147,11 @@ a{
     margin-block-end: 0px;
 }
 
+
+.edit-project-modal ::-webkit-scrollbar{
+    width: 2vw;
+}
+
 .edit-project-modal ::-webkit-scrollbar-thumb{
     border-radius: 20px;
     background-color: var(--deep-blue);

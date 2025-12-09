@@ -428,6 +428,9 @@ textarea{
     .close-editor{
         font-size: 3vw;
     }
+    .edit-a-project-resource-link{
+        font-size: 2vw;
+    }
 
 }
 

@@ -1344,7 +1344,9 @@ const inform_user = async(response)=>{
     else if(data.message == "already has an account"){
         show_toast("Uh Oh!", "there is already an account registered under that email,\n please login instead");
     }
-    window.location.assign('login.html');
+    setTimeout(() => {
+        window.location.assign('login.html');
+    }, 2000);
 }
 
 const check_for_empty = function(email, pass){

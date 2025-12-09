@@ -7,6 +7,7 @@ const LOADING_ANIMATION_DELAY = 1000; // in ms
 
 document.addEventListener('DOMContentLoaded', async()=>{
 
+    feedback_functionality();
 
     check_local_storage();
 
@@ -26,6 +27,80 @@ document.addEventListener('DOMContentLoaded', async()=>{
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+
+const show_feedback_form = function(){
+    document.getElementById('feedback').addEventListener('click', () => {
+        const backdrop = Array.from(document.getElementsByClassName('backdrop'))[0];
+        backdrop.classList.add('backdrop-show');
+        const form = Array.from(document.getElementsByClassName('feedback-modal'))[0];
+        form.classList.add('feedback-show');
+    });
+
+}
+
+const actually_close_the_feedback_form = function(){
+    const form = Array.from(document.getElementsByClassName('feedback-modal'))[0];
+    const fieldset = form.children[1].children[0].children[0];
+    fieldset.value = '';
+    form.classList.remove('feedback-show');
+    const backdrop = Array.from(document.getElementsByClassName('backdrop'))[0];
+    backdrop.classList.remove('backdrop-show');
+}
+
+const close_feedback_form = function(){
+    document.getElementById('close-feedback').addEventListener('click', actually_close_the_feedback_form);
+}
+
+const submit_feedback = function(){
+    const form = Array.from(document.getElementsByName('form-for-feedback'))[0];
+    form.addEventListener('submit', async(event) => {
+        event.preventDefault();
+        const input = event.target.children[0].children[0];
+        if((input.value).trim() != ''){
+            try{
+                const response = await fetch('https://calhounbryce13-backend.onrender.com/mailer', {
+                    method: "POST",
+                    headers: {
+                        "Content-type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        'message': input.value
+                    })
+                })
+                switch(response.status){
+                    case 200:
+                        window.alert("Success ! Thanks for the message.");
+                        actually_close_the_feedback_form();
+                        return;
+                    case 400:
+                        window.alert("Sorry :/ it looks like there was an issue with that request, please try agian tho");
+                        return;
+                    case 500:
+                        window.alert("Sorry :/ it looks like there was an isse communicating with the database, please try again tho");
+                        return;
+                    default:
+                        window.alert("Sorry :/ an unexpected issue occured, please try again");
+                        return;
+                }
+            }catch(error){
+                console.log(error);
+                window.alert("There was an error sending the request, please try again");
+                return;
+            }
+        }
+        window.alert("please add text to the feedback form before you submit");
+        return;
+    })
+}
+
+const feedback_functionality = function(){
+    textarea_dynamic_height_functionality();
+    show_feedback_form();
+    close_feedback_form();
+    submit_feedback();
+
+}
 
 const check_local_storage = function(){
     if(!(localStorage.getItem("Projectory"))){

@@ -40,6 +40,127 @@
     font-family: 'Cal Sans';
 }
 
+
+.backdrop{
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: -100%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(50,70,80,0.25);
+    transition: top 0.5s ease-in-out;
+    z-index: 10;
+}
+.backdrop-show{
+    top: 50%;
+}
+
+.feedback-modal{
+    position: fixed;
+    top: -100%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: auto;
+    width: 70%;
+    padding: 2%;
+    border-radius: 20px;
+    z-index: 11;
+    transition: top 0.5s ease-in-out;
+    background-color: var(--deep-blue);
+
+}
+.feedback-show{
+    top: 50%;
+}
+
+.feedback-modal > div{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: auto;
+}
+
+.feedback-modal > *{
+    background-color: rgba(0,0,0,0);
+    width: 100%;
+}
+
+.feedback-modal fieldset{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.feedback-modal fieldset > *{
+    margin-bottom: 3vh;
+    width: 90%;
+}
+
+.feedback-modal fieldset > button{
+    background-color: var(--yellow-gold);
+    color: var(--deep-blue);
+    height: auto;
+    font-size: 8vw;
+    border: none;
+    border-radius: 20px;
+    padding: 1vh;
+}
+.feedback-modal fieldset > textarea{
+    color: var(--deep-blue);
+    border-radius: 10px;
+    border: 4px solid var(--yellow-gold);
+    overflow: hidden;
+    font-size: 5vw;
+}
+
+.feedback-modal fieldset > button:hover{
+    background-color: var(--light-mint);
+    color: var(--deep-slate);
+}
+
+#close-feedback{
+    color: var(--yellow-gold);
+    background-color: var(--deep-blue);
+    font-size: 5vw;
+    border-radius: 10px;
+    border: 3px solid var(--yellow-gold);
+}
+#close-feedback:active{
+    filter: brightness(75%);
+}
+
+@media(min-width:900px){
+    #close-feedback{
+        font-size: 1.5vw;
+    }
+    .feedback-modal{
+        width: 50%;
+    }
+
+    .feedback-modal fieldset > textarea{
+        font-size: 2vw;
+    }
+    .feedback-modal fieldset > button{
+        font-size: 3vw;
+    }
+    .feedback-modal fieldset > button:hover{
+        background-color: var(--deep-blue);
+        color: var(--yellow-gold);
+    }
+}
+
+
+
+
+
+
+
+
+
+
 .yellow-button{
     background-color: var(--yellow-gold);
 }

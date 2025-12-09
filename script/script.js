@@ -1352,9 +1352,7 @@ const inform_user = async(response)=>{
 const check_for_empty = function(email, pass){
     if(email && pass){
         if(email.value == "" || pass.value == ""){
-            //show_toast("Uh Oh!","Please fill out the entire form");
-            show_modal("Uh Oh!","Please fill out the entire form");
-
+            show_toast("Uh Oh!","Please fill out the entire form");
             return 1;
         }
         return 0;

@@ -147,6 +147,16 @@ a{
     margin-block-end: 0px;
 }
 
+.edit-project-modal ::-webkit-scrollbar-thumb{
+    border-radius: 20px;
+    background-color: var(--deep-blue);
+}
+.edit-project-modal ::-webkit-scrollbar-track{
+    border-radius: 20px;
+    background-color: var(--deep-blue);
+    opacity: 0.3;
+}
+
 
 
 

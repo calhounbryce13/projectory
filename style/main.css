@@ -1002,7 +1002,7 @@ fieldset{
 
 input{
     border-radius: 10px;
-    height: 3vh;
+    height: auto;
     width: 95%;
 }
 

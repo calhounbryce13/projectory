@@ -1097,7 +1097,6 @@ footer{
     animation-delay: 1000ms;
 }
 @media(min-width:900px){
-
     .formButtonAlt{
         font-size: 1vw;
         width: 10%;

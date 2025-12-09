@@ -11,6 +11,7 @@ input::placeholder{
 
 
 fieldset input{
+    color: var(--deep-blue);
     font-size: 2vw;
     height: auto;
     width: 100%;

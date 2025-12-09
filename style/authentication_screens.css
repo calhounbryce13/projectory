@@ -1,5 +1,5 @@
 :root{
-
+    --deep-blue: #023047;
 }
 
 
@@ -14,6 +14,10 @@ fieldset input{
     font-size: 2vw;
     height: auto;
     width: 100%;
+}
+
+form button{
+    color: var(--deep-blue);
 }
 
 @media(max-width: 900px){

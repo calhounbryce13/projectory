@@ -1081,14 +1081,16 @@ footer{
 }
 
 .formButtonAlt{
-    font-size: 2.5vw;
+    font-size: 1vw;
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 4vh;
     margin-bottom: 4vh;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
     height: auto;
-    width: 10vw;
+    width: 10%;
     border-radius: 10px;
     opacity: 0;
     animation: myanimation 1.2s ease-out forwards;

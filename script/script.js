@@ -1364,11 +1364,11 @@ const password_validation = function(email, pass, passConfirm){
     const isEmpty = check_for_empty(email, pass);
     if(isEmpty != 1){
         if(Array.from(pass.value).length < PASSWORD_MIN){
-            show_modal("Uh Oh!", "passwords must be at least 8 characters long!");
+            show_toast("Uh Oh!", "passwords must be at least 8 characters long!");
             return 0;
         }
         if(pass.value !== passConfirm.value){
-            show_modal("Uh Oh!", "passwords must match!");
+            show_toast("Uh Oh!", "passwords must match!");
             return 0;
         }
         else{

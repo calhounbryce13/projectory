@@ -105,7 +105,8 @@ const request_to_delete_user_project = async(type, title, user) => {
 const remove_user_project = async(event) => {
     if(confirm("Are you sure you want to PERMANENTLY delete this project? This cannot be undone.")){
         const user = await fetch_for_user_email();
-        const title = event.target.parentNode.parentNode.children[2].children[0].textContent;
+        //const title = event.target.parentNode.parentNode.children[2].children[0].textContent;
+        const title = JSON.parse(localStorage.getItem("Projectory"))["project-title"];
         const type = JSON.parse(localStorage.getItem("Projectory"))["project-type"];
         const status = await request_to_delete_user_project(type, title, user);
         if(status){

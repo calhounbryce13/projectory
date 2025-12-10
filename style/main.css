@@ -162,9 +162,11 @@
 
 
 .yellow-button{
+    cursor: pointer;
     background-color: var(--yellow-gold);
 }
 .blue-button{
+    cursor: pointer;
     display: flex;
     justify-content: space-between;
     align-items: center;

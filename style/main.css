@@ -280,8 +280,7 @@ a{
 }
 ::-webkit-scrollbar-track{
     border-radius: 20px;
-    background-color: var(--deep-blue);
-    opacity: 0.3;
+    background-color: var(--frosted-blue);
 }
 
 

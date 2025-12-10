@@ -220,12 +220,6 @@
     font-family: inherit;
     border-radius: 10px;
 }
-@media(min-width: 900px){
-    .close-editor:hover{
-        background-color: var(--deep-blue);
-        color: var(--yellow-gold);
-    }
-}
 @media(max-width: 900px){
     .close-editor:active{
         background-color: var(--deep-blue);

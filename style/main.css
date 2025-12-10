@@ -186,6 +186,13 @@
 #goal{
     background-image: url('../icons/icons8-goal-100.png');
 }
+#resource{
+    background-image: url('../icons/icons8-link-100.png');
+}
+#close{
+    background-image: url('../icons/icons8-close-100.png');
+}
+
 
 
 #update-title{

@@ -276,15 +276,15 @@ a{
 }
 
 
-.edit-project-modal ::-webkit-scrollbar{
+::-webkit-scrollbar{
     width: 2vw;
 }
 
-.edit-project-modal ::-webkit-scrollbar-thumb{
+::-webkit-scrollbar-thumb{
     border-radius: 20px;
     background-color: var(--deep-blue);
 }
-.edit-project-modal ::-webkit-scrollbar-track{
+::-webkit-scrollbar-track{
     border-radius: 20px;
     background-color: var(--deep-blue);
     opacity: 0.3;
@@ -529,13 +529,13 @@ textarea{
         padding: 2%;
     }
     .project-title-container-edit-modal > *{
-        font-size: 4vw;
+        font-size: 2.5vw;
     }
     .edit-modal-title{
         font-size: 3vw;
     }
     .edit-modal-supporting-text{
-        font-size: 2.5vw;
+        font-size: 1.5vw;
     }
     #update-title{
         font-size: 3.5vw;
@@ -547,7 +547,7 @@ textarea{
         font-size: 3.5vw;
     }
     .edit-form-textarea{
-        font-size: 3vw;
+        font-size: 2vw;
     }
     .remove-a-project-element-button{
         font-size: 1vw;

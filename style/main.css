@@ -161,6 +161,8 @@
 
 
 
+
+
 .yellow-button{
     cursor: pointer;
     background-color: var(--yellow-gold);
@@ -1143,6 +1145,7 @@ div{
 }
 
 button{
+    cursor: pointer;
     border: none;
     border-radius: 10px;
 }

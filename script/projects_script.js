@@ -1,6 +1,9 @@
 'use strict';
 import { endpoints } from "./endpoints.js";
 
+const LOADING_ANIMATION_DELAY = 1000; // in ms
+
+
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -8,7 +11,107 @@ document.addEventListener("DOMContentLoaded", () => {
     update_project_goal_functionality();
     delete_project_functionality();
     closing_the_editor_functionality();
+    update_task_status_functionality();
 });
+
+
+
+const fetch_for_user_email = async()=>{
+    const animationInstance = show_loading();
+    try{
+        let response = await fetch(endpoints.user_email, {
+            method: 'GET',
+            credentials: 'include'
+        });
+        if(response.status == 200){
+            return await response.json();
+        }
+    }catch(error){
+        console.log(error);
+    }finally{
+        dismiss_loading(animationInstance);
+    }
+    return false;
+}
+
+const get_the_index_of_a_task = function(checkboxElement){
+    const parent = checkboxElement.parentNode.parentNode;
+    for(let i = 0; i < (parent.children).length; i++){
+        if(parent.children[i].children[1] == checkboxElement){
+            return i;
+        }
+    }
+    console.log("error: an unexpected issue occured while getting the index for the task update");
+    return null;
+}
+
+const get_the_title_of_the_project = function(checkboxElement){
+    const parent = checkboxElement.parentNode.parentNode.parentNode;
+    if((parent.children).length > 0){
+        return parent.children[1].children[0].textContent;
+    }
+    console.log("error: unexpected DOM tree positioning");
+    return null;
+}
+
+const toggle_respective_text = function(){
+    console.log("toggle text !");
+}
+
+
+const update_task_status_functionality = function(){
+    if(document.getElementsByClassName('subtask-checkbox')){
+        const checkBoxesElements = Array.from(document.getElementsByClassName('subtask-checkbox'));
+        checkBoxesElements.forEach((box) => {
+            box.addEventListener('click', async(event) => {
+                const checkBox = event.target;
+                const user = await fetch_for_user_email();
+                if(user){
+                    const index = get_the_index_of_a_task(checkBox);
+                    if(index != null){
+                        const projectTitle = get_the_title_of_the_project(checkBox);
+                        if(projectTitle != null){
+                            let mark = checkBox.checked ? 1 : 0;
+                            let loadingAnimation = false;
+                            const timer = setTimeout(() => {
+                                loadingAnimation = show_loading();
+                            }, LOADING_ANIMATION_DELAY);
+                            try{
+                                const response = await fetch(endpoints.taskManager, {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-type": "application/json"
+                                    },
+                                    body: JSON.stringify({
+                                        "userEmail": user,
+                                        "projectTitle": title,
+                                        "index": index,
+                                        "statusMark": mark
+                                    })
+                                });
+                                if(response.status == 200) toggle_respective_text(checkBox);
+                            }catch(error){
+                                console.log(error);
+                                show_toast("sorry :/", "There was an error communicating to the sevrer on that request");
+                            }
+                            finally{
+                                clearTimeout(timer);
+                                if(loadingAnimation) dismiss_loading();
+                            }
+                            return;
+                        }
+                        show_toast("Sorry :/", "There was an issue getting the project title for that update");
+                        return;
+                    }
+                    show_toast("Sorry :/", "There was an issue getting the task index for that update");
+                    return;
+                }
+                show_toast("Sorry :/", "There was an issue validating your email for that update");
+                return;
+            });
+        });
+    }
+}
 
 const dismiss_loading = function(animationInstance){
     const animation = document.getElementById('lottie-loading-animation');
@@ -32,24 +135,6 @@ const show_loading = function(){
         path: '../projectory/icons/Loading_sand_clock.json'
     });
 
-}
-
-const fetch_for_user_email = async()=>{
-    const animationInstance = show_loading();
-    try{
-        let response = await fetch(endpoints.user_email, {
-            method: 'GET',
-            credentials: 'include'
-        });
-        if(response.status == 200){
-            return await response.json();
-        }
-    }catch(error){
-        console.log(error);
-    }finally{
-        dismiss_loading(animationInstance);
-    }
-    return false;
 }
 
 
@@ -78,7 +163,10 @@ const show_toast = function(header, message){
 
 
 const request_to_delete_user_project = async(type, title, user) => {
-    const animationInstance = show_loading();
+    let animation = false;
+    const timer = setTimeout(() => {
+        animation = show_loading();
+    });
     try{
         let response = await fetch(endpoints.deletion,{
             method: 'DELETE',
@@ -91,13 +179,12 @@ const request_to_delete_user_project = async(type, title, user) => {
                 "project-name": title
             })
         });
-        if(response.status == 200){
-            return true;
-        }
+        if(response.status == 200) return true;
     }catch(error){
         console.log(error);
     }finally{
-        dismiss_loading(animationInstance);
+        clearTimeout(timer);
+        if(animation) dismiss_loading(animationInstance);
     }
     return false;
 }
@@ -105,7 +192,6 @@ const request_to_delete_user_project = async(type, title, user) => {
 const remove_user_project = async(event) => {
     if(confirm("Are you sure you want to PERMANENTLY delete this project? This cannot be undone.")){
         const user = await fetch_for_user_email();
-        //const title = event.target.parentNode.parentNode.children[2].children[0].textContent;
         const title = JSON.parse(localStorage.getItem("Projectory"))["project-title"];
         const type = JSON.parse(localStorage.getItem("Projectory"))["project-type"];
         const status = await request_to_delete_user_project(type, title, user);
@@ -145,8 +231,6 @@ const clear_the_modal = function(modal){
     
 
 }
-
-
 
 const remove_project_editor = function(){
     const editModal = Array.from(document.getElementsByClassName('edit-project-modal'))[0];

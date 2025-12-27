@@ -369,7 +369,11 @@ const process_the_form_to_add_a_new_link = async(event, projects, i)=>{
     show_toast("Sorry", "unable to add a new link to that project")
 }
 
-
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+//! JUNK !//
 const update_the_status_for_project_task = async(event, projects, i, x, text) => {
     let user = await fetch_for_user_email();
     if(user){
@@ -407,7 +411,6 @@ const update_the_status_for_project_task = async(event, projects, i, x, text) =>
         return;
     }
     show_toast("Sorry", "There is an issue communicating with the server\n that update was not saved.");
-
 }
 
 
@@ -1299,8 +1302,7 @@ const create_new_project_functionality = function(){
 const build_new_subtask = function(){
     const label = document.createElement('label');
     label.textContent = 'subtask';
-    const input = document.createElement('input');
-    input.type = 'text';
+    const input = document.createElement('textarea');
     input.classList.add('subtask-input');
 
     const parentContainer = document.createElement('div');

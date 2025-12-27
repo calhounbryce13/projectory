@@ -1065,6 +1065,7 @@ main{
     padding-left: 5%;
 }
 #feedback{
+    cursor: pointer;
     height: 90%;
     width: 20%;
     background-image: url('../icons/icons8-feedback-100\ \(1\).png');

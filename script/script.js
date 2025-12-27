@@ -374,44 +374,6 @@ const process_the_form_to_add_a_new_link = async(event, projects, i)=>{
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 //! JUNK !//
-const update_the_status_for_project_task = async(event, projects, i, x, text) => {
-    let user = await fetch_for_user_email();
-    if(user){
-        let animationInstance;
-        let loadingIconShown = false;
-        const requestDelayTimer = setTimeout(()=>{
-            animationInstance = show_loading();
-            loadingIconShown = true;
-        }, LOADING_ANIMATION_DELAY);
-        try{
-            let serviceBresponse = await fetch(endpoints.taskManager, {
-                method: 'POST',
-                headers:{"Content-type": "application/json"},
-                body: JSON.stringify({
-                    "userEmail": user,
-                    "projectTitle": title,
-                    "index": index,
-                    "statusMark": mark
-                })
-            });
-            if(serviceBresponse.status == 200){
-                text.classList.toggle('completed-task');
-            }
-        }catch(error){
-            console.log(error);
-            show_toast("Sorry", "There is an issue communicating with the server\n that update was not saved.");
-        }finally{
-            clearTimeout(requestDelayTimer);
-            if(loadingIconShown){
-                dismiss_loading(animationInstance);
-            }
-        }
-        projects = await get_updated_projects();
-        check_for_complete(projects, i, user);
-        return;
-    }
-    show_toast("Sorry", "There is an issue communicating with the server\n that update was not saved.");
-}
 
 
 

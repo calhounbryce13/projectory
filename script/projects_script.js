@@ -66,7 +66,7 @@ const update_task_status_functionality = function(){
 
             console.log("looping over the boxes");
 
-            box.addEventListener('click', async(event) => {
+            box.addEventListener('change', async(event) => {
 
                 console.log("attaching a listener");    
 

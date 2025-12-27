@@ -63,12 +63,24 @@ const update_task_status_functionality = function(){
     if(document.getElementsByClassName('subtask-checkbox')){
         const checkBoxesElements = Array.from(document.getElementsByClassName('subtask-checkbox'));
         checkBoxesElements.forEach((box) => {
+
+            console.log("looping over the boxes");
+
             box.addEventListener('click', async(event) => {
+
+                console.log("attaching a listener");    
+
                 const checkBox = event.target;
                 const user = await fetch_for_user_email();
                 if(user){
+
+                    console.log("user found");
+
                     const index = get_the_index_of_a_task(checkBox);
                     if(index != null){
+
+                        console.log("index found");
+
                         const projectTitle = get_the_title_of_the_project(checkBox);
                         if(projectTitle != null){
                             let mark = checkBox.checked ? 1 : 0;
@@ -89,7 +101,21 @@ const update_task_status_functionality = function(){
                                         "statusMark": mark
                                     })
                                 });
-                                if(response.status == 200) toggle_respective_text(checkBox);
+                                switch(response.status){
+                                    case 200:
+                                        toggle_respective_text(checkBox);
+                                        show_toast();
+                                        break;
+                                    case 400:
+                                        show_toast("Uh Oh", "It looks like there was an issue with the request");
+                                        break;
+                                    case 500:
+                                        show_toast("Uh Oh", "it looks like there was an issue with the server");
+                                        break;
+                                    default:
+                                        console.log("error: an unexpected status code was returned !");
+                                        break;
+                                }
                             }catch(error){
                                 console.log(error);
                                 show_toast("sorry :/", "There was an error communicating to the sevrer on that request");
@@ -166,7 +192,7 @@ const request_to_delete_user_project = async(type, title, user) => {
     let animation = false;
     const timer = setTimeout(() => {
         animation = show_loading();
-    });
+    }, LOADING_ANIMATION_DELAY);
     try{
         let response = await fetch(endpoints.deletion,{
             method: 'DELETE',
@@ -263,7 +289,10 @@ const is_unique_title = function(title){
 
 
 const request_to_update_project_title = async(email, newTitle) => {
-    const animation = show_loading();
+    let animation = false;
+    const timer = setTimeout(() => {
+        animation = show_loading();
+    }, LOADING_ANIMATION_DELAY)
     try{
         const response = await fetch(endpoints.titleUpdate, {
             method: "PUT",
@@ -297,7 +326,8 @@ const request_to_update_project_title = async(email, newTitle) => {
         console.log(error);
         show_toast("Sorry", "There seems to have been an issue sending that request, please try again");
     }finally{
-        dismiss_loading(animation);
+        clearTimeout(timer);
+        if(animation) dismiss_loading(animation);
     }
 }
 
@@ -321,7 +351,10 @@ const update_project_title_functionality = function(){
 
 
 const request_to_update_project_goal = async(email, newGoal) => {
-    const animation = show_loading();
+    let animation = false;
+    const timer = setTimeout(() => {
+        animation = show_loading();
+    }, LOADING_ANIMATION_DELAY)
     try{
         const response = await fetch(endpoints.goalUpdate, {
             method: "PUT",
@@ -355,7 +388,8 @@ const request_to_update_project_goal = async(email, newGoal) => {
         console.log(error);
         show_toast("Sorry", "There seems to have been an issue sending that request, please try again");
     }finally{
-        dismiss_loading(animation);
+        clearTimeout(timer);
+        if(animation) dismiss_loading(animation);
     }
 }
 

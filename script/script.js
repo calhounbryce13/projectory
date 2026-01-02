@@ -500,7 +500,7 @@ const build_single_subtask = function(singleSubtask, listOfSteps){
 
     const subtaskText = document.createElement('p');
     subtaskText.classList.add('project-subtask-text');
-    //! need to check if this task is done before I add the class for the mark
+    if(singleSubtask.is_complete) subtaskText.classList.add('completed-task');
     console.log(singleSubtask);
     subtaskText.textContent = singleSubtask.task_description;
 

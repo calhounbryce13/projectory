@@ -1290,10 +1290,12 @@ const add_task_to_new_functionality = function(){
 }
 
 const send_completion_fetch = async(title, user)=>{
-    let response;
-    const animationInstance = show_loading();
+    let animationInstance = false;
+    const timer = setTimeout(() => {
+        animationInstance = show_loading();
+    }, LOADING_ANIMATION_DELAY);
     try{
-        response = await fetch(endpoints.projectManager, {
+        const response = await fetch(endpoints.projectManager, {
             method: 'PUT',
             headers: {"Content-type": "application/json"},
             body: JSON.stringify({
@@ -1301,56 +1303,25 @@ const send_completion_fetch = async(title, user)=>{
                     "projectTitle": title
             })
         });
-    }catch(error){
-        console.log(error);
-    }finally{
-        dismiss_loading(animationInstance);
-    }
-    if(response.status == 200){
-        show_toast("Congrats!", "You just completed a project!");
-        window.location.reload();
-        return;
-    }
-    show_toast("Sorry", "There was an issue trying to move that project into the completed section\n please try again");
-}
-
-const check_for_complete = function(projects, i, user){
-    const tasks = Array.from(projects[i].tasks);
-    tasks.forEach((task) => {
-        if(task.is_complete == 0){
-            return;
+        switch(response.status){
+            case 200:
+                show_toast("Congrats!", "You just completed a project!");
+                window.location.reload();
+                break;
+            default:
+                show_toast("Sorry", "There was an issue trying to move that project into the completed section\n please try again");
+                break;
         }
-    })
-    if(confirm("marking this step 'complete' will move the project into your completed section. Are you sure it's all done?")){
-        send_completion_fetch(projects[i].title, user);
-    }
-}
-
-const get_updated_projects = async()=>{
-    let projects;
-    const animationInstance = show_loading();
-    try{
-        projects = await fetch(endpoints.projects_view,{
-            headers:{
-                "Content-type": "application/json"
-            },
-            credentials: 'include',
-            method: 'POST',
-            body: JSON.stringify({"project-type": "current"})
-            
-        });
     }catch(error){
         console.log(error);
     }finally{
-        dismiss_loading(animationInstance);
+        clearTimeout(timer);
+        if(animationInstance) dismiss_loading(animationInstance);
     }
-    if(projects){
-        return await projects.json();
-    }
-    else{
-        return false;
-    }
+
 }
+
+
 
 const get_buttons = function(){
     let res = [];

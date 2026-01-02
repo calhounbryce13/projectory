@@ -7,11 +7,19 @@ const LOADING_ANIMATION_DELAY = 1000; // in ms
 
 
 document.addEventListener("DOMContentLoaded", () => {
+
+    console.log("here");
+    update_task_status_functionality();
+
+    
     update_project_title_functionality();
     update_project_goal_functionality();
     delete_project_functionality();
     closing_the_editor_functionality();
-    update_task_status_functionality();
+
+
+
+
 });
 
 
@@ -60,7 +68,7 @@ const toggle_respective_text = function(){
 
 
 const update_task_status_functionality = function(){
-    if(document.getElementsByClassName('subtask-checkbox')){
+    if(document.getElementsByClassName('subtask-checkbox').length > 0){
         const checkBoxesElements = Array.from(document.getElementsByClassName('subtask-checkbox'));
         checkBoxesElements.forEach((box) => {
 

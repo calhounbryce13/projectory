@@ -111,7 +111,7 @@ const update_task_status_functionality = function(){
                                 switch(response.status){
                                     case 200:
                                         toggle_respective_text(checkBox);
-                                        show_toast();
+                                        show_toast("Nice", "That step was updates successfully");
                                         break;
                                     case 400:
                                         show_toast("Uh Oh", "It looks like there was an issue with the request");

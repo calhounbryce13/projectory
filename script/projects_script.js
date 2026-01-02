@@ -12,16 +12,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     setTimeout(() => {
         update_task_status_functionality();
-    }, 1000)
-
+    }, 1000);
 
     update_project_title_functionality();
     update_project_goal_functionality();
     delete_project_functionality();
     closing_the_editor_functionality();
-
-
-
 
 });
 
@@ -107,7 +103,7 @@ const update_task_status_functionality = function(){
                                     },
                                     body: JSON.stringify({
                                         "userEmail": user,
-                                        "projectTitle": title,
+                                        "projectTitle": projectTitle,
                                         "index": index,
                                         "statusMark": mark
                                     })

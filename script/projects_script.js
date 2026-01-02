@@ -61,8 +61,9 @@ const get_the_title_of_the_project = function(checkboxElement){
     return null;
 }
 
-const toggle_respective_text = function(){
-    console.log("toggle text !");
+const toggle_respective_text = function(checkbox){
+    const sibling = checkbox.parentNode.children[0];
+    sibling.classList.add('completed-task');
 }
 
 

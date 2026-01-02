@@ -500,6 +500,8 @@ const build_single_subtask = function(singleSubtask, listOfSteps){
 
     const subtaskText = document.createElement('p');
     subtaskText.classList.add('project-subtask-text');
+    //! need to check if this task is done before I add the class for the mark
+    console.log(singleSubtask);
     subtaskText.textContent = singleSubtask.task_description;
 
     const checkBox = document.createElement('input');
@@ -718,21 +720,6 @@ const start_a_planned_project_functionality = function(){
     starting_project();
 }
 
-const dynamic_textarea_heights = function(titleField, goalField){
-    titleField.style.height = 'auto';
-    titleField.style.height = titleField.scrollHeight + 'px';
-    goalField.style.height = 'auto';
-    goalField.style.height = goalField.scrollHeight + 'px';
-    titleField.addEventListener('input', () => {
-        titleField.style.height = 'auto';
-        titleField.style.height = titleField.scrollHeight + 'px';
-    });
-    goalField.addEventListener('input', () => {
-        goalField.style.height = 'auto';
-        goalField.style.height = goalField.scrollHeight + 'px';
-    });
-}
-
 
 const populate_the_title_and_goal = function(projectCard, editModal){
     const title = projectCard.children[1].children[0].textContent;
@@ -742,7 +729,7 @@ const populate_the_title_and_goal = function(projectCard, editModal){
     titleField.value = title;
     goalField.value = goal;
     setTimeout(() => {
-        dynamic_textarea_heights(titleField, goalField);
+        textarea_dynamic_height_functionality();
     }, 500)
 }
 
@@ -896,22 +883,32 @@ const project_functions = function(){
 
 
 const send_a_request_to_get_user_projects = async()=>{
-    const animationInstance = show_loading();
+
+    let animationInstance = false;
+    const timer = setTimeout(() => {
+        animationInstance = show_loading();
+    });
+    let projects;
     try{
-        let projects = await fetch(endpoints.projects_view,{
+        projects = await fetch(endpoints.projects_view,{
             headers:{
                 "Content-type": "application/json"
             },
             credentials: 'include',
             method: 'POST',
             body: JSON.stringify({"project-type": JSON.parse(localStorage.getItem("Projectory"))["project-type"]})
-            
         });
-        return projects;
     }catch(error){
         console.log(error);
     }finally{
-        dismiss_loading(animationInstance);
+        clearTimeout(timer);
+        if(animationInstance) dismiss_loading(animationInstance);
+        switch(projects.status){
+            case 200:
+                return projects;
+            default:
+                return false;
+        }
     }
 }
 
@@ -945,8 +942,6 @@ const clear_container = function(container){
 const update_user_projects_view = async()=>{
     let container = Array.from(document.getElementsByClassName('user-projects'))[0];
     if(container){
-
-        //container = Array.from(container)[0];
         clear_container(container);
         try{
             let projects = await send_a_request_to_get_user_projects();

@@ -1,24 +1,21 @@
 'use strict';
 import { endpoints } from "./endpoints.js";
 
-const LOADING_ANIMATION_DELAY = 1000; // in ms
+const LOADING_ANIMATION_DELAY = 1000; 
+
+const SHORT_PAGE_LOAD_DELAY = 1000;
 
 
 
 
 document.addEventListener("DOMContentLoaded", () => {
-
-    console.log("here");
-
     setTimeout(() => {
+        update_project_title_functionality();
+        update_project_goal_functionality();
+        delete_project_functionality();
+        closing_the_editor_functionality();
         update_task_status_functionality();
-    }, 1000);
-
-    update_project_title_functionality();
-    update_project_goal_functionality();
-    delete_project_functionality();
-    closing_the_editor_functionality();
-
+    }, SHORT_PAGE_LOAD_DELAY);
 });
 
 
@@ -65,7 +62,6 @@ const toggle_respective_text = function(checkbox){
     const sibling = checkbox.parentNode.children[0];
     sibling.classList.add('completed-task');
 }
-
 
 const update_task_status_functionality = function(){
     if(document.getElementsByClassName('subtask-checkbox').length > 0){
@@ -170,7 +166,6 @@ const show_loading = function(){
     });
 
 }
-
 
 const show_toast = function(header, message){
     Array.from(document.getElementsByClassName('toast-subject'))[0].textContent = header;

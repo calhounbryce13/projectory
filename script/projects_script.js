@@ -9,9 +9,12 @@ const LOADING_ANIMATION_DELAY = 1000; // in ms
 document.addEventListener("DOMContentLoaded", () => {
 
     console.log("here");
-    update_task_status_functionality();
 
-    
+    setTimeout(() => {
+        update_task_status_functionality();
+    }, 1000)
+
+
     update_project_title_functionality();
     update_project_goal_functionality();
     delete_project_functionality();

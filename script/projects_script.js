@@ -60,7 +60,7 @@ const get_the_title_of_the_project = function(checkboxElement){
 
 const toggle_respective_text = function(checkbox){
     const sibling = checkbox.parentNode.children[0];
-    sibling.classList.add('completed-task');
+    sibling.classList.toggle('completed-task');
 }
 
 const update_task_status_functionality = function(){

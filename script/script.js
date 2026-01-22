@@ -7,6 +7,8 @@ const LOADING_ANIMATION_DELAY = 1000; // in ms
 
 document.addEventListener('DOMContentLoaded', async()=>{
 
+    collect_user_data();
+
     feedback_functionality();
 
     check_local_storage();
@@ -26,6 +28,28 @@ document.addEventListener('DOMContentLoaded', async()=>{
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+const collect_user_data = async() => {
+    /* 
+    Description: This is a function a plan to only have up temporarily just to monitor any traffic I may get.
+                will send the app name to my web service so I know when it is accessed.
+    */
+    try{
+        const response = await fetch('https://calhounbryce13-backend.onrender.com/get-user-data', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                "application": "Projectory"
+            })
+        })
+    }catch(error){
+        console.log(error);
+    }
+}
 
 
 

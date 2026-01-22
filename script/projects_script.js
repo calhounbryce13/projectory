@@ -9,9 +9,7 @@ const SHORT_PAGE_LOAD_DELAY = 1000;
 
 
 document.addEventListener("DOMContentLoaded", () => {
-    get_project_data();
-
-
+    get_project_data();     //todo: testing this from script.js
     setTimeout(() => {
         update_project_title_functionality();
         update_project_goal_functionality();
@@ -191,14 +189,9 @@ const build_project_card = function(singleProject, index, array){
     }
 }
 
-
-
-
-
-
-
-
-
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 const show_modal_to_edit_a_project = function(event){
@@ -217,7 +210,6 @@ const show_modal_to_edit_a_project = function(event){
 
 }
 
-
 const get_max_height = function(list){
     let max = 0;
     for(let x = 0; x < list.children.length; x++){
@@ -227,7 +219,6 @@ const get_max_height = function(list){
     }
     return max;
 }
-
 
 const toggle_list_height = function(projectResourcesList, i){
     /* 
@@ -245,8 +236,6 @@ const toggle_list_height = function(projectResourcesList, i){
     }
     projectResourcesList[i].style.maxHeight = '0px';
 }
-
-
 
 const expanded_list_functionality = function(buttonClassName, containerClassName){
     /* 
@@ -289,8 +278,6 @@ const close_start_modal_functionality = function(){
     });
 }
 
-
-
 const starting_project = async() => {
     const startButton = document.getElementById('start-modal-initiate');
     startButton.addEventListener('click', async(event) => {
@@ -318,8 +305,6 @@ const starting_project = async() => {
     });
 
 }
-
-
 
 const send_request_to_make_current_project = async(title, goal, steps) => {
     const animationInstance = show_loading();
@@ -351,8 +336,6 @@ const send_request_to_make_current_project = async(title, goal, steps) => {
     show_toast("Uh Oh!", "there seems to have been an issue submitting your project, please try again");
     return false;
 }
-
-
 
 const project_functions = function(){
     /*
@@ -398,7 +381,6 @@ const populate_project_screen = function(projects){
 
 }
 
-
 const send_a_request_to_get_user_projects = async()=>{
 
     let animationInstance = false;
@@ -429,7 +411,6 @@ const send_a_request_to_get_user_projects = async()=>{
     }
 }
 
-
 const get_project_data = async()=>{
     try{
         let projects = await send_a_request_to_get_user_projects();
@@ -447,6 +428,10 @@ const get_project_data = async()=>{
         event.target.classList.toggle('add-new-open');
     });
 }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 

@@ -7,6 +7,7 @@ const LOADING_ANIMATION_DELAY = 1000; // in ms
 
 document.addEventListener('DOMContentLoaded', async()=>{
 
+
     collect_user_data();
 
     feedback_functionality();
@@ -14,6 +15,10 @@ document.addEventListener('DOMContentLoaded', async()=>{
     check_local_storage();
 
     dismiss_modal_functionality();
+
+
+
+
     await check_user_login_status();
     await generate_user_projects_page();
     backend_communication();
@@ -163,24 +168,29 @@ const fetch_for_login_status = async()=>{
 }
 
 const check_user_login_status = async()=>{
-    let loginStatus = await fetch_for_login_status();
-    if(!loginStatus){
-        if(window.location.pathname.endsWith('/userhome.html') || window.location.pathname.endsWith('/projects.html')){
-            window.location.assign('index.html');
-            return;
+    if(!(location.hostname == "127.0.0.1")){
+        let loginStatus = await fetch_for_login_status();
+        if(!loginStatus){
+            if(window.location.pathname.endsWith('/userhome.html') || window.location.pathname.endsWith('/projects.html')){
+                window.location.assign('index.html');
+                return;
+            }
         }
-    }
-    loginStatus = await loginStatus.json();
-    if(loginStatus){
-        if(window.location.pathname.endsWith('/login.html') || window.location.pathname.endsWith('/index.html')){
-            window.location.assign('userhome.html');
+        loginStatus = await loginStatus.json();
+        if(loginStatus){
+            if(window.location.pathname.endsWith('/login.html') || window.location.pathname.endsWith('/index.html')){
+                window.location.assign('userhome.html');
+            }
         }
-    }
-    else{
-        if(window.location.pathname.endsWith('/userhome.html') || window.location.pathname.endsWith('/projects.html')){
-            window.location.assign('index.html');
+        else{
+            if(window.location.pathname.endsWith('/userhome.html') || window.location.pathname.endsWith('/projects.html')){
+                window.location.assign('index.html');
+            }
         }
+        return;
     }
+    console.log("DEV MODE");
+    return;
 }
 
 const user_logout = async()=>{
@@ -481,7 +491,6 @@ const textarea_dynamic_height_functionality = function(){
     });
 }
 
-
 const populate_the_title_and_goal = function(projectCard, editModal){
     const title = projectCard.children[1].children[0].textContent;
     const goal = projectCard.children[2].children[0].textContent;
@@ -535,17 +544,8 @@ const populate_modal = function(event, editModal){
 
             });
         }
-        /*
-        if(ol){
-            Array.from(ol.children).forEach((listIndex) => {
-                steps.push(listIndex.children[0].textContent);
-            });
-        }
-            */
-    
     }
 }
-
 
 const save_a_new_resource = function(){
     const button = document.getElementById('add-a-new-project-resource-button');
@@ -610,7 +610,6 @@ const send_a_request_to_get_user_projects = async()=>{
     }
 }
 
-
 const clear_container = function(container){
     if(container){
         while(container.children.length > 0){
@@ -667,6 +666,7 @@ const signup_functionality = function(){
 
 }
 
+
 const registration_and_login_fetch = async(email, pass, endpoint)=>{
     
     try{
@@ -686,10 +686,12 @@ const registration_and_login_fetch = async(email, pass, endpoint)=>{
     }
 }
 
+
 const login_functionality = function(){
-    const login = document.getElementById('login');
-    if(login){
-        login.addEventListener('click', async(event)=>{
+    const loginForm = document.getElementsByName('login-form');
+    if(loginForm.length > 0){
+        Array.from(loginForm)[0].addEventListener('submit', async(event)=>{
+            console.log("HANDLER FIRED!");
             event.preventDefault();
             const userEmail = document.getElementsByName('userEmail')[0];
             const userPass = document.getElementsByName('userPass')[0];
@@ -705,10 +707,40 @@ const login_functionality = function(){
                     }
                 }
             }
+            window.alert("please fill out the entire form");
+            return;
         });
+        return;
     }
-    
+    console.log("error: there should be a login form!");
+    return;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const logout_functionality = function(){
     const logout = document.getElementsByClassName('logout-button')[0];
     if(logout){
@@ -996,8 +1028,6 @@ const send_completion_fetch = async(title, user)=>{
 
 }
 
-
-
 const get_buttons = function(){
     let res = [];
     res.push(document.getElementById('current'));
@@ -1035,6 +1065,7 @@ const inform_user = async(response)=>{
 }
 
 const check_for_empty = function(email, pass){
+    console.log(email, pass);
     if(email && pass){
         if(email.value == "" || pass.value == ""){
             show_toast("Uh Oh!","Please fill out the entire form");
@@ -1062,7 +1093,6 @@ const password_validation = function(email, pass, passConfirm){
     }
     return 0;
 }
-
 
 const show_loading = function(){
     const animation = document.getElementById('lottie-loading-animation');

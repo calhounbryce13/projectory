@@ -1,12 +1,8 @@
 'use strict';
 import { endpoints } from "./endpoints.js";
-
+import TEST_PROJECTS from "../db_dev/user_data.js";
 const LOADING_ANIMATION_DELAY = 1000; 
-
 const SHORT_PAGE_LOAD_DELAY = 1000;
-
-
-
 
 document.addEventListener("DOMContentLoaded", () => {
     get_project_data();     //todo: testing this from script.js
@@ -18,11 +14,6 @@ document.addEventListener("DOMContentLoaded", () => {
         update_task_status_functionality();
     }, SHORT_PAGE_LOAD_DELAY);
 });
-
-
-
-
-
 
 
 const insert_spacer = function(parentContainer){
@@ -37,14 +28,41 @@ const build_parent_container = function(){
     return parent;
 }
 
+const build_project_options = function(){
+    const container = document.createElement("div");
+    container.classList.add("project-options");
+
+    const editButton = document.createElement('button');
+    editButton.classList.add('edit-button');
+
+    const toggleExpansion = document.createElement('div');
+    toggleExpansion.classList.add('toggle-expansion');
+
+    container.appendChild(editButton);
+    container.appendChild(toggleExpansion);
+    return container;
+}
+
+
+const build_content_header = function(text){
+    const container = document.createElement("div");
+    container.textContent = text;
+    container.classList.add("content-header");
+    return container;
+}
+
 const build_title = function(singleProject){
     const projectTitle = document.createElement('p');
     projectTitle.classList.add('project-title');
     projectTitle.textContent = singleProject.title;
 
+    const projectOptions = build_project_options();
+
     const container = document.createElement('div');
     container.classList.add('project-title-container');
+
     container.appendChild(projectTitle);
+    container.appendChild(projectOptions);
 
     return container;
 }
@@ -126,15 +144,21 @@ const build_subtasks = function(singleProject){
 
 }
 
+
+/*
+
 const build_edit_container = function(){
     const editContainer = document.createElement('div');
     editContainer.classList.add('edit-button-container');
+    
     const editButton = document.createElement('button');
     editButton.classList.add('edit-button');
     editContainer.appendChild(editButton);
     return editContainer;
 
 }
+
+*/
 
 const build_project_start_container = function(){
     const projectStartContainer = document.createElement('div');
@@ -150,18 +174,23 @@ const build_project_start_container = function(){
 
 const build_project_card = function(singleProject, index, array){
     const parent = build_parent_container();
-    const editContainer = build_edit_container();
-    parent.appendChild(editContainer);
+    //const editContainer = build_edit_container();
+    //parent.appendChild(editContainer);
+
+    parent.appendChild(build_content_header("Title:"));
 
     const title = build_title(singleProject);
     parent.appendChild(title);
+
+    parent.appendChild(build_content_header("Goal:"));
+
 
     const goal = build_goal(singleProject);
     parent.appendChild(goal);
 
     if(singleProject.links){
         if(singleProject.links.length > 0){
-            const sectionHeader = build_section_header('resources','toggle-project-resources');
+            const sectionHeader = build_section_header('Resources','toggle-project-resources');
             parent.appendChild(sectionHeader);
             const resources = build_resources(singleProject);
             parent.appendChild(resources);
@@ -170,7 +199,7 @@ const build_project_card = function(singleProject, index, array){
 
     if(singleProject.tasks){
         if(singleProject.tasks.length > 0){
-            const sectionHeader = build_section_header('steps','toggle-project-steps');
+            const sectionHeader = build_section_header('Steps','toggle-project-steps');
             parent.appendChild(sectionHeader);
             const subtaskSection = build_subtasks(singleProject);
             parent.appendChild(subtaskSection);
@@ -369,6 +398,7 @@ const populate_project_screen = function(projects){
     Input(s): A list of projects (objects), based on the page they are on (current, planned, or complete)
     Output(s): None
     */
+    console.log(projects);
     const userProjectsArray = Array.from(projects);
     userProjectsArray.forEach((singleProject, index, array) => build_project_card(singleProject, index, array));
 
@@ -412,21 +442,31 @@ const send_a_request_to_get_user_projects = async()=>{
 }
 
 const get_project_data = async()=>{
-    try{
-        let projects = await send_a_request_to_get_user_projects();
-        if(projects){
-            let userProjects = await projects.json();
-            populate_project_screen(userProjects);
+
+    if(!(location.hostname == "127.0.0.1")){
+        try{
+            let projects = await send_a_request_to_get_user_projects();
+            if(projects){
+                let userProjects = await projects.json();
+                populate_project_screen(userProjects);
+            }
+        }catch(error){
+            console.log(error);
         }
-    }catch(error){
-        console.log(error);
+        const addNewProjectButton = Array.from(document.getElementsByClassName('add-new'))[0];
+        addNewProjectButton.addEventListener('click', (event)=>{
+            const form = Array.from(document.getElementsByClassName('project-form'))[0];
+            form.classList.toggle('project-form-show');
+            event.target.classList.toggle('add-new-open');
+        });
+        return;
     }
-    const addNewProjectButton = Array.from(document.getElementsByClassName('add-new'))[0];
-    addNewProjectButton.addEventListener('click', (event)=>{
-        const form = Array.from(document.getElementsByClassName('project-form'))[0];
-        form.classList.toggle('project-form-show');
-        event.target.classList.toggle('add-new-open');
-    });
+    else{
+        console.log("DEV MODE");
+        populate_project_screen(TEST_PROJECTS["testUser"].current);
+    }
+
+
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////

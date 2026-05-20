@@ -1361,6 +1361,7 @@ footer{
 }
 
 .header-title{
+    cursor: pointer;
     color: var(--yellow-gold);
     font-size: 2vw;
 }

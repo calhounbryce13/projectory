@@ -5,7 +5,8 @@ const LOADING_ANIMATION_DELAY = 1000;
 const SHORT_PAGE_LOAD_DELAY = 1000;
 
 document.addEventListener("DOMContentLoaded", () => {
-    get_project_data();     
+    get_project_data();   
+    project_card_expansion_functionality();
     setTimeout(() => {
         update_project_title_functionality();
         update_project_goal_functionality();
@@ -13,22 +14,25 @@ document.addEventListener("DOMContentLoaded", () => {
         closing_the_editor_functionality();
         update_task_status_functionality();
     }, SHORT_PAGE_LOAD_DELAY);
+});
 
 
-
-
+const project_card_expansion_functionality = function(){
+    console.log("here");
     const projectToggleButtons = Array.from(document.getElementsByClassName("toggle-expansion"));
     projectToggleButtons.forEach((toggleButton) => {
+        console.log("card toggle button:", toggleButton);
         toggle_element_height(toggleButton.parentNode.parentNode.parentNode.children[2]);
         toggleButton.addEventListener("click", (event) => {
             event.target.classList.toggle("toggle-expansion-show");
             toggle_element_height(event.target.parentNode.parentNode.parentNode.children[2]);
         })
-    })
-});
+    });
+}
 
 
 const toggle_element_height = function(element){
+    console.log("setting max height for dynamic container:", element);
     if(element.style.maxHeight == "none" || !element.style.maxHeight){
         element.style.overflowY = "hidden";
         element.style.maxHeight = "0px";
@@ -145,7 +149,6 @@ const build_single_subtask = function(singleSubtask, listOfSteps){
     const subtaskText = document.createElement('p');
     subtaskText.classList.add('project-subtask-text');
     if(singleSubtask.is_complete) subtaskText.classList.add('completed-task');
-    console.log(singleSubtask);
     subtaskText.textContent = singleSubtask.task_description;
 
     const checkBox = document.createElement('input');
@@ -402,11 +405,8 @@ const populate_project_screen = function(projects){
     Input(s): A list of projects (objects), based on the page they are on (current, planned, or complete)
     Output(s): None
     */
-    console.log(projects);
     const userProjectsArray = Array.from(projects);
     userProjectsArray.forEach((singleProject, index, array) => build_project_card(singleProject, index, array));
-
-
     if(JSON.parse(localStorage.getItem("Projectory"))["project-type"] == 'complete'){
         const addNewContainer = document.getElementById('add-new-container');
         addNewContainer.style.display = 'none';
@@ -581,24 +581,12 @@ const update_task_status_functionality = function(){
     if(document.getElementsByClassName('subtask-checkbox').length > 0){
         const checkBoxesElements = Array.from(document.getElementsByClassName('subtask-checkbox'));
         checkBoxesElements.forEach((box) => {
-
-            console.log("looping over the boxes");
-
             box.addEventListener('change', async(event) => {
-
-                console.log("attaching a listener");    
-
                 const checkBox = event.target;
                 const user = await fetch_for_user_email();
                 if(user){
-
-                    console.log("user found");
-
                     const index = get_the_index_of_a_task(checkBox);
                     if(index != null){
-
-                        console.log("index found");
-
                         const projectTitle = get_the_title_of_the_project(checkBox);
                         if(projectTitle != null){
                             let mark = checkBox.checked ? 1 : 0;
@@ -622,7 +610,7 @@ const update_task_status_functionality = function(){
                                 switch(response.status){
                                     case 200:
                                         toggle_respective_text(checkBox);
-                                        show_toast("Nice", "That step was updates successfully");
+                                        show_toast("Nice", "That step was updated successfully");
                                         break;
                                     case 400:
                                         show_toast("Uh Oh", "It looks like there was an issue with the request");

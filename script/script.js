@@ -612,7 +612,6 @@ const signup_functionality = function(){
 
 
 const registration_and_login_fetch = async(email, pass, endpoint)=>{
-    
     try{
         let response = await fetch(endpoint,{
             method: 'POST',
@@ -629,59 +628,6 @@ const registration_and_login_fetch = async(email, pass, endpoint)=>{
         return null;
     }
 }
-
-
-const login_functionality = function(){
-    const loginForm = document.getElementsByName('login-form');
-    if(loginForm.length > 0){
-        Array.from(loginForm)[0].addEventListener('submit', async(event)=>{
-            console.log("HANDLER FIRED!");
-            event.preventDefault();
-            const userEmail = document.getElementsByName('userEmail')[0];
-            const userPass = document.getElementsByName('userPass')[0];
-            if(!(check_for_empty(userEmail, userPass))){
-                let response = await registration_and_login_fetch(userEmail.value, userPass.value, endpoints.login);
-                if(response != null){
-                    let data = await response.json();
-                    if(data.message == 'session start'){
-                        window.location.assign('userhome.html');
-                    }
-                    else{
-                        show_toast("Uh Oh!", "wrong email and/or password");
-                    }
-                }
-            }
-            window.alert("please fill out the entire form");
-            return;
-        });
-        return;
-    }
-    console.log("error: there should be a login form!");
-    return;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1063,8 +1009,6 @@ const dismiss_loading = function(animationInstance){
 }
 
 const backend_communication = function(){
-    login_functionality();
-
     logout_functionality();
 
     add_task_to_new_functionality();

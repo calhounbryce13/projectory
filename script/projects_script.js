@@ -34,13 +34,10 @@ const project_card_expansion_functionality = function(){
 const toggle_element_height = function(element){
     console.log("setting max height for dynamic container:", element);
     if(element.style.maxHeight == "none" || !element.style.maxHeight){
-        element.style.overflowY = "hidden";
         element.style.maxHeight = "0px";
-        element.style.margin = "0px";
+        return;
     }
-    else{
-        element.style.maxHeight = "none";
-    }
+    element.style.maxHeight = "none";
 }
 
 const insert_spacer = function(parentContainer){

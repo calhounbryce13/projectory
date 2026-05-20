@@ -4,6 +4,19 @@ document.addEventListener("DOMContentLoaded", () => {
     login_functionality();
 });
 
+
+const check_for_empty = function(email, pass){
+    console.log(email, pass);
+    if(email && pass){
+        if(email.value == "" || pass.value == ""){
+            show_toast("Uh Oh!","Please fill out the entire form");
+            return 1;
+        }
+        return 0;
+    }
+    return 1;
+}
+
 const registration_and_login_fetch = async(email, pass, endpoint)=>{
     try{
         let response = await fetch(endpoint,{

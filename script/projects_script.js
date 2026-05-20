@@ -29,7 +29,6 @@ const project_card_expansion_functionality = function(){
     });
 }
 
-
 const toggle_element_height = function(element){
     console.log("setting max height for dynamic container:", element);
     if(element.style.maxHeight == "none" || !element.style.maxHeight){
@@ -154,7 +153,6 @@ const build_single_subtask = function(singleSubtask, listOfSteps){
     listIndexElement.appendChild(subtaskText);
     listIndexElement.appendChild(checkBox);
     listOfSteps.appendChild(listIndexElement);
-
 }
 
 const build_subtasks = function(singleProject){
@@ -231,15 +229,12 @@ const show_modal_to_edit_a_project = function(event){
         const localObj = JSON.parse(localStorage.getItem("Projectory"));
         localObj["project-title"] = (event.target).parentNode.parentNode.children[1].children[0].textContent;
         localStorage.setItem("Projectory", JSON.stringify(localObj));
-
         const editModal = Array.from(document.getElementsByClassName('edit-project-modal'))[0];
         const backdrop = Array.from(document.getElementsByClassName('modal-overlay-backdrop'))[1];
-
         populate_modal(event, editModal);
         backdrop.classList.add('modal-overlay-backdrop-show');
         editModal.classList.add('edit-modal-show');
     }
-
 }
 
 const get_max_height = function(list){
@@ -529,7 +524,6 @@ const populate_modal = function(event, editModal){
     }
 }
 
-
 const fetch_for_user_email = async()=>{
     const animationInstance = show_loading();
     try{
@@ -681,12 +675,6 @@ const show_toast = function(header, message){
 
 ////////////////////////////
 ////////////////////////////
-////////////////////////////
-////////////////////////////
-////////////////////////////
-////////////////////////////
-////////////////////////////
-////////////////////////////
 
 
 const request_to_delete_user_project = async(type, title, user) => {
@@ -739,7 +727,6 @@ const delete_project_functionality = function(){
     deleteProjectButton.addEventListener('click', (event) => remove_user_project(event));
 }
 
-
 const clear_the_modal = function(modal){
     const titleField = modal.children[2].children[0];
     const goalField = modal.children[3].children[0];
@@ -787,7 +774,6 @@ const is_unique_title = function(title){
     }
     return true;
 }
-
 
 const request_to_update_project_title = async(email, newTitle) => {
     let animation = false;
@@ -849,7 +835,6 @@ const update_project_title_functionality = function(){
         return;
     })
 }
-
 
 const request_to_update_project_goal = async(email, newGoal) => {
     let animation = false;

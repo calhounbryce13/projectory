@@ -755,7 +755,7 @@ const remove_project_editor = function(){
 }
 
 const closing_the_editor_functionality = function(){
-    const closeTheEditorButton = Array.from(document.getElementsByClassName('close-editor'))[0];
+    const closeTheEditorButton = Array.from(document.getElementsByClassName('close-project-editor'))[0];
     closeTheEditorButton.addEventListener('click', remove_project_editor);
 }
 

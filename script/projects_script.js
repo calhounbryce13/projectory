@@ -4,22 +4,21 @@ import TEST_PROJECTS from "../db_dev/user_data.js";
 const LOADING_ANIMATION_DELAY = 1000; 
 const SHORT_PAGE_LOAD_DELAY = 1000;
 
-document.addEventListener("DOMContentLoaded", () => {
-    get_project_data();   
+document.addEventListener("DOMContentLoaded", async() => {
+    await get_project_data();   
     project_card_expansion_functionality();
-    setTimeout(() => {
-        update_project_title_functionality();
-        update_project_goal_functionality();
-        delete_project_functionality();
-        closing_the_editor_functionality();
-        update_task_status_functionality();
-    }, SHORT_PAGE_LOAD_DELAY);
+    update_project_title_functionality();
+    update_project_goal_functionality();
+    delete_project_functionality();
+    closing_the_editor_functionality();
+    update_task_status_functionality();
 });
 
 
 const project_card_expansion_functionality = function(){
     console.log("here");
     const projectToggleButtons = Array.from(document.getElementsByClassName("toggle-expansion"));
+    console.log(projectToggleButtons);
     projectToggleButtons.forEach((toggleButton) => {
         console.log("card toggle button:", toggleButton);
         toggle_element_height(toggleButton.parentNode.parentNode.parentNode.children[2]);

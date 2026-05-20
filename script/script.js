@@ -491,62 +491,6 @@ const textarea_dynamic_height_functionality = function(){
     });
 }
 
-const populate_the_title_and_goal = function(projectCard, editModal){
-    const title = projectCard.children[1].children[0].textContent;
-    const goal = projectCard.children[2].children[0].textContent;
-    const titleField = editModal.children[2].children[0];
-    const goalField = editModal.children[3].children[0];
-    titleField.value = title;
-    goalField.value = goal;
-    setTimeout(() => {
-        textarea_dynamic_height_functionality();
-    }, 500)
-}
-
-const populate_modal = function(event, editModal){
-    /* 
-    description: Function to populate the edit project modal with the relevant data
-    input(s); The clicked event, modal element
-    output(s): None
-    */
-    const projectCard = event.target.parentNode.parentNode;
-    populate_the_title_and_goal(projectCard, editModal);
-    const projectType = JSON.parse(localStorage.getItem("Projectory"))["project-type"];
-
-
-    if( projectType != "planned" && projectType != 'complete'){
-        const ul = projectCard.children[4];
-        const ol = projectCard.children[6];
-        if(ul){
-            Array.from(ul.children).forEach((listIndex) => {
-
-                const url = listIndex.children[0].textContent;
-                const anchor = document.createElement('a');
-                anchor.classList.add('edit-a-project-resource-link');
-                anchor.textContent = url;
-
-                const button = document.createElement('button');
-                button.classList.add('edit-modal-button');
-                button.classList.add('remove-a-project-element-button');
-                button.textContent = 'delete';
-
-                const container = document.createElement('div');
-                container.classList.add('edit-a-project-resource-container');
-                container.appendChild(anchor);
-                container.appendChild(button);
-
-                const editIndex = document.createElement('li');
-                editIndex.classList.add('project-individual-resource');
-                editIndex.appendChild(container);
-
-                const editor = Array.from(document.getElementsByClassName('project-resources-edit-modal'))[0];
-                editor.appendChild(editIndex);
-
-            });
-        }
-    }
-}
-
 const save_a_new_resource = function(){
     const button = document.getElementById('add-a-new-project-resource-button');
     if(button){

@@ -3,6 +3,11 @@ import { endpoints } from './endpoints.js';
 
 
 document.addEventListener("DOMContentLoaded", async() => {
+    get_project_numbers();
+});
+
+
+const get_project_numbers = async () => {
     try{
         const response = await fetch(endpoints.get_nums, {method: 'GET', credentials: 'include'});
         if(response.status == 200){
@@ -12,7 +17,7 @@ document.addEventListener("DOMContentLoaded", async() => {
     }catch(error){
         console.log(error);
     }
-});
+}
 
 
 

@@ -384,7 +384,6 @@ textarea{
 
 .project-resource-link{
     font-size: 3vw;
-
 }
 
 .save-new-data-button{
@@ -438,11 +437,6 @@ textarea{
     max-width: 90%;
     resize: vertical;
     overflow-y: hidden;
-}
-
-.subtask-checkbox{
-    height: 6vw;
-    width: 6vw;
 }
 
 .edit-a-project-resource-container{
@@ -1407,11 +1401,11 @@ footer{
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
-    transition: .5s ease-in-out
+    transition: background-color .25s ease-in-out;
 }
 
 .add-new:hover{
-    filter: brightness(85%);
+    background-color: var(--deep-blue) !important;
 }
 
 .add-new:active{
@@ -1542,25 +1536,17 @@ footer{
     margin-top: 2vh;
     margin-bottom: 2vh;
     color: var(--deep-blue);
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    transition: 
+        transform 0.3s ease-in-out, 
+        box-shadow 0.3s ease-in-out, 
+        max-height 0.3s ease-in-out;
 }
-
 
 @media(min-width: 900px){
     .project-card:hover{
         transform: scale(1.1);
         box-shadow: 5px 5px 20px;
     }
-}
-
-
-.edit-button-container{
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: center;
-    height: auto;
-    width: 100%;
 }
 
 .edit-button{
@@ -1617,14 +1603,20 @@ footer{
 }
 
 .toggle-expansion{
-    height: 5vw;
-    width: 5vw;
+    cursor: pointer;
+    height: 9vw;
+    width: 9vw;
     border: 2px solid var(--border-color);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     background-image: url("../icons/drop_down_arrow_icon.svg");
-    transform: rotate();
+    transform: rotate(90deg);
+    transition: transform 0.5s ease-in-out;
+}
+
+.toggle-expansion-show{
+    transform: rotate(0deg);
 }
 
 
@@ -1728,7 +1720,7 @@ footer{
 
 @media(min-width: 900px){
     .project-resource-link{
-        font-size: 2vw;
+        font-size: 1.25vw;
     }
 
 }
@@ -1774,6 +1766,7 @@ footer{
     border: none;
     height: 6vw;
     width: 6vw;
+    transition: transform 0.3s ease-in-out;
 }
 
 @media(min-width: 900px){
@@ -1822,15 +1815,22 @@ footer{
 
 @media(min-width: 900px){
     .project-subtask-text{
-        font-size: 2vw;
+        font-size: 1.5vw;
     }
-
 }
 
 .subtask-checkbox{
     height: 6vw;
     width: 6vw;
+    border: 2px solid var(--deep-blue) !important;
+    appearance: none;
+    -webkit-appearance: none;
 }
+
+.subtask-checkbox:checked{
+    background-color: var(--deep-blue);
+}
+
 @media(min-width: 900px){
     .subtask-checkbox{
         height: 3vw;
@@ -1939,7 +1939,6 @@ footer{
     height: auto;
     font-size: 6vw;
     border-radius: 10px;
-
 }
 
 @media(min-width: 900px){
@@ -2122,7 +2121,6 @@ footer{
 
 }
 
-/**************************** animation functions ***********************************************************************/
 
 @keyframes myanimation{
     0%{
@@ -2132,4 +2130,16 @@ footer{
         transform: translateY(0vh);
         opacity: 1;
     }
+}
+
+.dynamic-container{
+    overflow: hidden;
+    height: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-height: 0px;
+    transition: max-height 2s ease-in-out;
 }

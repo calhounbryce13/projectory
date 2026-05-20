@@ -14,6 +14,17 @@ const testUser = {
         ],
         "links": ["www.homedepot.com"]
         },
+        {
+        "title": "Build a submarine in the lake before winter ends",
+        "goal": "Try to get a submarine with 4 windows, 2 doors and a ladder built in the cresent lake behind the house before December 17th",
+        "tasks": [
+            {
+            "task_description":"Go to home depot and find out approximately how much metal you will need to buy",
+            "is_complete": 0
+            }
+        ],
+        "links": ["www.homedepot.com"]
+        },
     ],
     "planned": [],
     "complete": []

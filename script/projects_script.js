@@ -5,7 +5,7 @@ const LOADING_ANIMATION_DELAY = 1000;
 const SHORT_PAGE_LOAD_DELAY = 1000;
 
 document.addEventListener("DOMContentLoaded", () => {
-    get_project_data();     //todo: testing this from script.js
+    get_project_data();     
     setTimeout(() => {
         update_project_title_functionality();
         update_project_goal_functionality();
@@ -13,8 +13,31 @@ document.addEventListener("DOMContentLoaded", () => {
         closing_the_editor_functionality();
         update_task_status_functionality();
     }, SHORT_PAGE_LOAD_DELAY);
+
+
+
+
+    const projectToggleButtons = Array.from(document.getElementsByClassName("toggle-expansion"));
+    projectToggleButtons.forEach((toggleButton) => {
+        toggle_element_height(toggleButton.parentNode.parentNode.parentNode.children[2]);
+        toggleButton.addEventListener("click", (event) => {
+            event.target.classList.toggle("toggle-expansion-show");
+            toggle_element_height(event.target.parentNode.parentNode.parentNode.children[2]);
+        })
+    })
 });
 
+
+const toggle_element_height = function(element){
+    if(element.style.maxHeight == "none" || !element.style.maxHeight){
+        element.style.overflowY = "hidden";
+        element.style.maxHeight = "0px";
+        element.style.margin = "0px";
+    }
+    else{
+        element.style.maxHeight = "none";
+    }
+}
 
 const insert_spacer = function(parentContainer){
     const spacer = document.createElement('div');
@@ -42,7 +65,6 @@ const build_project_options = function(){
     container.appendChild(toggleExpansion);
     return container;
 }
-
 
 const build_content_header = function(text){
     const container = document.createElement("div");
@@ -144,22 +166,6 @@ const build_subtasks = function(singleProject){
 
 }
 
-
-/*
-
-const build_edit_container = function(){
-    const editContainer = document.createElement('div');
-    editContainer.classList.add('edit-button-container');
-    
-    const editButton = document.createElement('button');
-    editButton.classList.add('edit-button');
-    editContainer.appendChild(editButton);
-    return editContainer;
-
-}
-
-*/
-
 const build_project_start_container = function(){
     const projectStartContainer = document.createElement('div');
     projectStartContainer.classList.add('start-button-container');
@@ -172,46 +178,44 @@ const build_project_start_container = function(){
     return projectStartContainer;
 }
 
+
 const build_project_card = function(singleProject, index, array){
     const parent = build_parent_container();
-    //const editContainer = build_edit_container();
-    //parent.appendChild(editContainer);
 
     parent.appendChild(build_content_header("Title:"));
 
     const title = build_title(singleProject);
     parent.appendChild(title);
 
-    parent.appendChild(build_content_header("Goal:"));
 
+    const dynamic_container = document.createElement("div");
+    dynamic_container.classList.add("dynamic-container");
+    dynamic_container.appendChild(build_content_header("Goal:"))
 
     const goal = build_goal(singleProject);
-    parent.appendChild(goal);
+    dynamic_container.appendChild(goal);
 
     if(singleProject.links){
         if(singleProject.links.length > 0){
             const sectionHeader = build_section_header('Resources','toggle-project-resources');
-            parent.appendChild(sectionHeader);
+            dynamic_container.appendChild(sectionHeader);
             const resources = build_resources(singleProject);
-            parent.appendChild(resources);
+            dynamic_container.appendChild(resources);
         }
     }
-
     if(singleProject.tasks){
         if(singleProject.tasks.length > 0){
             const sectionHeader = build_section_header('Steps','toggle-project-steps');
-            parent.appendChild(sectionHeader);
+            dynamic_container.appendChild(sectionHeader);
             const subtaskSection = build_subtasks(singleProject);
-            parent.appendChild(subtaskSection);
+            dynamic_container.appendChild(subtaskSection);
         }
     }
-
     if(JSON.parse(localStorage.getItem("Projectory"))["project-type"] == 'planned'){
         const startProjectOption = build_project_start_container();
-        parent.appendChild(startProjectOption);
-        
+        dynamic_container.appendChild(startProjectOption);
     }
-
+    parent.appendChild(dynamic_container);
     Array.from(document.getElementsByClassName('user-projects'))[0].appendChild(parent);
     if(index < array.length - 1){
         insert_spacer(document.getElementsByClassName('user-projects')[0]);
@@ -473,6 +477,61 @@ const get_project_data = async()=>{
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+const populate_the_title_and_goal = function(projectCard, editModal){
+    const title = projectCard.children[1].children[0].textContent;
+    const goal = projectCard.children[2].children[0].textContent;
+    const titleField = editModal.children[2].children[0];
+    const goalField = editModal.children[3].children[0];
+    titleField.value = title;
+    goalField.value = goal;
+    setTimeout(() => {
+        textarea_dynamic_height_functionality();
+    }, 500)
+}
+
+const populate_modal = function(event, editModal){
+    /* 
+    description: Function to populate the edit project modal with the relevant data
+    input(s); The clicked event, modal element
+    output(s): None
+    */
+    const projectCard = event.target.parentNode.parentNode.parentNode;
+    populate_the_title_and_goal(projectCard, editModal);
+    const projectType = JSON.parse(localStorage.getItem("Projectory"))["project-type"];
+    
+    if( projectType != "planned" && projectType != 'complete'){
+        const ul = projectCard.children[4];
+        const ol = projectCard.children[6];
+        if(ul){
+            Array.from(ul.children).forEach((listIndex) => {
+
+                const url = listIndex.children[0].textContent;
+                const anchor = document.createElement('a');
+                anchor.classList.add('edit-a-project-resource-link');
+                anchor.textContent = url;
+
+                const button = document.createElement('button');
+                button.classList.add('edit-modal-button');
+                button.classList.add('remove-a-project-element-button');
+                button.textContent = 'delete';
+
+                const container = document.createElement('div');
+                container.classList.add('edit-a-project-resource-container');
+                container.appendChild(anchor);
+                container.appendChild(button);
+
+                const editIndex = document.createElement('li');
+                editIndex.classList.add('project-individual-resource');
+                editIndex.appendChild(container);
+
+                const editor = Array.from(document.getElementsByClassName('project-resources-edit-modal'))[0];
+                editor.appendChild(editIndex);
+
+            });
+        }
+    }
+}
 
 
 const fetch_for_user_email = async()=>{

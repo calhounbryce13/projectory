@@ -1,4 +1,7 @@
 'use strict';
+import {endpoints} from './endpoints.js'
+
+
 
 document.addEventListener("DOMContentLoaded", () => {
     login_functionality();

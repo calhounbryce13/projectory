@@ -1692,7 +1692,6 @@ footer{
     width: 6vw;
     background-color: black;
     border-radius: 10px;
-
 }
 
 .project-resources{
@@ -1714,7 +1713,6 @@ footer{
     .project-resource-link{
         font-size: 1.25vw;
     }
-
 }
 
 .start-button-container{
@@ -1780,9 +1778,7 @@ footer{
     width: 90%;
     height: auto;
     max-height: 0vh;
-
     transition: max-height var(--expanding-container-animation-time) ease-in-out;
-
 }
 
 .project-individual-subtask{
@@ -1794,9 +1790,7 @@ footer{
     height: auto;
     overflow-x: hidden;
     overflow-y: hidden;
-
     border: 2px solid var(--border3);
-
 }
 
 .project-subtask-text{
@@ -1855,7 +1849,6 @@ footer{
     opacity: 0;
     transition: opacity 1s ease-in-out, 
                 z-index 0s linear 1s;
-
 }
 .modal-overlay-backdrop-show{
     opacity: 1;
@@ -1868,7 +1861,6 @@ footer{
     top: 50%;
     transform: translate(-50%, -50%);
     left: 250%;
-
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -1886,7 +1878,6 @@ footer{
     left: 50%;
 }
 
-
 .start-modal-title-container{
     display: flex;
     flex-direction: row;
@@ -1900,7 +1891,6 @@ footer{
 .start-modal-title{
     font-size: 5vw;
     font-weight: 100;
-
 }
 
 
@@ -1972,7 +1962,6 @@ footer{
     }
     .new-project-link-input{
         width: 45vw;
-
     }
     .task-remove-button{
         height: 8vw;
@@ -2111,7 +2100,6 @@ footer{
     }
 }
 
-
 @keyframes myanimation{
     0%{
         transform: translateY(10vh);
@@ -2134,7 +2122,6 @@ footer{
     transition: max-height 2s ease-in-out;
 }
 
-
 .close-project-editor{
     background-image: url("../icons/close-icon.svg");
     background-position: center;
@@ -2154,4 +2141,3 @@ footer{
         width: 4vw;
     }
 }
-

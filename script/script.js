@@ -7,7 +7,6 @@ const LOADING_ANIMATION_DELAY = 1000; // in ms
 
 document.addEventListener('DOMContentLoaded', async()=>{
     keeping_the_services_awake();
-
     collect_user_data();
     feedback_functionality();
     check_local_storage();
@@ -22,9 +21,7 @@ document.addEventListener('DOMContentLoaded', async()=>{
     
 });
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
 
 const keeping_the_services_awake = function(){

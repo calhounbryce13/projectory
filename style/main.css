@@ -1274,7 +1274,7 @@ footer{
 
 
 .home-screen-buttons{
-    height: 12vh;
+    height: auto;
     width: 20vw;
     margin-top: 4vh;
     margin-bottom: 4vh;

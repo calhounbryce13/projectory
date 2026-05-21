@@ -471,7 +471,7 @@ const get_project_data = async()=>{
 
 const populate_the_title_and_goal = function(projectCard, editModal){
     const title = projectCard.children[1].children[0].textContent;
-    const goal = projectCard.children[2].children[0].textContent;
+    const goal = projectCard.children[2].children[1].children[0].textContent;
     const titleField = editModal.children[2].children[0];
     const goalField = editModal.children[3].children[0];
     titleField.value = title;

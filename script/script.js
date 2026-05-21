@@ -6,6 +6,8 @@ const LOADING_ANIMATION_DELAY = 1000; // in ms
 
 
 document.addEventListener('DOMContentLoaded', async()=>{
+    keeping_the_services_awake();
+
     collect_user_data();
     feedback_functionality();
     check_local_storage();
@@ -24,6 +26,20 @@ document.addEventListener('DOMContentLoaded', async()=>{
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+
+const keeping_the_services_awake = function(){
+    setInterval( async() => {
+        await fetch("https://projectory-account-services.onrender.com/server-status", {
+            method: "GET"
+        });
+        await fetch("https://projectory-project-management-services.onrender.com/server-status", {
+            method: "GET"
+        });
+        await fetch("https://projectory-hyperlink-services.onrender.com/server-status", {
+            method: "GET"
+        });
+    }, 20000);
+}
 
 const collect_user_data = async() => {
     /* 

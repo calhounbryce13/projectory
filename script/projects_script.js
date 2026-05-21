@@ -184,7 +184,6 @@ const build_project_card = function(singleProject, index, array){
     const title = build_title(singleProject);
     parent.appendChild(title);
 
-
     const dynamic_container = document.createElement("div");
     dynamic_container.classList.add("dynamic-container");
     dynamic_container.appendChild(build_content_header("Goal:"))

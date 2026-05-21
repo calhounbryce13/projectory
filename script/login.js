@@ -1,6 +1,5 @@
 'use strict';
-const endpoints = require("./endpoints.js");
-
+import {endpoints} from './endpoints.js'
 
 
 document.addEventListener("DOMContentLoaded", () => {

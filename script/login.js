@@ -1,5 +1,5 @@
 'use strict';
-import {endpoints} from './endpoints.js'
+const endpoints = require("./endpoints.js");
 
 
 

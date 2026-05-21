@@ -6,25 +6,14 @@ const LOADING_ANIMATION_DELAY = 1000; // in ms
 
 
 document.addEventListener('DOMContentLoaded', async()=>{
-
-
     collect_user_data();
-
     feedback_functionality();
-
     check_local_storage();
-
     dismiss_modal_functionality();
-
-
-
-
     await check_user_login_status();
     await generate_user_projects_page();
     backend_communication();
     home_page_listeners();
-
-
     setTimeout(()=>{
         add_task_to_existing_functionality();
     }, 2000);
@@ -55,8 +44,6 @@ const collect_user_data = async() => {
         console.log(error);
     }
 }
-
-
 
 const show_feedback_form = function(){
     document.getElementById('feedback').addEventListener('click', () => {
@@ -271,7 +258,6 @@ const build_subtask_container = function(){
     container.id = 'project-form-subtasks';
     container.classList.add('container');
     container.appendChild(build_new_subtask());
-
     return container;
 }
 

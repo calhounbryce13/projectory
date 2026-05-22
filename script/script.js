@@ -3,6 +3,7 @@ import {endpoints} from './endpoints.js'
 
 const PASSWORD_MIN = 8;
 const LOADING_ANIMATION_DELAY = 1000; // in ms
+const devHost = "127.0.0.1";
 
 
 document.addEventListener('DOMContentLoaded', async()=>{
@@ -25,17 +26,19 @@ document.addEventListener('DOMContentLoaded', async()=>{
 
 
 const keeping_the_services_awake = function(){
-    setInterval( async() => {
-        await fetch("https://projectory-account-services.onrender.com/server-status", {
-            method: "GET"
-        });
-        await fetch("https://projectory-project-management-services.onrender.com/server-status", {
-            method: "GET"
-        });
-        await fetch("https://projectory-hyperlink-services.onrender.com/server-status", {
-            method: "GET"
-        });
-    }, 20000);
+    if(location.hostname != devHost){
+        setInterval( async() => {
+            await fetch("https://projectory-account-services.onrender.com/server-status", {
+                method: "GET"
+            });
+            await fetch("https://projectory-project-management-services.onrender.com/server-status", {
+                method: "GET"
+            });
+            await fetch("https://projectory-hyperlink-services.onrender.com/server-status", {
+                method: "GET"
+            });
+        }, 30000);
+    }
 }
 
 const collect_user_data = async() => {
@@ -168,7 +171,7 @@ const fetch_for_login_status = async()=>{
 }
 
 const check_user_login_status = async()=>{
-    if(!(location.hostname == "127.0.0.1")){
+    if(!(location.hostname == devHost)){
         let loginStatus = await fetch_for_login_status();
         if(!loginStatus){
             if(window.location.pathname.endsWith('/userhome.html') || window.location.pathname.endsWith('/projects.html')){

@@ -1,8 +1,11 @@
 'use strict';
 import { endpoints } from "./endpoints.js";
 import TEST_PROJECTS from "../db_dev/user_data.js";
+import svgs from "./svg.js";
+
 const LOADING_ANIMATION_DELAY = 1000; 
 const SHORT_PAGE_LOAD_DELAY = 1000;
+
 
 document.addEventListener("DOMContentLoaded", async() => {
     await get_project_data();   
@@ -14,23 +17,18 @@ document.addEventListener("DOMContentLoaded", async() => {
     update_task_status_functionality();
 });
 
-
 const project_card_expansion_functionality = function(){
-    console.log("here");
     const projectToggleButtons = Array.from(document.getElementsByClassName("toggle-expansion"));
-    console.log(projectToggleButtons);
     projectToggleButtons.forEach((toggleButton) => {
-        console.log("card toggle button:", toggleButton);
-        toggle_element_height(toggleButton.parentNode.parentNode.parentNode.children[2]);
+        toggle_element_height(toggleButton.closest(".project-options").closest(".project-title-container").nextElementSibling);
         toggleButton.addEventListener("click", (event) => {
             event.target.classList.toggle("toggle-expansion-show");
-            toggle_element_height(event.target.parentNode.parentNode.parentNode.children[2]);
-        })
+            toggle_element_height(event.target.closest(".project-options").closest(".project-title-container").nextElementSibling);
+        });
     });
 }
 
 const toggle_element_height = function(element){
-    console.log("setting max height for dynamic container:", element);
     if(element.style.maxHeight == "none" || !element.style.maxHeight){
         element.style.maxHeight = "0px";
         return;
@@ -57,8 +55,12 @@ const build_project_options = function(){
     const editButton = document.createElement('button');
     editButton.classList.add('edit-button');
 
+    editButton.innerHTML = svgs.editPencilSVG;
+
     const toggleExpansion = document.createElement('div');
     toggleExpansion.classList.add('toggle-expansion');
+    toggleExpansion.innerHTML = svgs.toggleArrowSVG;
+
 
     container.appendChild(editButton);
     container.appendChild(toggleExpansion);
@@ -174,7 +176,6 @@ const build_project_start_container = function(){
     projectStartContainer.appendChild(projectStartButton);
     return projectStartContainer;
 }
-
 
 const build_project_card = function(singleProject, index, array){
     const parent = build_parent_container();
@@ -469,8 +470,9 @@ const get_project_data = async()=>{
 
 
 const populate_the_title_and_goal = function(projectCard, editModal){
-    const title = projectCard.children[1].children[0].textContent;
-    const goal = projectCard.children[2].children[1].children[0].textContent;
+    const title = projectCard.querySelectorAll(".project-title")[0].textContent;
+    const goal = projectCard.querySelectorAll(".project-goal")[0].textContent;
+
     const titleField = editModal.children[2].children[0];
     const goalField = editModal.children[3].children[0];
     titleField.value = title;
@@ -486,10 +488,9 @@ const populate_modal = function(event, editModal){
     input(s); The clicked event, modal element
     output(s): None
     */
-    const projectCard = event.target.parentNode.parentNode.parentNode;
+    const projectCard = (event.target).closest(".project-card");
     populate_the_title_and_goal(projectCard, editModal);
     const projectType = JSON.parse(localStorage.getItem("Projectory"))["project-type"];
-    
     if( projectType != "planned" && projectType != 'complete'){
         const ul = projectCard.children[4];
         const ol = projectCard.children[6];

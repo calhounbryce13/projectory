@@ -10,7 +10,8 @@
     --light-grey-blue: rgba(230, 237, 245, 1.0);
     --forest-green: rgba(34, 139, 87, 1.0);
     --light-biege: rgba(250, 250, 245, 1.0);
-    --soft-sage: rgba(232, 240, 230, 0.532);
+    --soft-sage: rgba(232, 240, 230, 1);
+    --soft-sage-transparent: rgba(232, 240, 230, 0.532);
     --ice-blue: #8ecae6;
     --frosted-blue: 	#dfebf6;
     --deep-blue: #023047;
@@ -1250,8 +1251,6 @@ footer{
     width: 15%;
 }
 
-
-
 .home-screen-buttons{
     height: auto;
     width: 20vw;
@@ -1281,7 +1280,6 @@ footer{
     overflow: hidden;
 }
 
-
 .data-container{
     width: 70%;
 }
@@ -1299,11 +1297,12 @@ footer{
 
 #current-icon{
     background-image: url('../icons/icons8-current-100.png');
-
 }
+
 #completed-icon{
     background-image: url('../icons/completed-icon.png');
 }
+
 #planned-icon{
     background-image: url('../icons/planned-icon.png');
 }
@@ -1318,7 +1317,6 @@ footer{
         background-color: var(--deep-blue);
     }
 }
-
 
 .header-title{
     cursor: pointer;
@@ -1337,10 +1335,9 @@ footer{
     margin-bottom: 2vh;
     padding: 1vh;
     border-radius: 20px;
-    border: 3px solid var(--soft-sage);
-    background-color: var(--soft-sage);
+    border: 3px solid var(--soft-sage-transparent);
+    background-color: var(--soft-sage-transparent);
 }
-
 
 #h2-container{
     flex-direction: row;
@@ -1394,7 +1391,6 @@ footer{
     }
 }
 
-
 #home-button-container{
     flex-direction: row;
     justify-content: flex-start;
@@ -1427,7 +1423,6 @@ footer{
     filter: brightness(85%);
 }
 
-
 #project-form-add-more-container{
     flex-direction: row;
     justify-content: flex-end;
@@ -1439,7 +1434,6 @@ footer{
     flex-direction: column;
     justify-content: flex-end;
     width: 90%;
-
 }
 
 .new-subtask{
@@ -1493,7 +1487,7 @@ footer{
     border-radius: 15px;
     height: auto;
     width: 85%;
-    background-color: var(--soft-sage);
+    background-color: var(--soft-sage-transparent);
     margin-top: 2vh;
     margin-bottom: 2vh;
     color: var(--deep-blue);
@@ -1512,14 +1506,12 @@ footer{
 
 .edit-button{
     background-color: rgba(0,0,0,0);
-    background-image: url('../icons/edit_pencil_icon.svg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
     border: none;
     height: 6vw;
     width: 6vw;
-    filter: invert(1);
     margin-left: 10%;
 }
 
@@ -1528,7 +1520,6 @@ footer{
         height: 2vw;
         width: 2vw;
     }
-
 }
 
 
@@ -1568,25 +1559,25 @@ footer{
 
 .toggle-expansion{
     cursor: pointer;
-    height: 9vw;
-    width: 9vw;
     border: 2px solid var(--border-color);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    background-image: url("../icons/drop_down_arrow_icon.svg");
     transform: rotate(90deg);
     transition: transform 0.5s ease-in-out;
-    filter: invert(1);
+}
+
+.toggle-expansion svg{
+    height: 9vw;
+    width: 9vw;
 }
 
 .toggle-expansion-show{
     transform: rotate(0deg);
 }
 
-
 @media(min-width: 900px){
-    .toggle-expansion{
+    .toggle-expansion svg{
         height: 4vw;
         width: 4vw;
     }
@@ -1600,7 +1591,6 @@ footer{
     height: auto;
     width: 100%;
 }
-
 
 .project-card li{
     overflow-y: hidden;
@@ -2148,10 +2138,10 @@ footer{
     #project-buttons > div:nth-child(2){
         flex-direction: row;
         gap: 10vw;
-
     }
 }
 
-
-
+.project-card svg{
+    color: var(--soft-sage);
+}
 

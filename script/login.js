@@ -1,11 +1,9 @@
 'use strict';
 import {endpoints} from './endpoints.js'
 
-
 document.addEventListener("DOMContentLoaded", () => {
     login_functionality();
 });
-
 
 const check_for_empty = function(email, pass){
     console.log(email, pass);
@@ -18,7 +16,6 @@ const check_for_empty = function(email, pass){
     }
     return 1;
 }
-
 const registration_and_login_fetch = async(email, pass, endpoint)=>{
     try{
         let response = await fetch(endpoint,{

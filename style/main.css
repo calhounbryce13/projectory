@@ -59,7 +59,6 @@
     z-index: 11;
     transition: top 0.5s ease-in-out;
     background-color: var(--deep-blue);
-
 }
 .feedback-show{
     top: 50%;
@@ -142,17 +141,6 @@
         color: var(--yellow-gold);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
 
 .yellow-button{
     cursor: pointer;
@@ -307,7 +295,6 @@ a{
     margin-bottom: 3vh;
 }
 
-
 .project-title-container-edit-modal > *{
     font-size: 7vw;
     width: 100%;
@@ -357,7 +344,6 @@ textarea{
     width: 100%;
     font-size: 6vw;
     margin-bottom: 2vh;
-
 }
 
 .project-add-a-new-resource{
@@ -368,7 +354,6 @@ textarea{
     height: auto;
     width: 100%;
     overflow-x: hidden;
-
 }
 
 .project-resource-link{
@@ -380,8 +365,6 @@ textarea{
     width: 100%;
     font-size: 7vw;
 }
-
-
 
 .toggle-project-steps{
     height: 6vw;
@@ -398,11 +381,8 @@ textarea{
     align-items: center;
     width: 100%;
     height: auto;
-
     transition: max-height 0.3s ease-in-out;
     padding-inline-start: 0%;
-
-
 }
 
 .project-individual-subtask{
@@ -414,9 +394,7 @@ textarea{
     height: auto;
     overflow-x: hidden;
     overflow-y: hidden;
-
     border: 2px solid var(--border3);
-
 }
 
 .project-subtask-text{
@@ -1993,10 +1971,6 @@ footer{
         width: 50vw;
         font-size: 6vw;
     }
-    #complete{
-        width: 30vw;
-        font-size: 3.6vw;
-    }
     .header-title{
         font-size: 6vw;
     }
@@ -2112,7 +2086,6 @@ footer{
     max-height: 0px;
     transition: max-height 2s ease-in-out;
 }
-
 .close-project-editor{
     background-image: url("../icons/close-icon.svg");
     background-position: center;
@@ -2133,7 +2106,6 @@ footer{
     }
 }
 
-
 #project-buttons{
     display: flex;
     flex-direction: column;
@@ -2153,14 +2125,29 @@ footer{
 }
 
 #project-buttons > div:nth-child(2){
-    gap: 10vw;
+    flex-direction: column-reverse;
 }
 
 #current{
-    font-size: 3.75vw;
-    width: 30vw;
+    font-size: 10vw;
+    width: 65vw;
 }
 
-#current > div:first-child{
-    height: 15vh;
+@media(min-width: 900px){
+    #current{
+        font-size: 3.75vw;
+        width: 30vw;
+    }
+    #current > div:first-child{
+        height: 15vh;
+    }
+    #project-buttons > div:nth-child(2){
+        flex-direction: row;
+        gap: 10vw;
+
+    }
 }
+
+
+
+

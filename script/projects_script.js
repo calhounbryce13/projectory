@@ -679,7 +679,8 @@ const show_toast = function(header, message){
 const request_to_delete_user_project = async(type, title, user) => {
     let animation = false;
     const timer = setTimeout(() => {
-        animation = show_loading();
+        animationInstance = show_loading();
+        animation = true;
     }, LOADING_ANIMATION_DELAY);
     try{
         let response = await fetch(endpoints.deletion,{

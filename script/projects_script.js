@@ -22,18 +22,18 @@ const project_card_expansion_functionality = function(){
     projectToggleButtons.forEach((toggleButton) => {
         toggle_element_height(toggleButton.closest(".project-options").closest(".project-title-container").nextElementSibling);
         toggleButton.addEventListener("click", (event) => {
-            event.target.classList.toggle("toggle-expansion-show");
+            event.target.closest(".toggle-expansion").classList.toggle("toggle-expansion-show");
             toggle_element_height(event.target.closest(".project-options").closest(".project-title-container").nextElementSibling);
         });
     });
 }
 
 const toggle_element_height = function(element){
-    if(element.style.maxHeight == "none" || !element.style.maxHeight){
+    if(element.style.maxHeight == "100vh" || !element.style.maxHeight){
         element.style.maxHeight = "0px";
         return;
     }
-    element.style.maxHeight = "none";
+    element.style.maxHeight = "100vh";
 }
 
 const insert_spacer = function(parentContainer){
@@ -403,7 +403,6 @@ const populate_project_screen = function(projects){
         addNewContainer.style.display = 'none';
     }
     project_functions();
-
 }
 
 const send_a_request_to_get_user_projects = async()=>{
@@ -437,7 +436,6 @@ const send_a_request_to_get_user_projects = async()=>{
 }
 
 const get_project_data = async()=>{
-
     if(!(location.hostname == "127.0.0.1")){
         try{
             let projects = await send_a_request_to_get_user_projects();
@@ -458,10 +456,9 @@ const get_project_data = async()=>{
     }
     else{
         console.log("DEV MODE");
-        populate_project_screen(TEST_PROJECTS["testUser"].current);
+        const projectType = JSON.parse(localStorage.getItem("Projectory"))["project-type"];
+        populate_project_screen((TEST_PROJECTS["testUser"])[projectType]);
     }
-
-
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////

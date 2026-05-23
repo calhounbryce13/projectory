@@ -586,13 +586,11 @@ textarea{
     align-items: center;
     height: auto;
     width: 90%;
-
-
     border: 2px solid var(--border-color);
 }
 
 .toast-dismiss-button{
-    background-image: url('../icons/close-icon-ice-blue.svg');
+    background-image: url('../icons/close-icon.svg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
@@ -1564,7 +1562,7 @@ footer{
     background-repeat: no-repeat;
     background-size: cover;
     transform: rotate(90deg);
-    transition: transform 0.5s ease-in-out;
+    transition: transform var(--expanding-container-animation-time) ease-in-out;
 }
 
 .toggle-expansion svg{
@@ -2078,8 +2076,9 @@ footer{
     justify-content: center;
     align-items: center;
     max-height: 0px;
-    transition: max-height 2s ease-in-out;
+    transition: max-height var(--expanding-container-animation-time) ease-in-out;
 }
+
 .close-project-editor{
     background-image: url("../icons/close-icon.svg");
     background-position: center;

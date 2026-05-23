@@ -26,7 +26,16 @@ const testUser = {
         "links": ["www.homedepot.com"]
         },
     ],
-    "planned": [],
+    "planned": [
+        {
+        "title": "Build a lakehouse in the frontyard after summer ends",
+        "goal": "Try to get a treehouse with 2 windows, 1 door and a ladder built in the apple tree behind the house before June 17th"
+        },
+        {
+            "title": "find out why big oil companies keep buying houses in the carribbean",
+            "goal": "look into the housing crisis in the carribbean right now and find a definitive connection between the oil companies and the housing market"
+        }
+    ],
     "complete": []
 };
 

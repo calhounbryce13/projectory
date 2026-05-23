@@ -30,8 +30,8 @@
 
 *{
     font-family: 'Cal Sans';
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
-
 
 .backdrop{
     height: 100%;
@@ -176,8 +176,6 @@
 #close{
     background-image: url('../icons/icons8-close-100.png');
 }
-
-
 
 #update-title{
     font-size: 7vw;
@@ -372,7 +370,6 @@ textarea{
     width: 6vw;
     background-color: black;
     border-radius: 10px;
-
 }
 
 .project-steps-edit-modal{

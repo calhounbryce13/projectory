@@ -1562,21 +1562,12 @@ footer{
     transition: transform var(--expanding-container-animation-time) ease-in-out;
 }
 
-.toggle-expansion svg{
-    height: 9vw;
-    width: 9vw;
-}
+
 
 .toggle-expansion-show{
     transform: rotate(0deg);
 }
 
-@media(min-width: 900px){
-    .toggle-expansion svg{
-        height: 4vw;
-        width: 4vw;
-    }
-}
 
 .project-goal-container{
     display: flex;
@@ -1706,26 +1697,16 @@ footer{
 
 .toggle-button{
     background-color: rgba(0,0,0,0);
-    background-image: url('../icons/drop_down_arrow_icon.svg');
-    transform: rotate(0.25turn);
+    transform: rotate(90deg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
     border: none;
-    height: 6vw;
-    width: 6vw;
     transition: transform 0.3s ease-in-out;
 }
 
-@media(min-width: 900px){
-    .toggle-button{
-        height: 4vw;
-        width: 4vw;
-    }
-}
-
 .toggle-button-expanded{
-    transform: rotate(0.00turn);
+    transform: rotate(0deg);
 }
 
 .project-steps{
@@ -2140,4 +2121,28 @@ footer{
 .project-card svg{
     color: var(--soft-sage);
 }
+
+.project-card .toggle-button svg{
+    color: var(--deep-blue);
+    height: 9vw;
+    width: 9vw;
+}
+
+.toggle-expansion svg{
+    height: 10vw;
+    width: 10vw;
+}
+
+@media(min-width: 900px){
+    .toggle-expansion svg{
+        height: 4vw;
+        width: 4vw;
+    }
+    .project-card .toggle-button svg{
+        height: 3vw;
+        width: 3vw;
+    }
+}
+
+
 

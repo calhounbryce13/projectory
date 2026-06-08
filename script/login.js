@@ -51,7 +51,10 @@ const login_functionality = function(){
                     else{
                         show_toast("Uh Oh!", "wrong email and/or password");
                     }
+                    return;
                 }
+                show_toast("There was an unexpected issue, please try again");
+                return;
             }
             window.alert("please fill out the entire form");
             return;

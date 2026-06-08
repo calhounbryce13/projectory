@@ -109,6 +109,7 @@ const build_section_header = function(sectionText, toggleClassName){
 
     const toggleButton = document.createElement('button'); 
     toggleButton.classList.add('toggle-button');
+    toggleButton.innerHTML = svgs.toggleArrowSVG;
     toggleButton.classList.add(toggleClassName);
 
     const container = document.createElement('div');
@@ -227,7 +228,8 @@ const build_project_card = function(singleProject, index, array){
 const show_modal_to_edit_a_project = function(event){
     if(JSON.parse(localStorage.getItem("Projectory"))["project-type"] != 'complete'){
         const localObj = JSON.parse(localStorage.getItem("Projectory"));
-        localObj["project-title"] = (event.target).parentNode.parentNode.children[0].textContent;
+        //localObj["project-title"] = (event.target).parentNode.parentNode.children[0].textContent;
+        localObj["project-title"] = ((event.target).closest(".project-title")).textContent;
         localStorage.setItem("Projectory", JSON.stringify(localObj));
         const editModal = Array.from(document.getElementsByClassName('edit-project-modal'))[0];
         const backdrop = Array.from(document.getElementsByClassName('modal-overlay-backdrop'))[1];
@@ -277,7 +279,8 @@ const expanded_list_functionality = function(buttonClassName, containerClassName
         for(let i = 0; i < expandProjectButtonList.length; i++){
             expandProjectButtonList[i].addEventListener('click', (event)=>{
                 toggle_list_height(projectList, i);
-                event.target.classList.toggle('toggle-button-expanded');
+                console.log(event.target);
+                event.target.closest("toggle-button").classList.toggle('toggle-button-expanded');
             });
         }
     }

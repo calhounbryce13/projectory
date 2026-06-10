@@ -5,10 +5,8 @@ const PASSWORD_MIN = 8;
 const LOADING_ANIMATION_DELAY = 1000; // in ms
 const devHost = "127.0.0.1";
 
-
 document.addEventListener('DOMContentLoaded', async()=>{
     keeping_the_services_awake();
-    collect_user_data();
     feedback_functionality();
     check_local_storage();
     dismiss_modal_functionality();
@@ -21,9 +19,6 @@ document.addEventListener('DOMContentLoaded', async()=>{
     }, 2000);
     
 });
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
 const keeping_the_services_awake = function(){
     if(location.hostname != devHost){
@@ -38,26 +33,6 @@ const keeping_the_services_awake = function(){
                 method: "GET"
             });
         }, 30000);
-    }
-}
-
-const collect_user_data = async() => {
-    /* 
-    Description: This is a function a plan to only have up temporarily just to monitor any traffic I may get.
-                will send the app name to my web service so I know when it is accessed.
-    */
-    try{
-        const response = await fetch('https://calhounbryce13-backend.onrender.com/get-user-data', {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                "application": "Projectory"
-            })
-        })
-    }catch(error){
-        console.log(error);
     }
 }
 
@@ -144,7 +119,6 @@ const check_local_storage = function(){
 }
 
 const fetch_for_login_status = async()=>{
-
     let animationInstance;
     let loadingIconShown = false;
     const requestDelayTimer = setTimeout(()=>{
@@ -218,7 +192,6 @@ const delete_account = async(user)=>{
     }finally{
         dismiss_loading(animationInstance);
     }
-
 }
 
 const user_logout_and_account_removal = async()=>{
@@ -407,10 +380,8 @@ const process_the_form_to_add_a_new_link = async(event, projects, i)=>{
 
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////
-//! JUNK !//
 
+//! JUNK !//
 
 
 const remove_a_task_from_a_project = async(projects, i, x) => {
@@ -476,9 +447,7 @@ const show_modal_to_start_planned_project = function(event){
     const startProjectModal = Array.from(document.getElementsByClassName('start-project-modal'))[0];
     startProjectModal.classList.add('start-project-modal-show');
 
-
-    textarea_dynamic_height_functionality(); //* needs to be called after the element(s) are displayed *//
-
+    textarea_dynamic_height_functionality(); //! needs to be called after the element(s) are displayed !//
 }
 
 const textarea_dynamic_height_functionality = function(){
@@ -632,24 +601,32 @@ const registration_and_login_fetch = async(email, pass, endpoint)=>{
 }
 
 
-
 const logout_functionality = function(){
     const logout = document.getElementsByClassName('logout-button')[0];
-    if(logout){
+    if(logout != undefined){
+        const logoutModal = document.getElementById("logout-modal");
         logout.addEventListener('click', async()=>{
-            if(confirm("Are you sure you want to logout?")){
-                try{
-                    user_logout();
-                }catch(error){
-                    console.log(error);
-                }
-                setTimeout(()=>{
-                    window.location.assign('login.html');
-                }, 1000)
-            }
+            logoutModal.classList.add("logout-show");
         });
+        const closeLogout = document.getElementById("close-log-out-container").children[0];
+        closeLogout.addEventListener("click", () => {
+            logoutModal.classList.remove("logout-show");
+        });
+        const logoutButton = document.getElementById("logout-options").children[0];
+        logoutButton.addEventListener("click", () => {
+            try{
+                user_logout();
+            }catch(error){
+                console.log(error);
+            }
+            setTimeout(()=>{
+                window.location.assign('login.html');
+            }, 1000)
+        });
+        return;
     }
-    
+    console.log("ERROR: unexpected error... missing logout button");
+    return;
 }
 
 

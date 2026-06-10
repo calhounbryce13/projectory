@@ -2096,28 +2096,65 @@ footer{
     overflow: hidden;
     position: fixed;
     transform: translateX(-50%);
-    top: 10%;
+    top: -100%;
     left: 50%;
     background-color: var(--yellow-gold);
     padding: 3%;
     border-radius: 10px;
+    transition: top 0.5s ease-out;
 }
 
-#logout-modal > div{
+.logout-show{
+    top: 10% !important;
+}
+
+#logout-options{
     display: flex;
     flex-direction: column-reverse;
     justify-content: center;
     align-items: center;
-    gap: 20px;
+    gap: 40px;
+    width: 100%;
 }
 
-#logout-modal > div > button{
+#logout-options > button{
     font-size: 8vw !important;
     padding: 3%;
+    width: 90%;
 }
 
 #logout-modal p{
     text-align: center;
     font-size: 8vw;
     min-width: 80vw;
+}
+
+#close-log-out-container{
+    display: flex !important;
+    justify-content: flex-end !important;
+    align-items: center !important;
+    width: 100%;
+}
+
+#close-log-out-container > svg{
+    width: 15% !important;
+    height: 15% !important;
+}
+
+@media(min-width: 900px){
+    #logout-modal > div > button{
+        font-size: 3vw !important;
+        padding: 1%;
+        width: 40%;
+    }
+    #logout-modal p{
+        text-align: center;
+        font-size: 3vw;
+        min-width: 80vw;
+    }
+    #close-log-out-container > svg{
+        width: 5% !important;
+        height: 5% !important;
+        cursor: pointer;
+    }
 }

@@ -3,6 +3,7 @@
     <head>
         <title>Projectory</title>
         <link rel="stylesheet" href="style/main.css">
+        <link rel="stylesheet" href="style/userHome.css">
         <script src="script/script.js" type="module"></script>
         <script src="./script/homepage_script.js" type="module"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
@@ -27,41 +28,6 @@
             <h3 class="user-home-header-text">
                 select to view your current, planned or completed projects 
             </h3>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             <div id="project-buttons">
                 <div id="current-container">
                     <button id="current" class="home-screen-buttons yellow-button">
@@ -104,73 +70,33 @@
                     </button>
                 </div>
             </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         </main>
         <footer><p>&copy; Bryce Calhoun</p></footer>
         <!----------------------------------------CONDITIONAL ELEMENTS----------------------------------------------->
+
+
+
+        <div id="logout-modal">
+            <p>Are you sure you want to logout?</p>
+            <div>
+                <button>log-out</button>
+                <button>nevermind</button>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         <div class="backdrop"></div>
         <div class="feedback-modal">
             <div>

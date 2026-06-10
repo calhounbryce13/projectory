@@ -1,0 +1,72 @@
+
+
+#complete-planned-container button{
+    transition: opacity 0.2s linear;
+    opacity: 0.75;
+}
+
+#complete-planned-container button:hover{
+    opacity: 1;
+}
+
+#project-buttons{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    width: auto;
+    border: 2px solid var(--border-color);
+}
+
+#project-buttons > div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    width: auto;
+}
+
+#project-buttons > div:nth-child(2){
+    flex-direction: column-reverse;
+}
+
+#current{
+    font-size: 10vw;
+    width: 65vw;
+}
+
+@media(min-width: 900px){
+    #current{
+        font-size: 3.75vw;
+        width: 30vw;
+    }
+    #current > div:first-child{
+        height: 15vh;
+    }
+    #project-buttons > div:nth-child(2){
+        flex-direction: row;
+        gap: 10vw;
+    }
+    .home-screen-buttons:hover{
+        color: var(--yellow-gold);
+        background-color: var(--deep-blue);
+    }
+}
+
+
+
+
+
+#current-icon{
+    background-image: url('../icons/icons8-current-100.png');
+}
+
+#completed-icon{
+    background-image: url('../icons/completed-icon.png');
+}
+
+#planned-icon{
+    background-image: url('../icons/planned-icon.png');
+}
+

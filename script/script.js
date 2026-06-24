@@ -764,7 +764,6 @@ const send_request_to_make_current_project = async(title, goal, steps) => {
 const toggle_the_new_project_form = function(event){
     const form = Array.from(document.getElementsByClassName('add-project-form'))[0];
     form.classList.toggle('project-form-show');
-    event.target.classList.toggle('add-new-open');
 }
 
 const new_project_form_display_functionality = function(){

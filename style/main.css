@@ -1,5 +1,3 @@
-
-
 @import url('https://fonts.googleapis.com/css2?family=Cal+Sans&family=Fredoka:wght@300..700&display=swap');
 
 :root{
@@ -44,6 +42,7 @@
     transition: top 0.5s ease-in-out;
     z-index: 10;
 }
+
 .backdrop-show{
     top: 50%;
 }
@@ -61,6 +60,7 @@
     transition: top 0.5s ease-in-out;
     background-color: var(--deep-blue);
 }
+
 .feedback-show{
     top: 50%;
 }
@@ -99,6 +99,7 @@
     border-radius: 20px;
     padding: 1vh;
 }
+
 .feedback-modal fieldset > textarea{
     color: var(--deep-blue);
     border-radius: 10px;
@@ -119,6 +120,7 @@
     border-radius: 10px;
     border: 3px solid var(--yellow-gold);
 }
+
 #close-feedback:active{
     filter: brightness(75%);
 }
@@ -147,6 +149,7 @@
     cursor: pointer;
     background-color: var(--yellow-gold);
 }
+
 .blue-button{
     cursor: pointer;
     display: flex;
@@ -167,12 +170,15 @@
 #title{
     background-image: url('../icons/icons8-title-100.png');
 }
+
 #goal{
     background-image: url('../icons/icons8-goal-100.png');
 }
+
 #resource{
     background-image: url('../icons/icons8-link-100.png');
 }
+
 #close{
     background-image: url('../icons/icons8-close-100.png');
 }
@@ -215,13 +221,6 @@ a{
 }
 
 
-/*------------------------------------------------------------------------------------------------*/
-/*------------------------------------------------------------------------------------------------*/
-/*------------------------------------------------------------------------------------------------*/
-/*------------------------------------------------------------------------------------------------*/
-
-
-
 .edit-project-modal{
     display: none;
     flex-direction: column;
@@ -241,7 +240,6 @@ a{
     margin-block-start: 0px;
     margin-block-end: 0px;
 }
-
 
 ::-webkit-scrollbar{
     width: 1vw;
@@ -447,7 +445,6 @@ textarea{
     padding-top: 1vh;
 }
 
-
 .edit-form-controls-container > *{
     margin-bottom: 2vh;
     width: 100%;
@@ -471,7 +468,6 @@ textarea{
 .edit-modal-button{
     border-radius: 10px;
 }
-
 
 @media(min-width: 900px){
     .edit-project-modal{
@@ -515,10 +511,6 @@ textarea{
 }
 
 /*------------------------------------------------------------------------------------------------*/
-/*------------------------------------------------------------------------------------------------*/
-/*------------------------------------------------------------------------------------------------*/
-/*------------------------------------------------------------------------------------------------*/
-
 
 #lottie-parent{
     display: none;
@@ -533,7 +525,6 @@ textarea{
     background-color: rgba(0,0,0,0.2);
 }
 
-
 #lottie-loading-animation{
     position: fixed;
     top: 50%;
@@ -546,7 +537,6 @@ textarea{
     width: 20%;
 
 }
-
 
 .notification{
     z-index: 999;
@@ -565,12 +555,12 @@ textarea{
     transition: top .35s ease-in-out;
 }
 
-
 .modal-show{
     position: fixed;
     top: 30% !important; 
 
 }
+
 .toast-show{
     position: fixed;
     top: 10% !important; 
@@ -677,12 +667,6 @@ textarea{
     }
 }
 
-
-
-
-
-
-
 .container{
     display: flex;
     justify-content: center;
@@ -784,7 +768,6 @@ textarea{
 
 }
 
-
 @media(min-width:900px){
     .project-link-text:hover{
         color: var(--yellow-gold);
@@ -794,7 +777,6 @@ textarea{
     }
 
 }
-
 
 .task-container{
     display: flex;
@@ -855,7 +837,6 @@ textarea{
     width: 80%;
     border: 2px solid var(--border-color);
 }
-
 
 .delete-data-button{
     background-color: var(--delete-data-color);
@@ -958,7 +939,6 @@ textarea{
     height: auto;
 }
 
-
 .show-edits{
     display: flex;
 }
@@ -966,10 +946,6 @@ textarea{
 .resource-links-label{
     color: var(--gold);
 }
-
-
-/************************** name elements *************************************************************************/
-
 
 html,body{
     height: auto;
@@ -1086,8 +1062,6 @@ input{
     width: 95%;
 }
 
-
-
 input:focus{
     border: 4px solid var(--yellow-gold);
 }
@@ -1134,7 +1108,6 @@ footer{
     border: 2px solid var(--border-color);
 }
 
-/****************************** form elements *********************************************************************/
 
 .inputBox{
     flex-direction: row;
@@ -1176,6 +1149,7 @@ footer{
     animation: myanimation 1.2s ease-out forwards;
     animation-delay: 1000ms;
 }
+
 @media(min-width:900px){
     .formButtonAlt{
         font-size: 1vw;
@@ -1190,8 +1164,6 @@ footer{
         background-color: var(--deep-blue);
     }
 }
-
-
 
 #requirements{
     height: 8%;
@@ -1212,7 +1184,6 @@ footer{
     justify-content: space-between;
 }
 
-/***************************************************************************************************/
 
 #header-options-container{
     flex-direction: row;
@@ -1331,13 +1302,13 @@ footer{
 }
 
 .add-new{
-    height: 6vh;
+    height: 7vh;
     width: 4vw;
     background-image: url('../icons/plus-icon.svg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
-    transition: background-color .25s ease-in-out;
+    transition: background-color .1s ease-in-out;
 }
 
 .add-new:hover{
@@ -1346,10 +1317,6 @@ footer{
 
 .add-new:active{
     filter: brightness(85%);
-}
-
-.add-new-open{
-    background-image: url('../icons/close-icon.svg');
 }
 
 #home-button{
@@ -1371,7 +1338,7 @@ footer{
 
 #home-button-container{
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: space-between;
     width: 98%;
     padding-left: 2%;
 }
@@ -1486,10 +1453,7 @@ footer{
 }
 
 /*--------------------------------------------------------------------------------------------------------------------*/
-/*--------------------------------------------------------------------------------------------------------------------*/
-/*--------------------------------------------------------------------------------------------------------------------*/
-/*--------------------------------------------------------------------------------------------------------------------*/
-/*--------------------------------------------------------------------------------------------------------------------*/
+
 .project-card{
     display: flex;
     flex-direction: column;
@@ -1579,12 +1543,9 @@ footer{
     transition: transform var(--expanding-container-animation-time) ease-in-out;
 }
 
-
-
 .toggle-expansion-show{
     transform: rotate(0deg);
 }
-
 
 .project-goal-container{
     display: flex;
@@ -1598,6 +1559,7 @@ footer{
 .project-card li{
     overflow-y: hidden;
 }
+
 .project-card li p{
     color: inherit;
 }
@@ -1780,12 +1742,6 @@ footer{
     }
 }
 
-/********************************************************************************************************************************/
-/********************************************************************************************************************************/
-/********************************************************************************************************************************/
-/********************************************************************************************************************************/
-/********************************************************************************************************************************/
-
 .modal-overlay-backdrop{
     position: fixed;
     top: 0%;
@@ -1806,6 +1762,7 @@ footer{
     transition: opacity 1s ease-in-out, 
                 z-index 0s linear 1s;
 }
+
 .modal-overlay-backdrop-show{
     opacity: 1;
     z-index: 500;
@@ -1848,7 +1805,6 @@ footer{
     font-size: 5vw;
     font-weight: 100;
 }
-
 
 .textarea-start-project-first-step{
     border-radius: 10px;
@@ -1893,14 +1849,6 @@ footer{
         font-size: 2vw;
     }
 }
-
-/********************************************************************************************************************************/
-/********************************************************************************************************************************/
-/********************************************************************************************************************************/
-/********************************************************************************************************************************/
-/********************************************************************************************************************************/
-
-
 
 @media(max-width:900px){
     body{

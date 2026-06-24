@@ -20,6 +20,8 @@ document.addEventListener('DOMContentLoaded', async()=>{
     
 });
 
+
+
 const keeping_the_services_awake = function(){
     if(location.hostname != devHost){
         setInterval( async() => {
@@ -602,8 +604,9 @@ const registration_and_login_fetch = async(email, pass, endpoint)=>{
 
 
 const logout_functionality = function(){
-    const logout = document.getElementsByClassName('logout-button')[0];
-    if(logout != undefined){
+    const logouts = document.getElementsByClassName('logout-button');
+    if(logouts.length > 0){
+        const logout = Array.from(logouts)[0];
         const logoutModal = document.getElementById("logout-modal");
         logout.addEventListener('click', async()=>{
             logoutModal.classList.add("logout-show");
@@ -758,16 +761,34 @@ const send_request_to_make_current_project = async(title, goal, steps) => {
     return false;
 }
 
+
+const new_project_form_display_functionality = function(){
+    const buttons = document.getElementsByClassName('add-new');
+    console.log(Array.from(buttons)[0]);
+    if(buttons.length > 0){
+        const addNewProjectButton = Array.from(buttons)[0];
+        addNewProjectButton.addEventListener('click', (event)=>{
+            const form = Array.from(document.getElementsByClassName('project-form'))[0];
+            form.classList.toggle('project-form-show');
+            event.target.classList.toggle('add-new-open');
+        });
+    }
+}
+
 const create_new_project_functionality = function(){
-    const form = Array.from(document.getElementsByClassName('project-form'))[0];
-    if(form){
+    new_project_form_display_functionality();
+    const forms = document.getElementsByClassName('project-form');
+    if(forms.length > 0){
+        const form = Array.from(forms)[0];
         form.addEventListener('submit', async(event)=>{
             event.preventDefault();
             if((form.elements['project-title'].value == "") || (form.elements['project-goal'].value == "")){
                 show_modal("Uh Oh!", "please fill out the entire form!");
                 return;
             }
+            console.log("form submitted");
             if(JSON.parse(localStorage.getItem("Projectory"))["project-type"] == 'planned'){
+                console.log("on the planned project screen");
                 let response;
                 const animationInstance = show_loading();
                 try{
@@ -782,20 +803,20 @@ const create_new_project_functionality = function(){
                         }),
                         credentials:'include'
                     });
+                    switch(response.status){
+                        case 200:
+                            show_toast("Perfect!", "new planned project has been saved");
+                            window.location.reload();
+                            return;
+                        default:
+                            break;
+                    }
+                show_toast("Sorry", "there seems to have been an issue submitting your project\n please try again");
                 }catch(error){
                     console.log(error);
                 }finally{
                     dismiss_loading(animationInstance);
                 }
-                if(response){
-                    if(response.status == 200){
-                        show_toast("Perfect!", "new planned project has been saved");
-                        window.location.reload();
-                        return;
-                    }
-                }
-                show_toast("Sorry", "there seems to have been an issue submitting your project\n please try again");
-                
             }
             else{
                 const inputs = Array.from(document.getElementsByClassName('subtask-input'));
@@ -988,7 +1009,7 @@ const dismiss_loading = function(animationInstance){
 }
 
 const backend_communication = function(){
-    logout_functionality();
+    //logout_functionality();
 
     add_task_to_new_functionality();
 

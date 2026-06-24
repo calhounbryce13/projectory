@@ -448,13 +448,8 @@ const get_project_data = async()=>{
             }
         }catch(error){
             console.log(error);
+            show_toast("Uh Oh", "There was an error fetching your project data, please try again");
         }
-        const addNewProjectButton = Array.from(document.getElementsByClassName('add-new'))[0];
-        addNewProjectButton.addEventListener('click', (event)=>{
-            const form = Array.from(document.getElementsByClassName('project-form'))[0];
-            form.classList.toggle('project-form-show');
-            event.target.classList.toggle('add-new-open');
-        });
         return;
     }
     else{

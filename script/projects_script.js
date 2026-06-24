@@ -234,7 +234,7 @@ const show_modal_to_edit_a_project = function(event){
         localStorage.setItem("Projectory", JSON.stringify(localObj));
         const editModal = Array.from(document.getElementsByClassName('edit-project-modal'))[0];
         const backdrop = Array.from(document.getElementsByClassName('modal-overlay-backdrop'))[1];
-        populate_modal(event, editModal);
+        populate_editor(event, editModal);
         backdrop.classList.add('modal-overlay-backdrop-show');
         editModal.classList.add('edit-modal-show');
         return;
@@ -481,7 +481,36 @@ const populate_the_title_and_goal = function(projectCard, editModal){
     }, 500)
 }
 
-const populate_modal = function(event, editModal){
+const populate_set_of_resources = function(projectCard){
+    const ul = projectCard.children[4];
+    if(ul){
+        Array.from(ul.children).forEach((listIndex) => {
+            const url = listIndex.children[0].textContent;
+            const anchor = document.createElement('a');
+            anchor.classList.add('edit-a-project-resource-link');
+            anchor.textContent = url;
+
+            const button = document.createElement('button');
+            button.classList.add('edit-modal-button');
+            button.classList.add('remove-a-project-element-button');
+            button.textContent = 'delete';
+
+            const container = document.createElement('div');
+            container.classList.add('edit-a-project-resource-container');
+            container.appendChild(anchor);
+            container.appendChild(button);
+
+            const editIndex = document.createElement('li');
+            editIndex.classList.add('project-individual-resource');
+            editIndex.appendChild(container);
+
+            const editor = Array.from(document.getElementsByClassName('project-resources-edit-modal'))[0];
+            editor.appendChild(editIndex);
+        });
+    }
+}
+
+const populate_editor = function(event, editModal){
     /* 
     description: Function to populate the edit project modal with the relevant data
     input(s); The clicked event, modal element
@@ -490,37 +519,15 @@ const populate_modal = function(event, editModal){
     const projectCard = (event.target).closest(".project-card");
     populate_the_title_and_goal(projectCard, editModal);
     const projectType = JSON.parse(localStorage.getItem("Projectory"))["project-type"];
-    if( projectType != "planned" && projectType != 'complete'){
-        const ul = projectCard.children[4];
-        const ol = projectCard.children[6];
-        if(ul){
-            Array.from(ul.children).forEach((listIndex) => {
-
-                const url = listIndex.children[0].textContent;
-                const anchor = document.createElement('a');
-                anchor.classList.add('edit-a-project-resource-link');
-                anchor.textContent = url;
-
-                const button = document.createElement('button');
-                button.classList.add('edit-modal-button');
-                button.classList.add('remove-a-project-element-button');
-                button.textContent = 'delete';
-
-                const container = document.createElement('div');
-                container.classList.add('edit-a-project-resource-container');
-                container.appendChild(anchor);
-                container.appendChild(button);
-
-                const editIndex = document.createElement('li');
-                editIndex.classList.add('project-individual-resource');
-                editIndex.appendChild(container);
-
-                const editor = Array.from(document.getElementsByClassName('project-resources-edit-modal'))[0];
-                editor.appendChild(editIndex);
-
-            });
-        }
+    if( projectType == "current"){
+        populate_set_of_resources(projectCard);
+        // const ol = projectCard.children[6];
+        return;
     }
+    const resourcesHeader = Array.from(document.getElementsByClassName("project-section-header"))[0];
+    const setOfResources = Array.from(document.getElementsByClassName("project-resources-edit-modal"))[0];
+    setOfResources.remove();
+    resourcesHeader.remove();
 }
 
 const fetch_for_user_email = async()=>{

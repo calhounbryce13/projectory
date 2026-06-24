@@ -228,15 +228,18 @@ const build_project_card = function(singleProject, index, array){
 const show_modal_to_edit_a_project = function(event){
     if(JSON.parse(localStorage.getItem("Projectory"))["project-type"] != 'complete'){
         const localObj = JSON.parse(localStorage.getItem("Projectory"));
-        //localObj["project-title"] = (event.target).parentNode.parentNode.children[0].textContent;
-        localObj["project-title"] = ((event.target).closest(".project-title")).textContent;
+        const ancestor = event.target.closest(".project-title-container");
+        const titleElement = ancestor.querySelector(".project-title");
+        localObj["project-title"] = titleElement.textContent;
         localStorage.setItem("Projectory", JSON.stringify(localObj));
         const editModal = Array.from(document.getElementsByClassName('edit-project-modal'))[0];
         const backdrop = Array.from(document.getElementsByClassName('modal-overlay-backdrop'))[1];
         populate_modal(event, editModal);
         backdrop.classList.add('modal-overlay-backdrop-show');
         editModal.classList.add('edit-modal-show');
+        return;
     }
+    show_toast("Sorry", "You can't edit a project after it has been completed");
 }
 
 const get_max_height = function(list){

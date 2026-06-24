@@ -183,16 +183,6 @@
     background-image: url('../icons/icons8-close-100.png');
 }
 
-#update-title{
-    font-size: 7vw;
-    padding: 3%;
-}
-
-#update-goal{
-    font-size: 7vw;
-    padding: 3%;
-}
-
 .close-editor{
     height: auto;
     font-size: 7vw;
@@ -271,6 +261,11 @@ a{
     align-items: center;
     height: auto;
     width: 100%;
+    margin-bottom: 2vh;
+}
+
+.edit-modal-input-block{
+    margin-bottom: 10vh !important;
 }
 
 .edit-modal-title{
@@ -300,6 +295,20 @@ a{
 
 .edit-project-modal textarea{
     border-radius: 10px;
+    border: 1.5px solid var(--deep-blue);
+    color: var(--deep-blue);
+    font-weight: 100;
+}
+
+.edit-action-container{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.edit-project-modal button{
+    font-size: 2vw;
+    width: 25%;    
 }
 
 .project-add-new-text{
@@ -329,10 +338,6 @@ a{
     height: auto;
     width: 100%;
     border: 2px solid var(--border1);
-}
-
-textarea{
-    border: 4px solid var(--deep-blue);
 }
 
 .edit-form-textarea{
@@ -484,12 +489,6 @@ textarea{
     }
     .edit-modal-supporting-text{
         font-size: 1.5vw;
-    }
-    #update-title{
-        font-size: 3.5vw;
-    }
-    #update-goal{
-        font-size: 3.5vw;
     }
     .save-new-data-button{
         font-size: 3.5vw;

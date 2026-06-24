@@ -446,6 +446,7 @@ const get_project_data = async()=>{
                 let userProjects = await projects.json();
                 populate_project_screen(userProjects);
             }
+            return;
         }catch(error){
             console.log(error);
             show_toast("Uh Oh", "There was an error fetching your project data, please try again");

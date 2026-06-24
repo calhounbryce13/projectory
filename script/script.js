@@ -761,26 +761,30 @@ const send_request_to_make_current_project = async(title, goal, steps) => {
     return false;
 }
 
+const toggle_the_new_project_form = function(event){
+    const form = Array.from(document.getElementsByClassName('add-project-form'))[0];
+    form.classList.toggle('project-form-show');
+    event.target.classList.toggle('add-new-open');
+}
 
 const new_project_form_display_functionality = function(){
     const buttons = document.getElementsByClassName('add-new');
     console.log(Array.from(buttons)[0]);
     if(buttons.length > 0){
         const addNewProjectButton = Array.from(buttons)[0];
-        addNewProjectButton.addEventListener('click', (event)=>{
-            const form = Array.from(document.getElementsByClassName('project-form'))[0];
-            form.classList.toggle('project-form-show');
-            event.target.classList.toggle('add-new-open');
-        });
+        addNewProjectButton.addEventListener('click', (event) => toggle_the_new_project_form(event));
+
+        const closeButton = document.getElementById("close-add-project-form");
+        closeButton.addEventListener("click", (event) => toggle_the_new_project_form(event));
     }
 }
 
 const create_new_project_functionality = function(){
     new_project_form_display_functionality();
-    const forms = document.getElementsByClassName('project-form');
+    const forms = document.getElementsByClassName('add-project-form');
     if(forms.length > 0){
         const form = Array.from(forms)[0];
-        form.addEventListener('submit', async(event)=>{
+        form.addEventListener('submit', async(event) => {
             event.preventDefault();
             if((form.elements['project-title'].value == "") || (form.elements['project-goal'].value == "")){
                 show_modal("Uh Oh!", "please fill out the entire form!");

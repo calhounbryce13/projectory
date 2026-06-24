@@ -31,26 +31,48 @@
                 <h2></h2>
             </div>
             <div class="container user-projects"></div>
-            <form class="container project-form">
-                <div>
+
+
+
+
+
+
+
+
+            <form class="container add-project-form">
+                <div id="close-add-project-form"></div>
+                <div class="add-project-header-container">
                     <h3>
-                        use the form below to add project data including 
-                        a good <strong>unique title</strong>, and a clear <strong>goal</strong>
+                        use the form below to add project data 
+                        to the <span id="new-project-section-name">[BLANK]</span> section 
                         to get started.
                     </h3>
                 </div>
                 <fieldset class="container" id="project-fieldset">
                     <div class="container input-container">
-                        <label>Project title</label>
-                        <textarea name="project-title"></textarea>
+                        <textarea name="project-title" placeholder="project title"></textarea>
                     </div>
                     <div class="container input-container">
-                        <label>Project goal</label>
-                        <textarea name="project-goal"></textarea>
+                        <textarea name="project-goal" placeholder="project goal"></textarea>
                     </div>
                 </fieldset>
                 <button type="submit" id="submit-new-project-button"></button>
             </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             <div class="container" id="add-new-container">
                 <button class="add-new yellow-button"></button>
             </div>

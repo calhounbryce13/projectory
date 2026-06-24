@@ -1113,8 +1113,6 @@ button:active{
     background-color: rgb(225, 0, 0);
 }
 
-
-
 label{
     font-size: 1.7vw;
 }
@@ -1378,9 +1376,45 @@ footer{
     padding-left: 2%;
 }
 
-.project-form{
-    position: relative;
+.add-project-form{
     display: none;
+    position: fixed;
+    top: 10%;
+    transform: translate(-50%, -50%);
+}
+
+
+.add-project-form textarea{
+    border-radius: 20px;
+}
+
+@media(min-width: 900px){
+    .add-project-form{
+        width: 90vw;
+    }
+    .add-project-form h3{
+        font-size: 2vw;
+    }
+    .add-project-form textarea{
+        font-size: 2.25vw;
+        width: 100%;
+    }
+}
+
+#close-add-project-form{
+    height: 2vw;
+    width: 2vw;
+    background-color: black;
+    cursor: pointer;
+    position: absolute;
+    top: 4%;
+    right: 2%;
+}
+
+.add-project-header-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .project-form-show{

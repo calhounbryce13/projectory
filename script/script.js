@@ -7,7 +7,7 @@ const devHost = "127.0.0.1";
 
 
 const log_traffic = async () => {
-    if(!(localStorage.getItem("successful-traffic-log.PROJECTORY"))){
+    if(!(sessionStorage.getItem("successful-traffic-log.PROJECTORY"))){
         try{
             await fetch("https://calhounbryce13-backend.onrender.com/traffic-log", {
                 method: "PUT",
@@ -18,7 +18,7 @@ const log_traffic = async () => {
                     programName: "projectory"
                 })
             });
-            localStorage.setItem("successful-traffic-log.PROJECTORY", true);
+            sessionStorage.setItem("successful-traffic-log.PROJECTORY", true);
         }catch(error){
             console.log(error);
         }

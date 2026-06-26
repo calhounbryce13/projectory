@@ -4,19 +4,24 @@ import {endpoints} from './endpoints.js'
 const PASSWORD_MIN = 8;
 const LOADING_ANIMATION_DELAY = 1000; // in ms
 const devHost = "127.0.0.1";
+
+
 const log_traffic = async () => {
-    try{
-        await fetch("https://calhounbryce13-backend.onrender.com/traffic-log", {
-            method: "PUT",
-            headers: {
-                "Content-type": "application/json"
-            },
-            body: JSON.stringify({
-                programName: "projectory"
-            })
-        });
-    }catch(error){
-        console.log(error);
+    if(!(localStorage.getItem("successful-traffic-log"))){
+        try{
+            await fetch("https://calhounbryce13-backend.onrender.com/traffic-log", {
+                method: "PUT",
+                headers: {
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify({
+                    programName: "projectory"
+                })
+            });
+            localStorage.setItem("successful-traffic-log", true);
+        }catch(error){
+            console.log(error);
+        }
     }
 };
 log_traffic();

@@ -680,7 +680,6 @@ const show_toast = function(header, message){
 }
 
 ////////////////////////////
-////////////////////////////
 
 
 const request_to_delete_user_project = async(type, title, user) => {

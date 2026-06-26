@@ -4,21 +4,22 @@ import {endpoints} from './endpoints.js'
 const PASSWORD_MIN = 8;
 const LOADING_ANIMATION_DELAY = 1000; // in ms
 const devHost = "127.0.0.1";
-
-document.addEventListener('DOMContentLoaded', async()=>{
-    keeping_the_services_awake();
-    feedback_functionality();
-    check_local_storage();
-    dismiss_modal_functionality();
-    await check_user_login_status();
-    await generate_user_projects_page();
-    backend_communication();
-    home_page_listeners();
-    setTimeout(()=>{
-        add_task_to_existing_functionality();
-    }, 2000);
-    
-});
+const log_traffic = async () => {
+    try{
+        await fetch("https://calhounbryce13-backend.onrender.com/traffic-log", {
+            method: "PUT",
+            headers: {
+                "Content-type": "application/json"
+            },
+            body: JSON.stringify({
+                programName: "minimaxSolver"
+            })
+        });
+    }catch(error){
+        console.log(error);
+    }
+};
+log_traffic();
 
 
 
@@ -1022,3 +1023,18 @@ const backend_communication = function(){
 
     signup_functionality();
 }
+
+document.addEventListener('DOMContentLoaded', async()=>{
+    keeping_the_services_awake();
+    feedback_functionality();
+    check_local_storage();
+    dismiss_modal_functionality();
+    await check_user_login_status();
+    await generate_user_projects_page();
+    backend_communication();
+    home_page_listeners();
+    setTimeout(()=>{
+        add_task_to_existing_functionality();
+    }, 2000);
+    
+});

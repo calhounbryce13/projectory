@@ -12,7 +12,7 @@ const log_traffic = async () => {
                 "Content-type": "application/json"
             },
             body: JSON.stringify({
-                programName: "minimaxSolver"
+                programName: "projectory"
             })
         });
     }catch(error){

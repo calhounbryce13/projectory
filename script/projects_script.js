@@ -573,7 +573,7 @@ const system = {
     get_project_data : async() => {
         if(!(location.hostname == "127.0.0.1")){
             try{
-                let projects = await this.send_a_request_to_get_user_projects();
+                let projects = await system.send_a_request_to_get_user_projects();
                 if(projects){
                     let userProjects = await projects.json();
                     projectCard.populate_project_screen(userProjects);

@@ -557,12 +557,12 @@ const projectCard = {
         const updateButton = document.getElementById('update-goal');
         updateButton.addEventListener('click', async(event) => {
             const textarea = document.getElementById('goal-of-project-to-edit');
-            if(is_not_empty(textarea.value)){
-                const email = await fetch_for_user_email();
-                request_to_update_project_goal(email, textarea.value);
+            if(system.is_not_empty(textarea.value)){
+                const email = await system.fetch_for_user_email();
+                projectCard.request_to_update_project_goal(email, textarea.value);
                 return;
             }
-            show_toast("Uh Oh", "This field can't be empty, please add some text");
+            system.show_toast("Uh Oh", "This field can't be empty, please add some text");
             return;
         })
     },

@@ -581,7 +581,7 @@ const system = {
                 return;
             }catch(error){
                 console.log(error);
-                system.show_toast("Uh Oh", "There was an error fetching your project data, please try again");
+                this.show_toast("Uh Oh", "There was an error fetching your project data, please try again");
             }
             return;
         }

@@ -416,6 +416,9 @@ const projectCard = {
         titleField.value = '';
         goalField.value = '';
 
+
+
+        /* this is to remove the resources from the UI one at a time.
         const container = document.getElementsByClassName('project-resources-edit-modal')[0];
         const children = Array.from(container.children);
         
@@ -424,6 +427,8 @@ const projectCard = {
                 child.remove();
             }
         });
+
+        */
         
 
     },

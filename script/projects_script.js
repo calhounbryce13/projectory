@@ -17,15 +17,16 @@ document.addEventListener("DOMContentLoaded", async() => {
     projectCard.update_task_status_functionality();
 });
 
-const projectCard = {
 
+//! change the name of 1 of 2 'projectCard' references!
+const projectCard = {
     project_card_expansion_functionality : function(){
         const projectToggleButtons = Array.from(document.getElementsByClassName("toggle-expansion"));
         projectToggleButtons.forEach((toggleButton) => {
             this.toggle_element_height(toggleButton.closest(".project-options").closest(".project-title-container").nextElementSibling);
             toggleButton.addEventListener("click", (event) => {
                 event.target.closest(".toggle-expansion").classList.toggle("toggle-expansion-show");
-                toggle_element_height(event.target.closest(".project-options").closest(".project-title-container").nextElementSibling);
+                this.toggle_element_height(event.target.closest(".project-options").closest(".project-title-container").nextElementSibling);
             });
         });
     },
@@ -45,12 +46,12 @@ const projectCard = {
             localStorage.setItem("Projectory", JSON.stringify(localObj));
             const editModal = Array.from(document.getElementsByClassName('edit-project-modal'))[0];
             const backdrop = Array.from(document.getElementsByClassName('modal-overlay-backdrop'))[1];
-            populate_editor(event, editModal);
+            this.populate_editor(event, editModal);
             backdrop.classList.add('modal-overlay-backdrop-show');
             editModal.classList.add('edit-modal-show');
             return;
         }
-        show_toast("Sorry", "You can't edit a project after it has been completed");
+        system.show_toast("Sorry", "You can't edit a project after it has been completed");
     },
     get_max_height : function(list){
         let max = 0;
@@ -69,7 +70,7 @@ const projectCard = {
         OUTPUT(S): None
         */
         const numChildren = projectResourcesList[i].children.length;
-        const heightOfTallestChild = get_max_height(projectResourcesList[i]);
+        const heightOfTallestChild = this.get_max_height(projectResourcesList[i]);
         const newMaxHeight = (numChildren * heightOfTallestChild) + 10;
         if(getComputedStyle(projectResourcesList[i]).maxHeight == '0px'){
             projectResourcesList[i].style.maxHeight = newMaxHeight + 'vh';
@@ -89,7 +90,7 @@ const projectCard = {
             const projectList = Array.from(document.getElementsByClassName(containerClassName));
             for(let i = 0; i < expandProjectButtonList.length; i++){
                 expandProjectButtonList[i].addEventListener('click', (event)=>{
-                    toggle_list_height(projectList, i);
+                    this.toggle_list_height(projectList, i);
                     console.log(event.target);
                     event.target.closest("toggle-button").classList.toggle('toggle-button-expanded');
                 });
@@ -101,8 +102,8 @@ const projectCard = {
         startButtons.forEach((singleButton) => {
             singleButton.addEventListener('click', (event) => show_modal_to_start_planned_project(event));
         });
-        close_start_modal_functionality();
-        starting_project();
+        this.close_start_modal_functionality();
+        this.starting_project();
     },
     close_start_modal_functionality : function(){
         const dismissModal = document.getElementById('start-modal-close');
@@ -130,21 +131,20 @@ const projectCard = {
             const steps = [];
             steps.push(textarea.value);
 
-            if(await send_request_to_make_current_project(title, goal, steps)){
-                const user = await fetch_for_user_email();
+            if(await this.send_request_to_make_current_project(title, goal, steps)){
+                const user = await system.fetch_for_user_email();
                 if(await request_to_delete_user_project(JSON.parse(localStorage.getItem("Projectory"))["project-type"], title, user)){
                     window.location.reload();
                     return;
                 }
-                show_toast("Sorry", "unable to remove that project");
+                system.show_toast("Sorry", "unable to remove that project");
             }
             return;
-        
         });
 
     },
     send_request_to_make_current_project : async(title, goal, steps) => {
-        const animationInstance = show_loading();
+        const animationInstance = system.show_loading();
         try{
             let response = await fetch(endpoints.current_projects_generator,{
                 method: "POST",
@@ -160,7 +160,7 @@ const projectCard = {
             });
             if(response){
                 if(response.status == 200){
-                    show_toast("Perfect!","new current project has been saved");
+                    system.show_toast("Perfect!","new current project has been saved");
                     return true;
                 }
             }
@@ -168,9 +168,9 @@ const projectCard = {
         }catch(error){
             console.log(error);
         }finally{
-            dismiss_loading(animationInstance);
+            system.dismiss_loading(animationInstance);
         }
-        show_toast("Uh Oh!", "there seems to have been an issue submitting your project, please try again");
+        system.show_toast("Uh Oh!", "there seems to have been an issue submitting your project, please try again");
         return false;
     },
     project_functions : function(){
@@ -185,16 +185,16 @@ const projectCard = {
         */
         const editProjectButtonList = Array.from(document.getElementsByClassName('edit-button'));
         editProjectButtonList.forEach((button) => {
-            button.addEventListener('click', (event) => show_modal_to_edit_a_project(event));
+            button.addEventListener('click', (event) => this.show_modal_to_edit_a_project(event));
         });
         
 
         if(JSON.parse(localStorage.getItem("Projectory"))["project-type"] == 'current'){
-            expanded_list_functionality('toggle-project-resources', 'project-resources');
-            expanded_list_functionality('toggle-project-steps', 'project-steps');
+            this.expanded_list_functionality('toggle-project-resources', 'project-resources');
+            this.expanded_list_functionality('toggle-project-steps', 'project-steps');
         }
         else if(JSON.parse(localStorage.getItem("Projectory"))["project-type"] == 'planned'){
-            start_a_planned_project_functionality();
+            this.start_a_planned_project_functionality();
         }
     },
     populate_project_screen : function(projects){
@@ -205,12 +205,12 @@ const projectCard = {
         Output(s): None
         */
         const userProjectsArray = Array.from(projects);
-        userProjectsArray.forEach((singleProject, index, array) => build_project_card(singleProject, index, array));
+        userProjectsArray.forEach((singleProject, index, array) => system.build_project_card(singleProject, index, array));
         if(JSON.parse(localStorage.getItem("Projectory"))["project-type"] == 'complete'){
             const addNewContainer = document.getElementById('add-new-container');
             addNewContainer.style.display = 'none';
         }
-        project_functions();
+        this.project_functions();
     },
     populate_the_title_and_goal : function(projectCard, editModal){
         const title = projectCard.querySelectorAll(".project-title")[0].textContent;
@@ -221,7 +221,7 @@ const projectCard = {
         titleField.value = title;
         goalField.value = goal;
         setTimeout(() => {
-            textarea_dynamic_height_functionality();
+            system.textarea_dynamic_height_functionality();
         }, 500)
     },
     populate_set_of_resources : function(projectCard){
@@ -253,16 +253,17 @@ const projectCard = {
         }
     },
     populate_editor : function(event, editModal){
+        //! change the name of 1 of 2 'projectCard' references!
         /* 
         description: Function to populate the edit project modal with the relevant data
         input(s); The clicked event, modal element
         output(s): None
         */
         const projectCard = (event.target).closest(".project-card");
-        populate_the_title_and_goal(projectCard, editModal);
+        this.populate_the_title_and_goal(projectCard, editModal);
         const projectType = JSON.parse(localStorage.getItem("Projectory"))["project-type"];
         if( projectType == "current"){
-            populate_set_of_resources(projectCard);
+            this.populate_set_of_resources(projectCard);
             // const ol = projectCard.children[6];
             return;
         }
@@ -301,14 +302,14 @@ const projectCard = {
                     const checkBox = event.target;
                     const user = await fetch_for_user_email();
                     if(user){
-                        const index = get_the_index_of_a_task(checkBox);
+                        const index = this.get_the_index_of_a_task(checkBox);
                         if(index != null){
-                            const projectTitle = get_the_title_of_the_project(checkBox);
+                            const projectTitle = this.get_the_title_of_the_project(checkBox);
                             if(projectTitle != null){
                                 let mark = checkBox.checked ? 1 : 0;
                                 let loadingAnimation = false;
                                 const timer = setTimeout(() => {
-                                    loadingAnimation = show_loading();
+                                    loadingAnimation = system.show_loading();
                                 }, LOADING_ANIMATION_DELAY);
                                 try{
                                     const response = await fetch(endpoints.taskManager, {
@@ -325,11 +326,11 @@ const projectCard = {
                                     });
                                     switch(response.status){
                                         case 200:
-                                            toggle_respective_text(checkBox);
-                                            show_toast("Nice", "That step was updated successfully");
+                                            this.toggle_respective_text(checkBox);
+                                            system.show_toast("Nice", "That step was updated successfully");
                                             break;
                                         case 400:
-                                            show_toast("Uh Oh", "It looks like there was an issue with the request");
+                                            system.show_toast("Uh Oh", "It looks like there was an issue with the request");
                                             break;
                                         case 500:
                                             show_toast("Uh Oh", "it looks like there was an issue with the server");
@@ -344,7 +345,7 @@ const projectCard = {
                                 }
                                 finally{
                                     clearTimeout(timer);
-                                    if(loadingAnimation) dismiss_loading();
+                                    if(loadingAnimation) system.dismiss_loading();
                                 }
                                 return;
                             }
@@ -363,7 +364,7 @@ const projectCard = {
     request_to_delete_user_project : async(type, title, user) => {
         let animation = false;
         const timer = setTimeout(() => {
-            animationInstance = show_loading();
+            animationInstance = system.show_loading();
             animation = true;
         }, LOADING_ANIMATION_DELAY);
         try{
@@ -383,7 +384,7 @@ const projectCard = {
             console.log(error);
         }finally{
             clearTimeout(timer);
-            if(animation) dismiss_loading(animationInstance);
+            if(animation) system.dismiss_loading(animationInstance);
         }
         return false;
     },
@@ -392,7 +393,7 @@ const projectCard = {
             const user = await fetch_for_user_email();
             const title = JSON.parse(localStorage.getItem("Projectory"))["project-title"];
             const type = JSON.parse(localStorage.getItem("Projectory"))["project-type"];
-            const status = await request_to_delete_user_project(type, title, user);
+            const status = await this.request_to_delete_user_project(type, title, user);
             if(status){
                 show_toast("All Done", "That project was successfully removed from your collection");
                 setTimeout(() => {
@@ -406,7 +407,7 @@ const projectCard = {
     },
     delete_project_functionality : function(){
         const deleteProjectButton = Array.from(document.getElementsByClassName('delete-project'))[0];
-        deleteProjectButton.addEventListener('click', (event) => remove_user_project(event));
+        deleteProjectButton.addEventListener('click', (event) => this.remove_user_project(event));
     },
     clear_the_modal : function(modal){
         const titleField = modal.children[2].children[0];
@@ -428,14 +429,14 @@ const projectCard = {
     },
     remove_project_editor : function(){
         const editModal = Array.from(document.getElementsByClassName('edit-project-modal'))[0];
-        clear_the_modal(editModal);
+        projectCard.clear_the_modal(editModal);
         const backdrop = Array.from(document.getElementsByClassName('modal-overlay-backdrop'))[1];
         backdrop.classList.remove('modal-overlay-backdrop-show');
         editModal.classList.remove('edit-modal-show');
     },
     closing_the_editor_functionality : function(){
         const closeTheEditorButton = Array.from(document.getElementsByClassName('close-project-editor'))[0];
-        closeTheEditorButton.addEventListener('click', remove_project_editor);
+        closeTheEditorButton.addEventListener('click', this.remove_project_editor);
     },
     is_not_empty : function(field){
         if(field.trim() == '') return false;
@@ -454,7 +455,7 @@ const projectCard = {
     request_to_update_project_title : async(email, newTitle) => {
         let animation = false;
         const timer = setTimeout(() => {
-            animation = show_loading();
+            animation = system.show_loading();
         }, LOADING_ANIMATION_DELAY)
         try{
             const response = await fetch(endpoints.titleUpdate, {
@@ -490,17 +491,17 @@ const projectCard = {
             show_toast("Sorry", "There seems to have been an issue sending that request, please try again");
         }finally{
             clearTimeout(timer);
-            if(animation) dismiss_loading(animation);
+            if(animation) system.dismiss_loading(animation);
         }
     },
     update_project_title_functionality : function(){
         const updateButton = document.getElementById('update-title');
         updateButton.addEventListener('click', async(event) => {
             const textarea = document.getElementById('name-of-project-to-edit');
-            if(is_not_empty(textarea.value)){
-                if(is_unique_title(textarea.value)){
+            if(this.is_not_empty(textarea.value)){
+                if(this.is_unique_title(textarea.value)){
                     const email = await fetch_for_user_email();
-                    request_to_update_project_title(email, textarea.value);
+                    this.request_to_update_project_title(email, textarea.value);
                     return;
                 }
                 show_toast("Uh Oh", "There is another project with this title already, please try again");
@@ -513,7 +514,7 @@ const projectCard = {
     request_to_update_project_goal : async(email, newGoal) => {
         let animation = false;
         const timer = setTimeout(() => {
-            animation = show_loading();
+            animation = system.show_loading();
         }, LOADING_ANIMATION_DELAY)
         try{
             const response = await fetch(endpoints.goalUpdate, {
@@ -549,7 +550,7 @@ const projectCard = {
             show_toast("Sorry", "There seems to have been an issue sending that request, please try again");
         }finally{
             clearTimeout(timer);
-            if(animation) dismiss_loading(animation);
+            if(animation) system.dismiss_loading(animation);
         }
     },
     update_project_goal_functionality : function(){
@@ -572,10 +573,10 @@ const system = {
     get_project_data : async() => {
         if(!(location.hostname == "127.0.0.1")){
             try{
-                let projects = await send_a_request_to_get_user_projects();
+                let projects = await this.send_a_request_to_get_user_projects();
                 if(projects){
                     let userProjects = await projects.json();
-                    populate_project_screen(userProjects);
+                    projectCard.populate_project_screen(userProjects);
                 }
                 return;
             }catch(error){
@@ -587,7 +588,7 @@ const system = {
         else{
             console.log("DEV MODE");
             const projectType = JSON.parse(localStorage.getItem("Projectory"))["project-type"];
-            populate_project_screen((TEST_PROJECTS["testUser"])[projectType]);
+            projectCard.populate_project_screen((TEST_PROJECTS["testUser"])[projectType]);
         }
     },
 
@@ -601,7 +602,7 @@ const system = {
 
         let animationInstance = false;
         const timer = setTimeout(() => {
-            animationInstance = show_loading();
+            animationInstance = system.show_loading();
         });
         let projects;
         try{
@@ -617,7 +618,7 @@ const system = {
             console.log(error);
         }finally{
             clearTimeout(timer);
-            if(animationInstance) dismiss_loading(animationInstance);
+            if(animationInstance) system.dismiss_loading(animationInstance);
             switch(projects.status){
                 case 200:
                     return projects;
@@ -628,7 +629,7 @@ const system = {
     },
 
     fetch_for_user_email : async()=>{
-        const animationInstance = show_loading();
+        const animationInstance = system.show_loading();
         try{
             let response = await fetch(endpoints.user_email, {
                 method: 'GET',
@@ -640,7 +641,7 @@ const system = {
         }catch(error){
             console.log(error);
         }finally{
-            dismiss_loading(animationInstance);
+            system.dismiss_loading(animationInstance);
         }
         return false;
     },
@@ -739,7 +740,7 @@ const system = {
     build_resources : function(singleProject){
         const listOfResources = document.createElement('ul');
         listOfResources.classList.add('project-resources');
-        singleProject.links.forEach((singleResource) => build_single_resource(singleResource, listOfResources));
+        singleProject.links.forEach((singleResource) => this.build_single_resource(singleResource, listOfResources));
         return listOfResources;
     },
 
@@ -764,7 +765,7 @@ const system = {
     build_subtasks : function(singleProject){
         const listOfSteps = document.createElement('ol');
         listOfSteps.classList.add('project-steps');
-        singleProject.tasks.forEach((singleSubtask) => build_single_subtask(singleSubtask, listOfSteps));
+        singleProject.tasks.forEach((singleSubtask) => this.build_single_subtask(singleSubtask, listOfSteps));
         return listOfSteps;
 
     },
@@ -786,34 +787,34 @@ const system = {
 
         parent.appendChild(system.build_content_header("Title:"));
 
-        const title = build_title(singleProject);
+        const title = this.build_title(singleProject);
         parent.appendChild(title);
 
         const dynamic_container = document.createElement("div");
         dynamic_container.classList.add("dynamic-container");
         dynamic_container.appendChild(system.build_content_header("Goal:"))
 
-        const goal = build_goal(singleProject);
+        const goal = this.build_goal(singleProject);
         dynamic_container.appendChild(goal);
 
         if(singleProject.links){
             if(singleProject.links.length > 0){
-                const sectionHeader = build_section_header('Resources','toggle-project-resources');
+                const sectionHeader = this.build_section_header('Resources','toggle-project-resources');
                 dynamic_container.appendChild(sectionHeader);
-                const resources = build_resources(singleProject);
+                const resources = this.build_resources(singleProject);
                 dynamic_container.appendChild(resources);
             }
         }
         if(singleProject.tasks){
             if(singleProject.tasks.length > 0){
-                const sectionHeader = build_section_header('Steps','toggle-project-steps');
+                const sectionHeader = this.build_section_header('Steps','toggle-project-steps');
                 dynamic_container.appendChild(sectionHeader);
-                const subtaskSection = build_subtasks(singleProject);
+                const subtaskSection = this.build_subtasks(singleProject);
                 dynamic_container.appendChild(subtaskSection);
             }
         }
         if(JSON.parse(localStorage.getItem("Projectory"))["project-type"] == 'planned'){
-            const startProjectOption = build_project_start_container();
+            const startProjectOption = this.build_project_start_container();
             dynamic_container.appendChild(startProjectOption);
         }
         parent.appendChild(dynamic_container);
@@ -859,5 +860,16 @@ const system = {
                 Array.from(document.getElementsByClassName('toast-mssg'))[0].textContent = '';
             }, 7000);
         }, 500);
+    },
+    textarea_dynamic_height_functionality : function(){
+        const textareas = Array.from(document.getElementsByClassName('dynamic-height-textarea'));
+        textareas.forEach(textarea => {
+            textarea.style.height = 'auto';
+            textarea.style.height = textarea.scrollHeight + 'px'; 
+            textarea.addEventListener('input', () => {
+                textarea.style.height = 'auto';
+                textarea.style.height = textarea.scrollHeight + 'px';
+            });
+        });
     }
 };

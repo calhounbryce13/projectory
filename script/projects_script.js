@@ -100,7 +100,7 @@ const projectCard = {
     start_a_planned_project_functionality : function(){
         const startButtons = document.querySelectorAll('.start-button');
         startButtons.forEach((singleButton) => {
-            singleButton.addEventListener('click', (event) => show_modal_to_start_planned_project(event));
+            singleButton.addEventListener('click', (event) => system.show_modal_to_start_planned_project(event));
         });
         this.close_start_modal_functionality();
         this.starting_project();
@@ -596,6 +596,17 @@ const system = {
             projectCard.populate_project_screen((TEST_PROJECTS["testUser"])[projectType]);
         }
     },
+    
+    show_modal_to_start_planned_project : function(event){
+        populate_modal_to_start_planned_project(event);
+        const parent = Array.from(document.getElementsByClassName('modal-overlay-backdrop'))[0];
+        parent.classList.add('modal-overlay-backdrop-show');
+
+        const startProjectModal = Array.from(document.getElementsByClassName('start-project-modal'))[0];
+        startProjectModal.classList.add('start-project-modal-show');
+
+        textarea_dynamic_height_functionality(); //! needs to be called after the element(s) are displayed !//
+    },
 
     insert_spacer : function(parentContainer){
         const spacer = document.createElement('div');
@@ -866,6 +877,7 @@ const system = {
             }, 7000);
         }, 500);
     },
+
     textarea_dynamic_height_functionality : function(){
         const textareas = Array.from(document.getElementsByClassName('dynamic-height-textarea'));
         textareas.forEach(textarea => {

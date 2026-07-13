@@ -412,12 +412,8 @@ const projectCard = {
     clear_the_modal : function(modal){
         const titleField = modal.children[2].children[0];
         const goalField = modal.children[3].children[0];
-
         titleField.value = '';
         goalField.value = '';
-
-
-
         /* this is to remove the resources from the UI one at a time.
         const container = document.getElementsByClassName('project-resources-edit-modal')[0];
         const children = Array.from(container.children);
@@ -427,10 +423,7 @@ const projectCard = {
                 child.remove();
             }
         });
-
         */
-        
-
     },
     remove_project_editor : function(){
         const editModal = Array.from(document.getElementsByClassName('edit-project-modal'))[0];
@@ -596,16 +589,22 @@ const system = {
             projectCard.populate_project_screen((TEST_PROJECTS["testUser"])[projectType]);
         }
     },
-    
+
     show_modal_to_start_planned_project : function(event){
-        populate_modal_to_start_planned_project(event);
+        system.populate_modal_to_start_planned_project(event);
         const parent = Array.from(document.getElementsByClassName('modal-overlay-backdrop'))[0];
         parent.classList.add('modal-overlay-backdrop-show');
-
         const startProjectModal = Array.from(document.getElementsByClassName('start-project-modal'))[0];
         startProjectModal.classList.add('start-project-modal-show');
+        system.textarea_dynamic_height_functionality();
+    },
 
-        textarea_dynamic_height_functionality(); //! needs to be called after the element(s) are displayed !//
+    populate_modal_to_start_planned_project : function(event){
+        const title = event.target.parentNode.parentNode.children[1].children[0].textContent;
+        const goal = event.target.parentNode.parentNode.children[2].children[0].textContent;
+        const modal = Array.from(document.getElementsByClassName('start-project-modal'))[0];
+        modal.children[1].children[0].textContent = title;
+        modal.children[2].children[0].textContent = goal;
     },
 
     insert_spacer : function(parentContainer){

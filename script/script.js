@@ -436,17 +436,6 @@ const remove_a_task_from_a_project = async(projects, i, x) => {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-const populate_modal_to_start_planned_project = function(event){
-    const title = event.target.parentNode.parentNode.children[1].children[0].textContent;
-    const goal = event.target.parentNode.parentNode.children[2].children[0].textContent;
-
-    const modal = Array.from(document.getElementsByClassName('start-project-modal'))[0];
-
-    modal.children[1].children[0].textContent = title;
-    modal.children[2].children[0].textContent = goal;
-
-}
-
 const textarea_dynamic_height_functionality = function(){
     const textareas = Array.from(document.getElementsByClassName('dynamic-height-textarea'));
     textareas.forEach(textarea => {

@@ -907,9 +907,9 @@ const send_completion_fetch = async(title, user)=>{
 
 const get_buttons = function(){
     let res = [];
-    res.push(document.getElementById('current'));
-    res.push(document.getElementById('planned'));
-    res.push(document.getElementById('complete'));
+    res.push(document.getElementById('Current'));
+    res.push(document.getElementById('Planned'));
+    res.push(document.getElementById('Complete'));
     return res;
 }
 

@@ -3,6 +3,7 @@
     <head>
         <title>Projectory</title>
         <link rel="stylesheet" href="style/main.css">
+        <link rel="stylesheet" href="style/projects.css">
         <script src="script/script.js" type="module"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
         <script src="./script/projects_script.js" type="module"></script>
@@ -25,8 +26,8 @@
         </header>
         <main class="container" id="projects-main">
             <div class="container" id="home-button-container">
-                <a class="yellow-button" href="userhome.html" id="home-button"></a>
-                <button class="add-new yellow-button"></button>
+                <a title="go home" class="yellow-button" href="userhome.html" id="home-button"></a>
+                <button title="add new project" class="add-new yellow-button"></button>
             </div>
             <div class="container" id="h2-container">
                 <h2></h2>
@@ -116,40 +117,19 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         <div class="edit-project-modal">
             <div class="edit-modal-title-container">
-                <p class="edit-modal-title">Project Editor</p>
-                <div class="close-project-editor">
-                    
+                <p class="edit-modal-title"><strong id="editor-project-type"></strong>Project Editor</p>
+                <div title="close editor" class="close-project-editor">
                 </div>
             </div>
             <div class="edit-modal-title-container">
                 <p class="edit-modal-supporting-text">use this form to edit the properties of your project</p>
             </div>
-
-
-
-
             <div class="project-title-container-edit-modal edit-modal-input-block">
                 <textarea id="name-of-project-to-edit"></textarea>
                 <div class="edit-action-container">
-                    <button id="update-title" type="button" class="blue-button">
+                    <button title="update the title" id="update-title" type="button" class="blue-button">
                         <div class="editing-icon" id="title"></div>
                     update title
                     </button>
@@ -160,7 +140,7 @@
             <div class="project-title-container-edit-modal edit-modal-input-block">
                 <textarea id="goal-of-project-to-edit"></textarea>
                 <div class="edit-action-container">
-                    <button id="update-goal" type="button" class="blue-button">
+                    <button title="update the goal" id="update-goal" type="button" class="blue-button">
                         <div class="editing-icon" id="goal"></div>
                         update goal
                     </button>
@@ -241,7 +221,7 @@
             </ol>
             -->
             <div class="edit-form-controls-container">
-                <button class="edit-modal-button edit-form-control-button delete-project">
+                <button title="delete this project" class="edit-modal-button edit-form-control-button delete-project">
                     <div class="delete-project-icon">
                     </div>
                     delete project

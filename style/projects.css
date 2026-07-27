@@ -1,0 +1,7 @@
+:root{
+    --deep-blue: #023047;
+}
+
+#editor-project-type{
+    color: var(--deep-blue) !important;
+}

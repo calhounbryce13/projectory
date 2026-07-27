@@ -9,7 +9,7 @@ const testUser = {
         "tasks": [
             {
             "task_description":"Go to home depot and find out approximately how much wood you will need to buy",
-            "is_complete": 0
+            "is_complete": 1
             }
         ],
         "links": ["www.homedepot.com"]

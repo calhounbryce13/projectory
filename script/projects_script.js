@@ -133,7 +133,8 @@ const projectCard = {
 
             if(await this.send_request_to_make_current_project(title, goal, steps)){
                 const user = await system.fetch_for_user_email();
-                if(await request_to_delete_user_project(JSON.parse(localStorage.getItem("Projectory"))["project-type"], title, user)){
+                const projectType = JSON.parse(localStorage.getItem("Projectory"))["project-type"].toLowerCase();
+                if(await request_to_delete_user_project(projectType, title, user)){
                     window.location.reload();
                     return;
                 }
@@ -189,11 +190,11 @@ const projectCard = {
         });
         
 
-        if(JSON.parse(localStorage.getItem("Projectory"))["project-type"] == 'current'){
+        if(JSON.parse(localStorage.getItem("Projectory"))["project-type"].toLowerCase() == 'current'){
             this.expanded_list_functionality('toggle-project-resources', 'project-resources');
             this.expanded_list_functionality('toggle-project-steps', 'project-steps');
         }
-        else if(JSON.parse(localStorage.getItem("Projectory"))["project-type"] == 'planned'){
+        else if(JSON.parse(localStorage.getItem("Projectory"))["project-type"].toLowerCase() == 'planned'){
             this.start_a_planned_project_functionality();
         }
     },
@@ -260,17 +261,18 @@ const projectCard = {
         output(s): None
         */
         const projectCard = (event.target).closest(".project-card");
-        this.populate_the_title_and_goal(projectCard, editModal);
+        const editorType = document.getElementById("editor-project-type");
         const projectType = JSON.parse(localStorage.getItem("Projectory"))["project-type"];
-        if( projectType == "current"){
-            this.populate_set_of_resources(projectCard);
-            // const ol = projectCard.children[6];
-            return;
-        }
         const resourcesHeader = Array.from(document.getElementsByClassName("project-section-header"))[0];
         const setOfResources = Array.from(document.getElementsByClassName("project-resources-edit-modal"))[0];
-        setOfResources.remove();
-        resourcesHeader.remove();
+        editorType.textContent = projectType + " ";
+        this.populate_the_title_and_goal(projectCard, editModal);
+        if(projectType.toLowerCase() == "current"){
+            this.populate_set_of_resources(projectCard);
+        }else{
+            if(setOfResources) setOfResources.remove();
+            if(resourcesHeader) resourcesHeader.remove();
+        }
     },
     get_the_index_of_a_task : function(checkboxElement){
         const parent = checkboxElement.parentNode.parentNode;
@@ -300,7 +302,7 @@ const projectCard = {
             checkBoxesElements.forEach((box) => {
                 box.addEventListener('change', async(event) => {
                     const checkBox = event.target;
-                    const user = await fetch_for_user_email();
+                    const user = await system.fetch_for_user_email();
                     if(user){
                         const index = this.get_the_index_of_a_task(checkBox);
                         if(index != null){
@@ -355,7 +357,7 @@ const projectCard = {
                         show_toast("Sorry :/", "There was an issue getting the task index for that update");
                         return;
                     }
-                    show_toast("Sorry :/", "There was an issue validating your email for that update");
+                    system.show_toast("Sorry :/", "There was an issue validating your email for that update");
                     return;
                 });
             });
@@ -585,7 +587,7 @@ const system = {
         }
         else{
             console.log("DEV MODE");
-            const projectType = JSON.parse(localStorage.getItem("Projectory"))["project-type"];
+            const projectType = JSON.parse(localStorage.getItem("Projectory"))["project-type"].toLowerCase();
             projectCard.populate_project_screen((TEST_PROJECTS["testUser"])[projectType]);
         }
     },
@@ -673,11 +675,13 @@ const system = {
 
         const editButton = document.createElement('button');
         editButton.classList.add('edit-button');
+        editButton.title = "open editor";
 
         editButton.innerHTML = svgs.editPencilSVG;
 
         const toggleExpansion = document.createElement('div');
         toggleExpansion.classList.add('toggle-expansion');
+        toggleExpansion.title = "hide/show details";
         toggleExpansion.innerHTML = svgs.toggleArrowSVG;
 
 
@@ -765,13 +769,17 @@ const system = {
 
         const subtaskText = document.createElement('p');
         subtaskText.classList.add('project-subtask-text');
-        if(singleSubtask.is_complete) subtaskText.classList.add('completed-task');
         subtaskText.textContent = singleSubtask.task_description;
-
+        
         const checkBox = document.createElement('input');
         checkBox.classList.add('subtask-checkbox');
         checkBox.type = 'checkbox';
         checkBox.name = 'task';
+        checkBox.title = "check/uncheck task";
+        if(singleSubtask.is_complete){
+            subtaskText.classList.add('completed-task');
+            checkBox.checked = true;
+        } 
         listIndexElement.appendChild(subtaskText);
         listIndexElement.appendChild(checkBox);
         listOfSteps.appendChild(listIndexElement);

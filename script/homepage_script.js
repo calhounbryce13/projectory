@@ -22,9 +22,9 @@ const get_project_numbers = async () => {
 
 
 const populate_labels = function(data){
-    const plannedButton = document.getElementById('planned');
-    const currentButton = document.getElementById('current');
-    const completeButton = document.getElementById('complete');
+    const plannedButton = document.getElementById('Planned');
+    const currentButton = document.getElementById('Current');
+    const completeButton = document.getElementById('Complete');
     plannedButton.children[1].children[1].textContent = data[0];
     currentButton.children[1].children[1].textContent = data[1];
     completeButton.children[1].children[1].textContent = data[2];

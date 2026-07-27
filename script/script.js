@@ -234,7 +234,7 @@ const remove_user_account_functionality = function(){
 
 const update_header_text = function(){
     const header = document.getElementsByTagName('h2')[0];
-    header.textContent = `My ${JSON.parse(localStorage.getItem("Projectory"))["project-type"]} projects`;
+    header.textContent = `My ${JSON.parse(localStorage.getItem("Projectory"))["project-type"]} Projects`;
 }
 
 const build_add_more_container = function(){

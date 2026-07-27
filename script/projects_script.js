@@ -623,13 +623,14 @@ const system = {
         });
         let projects;
         try{
+            const projectType = JSON.parse(localStorage.getItem("Projectory"))["project-type"].toLowerCase();
             projects = await fetch(endpoints.projects_view,{
                 headers:{
                     "Content-type": "application/json"
                 },
                 credentials: 'include',
                 method: 'POST',
-                body: JSON.stringify({"project-type": JSON.parse(localStorage.getItem("Projectory"))["project-type"]})
+                body: JSON.stringify({"project-type": projectType})
             });
         }catch(error){
             console.log(error);
@@ -770,7 +771,7 @@ const system = {
         const subtaskText = document.createElement('p');
         subtaskText.classList.add('project-subtask-text');
         subtaskText.textContent = singleSubtask.task_description;
-        
+
         const checkBox = document.createElement('input');
         checkBox.classList.add('subtask-checkbox');
         checkBox.type = 'checkbox';

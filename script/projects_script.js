@@ -164,15 +164,27 @@ const projectCard = {
                     "tasks": steps
                 })
             });
-            if(response){
-                if(response.status == 200){
+            switch(response.status){
+                case 201:
                     system.show_toast("Perfect!","new current project has been saved");
                     return true;
-                }
-            }
-            
-        }catch(error){
-            console.log(error);
+                case 400:
+                    system.show_toast("Uh Oh","There seems to have been an issue with the request body");
+                    return false;
+                case 401:
+                    system.show_toast("Uh Oh","You are NOT authorized to modify this resource");
+                    return false;
+                case 409:
+                    system.show_toast("Uh Oh","A project with this name already exists in the same section");
+                    return false;
+                case 500:
+                    system.show_toast("Uh Oh","There was an internal server issue, please try again");
+                    return false;
+                default:
+                    break;
+            };
+        }catch(e){
+            console.error(e);
         }finally{
             system.dismiss_loading(animationInstance);
         }

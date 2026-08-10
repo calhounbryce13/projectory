@@ -6,24 +6,21 @@ import svgs from "./svg.js";
 const LOADING_ANIMATION_DELAY = 1000; 
 const SHORT_PAGE_LOAD_DELAY = 1000;
 
-
 document.addEventListener("DOMContentLoaded", async() => {
     await system.get_project_data()
     await system.generate_user_projects_page();
-    projectCard.projectCard_functions();
+    projectCardUI.projectCard_functions();
     system.create_new_project_functionality();
 });
 
-
-//! change the name of 1 of 2 'projectCard' references!
-const projectCard = {
+const projectCardUI = {
     projectCard_functions : function(){
-        projectCard.project_card_expansion_functionality();
-        projectCard.update_project_title_functionality();
-        projectCard.update_project_goal_functionality();
-        projectCard.delete_project_functionality();
-        projectCard.closing_the_editor_functionality();
-        projectCard.update_task_status_functionality();
+        projectCardUI.project_card_expansion_functionality();
+        projectCardUI.update_project_title_functionality();
+        projectCardUI.update_project_goal_functionality();
+        projectCardUI.delete_project_functionality();
+        projectCardUI.closing_the_editor_functionality();
+        projectCardUI.update_task_status_functionality();
     },
     project_card_expansion_functionality : function(){
         const projectToggleButtons = Array.from(document.getElementsByClassName("toggle-expansion"));
@@ -126,7 +123,6 @@ const projectCard = {
         const startButton = document.getElementById('start-modal-initiate');
         startButton.addEventListener('click', async(event) => {
             const textarea = event.target.parentNode.parentNode.children[3];
-
             if(textarea.value == ''){
                 show_modal("Uh Oh!","Please fill out the entire form");
                 return;
@@ -135,8 +131,7 @@ const projectCard = {
             const goal = event.target.parentNode.parentNode.children[2].children[0].textContent;
             const steps = [];
             steps.push(textarea.value);
-
-            if(await this.send_request_to_make_current_project(title, goal, steps)){
+            if(await system.send_request_to_make_current_project(title, goal, steps)){
                 const user = await system.fetch_for_user_email();
                 const projectType = JSON.parse(localStorage.getItem("Projectory"))["project-type"].toLowerCase();
                 if(await request_to_delete_user_project(projectType, title, user)){
@@ -147,50 +142,8 @@ const projectCard = {
             }
             return;
         });
+    },
 
-    },
-    send_request_to_make_current_project : async(title, goal, steps) => {
-        const animationInstance = system.show_loading();
-        try{
-            let response = await fetch(endpoints.current_projects_generator,{
-                method: "POST",
-                credentials: "include",
-                headers:{
-                    "Content-type": "application/json"
-                },
-                body:JSON.stringify({
-                    "title": title,
-                    "goal": goal,
-                    "tasks": steps
-                })
-            });
-            switch(response.status){
-                case 201:
-                    system.show_toast("Perfect!","new current project has been saved");
-                    return true;
-                case 400:
-                    system.show_toast("Uh Oh","There seems to have been an issue with the request body");
-                    return false;
-                case 401:
-                    system.show_toast("Uh Oh","You are NOT authorized to modify this resource");
-                    return false;
-                case 409:
-                    system.show_toast("Uh Oh","A project with this name already exists in the same section");
-                    return false;
-                case 500:
-                    system.show_toast("Uh Oh","There was an internal server issue, please try again");
-                    return false;
-                default:
-                    break;
-            };
-        }catch(e){
-            console.error(e);
-        }finally{
-            system.dismiss_loading(animationInstance);
-        }
-        system.show_toast("Uh Oh!", "there seems to have been an issue submitting your project, please try again");
-        return false;
-    },
     project_functions : function(){
         /*
         Description: Function defined to facilitate the various functionalities
@@ -321,10 +274,11 @@ const projectCard = {
                     const checkBox = event.target;
                     const user = await system.fetch_for_user_email();
                     if(user){
-                        const index = this.get_the_index_of_a_task(checkBox);
+                        const index = projectCardUI.get_the_index_of_a_task(checkBox);
                         if(index != null){
-                            const projectTitle = this.get_the_title_of_the_project(checkBox);
+                            const projectTitle = projectCardUI.get_the_title_of_the_project(checkBox);
                             if(projectTitle != null){
+
                                 let mark = checkBox.checked ? 1 : 0;
                                 let loadingAnimation = false;
                                 const timer = setTimeout(() => {
@@ -367,6 +321,7 @@ const projectCard = {
                                     if(loadingAnimation) system.dismiss_loading();
                                 }
                                 return;
+                                
                             }
                             show_toast("Sorry :/", "There was an issue getting the project title for that update");
                             return;
@@ -446,7 +401,7 @@ const projectCard = {
     },
     remove_project_editor : function(){
         const editModal = Array.from(document.getElementsByClassName('edit-project-modal'))[0];
-        projectCard.clear_the_modal(editModal);
+        projectCardUI.clear_the_modal(editModal);
         const backdrop = Array.from(document.getElementsByClassName('modal-overlay-backdrop'))[0];
         backdrop.classList.remove('modal-overlay-backdrop-show');
         editModal.classList.remove('edit-modal-show');
@@ -576,7 +531,7 @@ const projectCard = {
             const textarea = document.getElementById('goal-of-project-to-edit');
             if(system.is_not_empty(textarea.value)){
                 const email = await system.fetch_for_user_email();
-                projectCard.request_to_update_project_goal(email, textarea.value);
+                projectCardUI.request_to_update_project_goal(email, textarea.value);
                 return;
             }
             system.show_toast("Uh Oh", "This field can't be empty, please add some text");
@@ -585,7 +540,6 @@ const projectCard = {
     },
 };
 
-
 const system = {
     get_project_data : async() => {
         if(!(location.hostname == "127.0.0.1")){
@@ -593,7 +547,7 @@ const system = {
                 let projects = await system.send_a_request_to_get_user_projects();
                 if(projects){
                     let userProjects = await projects.json();
-                    projectCard.populate_project_screen(userProjects);
+                    projectCardUI.populate_project_screen(userProjects);
                 }
                 return;
             }catch(error){
@@ -605,7 +559,7 @@ const system = {
         else{
             console.log("DEV MODE");
             const projectType = JSON.parse(localStorage.getItem("Projectory"))["project-type"].toLowerCase();
-            projectCard.populate_project_screen((TEST_PROJECTS["testUser"])[projectType]);
+            projectCardUI.populate_project_screen((TEST_PROJECTS["testUser"])[projectType]);
         }
     },
 
@@ -661,6 +615,49 @@ const system = {
                     return false;
             }
         }
+    },
+
+    send_request_to_make_current_project : async(title, goal, steps) => {
+        const animationInstance = system.show_loading();
+        try{
+            let response = await fetch(endpoints.current_projects_generator,{
+                method: "POST",
+                credentials: "include",
+                headers:{
+                    "Content-type": "application/json"
+                },
+                body:JSON.stringify({
+                    "title": title,
+                    "goal": goal,
+                    "tasks": steps
+                })
+            });
+            switch(response.status){
+                case 201:
+                    system.show_toast("Perfect!","new current project has been saved");
+                    return true;
+                case 400:
+                    system.show_toast("Uh Oh","There seems to have been an issue with the request body");
+                    return false;
+                case 401:
+                    system.show_toast("Uh Oh","You are NOT authorized to modify this resource");
+                    return false;
+                case 409:
+                    system.show_toast("Uh Oh","A project with this name already exists in the same section");
+                    return false;
+                case 500:
+                    system.show_toast("Uh Oh","There was an internal server issue, please try again");
+                    return false;
+                default:
+                    break;
+            };
+        }catch(e){
+            console.error(e);
+        }finally{
+            system.dismiss_loading(animationInstance);
+        }
+        system.show_toast("Uh Oh!", "there seems to have been an issue submitting your project, please try again");
+        return false;
     },
 
     fetch_for_user_email : async()=>{

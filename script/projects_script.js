@@ -952,9 +952,9 @@ const system = {
                         system.show_toast("Uh Oh!","Please fill out at least the first subtask!");
                         return;
                     }
-                    const taskList = this.create_list_of_tasks(inputs);
+                    const taskList = system.create_list_of_tasks(inputs);
                     let response;
-                    const animationInstance = this.show_loading();
+                    const animationInstance = system.show_loading();
                     try{
                         response = await fetch(endpoints.current_projects_generator,{
                             method: "POST",
@@ -969,7 +969,7 @@ const system = {
                             })
                         });
                     }catch(error){
-                        console.log(error);
+                        console.error(error);
                     }finally{
                         system.dismiss_loading(animationInstance);
                     }

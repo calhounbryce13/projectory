@@ -232,47 +232,6 @@ const remove_user_account_functionality = function(){
 
 }
 
-const update_header_text = function(){
-    const header = document.getElementsByTagName('h2')[0];
-    header.textContent = `My ${JSON.parse(localStorage.getItem("Projectory"))["project-type"]} Projects`;
-}
-
-const build_add_more_container = function(){
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.id = 'project-form-add-more';
-
-    const parent = document.createElement('div');
-    parent.classList.add('container');
-    parent.id = 'project-form-add-more-container';
-    parent.appendChild(button);
-
-    return parent;
-}
-
-const build_subtask_container = function(){
-    const container = document.createElement('div');
-    container.id = 'project-form-subtasks';
-    container.classList.add('container');
-    container.appendChild(build_new_subtask());
-    return container;
-}
-
-const add_fields_for_subtasks = function(){
-    const fieldset = document.getElementById('project-fieldset');
-    if(fieldset){
-        fieldset.appendChild(build_subtask_container());
-        fieldset.appendChild(build_add_more_container());
-    }
-}
-
-const populate_form_controls = function(){
-    const projectType = JSON.parse(localStorage.getItem("Projectory"))["project-type"];
-    if(projectType == 'planned'){
-        return;
-    }
-    add_fields_for_subtasks();
-}
 
 const fetch_for_user_email = async()=>{
     const animationInstance = show_loading();
@@ -533,14 +492,7 @@ const update_user_projects_view = async()=>{
     }
 }
 
-const generate_user_projects_page = async() => {
-    
-    if(window.location.pathname.endsWith("/projects.html")){
-        update_header_text();
-        populate_form_controls();
-        //get_project_data();
-    }
-}
+
 
 const process_signup_data = async(event)=>{
     event.preventDefault();
@@ -567,7 +519,6 @@ const signup_functionality = function(){
 
 }
 
-
 const registration_and_login_fetch = async(email, pass, endpoint)=>{
     try{
         let response = await fetch(endpoint,{
@@ -585,7 +536,6 @@ const registration_and_login_fetch = async(email, pass, endpoint)=>{
         return null;
     }
 }
-
 
 const logout_functionality = function(){
     const logouts = document.getElementsByClassName('logout-button');
@@ -615,7 +565,6 @@ const logout_functionality = function(){
     console.log("ERROR: unexpected error... missing logout button");
     return;
 }
-
 
 const show_toast = function(header, message){
     Array.from(document.getElementsByClassName('toast-subject'))[0].textContent = header;
@@ -704,16 +653,6 @@ const add_task_to_existing_functionality = function(){
 
 }
 
-const create_list_of_tasks = function(inputs){
-    let res = [];
-    for(let i = 0; i < inputs.length; i++){
-        if(inputs[i].value != ""){
-            res.push(inputs[i].value);
-        }
-    }
-    return res;
-}
-
 const send_request_to_make_current_project = async(title, goal, steps) => {
     const animationInstance = show_loading();
     try{
@@ -745,121 +684,6 @@ const send_request_to_make_current_project = async(title, goal, steps) => {
     return false;
 }
 
-const toggle_the_new_project_form = function(event){
-    const form = Array.from(document.getElementsByClassName('add-project-form'))[0];
-    form.classList.toggle('project-form-show');
-}
-
-const new_project_form_display_functionality = function(){
-    const buttons = document.getElementsByClassName('add-new');
-    console.log(Array.from(buttons)[0]);
-    if(buttons.length > 0){
-        const addNewProjectButton = Array.from(buttons)[0];
-        addNewProjectButton.addEventListener('click', (event) => toggle_the_new_project_form(event));
-
-        const closeButton = document.getElementById("close-add-project-form");
-        closeButton.addEventListener("click", (event) => toggle_the_new_project_form(event));
-    }
-}
-
-const create_new_project_functionality = function(){
-    new_project_form_display_functionality();
-    const forms = document.getElementsByClassName('add-project-form');
-    if(forms.length > 0){
-        const form = Array.from(forms)[0];
-        form.addEventListener('submit', async(event) => {
-            event.preventDefault();
-            if((form.elements['project-title'].value == "") || (form.elements['project-goal'].value == "")){
-                show_modal("Uh Oh!", "please fill out the entire form!");
-                return;
-            }
-            console.log("form submitted");
-            if(JSON.parse(localStorage.getItem("Projectory"))["project-type"] == 'planned'){
-                console.log("on the planned project screen");
-                let response;
-                const animationInstance = show_loading();
-                try{
-                    response = await fetch(endpoints.planned_projects_generator,{
-                        method: "POST",
-                        headers:{
-                            "Content-type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            "title": form.elements['project-title'].value,
-                            "goal": form.elements['project-goal'].value
-                        }),
-                        credentials:'include'
-                    });
-                    switch(response.status){
-                        case 200:
-                            show_toast("Perfect!", "new planned project has been saved");
-                            window.location.reload();
-                            return;
-                        default:
-                            break;
-                    }
-                show_toast("Sorry", "there seems to have been an issue submitting your project\n please try again");
-                }catch(error){
-                    console.log(error);
-                }finally{
-                    dismiss_loading(animationInstance);
-                }
-            }
-            else{
-                const inputs = Array.from(document.getElementsByClassName('subtask-input'));
-                if(inputs[0].value == ""){
-                    show_modal("Uh Oh!","Please fill out at least the first subtask!");
-                    return;
-                }
-                const taskList = create_list_of_tasks(inputs);
-                let response;
-                const animationInstance = show_loading();
-                try{
-                    response = await fetch(endpoints.current_projects_generator,{
-                        method: "POST",
-                        credentials: "include",
-                        headers:{
-                            "Content-type": "application/json"
-                        },
-                        body:JSON.stringify({
-                            "title": form.elements['project-title'].value,
-                            "goal": form.elements['project-goal'].value,
-                            "tasks": taskList
-                        })
-                    });
-                }catch(error){
-                    console.log(error);
-                }finally{
-                    dismiss_loading(animationInstance);
-                }
-                if(response){
-                    if(response.status == 200){
-                        show_toast("Perfect!","new current project has been saved");
-                        window.location.reload();
-                        return;
-                    }
-                }
-                show_toast("Uh Oh!", "there seems to have been an issue submitting your project, please try again");
-            }
-        });
-    }
-}
-
-const build_new_subtask = function(){
-    const label = document.createElement('label');
-    label.textContent = 'subtask';
-    const input = document.createElement('textarea');
-    input.classList.add('subtask-input');
-
-    const parentContainer = document.createElement('div');
-    parentContainer.classList.add('container');
-    parentContainer.classList.add('new-subtask');
-    parentContainer.appendChild(label);
-    parentContainer.appendChild(input);
-
-    return parentContainer;
-    
-}
 
 const add_task_to_new_functionality = function(){
     const projectFieldset = document.getElementById('project-fieldset');
@@ -1000,8 +824,6 @@ const backend_communication = function(){
 
     add_task_to_new_functionality();
 
-    create_new_project_functionality();
-
     remove_user_account_functionality();
 
     signup_functionality();
@@ -1013,7 +835,6 @@ document.addEventListener('DOMContentLoaded', async()=>{
     check_local_storage();
     dismiss_modal_functionality();
     await check_user_login_status();
-    await generate_user_projects_page();
     backend_communication();
     home_page_listeners();
     setTimeout(()=>{

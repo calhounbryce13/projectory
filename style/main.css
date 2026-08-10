@@ -657,10 +657,10 @@ a{
         width: 30vw;
     }
     .toast-subject{
-        font-size: 2vw;
+        font-size: 2.5vw;
     }
     .toast-mssg{
-        font-size: 1vw;
+        font-size: 2vw;
     }
     .toast-accept-button{
         font-size: 1.5vw;
@@ -1354,9 +1354,18 @@ footer{
 
 .add-project-form{
     display: none;
+    justify-content: center;
+    align-items: center;
     position: fixed;
-    top: 10%;
-    transform: translate(-50%, -50%);
+    top: 5vh;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.add-project-form > form{
+    max-height: 90vh;
+    overflow-y: scroll;
+
 }
 
 
@@ -1365,7 +1374,7 @@ footer{
 }
 
 @media(min-width: 900px){
-    .add-project-form{
+    .add-project-form > form{
         width: 90vw;
     }
     .add-project-form h3{

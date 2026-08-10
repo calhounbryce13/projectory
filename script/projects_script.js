@@ -9,17 +9,22 @@ const SHORT_PAGE_LOAD_DELAY = 1000;
 
 document.addEventListener("DOMContentLoaded", async() => {
     await system.get_project_data()
-    projectCard.project_card_expansion_functionality();
-    projectCard.update_project_title_functionality();
-    projectCard.update_project_goal_functionality();
-    projectCard.delete_project_functionality();
-    projectCard.closing_the_editor_functionality();
-    projectCard.update_task_status_functionality();
+    await system.generate_user_projects_page();
+    projectCard.projectCard_functions();
+    system.create_new_project_functionality();
 });
 
 
 //! change the name of 1 of 2 'projectCard' references!
 const projectCard = {
+    projectCard_functions : function(){
+        projectCard.project_card_expansion_functionality();
+        projectCard.update_project_title_functionality();
+        projectCard.update_project_goal_functionality();
+        projectCard.delete_project_functionality();
+        projectCard.closing_the_editor_functionality();
+        projectCard.update_task_status_functionality();
+    },
     project_card_expansion_functionality : function(){
         const projectToggleButtons = Array.from(document.getElementsByClassName("toggle-expansion"));
         projectToggleButtons.forEach((toggleButton) => {
@@ -45,7 +50,7 @@ const projectCard = {
             localObj["project-title"] = titleElement.textContent;
             localStorage.setItem("Projectory", JSON.stringify(localObj));
             const editModal = Array.from(document.getElementsByClassName('edit-project-modal'))[0];
-            const backdrop = Array.from(document.getElementsByClassName('modal-overlay-backdrop'))[1];
+            const backdrop = Array.from(document.getElementsByClassName('modal-overlay-backdrop'))[0];
             this.populate_editor(event, editModal);
             backdrop.classList.add('modal-overlay-backdrop-show');
             editModal.classList.add('edit-modal-show');
@@ -430,7 +435,7 @@ const projectCard = {
     remove_project_editor : function(){
         const editModal = Array.from(document.getElementsByClassName('edit-project-modal'))[0];
         projectCard.clear_the_modal(editModal);
-        const backdrop = Array.from(document.getElementsByClassName('modal-overlay-backdrop'))[1];
+        const backdrop = Array.from(document.getElementsByClassName('modal-overlay-backdrop'))[0];
         backdrop.classList.remove('modal-overlay-backdrop-show');
         editModal.classList.remove('edit-modal-show');
     },
@@ -896,5 +901,180 @@ const system = {
                 textarea.style.height = textarea.scrollHeight + 'px';
             });
         });
+    },
+
+
+
+    create_new_project_functionality : function(){
+        this.new_project_form_display_functionality();
+        const formsContainer = document.getElementsByClassName('add-project-form');
+        if(formsContainer.length > 0){
+            const form = (Array.from(formsContainer)[0]).children[0];
+            form.addEventListener('submit', async(event) => {
+                event.preventDefault();
+                if((form.elements['project-title'].value == "") || (form.elements['project-goal'].value == "")){
+                    this.show_toast("Uh Oh!", "please fill out the entire form!");
+                    return;
+                }
+                if(JSON.parse(localStorage.getItem("Projectory"))["project-type"] == 'planned'){
+                    let response;
+                    const animationInstance = show_loading();
+                    try{
+                        response = await fetch(endpoints.planned_projects_generator,{
+                            method: "POST",
+                            headers:{
+                                "Content-type": "application/json"
+                            },
+                            body: JSON.stringify({
+                                "title": form.elements['project-title'].value,
+                                "goal": form.elements['project-goal'].value
+                            }),
+                            credentials:'include'
+                        });
+                        switch(response.status){
+                            case 200:
+                                this.show_toast("Perfect!", "new planned project has been saved");
+                                window.location.reload();
+                                return;
+                            default:
+                                break;
+                        }
+                    this.show_toast("Sorry", "there seems to have been an issue submitting your project\n please try again");
+                    }catch(error){
+                        console.log(error);
+                    }finally{
+                        this.dismiss_loading(animationInstance);
+                    }
+                }
+                else{
+                    const inputs = Array.from(document.getElementsByClassName('subtask-input'));
+                    if(inputs[0].value == ""){
+                        this.show_toast("Uh Oh!","Please fill out at least the first subtask!");
+                        return;
+                    }
+                    const taskList = this.create_list_of_tasks(inputs);
+                    let response;
+                    const animationInstance = this.show_loading();
+                    try{
+                        response = await fetch(endpoints.current_projects_generator,{
+                            method: "POST",
+                            credentials: "include",
+                            headers:{
+                                "Content-type": "application/json"
+                            },
+                            body:JSON.stringify({
+                                "title": form.elements['project-title'].value,
+                                "goal": form.elements['project-goal'].value,
+                                "tasks": taskList
+                            })
+                        });
+                    }catch(error){
+                        console.log(error);
+                    }finally{
+                        this.dismiss_loading(animationInstance);
+                    }
+                    if(response){
+                        if(response.status == 200){
+                            show_toast("Perfect!","new current project has been saved");
+                            window.location.reload();
+                            return;
+                        }
+                    }
+                    this.show_toast("Uh Oh!", "there seems to have been an issue submitting your project, please try again");
+                }
+            });
+        }
+    },
+
+    create_list_of_tasks : function(inputs){
+        let res = [];
+        for(let i = 0; i < inputs.length; i++){
+            if(inputs[i].value != ""){
+                res.push(inputs[i].value);
+            }
+        }
+        return res;
+    },
+
+    new_project_form_display_functionality : function(){
+        const buttons = document.getElementsByClassName('add-new');
+        console.log(Array.from(buttons)[0]);
+        if(buttons.length > 0){
+            const addNewProjectButton = Array.from(buttons)[0];
+            addNewProjectButton.addEventListener('click', (event) => system.toggle_the_new_project_form(event));
+
+            const closeButton = document.getElementById("close-add-project-form");
+            closeButton.addEventListener("click", (event) => system.toggle_the_new_project_form(event));
+        }
+    },
+
+    toggle_the_new_project_form : function(event){
+        const container = Array.from(document.getElementsByClassName('add-project-form'))[0];
+        container.classList.toggle('project-form-show');
+    },
+
+    generate_user_projects_page : async() => {
+        system.update_header_text();
+        system.new_project_populate_form();
+    },
+
+    update_header_text : function(){
+        const header = document.getElementsByTagName('h2')[0];
+        header.textContent = `My ${JSON.parse(localStorage.getItem("Projectory"))["project-type"]} Projects`;
+    },
+
+    new_project_populate_form : function(){
+        const projectType = JSON.parse(localStorage.getItem("Projectory"))["project-type"].toLowerCase();
+        const sectionName = document.getElementById("new-project-section-name");
+        sectionName.textContent = projectType
+        if(projectType != 'planned'){
+            system.add_fields_for_subtasks();
+            return;
+        }
+    },
+
+    add_fields_for_subtasks : function(){
+        const fieldset = document.getElementById('project-fieldset');
+        if(fieldset){
+            fieldset.appendChild(system.build_subtask_container());
+            fieldset.appendChild(system.build_add_more_container());
+        }
+    },
+
+    build_subtask_container : function(){
+        const container = document.createElement('div');
+        container.id = 'project-form-subtasks';
+        container.classList.add('container');
+        container.appendChild(system.build_new_subtask());
+        return container;
+    },
+
+    build_new_subtask : function(){
+        const label = document.createElement('label');
+        label.textContent = 'subtask';
+        const input = document.createElement('textarea');
+        input.classList.add('subtask-input');
+
+        const parentContainer = document.createElement('div');
+        parentContainer.classList.add('container');
+        parentContainer.classList.add('new-subtask');
+        parentContainer.appendChild(label);
+        parentContainer.appendChild(input);
+
+        return parentContainer;
+        
+    },
+    
+    build_add_more_container : function(){
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.id = 'project-form-add-more';
+
+        const parent = document.createElement('div');
+        parent.classList.add('container');
+        parent.id = 'project-form-add-more-container';
+        parent.appendChild(button);
+
+        return parent;
     }
 };

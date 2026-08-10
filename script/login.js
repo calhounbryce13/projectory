@@ -1,6 +1,9 @@
 'use strict';
 import {endpoints} from './endpoints.js'
 
+const LOADING_ANIMATION_DELAY = 1000; // in ms
+
+
 document.addEventListener("DOMContentLoaded", () => {
     system.login_functionality();
 });
@@ -21,6 +24,10 @@ const system = {
         }, 500);
     },
     registration_and_login_fetch : async(email, pass, endpoint)=>{
+        let animationInstance = false;
+        const timer = setTimeout(() => {
+            animationInstance = system.show_loading();
+        }, LOADING_ANIMATION_DELAY);
         try{
             let response = await fetch(endpoint,{
                 method: 'POST',
@@ -32,9 +39,12 @@ const system = {
             });
             return response;
         }catch(error){
-            console.log(error);
-            show_toast("Uh Oh!","There seems to be an issue connecting to backend web services at the moment :/");
+            console.error(error);
+            system.show_toast("Uh Oh!","There seems to be an issue connecting to backend web services at the moment :/");
             return null;
+        }finally{
+            clearTimeout(timer);
+            if(animationInstance) system.dismiss_loading(animationInstance);
         }
     },
     login_functionality : function(){
@@ -66,8 +76,34 @@ const system = {
         }
         console.error("ERROR: NO LOGIN FORM PRESENT!");
         return;
+    },
+    show_loading : function(){
+        const animation = document.getElementById('lottie-loading-animation');
+        const animationContainer = document.getElementById('lottie-parent');
+        animationContainer.style.display = 'flex';
+        animation.style.display = 'flex';
+        return lottie.loadAnimation({
+            container: animation,
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            path: '../projectory/icons/Loading_sand_clock.json'
+        });
+    },
+    dismiss_loading : function(animationInstance){
+        const animation = document.getElementById('lottie-loading-animation');
+        const animationContainer = document.getElementById('lottie-parent');
+        animation.style.display = 'none';
+        animationContainer.style.display = 'none';
+        animationInstance.destroy();
     }
 };
+
+
+
+
+
+
 
 const loginFormUI = {
     check_for_empty : function(email, pass){
@@ -81,3 +117,5 @@ const loginFormUI = {
         return 1;
     },
 };
+
+

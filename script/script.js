@@ -146,9 +146,8 @@ const fetch_for_login_status = async()=>{
         return false;
     }finally{
         clearTimeout(requestDelayTimer);
-        if(loadingIconShown){
-            dismiss_loading(animationInstance);
-        }
+        if(loadingIconShown) dismiss_loading(animationInstance);
+        
     }
 }
 

@@ -906,14 +906,14 @@ const system = {
 
 
     create_new_project_functionality : function(){
-        this.new_project_form_display_functionality();
+        system.new_project_form_display_functionality();
         const formsContainer = document.getElementsByClassName('add-project-form');
         if(formsContainer.length > 0){
             const form = (Array.from(formsContainer)[0]).children[0];
             form.addEventListener('submit', async(event) => {
                 event.preventDefault();
                 if((form.elements['project-title'].value == "") || (form.elements['project-goal'].value == "")){
-                    this.show_toast("Uh Oh!", "please fill out the entire form!");
+                    system.show_toast("Uh Oh!", "please fill out the entire form!");
                     return;
                 }
                 if(JSON.parse(localStorage.getItem("Projectory"))["project-type"] == 'planned'){
@@ -933,23 +933,23 @@ const system = {
                         });
                         switch(response.status){
                             case 200:
-                                this.show_toast("Perfect!", "new planned project has been saved");
+                                system.show_toast("Perfect!", "new planned project has been saved");
                                 window.location.reload();
                                 return;
                             default:
                                 break;
                         }
-                    this.show_toast("Sorry", "there seems to have been an issue submitting your project\n please try again");
+                    system.show_toast("Sorry", "there seems to have been an issue submitting your project\n please try again");
                     }catch(error){
                         console.log(error);
                     }finally{
-                        this.dismiss_loading(animationInstance);
+                        system.dismiss_loading(animationInstance);
                     }
                 }
                 else{
                     const inputs = Array.from(document.getElementsByClassName('subtask-input'));
                     if(inputs[0].value == ""){
-                        this.show_toast("Uh Oh!","Please fill out at least the first subtask!");
+                        system.show_toast("Uh Oh!","Please fill out at least the first subtask!");
                         return;
                     }
                     const taskList = this.create_list_of_tasks(inputs);
@@ -971,16 +971,16 @@ const system = {
                     }catch(error){
                         console.log(error);
                     }finally{
-                        this.dismiss_loading(animationInstance);
+                        system.dismiss_loading(animationInstance);
                     }
                     if(response){
                         if(response.status == 200){
-                            show_toast("Perfect!","new current project has been saved");
+                            system.show_toast("Perfect!","new current project has been saved");
                             window.location.reload();
                             return;
                         }
                     }
-                    this.show_toast("Uh Oh!", "there seems to have been an issue submitting your project, please try again");
+                    system.show_toast("Uh Oh!", "there seems to have been an issue submitting your project, please try again");
                 }
             });
         }

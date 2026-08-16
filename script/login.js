@@ -3,11 +3,9 @@ import {endpoints} from './endpoints.js'
 
 const LOADING_ANIMATION_DELAY = 1000; // in ms
 
-
 document.addEventListener("DOMContentLoaded", () => {
     system.login_functionality();
 });
-
 
 const system = {
     show_toast : function(header, message){
@@ -29,7 +27,7 @@ const system = {
             animationInstance = system.show_loading();
         }, LOADING_ANIMATION_DELAY);
         try{
-            let response = await fetch(endpoint,{
+            let response = await fetch(endpoints.login,{
                 method: 'POST',
                 body: JSON.stringify({"userEmail": email, "userPassword": pass}),
                 credentials: "include",
@@ -56,7 +54,7 @@ const system = {
                 const userPass = document.getElementsByName('userPass')[0];
                 if(!(loginFormUI.check_for_empty(userEmail, userPass))){
                     let response = await system.registration_and_login_fetch(userEmail.value, userPass.value, endpoints.login);
-                    if(response != null){
+                    if(response){
                         let data = await response.json();
                         if(data.message == 'session start'){
                             window.location.assign('userhome.html');
@@ -99,12 +97,6 @@ const system = {
     }
 };
 
-
-
-
-
-
-
 const loginFormUI = {
     check_for_empty : function(email, pass){
         if(email && pass){
@@ -117,5 +109,3 @@ const loginFormUI = {
         return 1;
     },
 };
-
-

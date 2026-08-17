@@ -143,7 +143,6 @@ const projectCardUI = {
             return;
         });
     },
-
     project_functions : function(){
         /*
         Description: Function defined to facilitate the various functionalities
@@ -470,16 +469,16 @@ const projectCardUI = {
         const updateButton = document.getElementById('update-title');
         updateButton.addEventListener('click', async(event) => {
             const textarea = document.getElementById('name-of-project-to-edit');
-            if(this.is_not_empty(textarea.value)){
-                if(this.is_unique_title(textarea.value)){
+            if(projectCardUI.is_not_empty(textarea.value)){
+                if(projectCardUI.is_unique_title(textarea.value)){
                     const email = await fetch_for_user_email();
-                    this.request_to_update_project_title(email, textarea.value);
+                    projectCardUI.request_to_update_project_title(email, textarea.value);
                     return;
                 }
-                show_toast("Uh Oh", "There is another project with this title already, please try again");
+                system.show_toast("Uh Oh", "There is another project with this title already, please try again");
                 return;
             }
-            show_toast("Uh Oh", "This field can't be empty, please add some text");
+            system.show_toast("Uh Oh", "This field can't be empty, please add some text");
             return;
         })
     },

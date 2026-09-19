@@ -569,6 +569,10 @@ const projectCardUI = {
 };
 
 const system = {
+    /*
+    Description: This is the system component of the frontend that handles anything
+                that is not specific to a page or single UI component. 
+     */
     get_project_data : async() => {
         if(!(location.hostname == "127.0.0.1")){
             try{
@@ -954,7 +958,7 @@ const system = {
                 const projectType = String(JSON.parse(localStorage.getItem("Projectory"))["project-type"]).toLowerCase();
                 if( projectType == "planned"){
                     let response;
-                    const animationInstance = show_loading();
+                    const animationInstance = system.show_loading();
                     try{
                         response = await fetch(endpoints.planned_projects_generator,{
                             method: "POST",
@@ -977,7 +981,7 @@ const system = {
                         }
                     system.show_toast("Sorry", "there seems to have been an issue submitting your project\n please try again");
                     }catch(error){
-                        console.log(error);
+                        console.error(error);
                     }finally{
                         system.dismiss_loading(animationInstance);
                     }

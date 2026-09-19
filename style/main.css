@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Cal+Sans&family=Fredoka:wght@300..700&display=swap');
 
 :root{
-    --border-color: rgba(255, 0, 0, 1);
+    --border-color: rgba(255, 0, 0, 0);
     --edit-projects-button: rgb(204, 204, 204);
     --off-white: rgba(247, 249, 252, 1.0);
     --soft-blue: rgba(58, 134, 255, 1.0);

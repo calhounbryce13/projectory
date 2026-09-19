@@ -4,7 +4,6 @@ import TEST_PROJECTS from "../db_dev/user_data.js";
 import svgs from "./svg.js";
 
 const LOADING_ANIMATION_DELAY = 1000; 
-const SHORT_PAGE_LOAD_DELAY = 1000;
 
 document.addEventListener("DOMContentLoaded", async() => {
     await system.get_project_data()
@@ -952,7 +951,8 @@ const system = {
                     system.show_toast("Uh Oh!", "please fill out the entire form!");
                     return;
                 }
-                if(JSON.parse(localStorage.getItem("Projectory"))["project-type"] == "Planned"){
+                const projectType = String(JSON.parse(localStorage.getItem("Projectory"))["project-type"]).toLowerCase();
+                if( projectType == "planned"){
                     let response;
                     const animationInstance = show_loading();
                     try{

@@ -22,6 +22,7 @@ const projectCardUI = {
         projectCardUI.closing_the_editor_functionality();
         projectCardUI.update_task_status_functionality();
     },
+
     project_card_expansion_functionality : function(){
         const projectToggleButtons = Array.from(document.getElementsByClassName("toggle-expansion"));
         projectToggleButtons.forEach((toggleButton) => {
@@ -32,6 +33,7 @@ const projectCardUI = {
             });
         });
     },
+
     toggle_element_height : function(element){
         if(element.style.maxHeight == "100vh" || !element.style.maxHeight){
             element.style.maxHeight = "0px";
@@ -39,6 +41,7 @@ const projectCardUI = {
         }
         element.style.maxHeight = "100vh";
     },
+
     show_modal_to_edit_a_project : function(event){
         if(JSON.parse(localStorage.getItem("Projectory"))["project-type"] != 'complete'){
             const localObj = JSON.parse(localStorage.getItem("Projectory"));
@@ -55,6 +58,7 @@ const projectCardUI = {
         }
         system.show_toast("Sorry", "You can't edit a project after it has been completed");
     },
+
     get_max_height : function(list){
         let max = 0;
         for(let x = 0; x < list.children.length; x++){
@@ -64,6 +68,7 @@ const projectCardUI = {
         }
         return max;
     },
+
     toggle_list_height : function(projectResourcesList, i){
         /* 
         DESCRIPTION: Function defined to re-assign the max height of the given 
@@ -80,6 +85,7 @@ const projectCardUI = {
         }
         projectResourcesList[i].style.maxHeight = '0px';
     },
+
     expanded_list_functionality : function(buttonClassName, containerClassName){
         /* 
         DESCRIPTION: Function defined to access all the expansion buttons on the page and apply event listeners
@@ -99,6 +105,7 @@ const projectCardUI = {
             }
         }
     },
+
     start_a_planned_project_functionality : function(){
         const startButtons = document.querySelectorAll('.start-button');
         startButtons.forEach((singleButton) => {
@@ -107,6 +114,7 @@ const projectCardUI = {
         this.close_start_modal_functionality();
         this.starting_project();
     },
+
     close_start_modal_functionality : function(){
         const dismissModal = document.getElementById('start-modal-close');
         dismissModal.addEventListener('click', () => {
@@ -143,6 +151,7 @@ const projectCardUI = {
             return;
         });
     },
+
     project_functions : function(){
         /*
         Description: Function defined to facilitate the various functionalities
@@ -167,6 +176,7 @@ const projectCardUI = {
             this.start_a_planned_project_functionality();
         }
     },
+
     populate_project_screen : function(projects){
         /* 
         Description: This is the function to handle the dynamic rendering of the user's 
@@ -182,6 +192,7 @@ const projectCardUI = {
         }
         this.project_functions();
     },
+
     populate_the_title_and_goal : function(projectCard, editModal){
         const title = projectCard.querySelectorAll(".project-title")[0].textContent;
         const goal = projectCard.querySelectorAll(".project-goal")[0].textContent;
@@ -194,10 +205,11 @@ const projectCardUI = {
             system.textarea_dynamic_height_functionality();
         }, 500)
     },
+
     populate_set_of_resources : function(projectCard){
         const ul = projectCard.children[4];
         if(ul){
-            Array.from(ul.children).forEach((listIndex) => {
+            (Array.from(ul.children)).forEach((listIndex) => {
                 const url = listIndex.children[0].textContent;
                 const anchor = document.createElement('a');
                 anchor.classList.add('edit-a-project-resource-link');
@@ -222,6 +234,7 @@ const projectCardUI = {
             });
         }
     },
+
     populate_editor : function(event, editModal){
         //! change the name of 1 of 2 'projectCard' references!
         /* 
@@ -243,6 +256,7 @@ const projectCardUI = {
             if(resourcesHeader) resourcesHeader.remove();
         }
     },
+
     get_the_index_of_a_task : function(checkboxElement){
         const parent = checkboxElement.parentNode.parentNode;
         for(let i = 0; i < (parent.children).length; i++){
@@ -253,6 +267,7 @@ const projectCardUI = {
         console.log("error: an unexpected issue occured while getting the index for the task update");
         return null;
     },
+
     get_the_title_of_the_project : function(checkboxElement){
         const parent = checkboxElement.parentNode.parentNode.parentNode;
         if((parent.children).length > 0){
@@ -261,10 +276,12 @@ const projectCardUI = {
         console.log("error: unexpected DOM tree positioning");
         return null;
     },
+
     toggle_respective_text : function(checkbox){
         const sibling = checkbox.parentNode.children[0];
         sibling.classList.toggle('completed-task');
     },
+
     update_task_status_functionality : function(){
         if(document.getElementsByClassName('subtask-checkbox').length > 0){
             const checkBoxesElements = Array.from(document.getElementsByClassName('subtask-checkbox'));
@@ -334,6 +351,7 @@ const projectCardUI = {
             });
         }
     },
+
     request_to_delete_user_project : async(type, title, user) => {
         let animation = false;
         const timer = setTimeout(() => {
@@ -361,6 +379,7 @@ const projectCardUI = {
         }
         return false;
     },
+
     remove_user_project : async(event) => {
         if(confirm("Are you sure you want to PERMANENTLY delete this project? This cannot be undone.")){
             const user = await fetch_for_user_email();
@@ -378,10 +397,12 @@ const projectCardUI = {
             }
         }
     },
+
     delete_project_functionality : function(){
         const deleteProjectButton = Array.from(document.getElementsByClassName('delete-project'))[0];
         deleteProjectButton.addEventListener('click', (event) => this.remove_user_project(event));
     },
+
     clear_the_modal : function(modal){
         const titleField = modal.children[2].children[0];
         const goalField = modal.children[3].children[0];
@@ -398,6 +419,7 @@ const projectCardUI = {
         });
         */
     },
+
     remove_project_editor : function(){
         const editModal = Array.from(document.getElementsByClassName('edit-project-modal'))[0];
         projectCardUI.clear_the_modal(editModal);
@@ -405,14 +427,17 @@ const projectCardUI = {
         backdrop.classList.remove('modal-overlay-backdrop-show');
         editModal.classList.remove('edit-modal-show');
     },
+
     closing_the_editor_functionality : function(){
         const closeTheEditorButton = Array.from(document.getElementsByClassName('close-project-editor'))[0];
         closeTheEditorButton.addEventListener('click', this.remove_project_editor);
     },
+
     is_not_empty : function(field){
         if(field.trim() == '') return false;
         return true;
     },
+
     is_unique_title : function(title){
         const projectCards = Array.from(document.getElementsByClassName('project-card'));
         for(let i = 0; i < projectCards.length; i++){
@@ -423,6 +448,7 @@ const projectCardUI = {
         }
         return true;
     },
+
     request_to_update_project_title : async(email, newTitle) => {
         let animation = false;
         const timer = setTimeout(() => {
@@ -465,6 +491,7 @@ const projectCardUI = {
             if(animation) system.dismiss_loading(animation);
         }
     },
+
     update_project_title_functionality : function(){
         const updateButton = document.getElementById('update-title');
         updateButton.addEventListener('click', async(event) => {
@@ -482,6 +509,7 @@ const projectCardUI = {
             return;
         })
     },
+
     request_to_update_project_goal : async(email, newGoal) => {
         let animation = false;
         const timer = setTimeout(() => {
@@ -524,6 +552,7 @@ const projectCardUI = {
             if(animation) system.dismiss_loading(animation);
         }
     },
+
     update_project_goal_functionality : function(){
         const updateButton = document.getElementById('update-goal');
         updateButton.addEventListener('click', async(event) => {
@@ -537,6 +566,7 @@ const projectCardUI = {
             return;
         })
     },
+
 };
 
 const system = {
@@ -911,20 +941,18 @@ const system = {
         });
     },
 
-
-
     create_new_project_functionality : function(){
         system.new_project_form_display_functionality();
         const formsContainer = document.getElementsByClassName('add-project-form');
         if(formsContainer.length > 0){
-            const form = (Array.from(formsContainer)[0]).children[0];
+            const form = Array.from(formsContainer)[0].children[0];
             form.addEventListener('submit', async(event) => {
                 event.preventDefault();
                 if((form.elements['project-title'].value == "") || (form.elements['project-goal'].value == "")){
                     system.show_toast("Uh Oh!", "please fill out the entire form!");
                     return;
                 }
-                if(JSON.parse(localStorage.getItem("Projectory"))["project-type"] == 'planned'){
+                if(JSON.parse(localStorage.getItem("Projectory"))["project-type"] == "Planned"){
                     let response;
                     const animationInstance = show_loading();
                     try{

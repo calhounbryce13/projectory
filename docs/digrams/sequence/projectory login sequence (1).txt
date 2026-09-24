@@ -1,0 +1,64 @@
+frame#lightblue #c5cbc8 #lightgreen;3;dashed Bryce Calhoun, Projectory - Login Sequence
+
+
+actor User #yellow
+rparticipant Frontend/Client
+participant Node.js account services
+participant Node.js model
+database MongoDB #yellow
+
+
+alt form submission error
+User-#redxFrontend/Client:missing data field
+Frontend/Client--#redxUser:"please fill out entire form
+end
+
+activate User
+User-#blue>Frontend/Client: successfully submits form
+activate Frontend/Client
+Frontend/Client-#blue>Node.js account services: {email, password}
+activate Node.js account services
+Node.js account services-#blue>Node.js model: find_existing_user(email)
+activate Node.js model
+Node.js model-#blue>MongoDB: .find(email)
+activate MongoDB
+MongoDB-#blue>Node.js model: user info
+deactivate MongoDB
+Node.js model-#blue>Node.js account services: user info
+deactivate Node.js model
+Node.js account services-#blue>Node.js account services: existing user check
+Node.js account services-#blue>Node.js account services: password validation
+Node.js account services-#blue>Frontend/Client: status : 200, session : {}
+deactivate Node.js account services
+
+Frontend/Client-#blue>User: *window reassign
+deactivate Frontend/Client
+deactivate User
+
+
+alt DBMS error
+MongoDB--#redxNode.js model: [fail]
+Node.js model--#redxNode.js account services: false
+Node.js account services--#redxFrontend/Client: status : 500
+Frontend/Client--#redxUser: "issue connecting to records"
+end
+
+alt non-existing user
+Node.js account services-#redxNode.js account services: existing user fail
+Node.js account services--#redxFrontend/Client: status : 402
+Frontend/Client--#redxUser: "please sign up now"
+end
+
+alt invalid password
+
+Node.js account services-#redxNode.js account services: invalid password
+Node.js account services--#redxFrontend/Client: status : 401
+Frontend/Client--#redxUser: "wrong email and/or password"
+
+
+end
+
+
+
+
+

@@ -59,17 +59,17 @@ const system = {
                             case 200:
                                 window.location.assign('userhome.html');
                                 break;
-                            case 400:
-                                system.show_toast("Uh Oh!", "There seems to have been an issue with that request, please try again");
-                                break;
                             case 401:
                                 system.show_toast("Uh Oh!", "wrong email and/or password");
                                 break;
+                            case 402:
+                                system.show_toast("Uh Oh", "It doesn't look like you have an account yet. Please sign up now");
+                                break;
                             case 500:
-                                system.show_toast("Uh Oh!", "There was an issue with the server, please try again");
+                                system.show_toast("Uh Oh!", "There was an issue connecting with our records, please try again");
                                 break;
                             default:
-                                system.show_toast("Uh Oh", "An unexpected error occured, please try again");
+                                system.show_toast("Uh Oh!", "There seems to have been an issue with that request, please try again");
                                 break;
                         }
                         return;

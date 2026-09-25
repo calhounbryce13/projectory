@@ -30,35 +30,28 @@ Node.js account services-#blue>Node.js account services: existing user check
 Node.js account services-#blue>Node.js account services: password validation
 Node.js account services-#blue>Frontend/Client: status : 200, session : {}
 deactivate Node.js account services
-
 Frontend/Client-#blue>User: *window reassign
 deactivate Frontend/Client
 deactivate User
 
-
 alt DBMS error
 MongoDB--#redxNode.js model: [fail]
 Node.js model--#redxNode.js account services: false
+box over Node.js account services:log error
 Node.js account services--#redxFrontend/Client: status : 500
 Frontend/Client--#redxUser: "issue connecting to records"
 end
 
 alt non-existing user
 Node.js account services-#redxNode.js account services: existing user fail
+box over Node.js account services:log error
 Node.js account services--#redxFrontend/Client: status : 402
 Frontend/Client--#redxUser: "please sign up now"
 end
 
 alt invalid password
-
 Node.js account services-#redxNode.js account services: invalid password
+box over Node.js account services:log error
 Node.js account services--#redxFrontend/Client: status : 401
 Frontend/Client--#redxUser: "wrong email and/or password"
-
-
 end
-
-
-
-
-

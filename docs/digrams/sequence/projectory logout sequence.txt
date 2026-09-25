@@ -1,0 +1,44 @@
+frame#lightblue #c5cbc8 #lightgreen;3;dashed Bryce Calhoun, Projectory - Logout Sequence
+
+actor User #yellow
+rparticipant Frontend/Client
+participant Node.js account services
+database MongoDB #yellow
+
+activate User
+User-#blue>Frontend/Client: clicks logout
+activate Frontend/Client
+Frontend/Client-#blue>Node.js account services: session{}
+activate Node.js account services
+Node.js account services-#blue>Node.js account services: valid session check
+Node.js account services-#blue>Node.js account services: active login check
+Node.js account services-#blue>MongoDB: session.destroy()
+activate MongoDB
+MongoDB--#blue>Node.js account services: [success]
+deactivate MongoDB
+Node.js account services--#blue>Frontend/Client: status : 200
+deactivate Node.js account services
+Frontend/Client--#blue>User: *window reassign
+deactivate Frontend/Client
+deactivate User
+
+alt invalid session
+Node.js account services-#red>Node.js account services: valid session fail
+note over Node.js account services: log error
+Node.js account services--#redxFrontend/Client: status : 401
+note over Frontend/Client: no UI response
+end
+
+alt user logged in already
+Node.js account services-#red>Node.js account services: active login fail
+note over Node.js account services: log error
+Node.js account services--#redxFrontend/Client: status : 400
+note over Frontend/Client: no UI response
+end
+
+alt DBMS error
+MongoDB--#redxNode.js account services: [fail]
+note over Node.js account services: log error
+Node.js account services--#redxFrontend/Client: status : 500
+Frontend/Client--#redxUser: "unsuccessful logout"
+end

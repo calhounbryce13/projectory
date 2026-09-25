@@ -178,31 +178,27 @@ const check_user_login_status = async()=>{
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 const user_logout = async()=>{
-    let logoutResponse = await fetch(endpoints.logout, {
-        method: "POST",
-        credentials: "include"
-    });
+    try{
+        let logoutResponse = await fetch(endpoints.logout, {
+            method: "POST",
+            credentials: "include"
+        });
+        switch(logoutResponse.status){
+            case 200:
+                window.location.assign("index.html");
+                break;
+            case 500:
+                window.alert("Sorry there was an issue connecting to DBMS");
+                break;
+            default:
+                window.alert("unsuccessful logout");
+                break;
+        };
+    }catch(error){
+        console.error(error);
+        window.alert("error on request");
+    }
 }
 
 const delete_account = async(user)=>{
@@ -255,17 +251,6 @@ const remove_user_account_functionality = function(){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 const fetch_for_user_email = async()=>{
     const animationInstance = show_loading();
     try{
@@ -283,31 +268,6 @@ const fetch_for_user_email = async()=>{
     }
     return false;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 const send_request_to_remove_a_link = async(title, user, linkText)=>{
@@ -403,29 +363,6 @@ const process_the_form_to_add_a_new_link = async(event, projects, i)=>{
     }
     show_toast("Sorry", "unable to add a new link to that project")
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -537,8 +474,6 @@ const send_a_request_to_get_user_projects = async()=>{
         }
     }
 }
-
-
 
 
 
@@ -892,7 +827,7 @@ const dismiss_loading = function(animationInstance){
 }
 
 const backend_communication = function(){
-    //logout_functionality();
+    logout_functionality();
 
     add_task_to_new_functionality();
 

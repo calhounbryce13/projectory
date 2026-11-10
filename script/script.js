@@ -149,6 +149,7 @@ const fetch_for_login_status = async()=>{
         if(loadingIconShown) dismiss_loading(animationInstance);
         
     }
+    return false;
 }
 
 const check_user_login_status = async()=>{

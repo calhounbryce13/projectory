@@ -1,0 +1,75 @@
+frame#lightblue #c5cbc8 #lightgreen;3;dashed Projectory - Registration Sequence, Bryce Calhoun
+
+actor User #yellow
+rparticipant Frontend/Client
+participant Node.js Server
+participant Node.js Model
+database MongoDB #yellow
+
+
+alt form completion check fail
+User-#red>Frontend/Client: email, password, passConfirmation
+Frontend/Client--#redxUser:"please try again"
+end
+
+alt password match check fail
+User-#red>Frontend/Client: email, password, passConfirmation
+Frontend/Client--#redxUser:"please try again"
+end
+
+activate User
+User-#blue>Frontend/Client: email, password, passConfirmation
+activate Frontend/Client
+Frontend/Client-#blue>Frontend/Client:form completion check
+Frontend/Client-#blue>Frontend/Client:password match check
+Frontend/Client-#blue>Node.js Server: {email, password}
+activate Node.js Server
+Node.js Server-#blue>Node.js Model:find_existing_user(email)
+activate Node.js Model
+Node.js Model-#blue>MongoDB: User.find(email)
+activate MongoDB
+MongoDB--#blue>Node.js Model: users []
+Node.js Model-#blue>Node.js Model: non-existing user check
+Node.js Model--#blue>Node.js Server: 1
+Node.js Server-#blue>Node.js Model: create_new_user(email, hashed password, rounds)
+Node.js Model-#blue>MongoDB: User.save(email, password, rounds, [], [], [])
+MongoDB--#blue>Node.js Model: *success
+deactivate MongoDB
+Node.js Model--#blue>Node.js Server:true
+deactivate Node.js Model
+Node.js Server--#blue>Frontend/Client: status : 201
+deactivate Node.js Server
+Frontend/Client--#blue>User: "account made successfully"
+Frontend/Client--#blue>User: *redirect to \login
+deactivate User
+deactivate Frontend/Client
+
+
+alt DBMS connection error 1
+MongoDB--#redxNode.js Model: *fail
+Node.js Model--#redxNode.js Server: 0
+note over Node.js Server: log error
+Node.js Server--#redxFrontend/Client: status : 500
+Frontend/Client--#redxUser: "please try again"
+end
+
+alt non-existing user check fail
+Node.js Model-#red>Node.js Model: non-existing user check fail
+Node.js Model--#redxNode.js Server: 2
+note over Node.js Server: log error
+Node.js Server--#redxFrontend/Client: status : 401
+Frontend/Client--#redxUser: "you already have an account"
+Frontend/Client--#redxUser: *redirect to \login
+end
+
+alt DBMS connection error 2
+MongoDB--#redxNode.js Model: *fail
+Node.js Model--#redxNode.js Server: false
+note over Node.js Server: log error
+Node.js Server--#redxFrontend/Client: status : 500
+Frontend/Client--#redxUser: "please try again"
+
+end
+
+
+

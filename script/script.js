@@ -506,16 +506,41 @@ const process_signup_data = async(event)=>{
     const email = document.getElementsByName('email')[0];
     const pass = document.getElementsByName('pass')[0];
     const passConfirm = document.getElementsByName('passConfirm')[0];
-    const validPassword = password_validation(email, pass, passConfirm);
-    if(validPassword != 0){
-        let response = await registration_and_login_fetch(email.value, pass.value, endpoints.registration);
-        if(response != null){
-            inform_user(response);
+    if(email.value && pass.value && passConfirm.value){
+        const validPassword = password_validation(email, pass, passConfirm);
+        if(validPassword){
+            let response = await registration_and_login_fetch(email.value, pass.value, endpoints.registration);
+            if(response){
+                switch(response.status){
+                    case 201:
+                        show_toast("Perfect!", "account made successfully!");
+                        setTimeout(() => {
+                            window.location.assign('login.html');
+                        }, 2000);
+                        break;
+                    case 400:
+                        show_toast("Uh Oh", "bad request");
+                        break;
+                    case 401:
+                        show_toast("Oh Hi", "there is already an account registered under that email,\n please login instead");
+                        break;
+                    case 500:
+                        show_toast("Uh Oh", "server error");
+                        break;
+                    default:
+                        show_toast("Uh Oh", "An unexpected error");
+                        break;
+                }
+                return;
+            }
+            show_toast("Uh Oh","There was an error trying to make an account for you, please try again.");
+            return;
         }
-        else{
-            show_toast("I'm sorry","there was an error trying to make an account for you, please try again");
-        }
+        show_toast("Uh Oh","Both password must match!");
+        return;
     }
+    show_toast("Uh Oh", "Please fill out the entire form.");
+    return;
 }
 
 const signup_functionality = function(){
@@ -759,47 +784,18 @@ const home_page_listeners = function(){
     }
 }
 
-const inform_user = async(response)=>{
-    let data = await response.json();
-    if(data.message == "true"){
-        show_toast("Perfect!", "account made successfully!");
-    }
-    else if(data.message == "already has an account"){
-        show_toast("Uh Oh!", "there is already an account registered under that email,\n please login instead");
-    }
-    setTimeout(() => {
-        window.location.assign('login.html');
-    }, 2000);
-}
-
-const check_for_empty = function(email, pass){
-    console.log(email, pass);
-    if(email && pass){
-        if(email.value == "" || pass.value == ""){
-            show_toast("Uh Oh!","Please fill out the entire form");
-            return 1;
-        }
+const password_validation = function(email, pass, passConfirm){
+    if(Array.from(pass.value).length < PASSWORD_MIN){
+        show_toast("Uh Oh!", "passwords must be at least 8 characters long!");
         return 0;
     }
-    return 1;
-}
-
-const password_validation = function(email, pass, passConfirm){
-    const isEmpty = check_for_empty(email, pass);
-    if(isEmpty != 1){
-        if(Array.from(pass.value).length < PASSWORD_MIN){
-            show_toast("Uh Oh!", "passwords must be at least 8 characters long!");
-            return 0;
-        }
-        if(pass.value !== passConfirm.value){
-            show_toast("Uh Oh!", "passwords must match!");
-            return 0;
-        }
-        else{
-            return 1;
-        }
+    if(pass.value !== passConfirm.value){
+        show_toast("Uh Oh!", "passwords must match!");
+        return 0;
     }
-    return 0;
+    else{
+        return 1;
+    }
 }
 
 const show_loading = function(){

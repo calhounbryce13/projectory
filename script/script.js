@@ -138,6 +138,7 @@ const fetch_for_login_status = async()=>{
             method: "GET",
             credentials: "include"
         });
+
         if(response.status == 200){
             return response;
         }
@@ -155,6 +156,7 @@ const fetch_for_login_status = async()=>{
 const check_user_login_status = async()=>{
     if(!(location.hostname == devHost)){
         let loginStatus = await fetch_for_login_status();
+        console.log("response from login service:", loginStatus);
         if(!loginStatus){
             if(window.location.pathname.endsWith('/userhome.html') || window.location.pathname.endsWith('/projects.html')){
                 window.location.assign('index.html');
@@ -162,6 +164,7 @@ const check_user_login_status = async()=>{
             }
         }
         loginStatus = await loginStatus.json();
+        console.log("response from login service:", loginStatus);
         if(loginStatus){
             if(window.location.pathname.endsWith('/login.html') || window.location.pathname.endsWith('/index.html')){
                 window.location.assign('userhome.html');
